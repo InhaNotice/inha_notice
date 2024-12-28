@@ -31,12 +31,9 @@ class _NoticePageState extends State<NoticePage> {
         // 공지사항 본문을 선택하는 CSS 셀렉터
         final contentElement = document.querySelector('div.artclView'); // 본문 CSS 셀렉터
         if (contentElement != null) {
-          // 'artclItem viewForm' 이전의 텍스트만 가져오기
+          // 줄바꿈 처리
           final buffer = StringBuffer();
-          for (var child in contentElement.children) {
-            if (child.classes.contains('artclItem') && child.classes.contains('viewForm')) {
-              break; // 해당 태그가 나타나면 중지
-            }
+          for (var child in contentElement.nodes) {
             if (child.text != null && child.text!.trim().isNotEmpty) {
               buffer.writeln(child.text!.trim()); // 줄바꿈 추가
             }
