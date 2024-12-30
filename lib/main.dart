@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'screens/left_notice.dart';
 import 'screens/right_notice.dart';
+import 'screens/background_page.dart';
+import 'services/background.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized(); // 초기화 호출
+  BackgroundService.initializeService();
   runApp(const MyApp());
 }
 
@@ -28,7 +32,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // 두 개의 탭
+      length: 3, // 두 개의 탭
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Notice Board'),
@@ -36,6 +40,7 @@ class MainPage extends StatelessWidget {
             tabs: [
               Tab(text: 'SW Univ Notices'),
               Tab(text: 'CSE Notices'),
+              Tab(text: 'Backgroud'),
             ],
           ),
         ),
@@ -43,6 +48,7 @@ class MainPage extends StatelessWidget {
           children: [
             LeftNoticePage(), // 왼쪽 탭
             RightNoticePage(), // 오른쪽 탭
+            BackgroundPage(),
           ],
         ),
       ),
