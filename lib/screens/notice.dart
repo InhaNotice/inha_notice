@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
-import 'package:html/dom.dart' as dom; // 별칭 추가
 
 class NoticePage extends StatefulWidget {
   final String url;
