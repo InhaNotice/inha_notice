@@ -33,6 +33,7 @@ class BackgroundService {
       ),
       iosConfiguration: IosConfiguration(
         onForeground: onStart,
+        autoStart: false,
         onBackground: onIosBackground,
       ),
     );

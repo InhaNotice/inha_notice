@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import '../services/background.dart';
 
 class BackgroundPage extends StatefulWidget {
   const BackgroundPage({super.key});
@@ -11,6 +12,7 @@ class BackgroundPage extends StatefulWidget {
 }
 
 class _BackgroundPageState extends State<BackgroundPage> {
+  bool isServiceRunning = false;
   String serviceStatus = 'Service Not Running';
 
   @override
@@ -25,6 +27,7 @@ class _BackgroundPageState extends State<BackgroundPage> {
   }
 
   void startService() {
+    BackgroundService.initializeService();
     FlutterBackgroundService().startService();
     setState(() {
       serviceStatus = 'Service Running';

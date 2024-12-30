@@ -6,7 +6,6 @@ import 'services/background.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // 초기화 호출
-  BackgroundService.initializeService();
   runApp(const MyApp());
 }
 
