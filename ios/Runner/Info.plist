@@ -56,6 +56,11 @@
     <array>
         <string>my</string>
     </array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>
 <key>UIBackgroundModes</key>
