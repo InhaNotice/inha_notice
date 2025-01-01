@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
 class ApiService {
-  Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, {int page = 1}) async {
+  Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, String name, {int page = 1}) async {
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -13,18 +13,36 @@ class ApiService {
             '.artclTable .headline ._artclTdTitle a'); // headline CSS 셀렉터
         final headlineNotices = headlineElements.map((element) {
           final title = element.querySelector('strong')?.text.trim() ?? '';
-          final link = 'https://swuniv.inha.ac.kr' +
-              (element.attributes['href'] ?? '');
+          String link = "";
+          if(name == "swcore") {
+            link = 'https://swuniv.inha.ac.kr' +
+                (element.attributes['href'] ?? '');
+          } else if (name == "cse") {
+            link = 'https://cse.inha.ac.kr' +
+                (element.attributes['href'] ?? '');
+          } else {
+            link = "";
+          }
           return {'title': title, 'link': link};
         }).toList();
 
         // 일반 공지사항
         final generalElements = document.querySelectorAll(
-            '.artclTable ._artclTdTitle:not(.headline) a'); // 일반 공지사항 CSS 셀렉터
-        final generalNotices = generalElements.map((element) {
-          final title = element.querySelector('strong')?.text.trim() ?? '';
-          final link = 'https://swuniv.inha.ac.kr' +
-              (element.attributes['href'] ?? '');
+            '.artclTable tr:not(.headline)');
+
+        // 첫 번째 <tr> 태그(테이블 헤더)를 제외
+        final generalNotices = generalElements.skip(1).map((element) {
+          final title = element.querySelector('._artclTdTitle a strong')?.text.trim() ?? '';
+          String link = "";
+          if (name == "swcore") {
+            link = 'https://swuniv.inha.ac.kr' +
+                (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
+          } else if (name == "cse") {
+            link = 'https://cse.inha.ac.kr' +
+                (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
+          } else {
+            link = "";
+          }
           return {'title': title, 'link': link};
         }).toList();
 

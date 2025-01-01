@@ -33,7 +33,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
 
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
-          'https://swuniv.inha.ac.kr/swuniv/12703/subview.do?page=$page');
+          'https://swuniv.inha.ac.kr/swuniv/12703/subview.do?page=$page', "swcore");
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         _currentPage = page; // 현재 페이지 업데이트

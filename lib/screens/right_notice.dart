@@ -33,7 +33,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
 
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
-          'https://cse.inha.ac.kr/cse/888/subview.do?page=$page');
+          'https://cse.inha.ac.kr/cse/888/subview.do?page=$page', "cse");
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         _currentPage = page; // 현재 페이지 업데이트
