@@ -28,8 +28,6 @@ class _RightNoticePageState extends State<RightNoticePage> {
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
           'https://cse.inha.ac.kr/cse/888/subview.do');
-      // final jsonOutput = jsonEncode(notices);
-      // await saveJsonToFile('right_notices.json', jsonOutput); // JSON 데이터를 파일로 저장
       setState(() {
         _notices = notices;
         _isLoading = false;
@@ -64,13 +62,13 @@ class _RightNoticePageState extends State<RightNoticePage> {
                   child: Text(
                     'Headline Notices',
                     style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold,  color: Colors.white),
+                        fontFamily: 'Pretendard', fontSize: 18, color: Colors.white),
                   ),
                 ),
                 ..._notices['headline']!.map((notice) {
                   return Container(
                       decoration: const BoxDecoration(
-                        color: const Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
+                        color: const Color(0xFF222222), // 배경색 #525050, 투명도 55% (Alpha: 8C)
                         border: const Border(
                           bottom: BorderSide(
                             color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
@@ -78,12 +76,12 @@ class _RightNoticePageState extends State<RightNoticePage> {
                           ),
                         ),
                       ),
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 8.0),
                   child: ListTile(
                     title: Text(
                       notice['title'] ?? 'No Title',
-                      style: const TextStyle(color: Colors.white), // 제목 글자색 하얀색
+                      style: const TextStyle(
+                          fontFamily: 'Pretendard', fontSize: 18, color: Colors.white
+                      ), // 제목 글자색 하얀색
                     ),
                     onTap: () {
                       Navigator.push(
@@ -108,13 +106,13 @@ class _RightNoticePageState extends State<RightNoticePage> {
                   child: Text(
                     'General Notices',
                     style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold,  color: Colors.white),
+                        fontFamily: 'Pretendard', fontSize: 18, color: Colors.white),
                   ),
                 ),
                 ..._notices['general']!.map((notice) {
                   return Container(
                       decoration: const BoxDecoration(
-                        color: Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
+                        color: Color(0xFF292929),
                         border: Border(
                           bottom: BorderSide(
                             color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
@@ -122,12 +120,10 @@ class _RightNoticePageState extends State<RightNoticePage> {
                           ),
                         ),
                       ),
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 8.0),
                       child: ListTile(
                         title: Text(
                           notice['title'] ?? 'No Title',
-                          style: const TextStyle(color: Colors.white), // 제목 글자색 하얀색
+                          style: TextStyle(fontFamily: 'Pretendard', fontWeight: FontWeight.normal, fontSize: 16, color: Colors.white),// 제목 글자색 하얀색
                         ),
                     onTap: () {
                       Navigator.push(

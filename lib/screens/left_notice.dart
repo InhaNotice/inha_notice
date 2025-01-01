@@ -58,8 +58,8 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       'Headline Notices',
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      style: const TextStyle(
+                          fontFamily: 'Pretendard', fontSize: 16, color: Colors.white),
                     ),
                   ),
                   ..._notices['headline']!.map((notice) {
@@ -68,7 +68,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                         color: const Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
                         border: const Border(
                           bottom: BorderSide(
-                            color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
+                            color: Color(0xFF222222), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
                             width: 2.0, // 테두리 두께
                           ),
                         ),
@@ -103,13 +103,13 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                     child: Text(
                       'General Notices',
                       style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                          fontFamily: 'Pretendard', fontSize: 18, color: Colors.white),
                     ),
                   ),
                   ..._notices['general']!.map((notice) {
                     return Container(
                       decoration: const BoxDecoration(
-                        color: const Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
+                        color: const Color(0xFF292929),
                         border: const Border(
                           bottom: BorderSide(
                             color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
@@ -122,7 +122,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                       child: ListTile(
                         title: Text(
                           notice['title'] ?? 'No Title',
-                          style: const TextStyle(color: Colors.white), // 제목 글자색 하얀색
+                          style: TextStyle(fontFamily: 'Pretendard', fontWeight: FontWeight.normal, fontSize: 16, color: Colors.white), // 제목 글자색 하얀색
                         ),
                         onTap: () {
                           Navigator.push(
