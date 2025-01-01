@@ -18,6 +18,8 @@ class MainNoticePage extends StatelessWidget {
             child: Text(
               '인하공유',
               style: TextStyle(
+                fontFamily: 'Pretendard',
+                fontSize: 16,
                 color: Color(0xFFBAB6B6), // 제목 글자 색상 BAB6B6
                 fontWeight: FontWeight.bold,
               ),
@@ -37,6 +39,16 @@ class MainNoticePage extends StatelessWidget {
             indicatorColor: Color(0xFF12B8FF), // 탭 선택 시 하단 표시줄 색상
             labelColor: Color(0xFF12B8FF), // 선택된 탭 텍스트 색상 12B8FF
             unselectedLabelColor: Color(0xFFBAB6B6), // 선택되지 않은 탭 텍스트 색상 BAB6B6
+            labelStyle: TextStyle( // 선택된 탭 텍스트 스타일
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
+            unselectedLabelStyle: TextStyle( // 선택되지 않은 탭 텍스트 스타일
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
             tabs: [
               Tab(text: '학사'),
               Tab(text: '학과'),

@@ -62,6 +62,16 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
         backgroundColor: const Color(0xFF292929), // 배경 색상
         selectedItemColor: Colors.white, // 선택된 아이콘 및 텍스트 색상
         unselectedItemColor: Colors.white60, // 선택되지 않은 아이콘 및 텍스트 색상
+        selectedLabelStyle: const TextStyle( // 선택된 텍스트 스타일
+          fontFamily: 'Pretendard',
+          fontWeight: FontWeight.bold,
+          fontSize: 13,
+        ),
+        unselectedLabelStyle: const TextStyle( // 선택되지 않은 텍스트 스타일
+          fontFamily: 'Pretendard',
+          fontWeight: FontWeight.normal,
+          fontSize: 13,
+        ),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
