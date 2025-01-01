@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../services/api.dart';
-import 'notice.dart';
+import '../../services/api.dart';
+import '../web_page.dart';
 
-class LeftNoticePage extends StatefulWidget {
-  const LeftNoticePage({super.key});
+class MajorNoticePage extends StatefulWidget {
+  const MajorNoticePage({super.key});
 
   @override
-  State<LeftNoticePage> createState() => _LeftNoticePageState();
+  State<MajorNoticePage> createState() => _MajorNoticePageState();
 }
 
-class _LeftNoticePageState extends State<LeftNoticePage> {
+class _MajorNoticePageState extends State<MajorNoticePage> {
   final ApiService _apiService = ApiService();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   bool _isLoading = true;
@@ -33,7 +33,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
 
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
-          'https://swuniv.inha.ac.kr/swuniv/12703/subview.do?page=$page', "swcore");
+          'https://cse.inha.ac.kr/cse/888/subview.do?page=$page', "cse");
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         _currentPage = page; // 현재 페이지 업데이트
@@ -63,7 +63,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                   ? Center(child: Text('Error: $_error')) // 오류 메시지 표시
                   : ListView(
                 children: [
-                  // 중요 공지사항(Headline Notices)
+                  // 헤드라인 공지사항
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -88,16 +88,14 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                           ..._notices['headline']!.map((notice) {
                             return Container(
                               decoration: const BoxDecoration(
-                                color: Color(0x8C292929), // 배경색
+                                color: Color(0xFF222222), // 배경색
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: Color(0xFF222222), // 하단 테두리 색상
+                                    color: Color(0x8C525050), // 하단 테두리 색상
                                     width: 2.0,
                                   ),
                                 ),
                               ),
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 4.0, horizontal: 8.0),
                               child: ListTile(
                                 title: Text(
                                   notice['title'] ?? 'No Title',
@@ -108,7 +106,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => NoticePage(
+                                      builder: (context) => WebPage(
                                           url: notice['link'] ?? ''),
                                     ),
                                   );
@@ -120,7 +118,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                     ),
                   ),
 
-                  // 일반 공지사항(General Notices)
+                  // 일반 공지사항
                   if (_notices['general']!.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +157,7 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => NoticePage(
+                                    builder: (context) => WebPage(
                                         url: notice['link'] ?? ''),
                                   ),
                                 );

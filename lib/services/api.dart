@@ -8,21 +8,19 @@ class ApiService {
       if (response.statusCode == 200) {
         final document = parse(response.body);
 
+        // name과 도메인 매핑
+        final domainMap = {
+          "swcore": "https://swuniv.inha.ac.kr",
+          "cse": "https://cse.inha.ac.kr"
+        };
+
         // headline 공지사항
         final headlineElements = document.querySelectorAll(
             '.artclTable .headline ._artclTdTitle a'); // headline CSS 셀렉터
         final headlineNotices = headlineElements.map((element) {
           final title = element.querySelector('strong')?.text.trim() ?? '';
-          String link = "";
-          if(name == "swcore") {
-            link = 'https://swuniv.inha.ac.kr' +
-                (element.attributes['href'] ?? '');
-          } else if (name == "cse") {
-            link = 'https://cse.inha.ac.kr' +
-                (element.attributes['href'] ?? '');
-          } else {
-            link = "";
-          }
+          final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
+          final link = baseUrl + (element.attributes['href'] ?? '');
           return {'title': title, 'link': link};
         }).toList();
 
@@ -33,16 +31,8 @@ class ApiService {
         // 첫 번째 <tr> 태그(테이블 헤더)를 제외
         final generalNotices = generalElements.skip(1).map((element) {
           final title = element.querySelector('._artclTdTitle a strong')?.text.trim() ?? '';
-          String link = "";
-          if (name == "swcore") {
-            link = 'https://swuniv.inha.ac.kr' +
-                (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
-          } else if (name == "cse") {
-            link = 'https://cse.inha.ac.kr' +
-                (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
-          } else {
-            link = "";
-          }
+          final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
+          final link = baseUrl + (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
           return {'title': title, 'link': link};
         }).toList();
 
@@ -55,6 +45,7 @@ class ApiService {
             'isCurrent': isCurrent,
           };
         }).toList();
+
         return {
           'headline': headlineNotices,
           'general': generalNotices,

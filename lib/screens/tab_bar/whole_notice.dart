@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../services/api.dart';
-import 'notice.dart';
+import '../../services/api.dart';
+import '../web_page.dart';
 
-class RightNoticePage extends StatefulWidget {
-  const RightNoticePage({super.key});
+class WholeNoticePage extends StatefulWidget {
+  const WholeNoticePage({super.key});
 
   @override
-  State<RightNoticePage> createState() => _RightNoticePageState();
+  State<WholeNoticePage> createState() => _WholeNoticePageState();
 }
 
-class _RightNoticePageState extends State<RightNoticePage> {
+class _WholeNoticePageState extends State<WholeNoticePage> {
   final ApiService _apiService = ApiService();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   bool _isLoading = true;
@@ -33,7 +33,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
 
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
-          'https://cse.inha.ac.kr/cse/888/subview.do?page=$page', "cse");
+          'https://swuniv.inha.ac.kr/swuniv/12703/subview.do?page=$page', "swcore");
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         _currentPage = page; // 현재 페이지 업데이트
@@ -63,7 +63,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
                   ? Center(child: Text('Error: $_error')) // 오류 메시지 표시
                   : ListView(
                 children: [
-                  // 헤드라인 공지사항
+                  // 중요 공지사항(Headline Notices)
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -88,14 +88,16 @@ class _RightNoticePageState extends State<RightNoticePage> {
                           ..._notices['headline']!.map((notice) {
                             return Container(
                               decoration: const BoxDecoration(
-                                color: Color(0xFF222222), // 배경색
+                                color: Color(0x8C292929), // 배경색
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: Color(0x8C525050), // 하단 테두리 색상
+                                    color: Color(0xFF222222), // 하단 테두리 색상
                                     width: 2.0,
                                   ),
                                 ),
                               ),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 4.0, horizontal: 8.0),
                               child: ListTile(
                                 title: Text(
                                   notice['title'] ?? 'No Title',
@@ -106,7 +108,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => NoticePage(
+                                      builder: (context) => WebPage(
                                           url: notice['link'] ?? ''),
                                     ),
                                   );
@@ -118,7 +120,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
                     ),
                   ),
 
-                  // 일반 공지사항
+                  // 일반 공지사항(General Notices)
                   if (_notices['general']!.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +159,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => NoticePage(
+                                    builder: (context) => WebPage(
                                         url: notice['link'] ?? ''),
                                   ),
                                 );

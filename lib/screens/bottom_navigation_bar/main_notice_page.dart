@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../left_notice.dart';
-import '../right_notice.dart';
+import '../tab_bar/whole_notice.dart';
+import '../tab_bar/major_notice.dart';
 
 class MainNoticePage extends StatelessWidget {
   const MainNoticePage({super.key});
@@ -57,8 +57,8 @@ class MainNoticePage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            LeftNoticePage(), // 왼쪽 탭
-            RightNoticePage(), // 오른쪽 탭
+            WholeNoticePage(), // 왼쪽 탭
+            MajorNoticePage(), // 오른쪽 탭
           ],
         ),
       ),

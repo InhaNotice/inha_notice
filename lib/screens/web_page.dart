@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NoticePage extends StatelessWidget {
+class WebPage extends StatelessWidget {
   final String url;
 
-  const NoticePage({super.key, required this.url});
+  const WebPage({super.key, required this.url});
 
   Future<void> _launchInAppWebView(String url, BuildContext context) async {
     final Uri uri = Uri.parse(url);
