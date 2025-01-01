@@ -12,6 +12,7 @@ class ApiService {
         // name과 도메인 매핑
         final domainMap = {
           "cse": "https://cse.inha.ac.kr",
+          "internal": "https://internationalcenter.inha.ac.kr"
         };
 
         // headline 공지사항

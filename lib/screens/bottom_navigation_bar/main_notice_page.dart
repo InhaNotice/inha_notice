@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:practice_crawling/screens/tab_bar/international_notice.dart';
+import 'package:practice_crawling/screens/tab_bar/lib_notice.dart';
+import 'package:practice_crawling/screens/tab_bar/recruitment_notice.dart';
+import 'package:practice_crawling/screens/tab_bar/scholarship_notice.dart';
 
 import '../tab_bar/whole_notice.dart';
 import '../tab_bar/major_notice.dart';
@@ -9,7 +13,7 @@ class MainNoticePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // 두 개의 탭
+      length: 6, // 두 개의 탭
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF222222), // AppBar 배경색
@@ -52,13 +56,21 @@ class MainNoticePage extends StatelessWidget {
             tabs: [
               Tab(text: '학사'),
               Tab(text: '학과'),
+              Tab(text: '장학'),
+              Tab(text: '채용'),
+              Tab(text: '정석'),
+              Tab(text: '국제')
             ],
           ),
         ),
         body: const TabBarView(
           children: [
-            WholeNoticePage(), // 왼쪽 탭
-            MajorNoticePage(), // 오른쪽 탭
+            WholeNoticePage(),
+            MajorNoticePage(),
+            ScholarshipNoticePage(),
+            RecruitmentNoticePage(),
+            LibNoticePage(),
+            InternationalNoticePage(),
           ],
         ),
       ),
