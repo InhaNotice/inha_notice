@@ -64,25 +64,25 @@ class _MajorNoticePageState extends State<MajorNoticePage> {
                   : ListView(
                 children: [
                   // 헤드라인 공지사항
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _showHeadlines = !_showHeadlines;
-                      });
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            '중요 공지사항',
-                            style: TextStyle(
-                                fontFamily: 'Pretendard',
-                                fontSize: 16,
-                                color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _showHeadlines = !_showHeadlines;
+                        });
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              '중요 공지사항',
+                              style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
                           ),
-                        ),
                         if (_showHeadlines &&
                             _notices['headline']!.isNotEmpty)
                           ..._notices['headline']!.map((notice) {

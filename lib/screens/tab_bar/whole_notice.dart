@@ -64,61 +64,61 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                   : ListView(
                 children: [
                   // 중요 공지사항(Headline Notices)
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _showHeadlines = !_showHeadlines;
-                      });
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            '중요 공지사항',
-                            style: TextStyle(
-                                fontFamily: 'Pretendard',
-                                fontSize: 16,
-                                color: Colors.white),
+                  if (_notices['headline']!.isNotEmpty)
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _showHeadlines = !_showHeadlines;
+                        });
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              '중요 공지사항',
+                              style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
                           ),
-                        ),
-                        if (_showHeadlines &&
-                            _notices['headline']!.isNotEmpty)
-                          ..._notices['headline']!.map((notice) {
-                            return Container(
-                              decoration: const BoxDecoration(
-                                color: Color(0x8C292929), // 배경색
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Color(0xFF222222), // 하단 테두리 색상
-                                    width: 2.0,
+                          if (_showHeadlines)
+                            ..._notices['headline']!.map((notice) {
+                              return Container(
+                                decoration: const BoxDecoration(
+                                  color: Color(0x8C292929), // 배경색
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Color(0xFF222222), // 하단 테두리 색상
+                                      width: 2.0,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 4.0, horizontal: 8.0),
-                              child: ListTile(
-                                title: Text(
-                                  notice['title'] ?? 'No Title',
-                                  style: const TextStyle(
-                                      color: Colors.white), // 제목 글자색
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 4.0, horizontal: 8.0),
+                                child: ListTile(
+                                  title: Text(
+                                    notice['title'] ?? 'No Title',
+                                    style: const TextStyle(
+                                        color: Colors.white), // 제목 글자색
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => WebPage(
+                                            url: notice['link'] ?? ''),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => WebPage(
-                                          url: notice['link'] ?? ''),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          }).toList(),
-                      ],
+                              );
+                            }).toList(),
+                        ],
+                      ),
                     ),
-                  ),
 
                   // 일반 공지사항(General Notices)
                   if (_notices['general']!.isNotEmpty)
