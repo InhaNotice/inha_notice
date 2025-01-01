@@ -14,7 +14,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
   final ApiService _apiService = ApiService();
 
   // 초기값 수정
-  Map<String, List<Map<String, String>>> _notices = {'headline': [], 'general': []};
+  Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   bool _isLoading = true;
   String _error = '';
 

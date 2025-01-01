@@ -2,8 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
 class ApiService {
-  Future<Map<String, List<Map<String, String>>>> fetchNoticesWithLinks(
-      String url) async {
+  Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, {int page = 1}) async {
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -29,9 +28,20 @@ class ApiService {
           return {'title': title, 'link': link};
         }).toList();
 
+        // 페이지 번호 크롤링
+        final pageElements = document.querySelectorAll('._paging ._inner ul li');
+        final pages = pageElements.map((element) {
+          final isCurrent = element.localName == 'strong'; // 현재 페이지는 <strong> 태그
+          return {
+            'page': element.text.trim(),
+            'isCurrent': isCurrent,
+          };
+        }).toList();
+        print('Pages: ${pages}');
         return {
           'headline': headlineNotices,
           'general': generalNotices,
+          'pages': pages,
         };
       } else {
         throw Exception('Failed to load notices: ${response.statusCode}');
