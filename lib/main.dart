@@ -60,6 +60,9 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
           });
         },
         type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xFF292929), // 배경 색상
+        selectedItemColor: Colors.white, // 선택된 아이콘 및 텍스트 색상
+        unselectedItemColor: Colors.white60, // 선택되지 않은 아이콘 및 텍스트 색상
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
@@ -86,7 +89,6 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
     );
   }
 }
-
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
@@ -96,11 +98,34 @@ class MainPage extends StatelessWidget {
       length: 2, // 두 개의 탭
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Notice Board'),
+          backgroundColor: const Color(0xFF222222), // AppBar 배경색
+          title: const Align(
+            alignment: Alignment.centerLeft, // 제목을 왼쪽 정렬
+            child: Text(
+              'Notice Board',
+              style: TextStyle(
+                color: Color(0xFFBAB6B6), // 제목 글자 색상 BAB6B6
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications),
+              color: const Color(0xFFBAB6B6), // 알림 버튼 색상
+              onPressed: () {
+                // 알림 버튼 동작 추가
+                print('알림 버튼 클릭됨');
+              },
+            ),
+          ],
           bottom: const TabBar(
+            indicatorColor: Color(0xFF12B8FF), // 탭 선택 시 하단 표시줄 색상
+            labelColor: Color(0xFF12B8FF), // 선택된 탭 텍스트 색상 12B8FF
+            unselectedLabelColor: Color(0xFFBAB6B6), // 선택되지 않은 탭 텍스트 색상 BAB6B6
             tabs: [
-              Tab(text: 'SW Univ Notices'),
-              Tab(text: 'CSE Notices'),
+              Tab(text: '학사'),
+              Tab(text: '학과'),
             ],
           ),
         ),
