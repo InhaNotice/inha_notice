@@ -33,7 +33,7 @@ class _MajorNoticePageState extends State<MajorNoticePage> {
 
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
-          'https://cse.inha.ac.kr/cse/888/subview.do?page=$page', "cse");
+          'https://cse.inha.ac.kr/bbs/cse/242/artclList.do?page=$page', "cse");
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         _currentPage = page; // 현재 페이지 업데이트
