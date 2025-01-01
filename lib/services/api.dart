@@ -37,7 +37,6 @@ class ApiService {
             'isCurrent': isCurrent,
           };
         }).toList();
-        print('Pages: ${pages}');
         return {
           'headline': headlineNotices,
           'general': generalNotices,
