@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../services/api.dart';
-// import '../utils/file_utils.dart';
 import 'notice.dart';
 
 class RightNoticePage extends StatefulWidget {
@@ -48,7 +45,11 @@ class _RightNoticePageState extends State<RightNoticePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _isLoading
+        body: Container(
+        decoration: const BoxDecoration(
+        color: Color(0xEB292929), // 배경색 #292929, 투명도 92% (Alpha: EB)
+    ),
+      child: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _error.isNotEmpty
           ? Center(child: Text('Error: $_error'))
@@ -63,12 +64,27 @@ class _RightNoticePageState extends State<RightNoticePage> {
                   child: Text(
                     'Headline Notices',
                     style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                        fontSize: 18, fontWeight: FontWeight.bold,  color: Colors.white),
                   ),
                 ),
                 ..._notices['headline']!.map((notice) {
-                  return ListTile(
-                    title: Text(notice['title'] ?? 'No Title'),
+                  return Container(
+                      decoration: const BoxDecoration(
+                        color: const Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
+                            width: 2.0, // 테두리 두께
+                          ),
+                        ),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 8.0),
+                  child: ListTile(
+                    title: Text(
+                      notice['title'] ?? 'No Title',
+                      style: const TextStyle(color: Colors.white), // 제목 글자색 하얀색
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -78,6 +94,7 @@ class _RightNoticePageState extends State<RightNoticePage> {
                         ),
                       );
                     },
+                  ),
                   );
                 }).toList(),
               ],
@@ -91,12 +108,27 @@ class _RightNoticePageState extends State<RightNoticePage> {
                   child: Text(
                     'General Notices',
                     style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                        fontSize: 18, fontWeight: FontWeight.bold,  color: Colors.white),
                   ),
                 ),
                 ..._notices['general']!.map((notice) {
-                  return ListTile(
-                    title: Text(notice['title'] ?? 'No Title'),
+                  return Container(
+                      decoration: const BoxDecoration(
+                        color: Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
+                            width: 2.0, // 테두리 두께
+                          ),
+                        ),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 8.0),
+                      child: ListTile(
+                        title: Text(
+                          notice['title'] ?? 'No Title',
+                          style: const TextStyle(color: Colors.white), // 제목 글자색 하얀색
+                        ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -106,12 +138,14 @@ class _RightNoticePageState extends State<RightNoticePage> {
                         ),
                       );
                     },
+                  ),
                   );
                 }).toList(),
               ],
             ),
         ],
       ),
+    ),
     );
   }
 }

@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import '../services/api.dart';
 import 'notice.dart';
-// import '../utils/file_utils.dart';
 
 class LeftNoticePage extends StatefulWidget {
   const LeftNoticePage({super.key});
@@ -28,8 +25,6 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
           'https://swuniv.inha.ac.kr/swuniv/12703/subview.do');
-      // final jsonOutput = jsonEncode(notices);
-      // await saveJsonToFile('left_notices.json', jsonOutput); // JSON 데이터를 파일로 저장
       setState(() {
         _notices = notices;
         _isLoading = false;
@@ -45,69 +40,106 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _error.isNotEmpty
-          ? Center(child: Text('Error: $_error'))
-          : ListView(
-        children: [
-          if (_notices['headline']!.isNotEmpty)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Headline Notices',
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xEB292929), // 배경색 #292929, 투명도 92% (Alpha: EB)
+        ),
+        child: _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : _error.isNotEmpty
+            ? Center(child: Text('Error: $_error'))
+            : ListView(
+          children: [
+            if (_notices['headline']!.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Headline Notices',
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
-                ),
-                ..._notices['headline']!.map((notice) {
-                  return ListTile(
-                    title: Text(notice['title'] ?? 'No Title'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NoticePage(
-                              url: notice['link'] ?? ''),
+                  ..._notices['headline']!.map((notice) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: const Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
+                            width: 2.0, // 테두리 두께
+                          ),
                         ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ],
-            ),
-          if (_notices['general']!.isNotEmpty)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'General Notices',
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 8.0),  // 간격 추가
+                      child: ListTile(
+                        title: Text(
+                          notice['title'] ?? 'No Title',
+                          style: const TextStyle(color: Colors.white), // 제목 글자색 하얀색
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NoticePage(
+                                  url: notice['link'] ?? ''),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }).toList(),
+                ],
+              ),
+            if (_notices['general']!.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'General Notices',
+                      style: TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
-                ),
-                ..._notices['general']!.map((notice) {
-                  return ListTile(
-                    title: Text(notice['title'] ?? 'No Title'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NoticePage(
-                              url: notice['link'] ?? ''),
+                  ..._notices['general']!.map((notice) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: const Color(0x8C292929), // 배경색 #525050, 투명도 55% (Alpha: 8C)
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color(0x8C525050), // 하단 테두리 색상 #525050, 투명도 55% (Alpha: 8C)
+                            width: 2.0, // 테두리 두께
+                          ),
                         ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ],
-            ),
-        ],
+                      ),
+                      // margin: const EdgeInsets.symmetric(
+                      //     vertical: 4.0, horizontal: 8.0), // 간격 추가
+                      child: ListTile(
+                        title: Text(
+                          notice['title'] ?? 'No Title',
+                          style: const TextStyle(color: Colors.white), // 제목 글자색 하얀색
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NoticePage(
+                                  url: notice['link'] ?? ''),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }).toList(),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
