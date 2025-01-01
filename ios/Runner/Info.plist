@@ -45,10 +45,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+        <string>fetch</string>
+        <string>location</string>
+        <string>processing</string>
+        <string>remote-notification</string>
+    </array>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>my</string>
+    </array>
 </dict>
 </plist>
 <key>UIBackgroundModes</key>
-<array>
-    <string>fetch</string>
-    <string>processing</string>
-</array>
+
