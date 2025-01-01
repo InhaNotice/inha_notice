@@ -6,7 +6,6 @@ import 'package:html/parser.dart';
 class ApiService {
   Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, String name, {int page = 1}) async {
     try {
-      print(Uri.parse(url));
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final document = parse(response.body);

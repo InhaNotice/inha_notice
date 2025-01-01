@@ -88,7 +88,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                             ..._notices['headline']!.map((notice) {
                               return Container(
                                 decoration: const BoxDecoration(
-                                  color: Color(0x8C292929), // 배경색
+                                  color: Color(0xFF222222), // 배경색
                                   border: Border(
                                     bottom: BorderSide(
                                       color: Color(0xFF222222), // 하단 테두리 색상
@@ -96,8 +96,6 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                                     ),
                                   ),
                                 ),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 4.0, horizontal: 8.0),
                                 child: ListTile(
                                   title: Text(
                                     notice['title'] ?? 'No Title',
