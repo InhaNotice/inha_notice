@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
-class ApiService {
+class WholeAPI {
   Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, String name, {int page = 1}) async {
     try {
       print(Uri.parse(url));
@@ -12,16 +10,17 @@ class ApiService {
         final document = parse(response.body);
         // name과 도메인 매핑
         final domainMap = {
-          "cse": "https://cse.inha.ac.kr",
+          "whole": "https://www.inha.ac.kr",
         };
 
         // headline 공지사항
         final headlineElements = document.querySelectorAll(
-            '.artclTable .headline ._artclTdTitle a'); // headline CSS 셀렉터
+            '.artclTable .headline ._artclTdTitle'); // headline CSS 셀렉터
         final headlineNotices = headlineElements.map((element) {
-          final title = element.querySelector('strong')?.text.trim() ?? '';
+          final title = element.querySelector('.artclLinkView')?.text.trim() ?? '';
           final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
-          final link = baseUrl + (element.attributes['href'] ?? '');
+          final attribute = element.querySelector('.artclLinkView')?.attributes['href'];
+          final link = baseUrl + (attribute ?? '');
           return {'title': title, 'link': link};
         }).toList();
 
@@ -31,7 +30,7 @@ class ApiService {
 
         // 첫 번째 <tr> 태그(테이블 헤더)를 제외
         final generalNotices = generalElements.skip(1).map((element) {
-          final title = element.querySelector('._artclTdTitle a strong')?.text.trim() ?? '';
+          final title = element.querySelector('._artclTdTitle a')?.text.trim() ?? '';
           final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
           final link = baseUrl + (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
           return {'title': title, 'link': link};

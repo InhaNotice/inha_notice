@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/api.dart';
+import '../../services/whole_api.dart';
 import '../web_page.dart';
 
 class WholeNoticePage extends StatefulWidget {
@@ -11,7 +11,7 @@ class WholeNoticePage extends StatefulWidget {
 }
 
 class _WholeNoticePageState extends State<WholeNoticePage> {
-  final ApiService _apiService = ApiService();
+  final WholeAPI _whole_api = WholeAPI();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   bool _isLoading = true;
   String _error = '';
@@ -32,8 +32,8 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
     });
 
     try {
-      final notices = await _apiService.fetchNoticesWithLinks(
-          'https://swuniv.inha.ac.kr/swuniv/12703/subview.do?page=$page', "swcore");
+      final notices = await _whole_api.fetchNoticesWithLinks(
+          'http://www.inha.ac.kr/bbs/kr/8/artclList.do?page=$page', "whole");
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         _currentPage = page; // 현재 페이지 업데이트
