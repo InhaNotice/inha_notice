@@ -9,46 +9,46 @@ class AppDelegate: FlutterAppDelegate {
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
 
-        // 백그라운드 작업 등록 (iOS 13 이상에서만 실행)
         if #available(iOS 13.0, *) {
-            BGTaskScheduler.shared.register(forTaskWithIdentifier: "my", using: nil) { task in
+            BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.example.practiceCrawling", using: nil) { task in
                 self.handleAppRefresh(task: task as! BGAppRefreshTask)
             }
-        } else {
-            // Fallback on earlier versions
         }
-
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     @available(iOS 13.0, *)
     func handleAppRefresh(task: BGAppRefreshTask) {
-        // 백그라운드 작업 처리
-        self.scheduleAppRefresh() // 다음 작업 예약
+        self.scheduleAppRefresh()
 
         task.expirationHandler = {
-            // 작업이 완료되지 않을 경우 처리
-            print("error")
+            print("백그라운드 작업이 제한 시간 내에 완료되지 않았습니다.")
         }
 
-        // 작업 수행
-        task.setTaskCompleted(success: true)
+        // 실제 작업 수행
+        performBackgroundTask {
+            task.setTaskCompleted(success: true)
+        }
     }
 
     func scheduleAppRefresh() {
         if #available(iOS 13.0, *) {
-            let request = BGAppRefreshTaskRequest(identifier: "my")
-            request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15 * 60
+            let request = BGAppRefreshTaskRequest(identifier: "com.example.practiceCrawling")
+            request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15분 후 실행
 
             do {
-                print("백그라운드 작업 예약 성공")
                 try BGTaskScheduler.shared.submit(request)
+                print("백그라운드 작업 예약 성공")
             } catch {
-                print("Could not schedule app refresh: \(error)")
+                print("백그라운드 작업 예약 실패: \(error)")
             }
-        } else {
-            print("BGTaskScheduler는 iOS 13 이상에서만 지원됩니다.")
         }
+    }
+
+    func performBackgroundTask(completion: @escaping () -> Void) {
+        // 여기에서 작업 수행
+        print("백그라운드 작업 수행 중...")
+        completion()
     }
 }

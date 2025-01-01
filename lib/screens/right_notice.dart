@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../services/api.dart';
-import '../utils/file_utils.dart';
+// import '../utils/file_utils.dart';
 import 'notice.dart';
 
 class RightNoticePage extends StatefulWidget {
@@ -31,8 +31,8 @@ class _RightNoticePageState extends State<RightNoticePage> {
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
           'https://cse.inha.ac.kr/cse/888/subview.do');
-      final jsonOutput = jsonEncode(notices);
-      await saveJsonToFile('right_notices.json', jsonOutput); // JSON 데이터를 파일로 저장
+      // final jsonOutput = jsonEncode(notices);
+      // await saveJsonToFile('right_notices.json', jsonOutput); // JSON 데이터를 파일로 저장
       setState(() {
         _notices = notices;
         _isLoading = false;

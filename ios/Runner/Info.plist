@@ -54,7 +54,7 @@
     </array>
     <key>BGTaskSchedulerPermittedIdentifiers</key>
     <array>
-        <string>my</string>
+        <string>com.example.practiceCrawling</string>
     </array>
     <key>NSAppTransportSecurity</key>
     <dict>

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../services/api.dart';
 import 'notice.dart';
-import '../utils/file_utils.dart';
+// import '../utils/file_utils.dart';
 
 class LeftNoticePage extends StatefulWidget {
   const LeftNoticePage({super.key});
@@ -28,8 +28,8 @@ class _LeftNoticePageState extends State<LeftNoticePage> {
     try {
       final notices = await _apiService.fetchNoticesWithLinks(
           'https://swuniv.inha.ac.kr/swuniv/12703/subview.do');
-      final jsonOutput = jsonEncode(notices);
-      await saveJsonToFile('left_notices.json', jsonOutput); // JSON 데이터를 파일로 저장
+      // final jsonOutput = jsonEncode(notices);
+      // await saveJsonToFile('left_notices.json', jsonOutput); // JSON 데이터를 파일로 저장
       setState(() {
         _notices = notices;
         _isLoading = false;
