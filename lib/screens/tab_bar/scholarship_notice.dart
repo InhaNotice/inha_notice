@@ -13,6 +13,7 @@ class ScholarshipNoticePage extends StatefulWidget {
 class _ScholarshipNoticePageState extends State<ScholarshipNoticePage> {
   final SearchAPI _searchAPI = SearchAPI();
   Map<String, dynamic> _notices = {'notices': [], 'pages': []};
+  List<Map<String, dynamic>> _initialPages = [];
   bool _isLoading = true;
   String _error = '';
   int _currentPage = 1;
@@ -20,30 +21,30 @@ class _ScholarshipNoticePageState extends State<ScholarshipNoticePage> {
   @override
   void initState() {
     super.initState();
-    _fetchNotices(); // 초기 데이터 로드
+    _loadNotices(); // 초기 데이터 로드
   }
 
-  Future<void> _fetchNotices({int page = 1}) async {
+  Future<void> _loadNotices({int startCount = 0}) async {
     setState(() {
-      _isLoading = true;
-      _error = '';
+      _isLoading = true; // 로딩 상태
     });
 
     try {
-      final notices = await _searchAPI.fetchNoticesWithLinks(
-        'https://www.inha.ac.kr/search/search.jsp?query=장학&collection=inhabbs&page=$page',
-        '장학',
-      );
-
+      final url =
+          'https://www.inha.ac.kr/search/search.jsp?query=장학&collection=inhabbs&startCount=$startCount';
+      final notices = await _searchAPI.fetchNoticesWithLinks(url, '장학');
       setState(() {
-        _notices = notices;
-        _currentPage = page;
-        _isLoading = false;
+        _notices = notices; // 공지사항 데이터 저장
+        if (startCount == 0) {
+          _initialPages = List<Map<String, dynamic>>.from(notices['pages']);
+        }
+        _currentPage = (startCount ~/ 10) + 1; // 현재 페이지 계산
+        _isLoading = false; // 로딩 상태 종료
       });
     } catch (e) {
       setState(() {
-        _error = e.toString();
-        _isLoading = false;
+        _error = e.toString(); // 오류 메시지 저장
+        _isLoading = false; // 로딩 상태 종료
       });
     }
   }
@@ -112,13 +113,16 @@ class _ScholarshipNoticePageState extends State<ScholarshipNoticePage> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: _notices['pages'].map<Widget>((pageData) {
-                    final String pageNumber = pageData['pageNumber'].toString();
-                    final bool isCurrentPage = pageData['isCurrent'] as bool;
+                  children: _initialPages.map<Widget>((pageData) {
+                    final String pageNumber = pageData['page'].toString(); // 페이지 번호 추출
+                    final String startCount = pageData['startCount'].toString(); // startCount 값
+                    final bool isCurrentPage =
+                        (int.parse(startCount) ~/ 10) + 1 == _currentPage; // 현재 페이지 여부 확인
+
                     return TextButton(
                       onPressed: isCurrentPage
                           ? null
-                          : () => _fetchNotices(page: int.parse(pageNumber)),
+                          : () => _loadNotices(startCount: int.parse(startCount)),
                       child: Text(
                         pageNumber,
                         style: TextStyle(
