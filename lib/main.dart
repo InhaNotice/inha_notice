@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 // Import screens
-import 'screens/bottom_navigation_bar/main_notice_page.dart';
-import 'screens/bottom_navigation_bar/subscription_page.dart';
-import 'screens/bottom_navigation_bar/bookmark_page.dart';
-import 'screens/bottom_navigation_bar/search_page.dart';
-import 'screens/bottom_navigation_bar/more_page.dart';
+import 'screens/bottom_navigation/main_notice_page.dart';
+import 'screens/bottom_navigation/subscription_page.dart';
+import 'screens/bottom_navigation/bookmark_page.dart';
+import 'screens/bottom_navigation/search_page.dart';
+import 'screens/bottom_navigation/more_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
