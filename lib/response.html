@@ -1,0 +1,1503 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maxium-scale=1.0, minimum-scale=1.0, user-scalable=yes" />
+    <meta name="robots" content="noindex,nofollow" />
+
+    <title>인하대학교 통합검색</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style01.css">
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="ark/css/ark.css" media="screen">
+    <link rel="shortcut icon" href="/sites/kr/images/favicons.png">
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="ark/js/beta.fix.js"></script>
+    <script type="text/javascript" src="ark/js/ark.js"></script>
+    <script type="text/javascript" src="js/datepicker.js"></script>
+    <script type="text/javascript" src="js/search.js"></script><!--  검색관련 js -->
+    <script type="text/javascript">
+        <!--
+        $(document).ready(function() {
+	// 기간 달력 설정
+	$("#startDate").datepicker({dateFormat: "yy.mm.dd"});
+	$("#endDate").datepicker({dateFormat: "yy.mm.dd"});
+
+	// 내가 찾은 검색어
+	getMyKeyword("장학", "8349");
+
+	// 항목 초기화
+
+	document.search.sort.value = "DATE";
+	document.search.collection.value = "ALL";
+	document.search.range.value = "A";
+	document.search.searchField.value = "ALL";
+	document.search.reQuery.value = "";
+	document.search.popCheck.value = "pop_day";
+
+	document.getElementById("reChk").checked = false;
+	checkReSearch();
+
+	document.search.query.value = "장학";
+
+});
+//
+        -->
+
+    </script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-78301200-2', 'auto');
+  ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div class="wrap">
+    <form name="search" id="search" action="/search/search.jsp" method="POST">
+        <input type="hidden" name="startCount" id="startCount" value="0" />
+        <input type="hidden" name="sort" id="sort" value="DATE" />
+        <input type="hidden" name="collection" id="collection" value="ALL" />
+        <input type="hidden" name="range" id="range" value="A" />
+        <input type="hidden" name="searchField" id="searchField" value="ALL" />
+        <input type="hidden" name="reQuery" id="reQuery" value="" />
+        <input type="hidden" name="userId" id="userId" value="null"/>
+        <input type="hidden" name="realQuery" id="realQuery" value="장학"/>
+        <input type="hidden" id="popCheck" name="popCheck" value="pop_day"/>
+
+        <!-- header -->
+        <div class="header">
+            <div class="top">
+                <h1><a href="http://www.inha.ac.kr"><img src="images/logo.gif" alt="인하대학교" /></a></h1>
+                <dl class="search_area">
+                    <dd><input type="text" id="query" name="query" value="장학" onKeypress="javascript:pressCheck((event),this);" autocomplete="off"/>
+                    </dd>
+                    <div id="ark"></div>
+                    <dd class="searchBtn"><a href="#"
+                                             onClick="javascript:doSearch();"><img src="images/icon_search.png" alt="검색버튼" /></a>
+                    </dd>
+                </dl>
+                <dl class="searchOpt">
+                    <dd><label><input name="reChk" id="reChk" onClick="checkReSearch();" type="checkbox" /> 결과 내 재검색</label>
+                    </dd>
+                </dl>
+
+
+            </div>
+
+        </div>
+        <!-- //header -->
+
+        <!-- container -->
+        <div class="container">
+            <!-- leftArea -->
+            <div class="leftArea">
+                <ul class="snb">
+                    <li>
+                        <a class="on" href="#none" onClick="javascript:doCollection('ALL');">통합검색</a>
+                    </li>
+                    <li>
+                        <a href="#none" onClick="javascript:doCollection('employee');">
+                            교직원
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#none" onClick="javascript:doCollection('student1');">
+                            동문·학생
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#none" onClick="javascript:doCollection('website');">
+                            웹사이트
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#none" onClick="javascript:doCollection('menu');">
+                            메뉴
+                        </a>
+                    </li>
+                    <!--
+            <li>
+                <a  href="#none" onClick="javascript:doCollection('dcoll');">
+                    학위논문
+                </a>
+            </li>
+            -->
+
+                    <li>
+                        <a href="#none" onClick="javascript:doCollection('inhabbs');">
+                            게시판
+                        </a>
+                    </li>
+                    <!--
+            <li>
+                <a  href="#none" onClick="javascript:doCollection('sns');">
+                    동문SNS
+                </a>
+            </li>
+            -->
+                    <li>
+                        <a href="#none" onClick="javascript:doCollection('webpage');">
+                            웹페이지
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#none" onClick="javascript:doCollection('rules');">
+                            규정집
+                        </a>
+                    </li>
+                </ul>
+                <ul class="optionArea">
+                    <dl class="align">
+                        <dt>정렬</dt>
+                        <dd class="divi ">
+                            <a href="#" onClick="javascript:doSorting('RANK')">정확도</a>
+                        </dd>
+                        <dd class="divi  on ">
+                            <a href="#" onClick="javascript:doSorting('DATE')">최신순</a>
+                        </dd>
+                    </dl>
+                    <dl class="date">
+                        <dt>기간</dt>
+                        <dd class="divi3 on">
+                            <a href="#" onClick="javascript:setDate('A');">전체</a>
+                        </dd>
+                        <dd class="divi3 ">
+                            <a href="#" onClick="javascript:setDate('D');">오늘</a>
+                        </dd>
+                        <dd class="divi3 ">
+                            <a href="#" onClick="javascript:setDate('W');">1주</a>
+                        </dd>
+                        <dd class="divi3 ">
+                            <a href="#" onClick="javascript:setDate('M');">1달</a>
+                        </dd>
+                        <dd class="cal_box">
+                            <span><input type="text" id="startDate" name="startDate" value="1970.01.01"></span>
+                            <span>~</span>
+                            <span><input type="text" id="endDate" name="endDate" value="2025.01.02"/></span>
+                        </dd>
+                        <dd>
+                            <a href="#" class="align_btn" onClick="javascript:doRange();">적용</a>
+                        </dd>
+                    </dl>
+                    <dl class="area">
+                        <dt>검색영역</dt>
+                        <dd class="divi  on ">
+                            <a href="#none" onClick="doSearchField('ALL');">전체</a>
+                        </dd>
+                        <dd class="divi ">
+                            <a href="#none" onClick="doSearchField('TITLE');">제목</a>
+                        </dd>
+                        <dd class="divi ">
+                            <a href="#none" onClick="doSearchField('CONTENT');">내용</a>
+                        </dd>
+                        <dd class="divi ">
+                            <a href="#none" onClick="doSearchField('USER_NAME');">작성자</a>
+                        </dd>
+                    </dl>
+                </ul>
+            </div>
+            <!-- //leftArea -->
+
+            <!-- contents -->
+            <div class="contents">
+
+                <div class="result_top">
+                    <h2><span>"장학"</span>에 대한 통합검색 결과는 총 <span>8,349</span>건 입니다.</h2>
+                    <div class="top_box">
+                        <p>통합검색 <span>[총 8,349건]</span> </p>
+                        <ul>
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('employee')">
+                                    교직원 <span>32</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('student1')">
+                                    동문·학생 <span>7</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('website')">
+                                    웹사이트 <span>8</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('menu')">
+                                    메뉴 <span>12</span>
+                                </a>
+                            </li>
+                            <!--
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('dcoll')">
+                                    학위논문 <span>5</span>
+                                </a>
+                            </li>
+                            -->
+                        </ul>
+                        <ul>
+
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('inhabbs')">
+                                    게시판 <span>8,001</span>
+                                </a>
+                            </li>
+                            <!--
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('sns')">
+                                    동문SNS <span>255</span>
+                                </a>
+                            </li>
+                            -->
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('webpage')">
+                                    웹페이지 <span>234</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="javascript:doCollection('rules')">
+                                    규정집 <span>55</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+
+                <div class="sectit00">
+                    <h2>교직원 <span> [총 32건]</span></h2>
+                    <table>
+                        <caption>교직원정보</caption>
+                        <colgroup>
+                            <!--
+                <col width="15%" />
+                <col width="20%" />
+                <col width="10%" />
+                <col width="15%" />
+                <col width="30%" />
+                <col width="10%" />
+            -->
+                            <col width="14%" />
+                            <col width="19%" />
+                            <col width="8%" />
+                            <col width="14%" />
+                            <col width="28%" />
+                            <col width="8%" />
+                            <col width="9%" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>성명</th>
+                            <th>부서</th>
+                            <th>직급</th>
+                            <th>연락처(위치)</th>
+                            <th>업무</th>
+                            <th>이메일</th>
+                            <th>비고</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        <tr>
+
+                            <td><a href="/facultySearch/kr/nameList.do?layout=unknown&kname=%EC%9E%84%EB%AF%BC%EC%88%98&inhaid=5567336F0CD26398761F9B45E2ED9B4A5326F7FED31ED57F874C18CD0AE4B3E40750EE339417FA7C63DFE51D61A24BADBB10E87929EE81D977A66C46D48E7C5D"
+                                   target="_blank">임민수</a></td>
+                            <td>학생부처</td>
+                            <td>부처장</td>
+
+                            <td>032-860-7070</td>
+
+                            <td>체육지원팀, 학생팀,<font color=#ff5e19><strong>장학</strong></font>복지팀 총괄</td>
+                            <td>
+
+                                <a
+                                        href="mailto:f292397@inha.ac.kr"><img src="images/mail_icon.gif" alt="메일버튼" /></a>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+
+
+                        <tbody>
+                        <tr>
+
+                            <td><a href="/facultySearch/kr/nameList.do?layout=unknown&kname=%EC%95%88%EC%9D%80%EA%B2%BD&inhaid=D83FC0434DB3310A86C98F58DF4D451157C5E0361C5719481937B78C9AA83727F640E6BC62C4B8F4AD3E5A6E669256D9249F9621F60D2AD638FE105AA310FAA9"
+                                   target="_blank">안은경</a></td>
+                            <td>정보통신공학과</td>
+                            <td>팀원</td>
+
+                            <td>032-860-7431<BR />
+
+                            </td>
+
+                            <td>대학원, 예산, <font color=#ff5e19><strong>장학</strong></font>, 자산, 캡스톤</td>
+                            <td>
+
+                                <a
+                                        href="mailto:223305@inha.ac.kr"><img src="images/mail_icon.gif" alt="메일버튼" /></a>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+
+
+                        <tbody>
+                        <tr>
+
+                            <td><a href="/facultySearch/kr/nameList.do?layout=unknown&kname=%EC%B5%9C%EC%9C%A0%EB%B9%88&inhaid=81F5FC176D082C7C7799DD2273A9078190B50FDD916D697D8426C77FD26DA79E85D4B3E130EC3DE78C4FA369B972D6539374F0AA6EE312B98929C6C88F8D9279"
+                                   target="_blank">최유빈</a></td>
+                            <td>경영대학행정실</td>
+                            <td>팀원</td>
+
+                            <td>032-860-8403<BR />
+
+                                (6-323B)
+
+                            </td>
+
+                            <td>입학, 등록, <font color=#ff5e19><strong>장학</strong></font>, 통계</td>
+                            <td>
+
+                                <a
+                                        href="mailto:yubin@inha.ac.kr"><img src="images/mail_icon.gif" alt="메일버튼" /></a>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+
+
+                        <tbody>
+                        <tr>
+
+                            <td><a href="/facultySearch/kr/nameList.do?layout=unknown&kname=%EC%A1%B0%EC%98%81%EB%AF%B8&inhaid=7B407EE7688FB4649D4156B8A686A8D2852AF06912D07C7A947CF9EB23FF1ECBFF7354586EC55E52F9A3AA10C1A5FBCD9A3265C2D31B7AF884C49DC86C6C5A72"
+                                   target="_blank">조영미</a></td>
+                            <td>경영대학행정실</td>
+                            <td>팀원</td>
+
+                            <td>032-860-8142<BR />
+
+                            </td>
+
+                            <td>교내/외 <font color=#ff5e19><strong>장학</strong></font>금, 취업, 근로, 자산관리</td>
+                            <td>
+
+                                <a
+                                        href="mailto:224308@inha.ac.kr"><img src="images/mail_icon.gif" alt="메일버튼" /></a>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+
+
+                        <tbody>
+                        <tr>
+
+                            <td><a href="/facultySearch/kr/nameList.do?layout=unknown&kname=%EA%B9%80%EC%A7%80%EC%97%B0&inhaid=9D2AAB8BBE633EAAA9D542908CA95761A1CF9C980F2436A0119225CBE965FE0CB3A8F1900B45A5702FF6B1E3DE0D1CE462617F496FEB6CB77F46CEC2E8A9415A"
+                                   target="_blank">김지연</a></td>
+                            <td>사회과학대학행정실</td>
+                            <td>팀원</td>
+
+                            <td>032-860-7903<BR />
+
+                                (9-409)
+
+                            </td>
+
+                            <td>학사, <font color=#ff5e19><strong>장학</strong></font>, 시설</td>
+                            <td>
+
+                                <a
+                                        href="mailto:j221135@inha.ac.kr"><img src="images/mail_icon.gif" alt="메일버튼" /></a>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+
+
+                        <tbody>
+                        <tr>
+
+                            <td><a href="/facultySearch/kr/nameList.do?layout=unknown&kname=%EC%A0%95%EC%9A%B0%ED%98%81&inhaid=91458322C5813FF4B2630DC57ED22DBD1A668A4E875BF432B2FD9AB95145133B182A366FA70B1CA1F85644DF4A202CD6F2E975AB5CA0E1985781B0937F292310"
+                                   target="_blank">정우혁</a></td>
+                            <td>문과대학행정실</td>
+                            <td>팀원</td>
+
+                            <td>032-860-7984<BR />
+
+                                (5S309)
+
+                            </td>
+
+                            <td>학사, <font color=#ff5e19><strong>장학</strong></font>, 자산, 시설 사용</td>
+                            <td>
+
+                                <a
+                                        href="mailto:mdh4282@inha.ac.kr"><img src="images/mail_icon.gif" alt="메일버튼" /></a>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+
+
+                        <tbody>
+                        <tr>
+
+                            <td><a href="/facultySearch/kr/nameList.do?layout=unknown&kname=%EA%B9%80%EC%95%A0%EB%9E%80&inhaid=4B88BC7734BE605EC570B37E6A531E95BEF726604072737335A0D5C2296C776C24B5EC19E730233F81B65C7057EEC54417EED13826BEDF2898D3A8CCAD1DAC9D"
+                                   target="_blank">김애란</a></td>
+                            <td>화학공학과</td>
+                            <td>팀원</td>
+
+                            <td>032-860-7460<BR />
+
+                                (60주년-801A)
+
+                            </td>
+
+                            <td>학부(공학교육인증), 대학원 , <font color=#ff5e19><strong>장학</strong></font>, 예산</td>
+                            <td>
+
+                                <a
+                                        href="mailto:199132@inha.ac.kr"><img src="images/mail_icon.gif" alt="메일버튼" /></a>
+
+                            </td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+
+                    </table>
+
+                    <a class="section_more" href="#none" onClick="javascript:doCollection('employee');">더보기</a>
+
+                </div>
+                <!-- 교직원 -->
+
+
+
+                <div class="sectit00">
+                    <h2>동문·학생 <span> [총 7건]</span></h2>
+                    <table>
+                        <caption>동문·학생</caption>
+                        <colgroup>
+                            <col width="10%" />
+                            <col width="37%" />
+                            <col width="10%" />
+                            <col width="21%" />
+                            <col width="22%" />
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>성명</th>
+                            <th>학력사항</th>
+                            <th>직장명</th>
+                            <th>담당업무</th>
+                            <th>키워드</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>
+
+                                <a href="/facultySearch/kr/stSearchView.do?layout=unknown&stno=YZY6Z5V4"
+                                   target="_black">강은빈</a>
+                            </td>
+                            <td>
+
+
+
+                                학사, 아태물류학부(졸업), 2016~2021 <br/>
+
+
+
+                            </td>
+
+
+                            <td></td>
+
+
+
+
+                            <td></td>
+
+
+                            <td>아태물류,공모전,근로,<font color=#ff5e19><strong>장학</strong></font>금,럽인나눔서포터즈</td>
+                        </tr>
+                        </tbody>
+
+                        <tbody>
+                        <tr>
+                            <td>
+
+                                <a href="/facultySearch/kr/stSearchView.do?layout=unknown&stno=YZY5343Z"
+                                   target="_black">최윤정</a>
+                            </td>
+                            <td>
+
+
+
+                                비공개<br/>
+
+
+
+                            </td>
+
+
+                            <td></td>
+
+
+
+
+                            <td></td>
+
+
+                            <td>
+                                <font color=#ff5e19><strong>장학</strong></font>금
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <tbody>
+                        <tr>
+                            <td>
+
+                                <a href="/facultySearch/kr/stSearchView.do?layout=unknown&stno=YZY6Z7GV"
+                                   target="_black">김윤정</a>
+                            </td>
+                            <td>
+
+
+
+                                학사, 교육학과(졸업), 2016~2021 <br/>
+
+
+
+                            </td>
+
+
+                            <td>인하대학교</td>
+
+
+
+
+                            <td>공부</td>
+
+
+                            <td>
+                                <font color=#ff5e19><strong>장학</strong></font>금, 해외봉사, 멘토링
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <tbody>
+                        <tr>
+                            <td>
+
+                                <a href="/facultySearch/kr/stSearchView.do?layout=unknown&stno=YY54VV4B"
+                                   target="_black">남종우</a>
+                            </td>
+                            <td>
+
+
+
+                                학사, 화학공학과(졸업), 1954~1958 <br/>
+
+
+
+                            </td>
+
+
+                            <td>인하대학교</td>
+
+
+
+
+                            <td></td>
+
+
+                            <td></td>
+                        </tr>
+                        </tbody>
+
+                        <tbody>
+                        <tr>
+                            <td>
+
+                                <a href="/facultySearch/kr/stSearchView.do?layout=unknown&stno=YZY7ZG74"
+                                   target="_black">신유진</a>
+                            </td>
+                            <td>
+
+
+
+                                비공개<br/>
+
+
+
+                            </td>
+
+
+                            <td></td>
+
+
+
+
+                            <td></td>
+
+
+                            <td>언론, 영상, <font color=#ff5e19><strong>장학</strong></font>금</td>
+                        </tr>
+                        </tbody>
+
+                        <tbody>
+                        <tr>
+                            <td>
+
+                                <a href="/facultySearch/kr/stSearchView.do?layout=unknown&stno=YZY4ZY57"
+                                   target="_black">황지우</a>
+                            </td>
+                            <td>
+
+
+
+                                비공개<br/>
+
+
+
+                            </td>
+
+
+                            <td></td>
+
+
+
+
+                            <td></td>
+
+
+                            <td>
+                                <font color=#ff5e19><strong>장학</strong></font>금
+                            </td>
+                        </tr>
+                        </tbody>
+
+                        <tbody>
+                        <tr>
+                            <td>
+
+                                <a href="/facultySearch/kr/stSearchView.do?layout=unknown&stno=YZY436G6"
+                                   target="_black">황두현</a>
+                            </td>
+                            <td>
+
+
+
+                                학사, 전자공학과(졸업), 2014~2020 <br/>
+
+
+
+                            </td>
+
+
+                            <td></td>
+
+
+
+
+                            <td></td>
+
+
+                            <td>인하<font color=#ff5e19><strong>장학</strong></font>회 대장</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <!-- 동문·학생 -->
+
+
+
+                <div class="sectit01">
+                    <h2>웹사이트 <span> [총 8건]</span></h2>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://fashion.inha.ac.kr" target="_blank">
+                                <strong>의류디자인학과</strong>
+                            </a>
+                        </dt>
+                        <dd>인하대학교 의료디자인학과 홈페이지,학과소개,교수소개,학사안내,대학원소개,학생활동,정보마당,공지사항,<font color=#ff5e19>
+                            <strong>장학</strong></font>,자료실</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://fashion.inha.ac.kr"
+                                    target="_blank">https://fashion.inha.ac.kr</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://eneres.inha.ac.kr" target="_blank">
+                                <strong>에너지자원공학과</strong>
+                            </a>
+                        </dt>
+                        <dd>인하대학교 에너지자원공학과 홈페이지,학과소개,교수소개,학사안내,대학원소개,학생활동,정보마당,공지사항,<font color=#ff5e19>
+                            <strong>장학</strong></font>제도,사이트</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://eneres.inha.ac.kr"
+                                    target="_blank">https://eneres.inha.ac.kr</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://fccollege.inha.ac.kr" target="_blank">
+                                <strong>미래융합대학</strong>
+                            </a>
+                        </dt>
+                        <dd>인하대학교 미래융합대학 소개, 학장인사말, 교육목표, 연혁, 학과소개, 입학지원자격, <font color=#ff5e19><strong>장학</strong>
+                        </font>안내, 커뮤니티, 블로그, 대학뉴스, 공지사항 등</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://fccollege.inha.ac.kr"
+                                    target="_blank">https://fccollege.inha.ac.kr</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://mba.inha.ac.kr" target="_blank">
+                                <strong>경영대학원</strong>
+                            </a>
+                        </dt>
+                        <dd>인하대학교 경영대학원 홈페이지,AACSB,주중MBA,주말MBA,지속가능경영MBA,창업MBA,서비스경영MBA,최고영영자과정,<font color=#ff5e19>
+                            <strong>장학</strong></font>제도,입학안내,학사안내,정보마당,동문회 및 원우회,총원...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://mba.inha.ac.kr"
+                                    target="_blank">https://mba.inha.ac.kr</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://ilu.inha.ac.kr" target="_blank">
+                                <strong>노동조합</strong>
+                            </a>
+                        </dt>
+                        <dd>인하대학교 노동조합 홈페이지, 인사말, 조직도, 연혁, 역대 위원장, 사업계획, 위치, 활동보고, 자료실, 노동조합 규약, 단체 협약서/입금협약서, 선거관리
+                            규정, 우수리 <font color=#ff5e19><strong>장학</strong></font>사업...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://ilu.inha.ac.kr"
+                                    target="_blank">https://ilu.inha.ac.kr</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://edugrad.inha.ac.kr" target="_blank">
+                                <strong>교육대학원</strong>
+                            </a>
+                        </dt>
+                        <dd>인하대학교 교육대학원 홈페이지,대학원 소개,교육대학원 요람,교육과정,전공소개 및 교과과정,입학안내,<font color=#ff5e19>
+                            <strong>장학</strong></font>안내,논문목록조회,교원자격증,교육실습,학교현장실습,교육봉사활동,교육부 고시 기...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://edugrad.inha.ac.kr"
+                                    target="_blank">https://edugrad.inha.ac.kr</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="http://ocean.inha.ac.kr" target="_blank">
+                                <strong>해양과학과</strong>
+                            </a>
+                        </dt>
+                        <dd>인하대학교 해양과학과 홈페이지 학과소개, 연혁, 교수진 소개, 학과사무실, 교과과정, 교과목 개요, 졸업요구조건, <font color=#ff5e19>
+                            <strong>장학</strong></font> 안내, 대학원 입학 및 졸업, 연구실 안내, 학과 공지, 취...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="http://ocean.inha.ac.kr"
+                                    target="_blank">http://ocean.inha.ac.kr</a>
+                        </dd>
+                    </dl>
+
+                    <a class="section_more" href="#" onClick="javascript:doCollection('website');">더보기</a>
+
+                </div>
+                <!-- 메뉴검색 -->
+
+
+                <div class="sectit01">
+                    <h2>메뉴 <span> [총 12건]</span></h2>
+
+                    <ul class="site">
+                        <li>
+
+                            <a href="/kr/920/subview.do" target="_blank">
+                                <strong>[<font color=#ff5e19><strong>장학</strong></font>] </strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="site">
+                        <li>
+
+                            <a href="/kr/2137/subview.do" target="_blank">
+                                <strong>[<font color=#ff5e19><strong>장학</strong></font>사정관제 특별<font color=#ff5e19>
+                                    <strong>장학</strong></font>금 신청] </strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="site">
+                        <li>
+
+                            <a href="/kr/2136/subview.do" target="_blank">
+                                <strong>['인하 함께 나눔' <font color=#ff5e19><strong>장학</strong></font>금 2차 신청 안내]
+                                </strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="site">
+                        <li>
+
+                            <a href="/kr/2131/subview.do" target="_blank">
+                                <strong>['인하 함께 나눔' <font color=#ff5e19><strong>장학</strong></font>금 신청 안내] </strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="site">
+                        <li>
+
+                            <a href="/kr/1061/subview.do" target="_blank">
+                                <strong>[FAQ] <font color=#ff5e19><strong>장학</strong></font>-FAQ</strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="site">
+                        <li>
+
+                            <a href="/kr/1059/subview.do" target="_blank">
+                                <strong>[국가<font color=#ff5e19><strong>장학</strong></font>금 안내] </strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="site">
+                        <li>
+
+                            <a href="/kr/1058/subview.do" target="_blank">
+                                <strong>[<font color=#ff5e19><strong>장학</strong></font>금 수혜 신청방법] </strong>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <a class="section_more" href="#" onClick="javascript:doCollection('menu');">더보기</a>
+
+                </div>
+                <!-- 메뉴검색 -->
+                <!--
+
+        <div class="sectit01">
+            <h2>학위논문 <span> [총 5건]</span></h2>
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="http://www.dcollection.net/handler/inha/000000000097" target="_blank"><strong>校內奬學에 대한 敎員의 認識差에 관한 硏究</strong></a>
+                        <span class="tit_date"> 저자 : 李俊鎔. </span>
+                </dt>
+                  <dd></dd>
+            </dl>
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="http://www.dcollection.net/handler/inha/000000005326" target="_blank"><strong>선택적 <font color=#ff5e19><strong>장학</strong></font>에 대한 초등학교 교사의 인식 연구</strong></a>
+                        <span class="tit_date"> 저자 : 한재기 </span>
+                </dt>
+                  <dd></dd>
+            </dl>
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="http://www.dcollection.net/handler/inha/000000007133" target="_blank"><strong>교원능력개발평가에 대한 교사의 인식과 자기<font color=#ff5e19><strong>장학</strong></font> 간의 관계</strong></a>
+                        <span class="tit_date"> 저자 : 이수진 </span>
+                </dt>
+                  <dd></dd>
+            </dl>
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="http://www.dcollection.net/handler/inha/000000012077" target="_blank"><strong>컨설팅<font color=#ff5e19><strong>장학</strong></font>에 대한 중등교사의 인식 분석</strong></a>
+                        <span class="tit_date"> 저자 : 남궁진 </span>
+                </dt>
+                  <dd></dd>
+            </dl>
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="http://www.dcollection.net/handler/inha/000000012112" target="_blank"><strong>초등학교에 대한 교육지원청 수업영역 컨설팅<font color=#ff5e19><strong>장학</strong></font>이 학교조직효과성에 미치는 영향</strong></a>
+                        <span class="tit_date"> 저자 : 노승규 </span>
+                </dt>
+                  <dd></dd>
+            </dl>
+
+    </div>
+
+-->
+                <!-- 학위논문 -->
+
+
+
+
+                <div class="sectit01">
+                    <h2>게시판 <span> [총 8,001건]</span></h2>
+
+
+                    <dl class="resultsty_1">
+                        <dt>
+
+                            <a class="tit"
+                               href="https://dmse.inha.ac.kr/bbs/dmse/535/141951/artclView.do?layout=unknown"
+                               target="_blank"><strong>[신소재공학과-공지사항]2025학년도 해동과학문학재단 <font color=#ff5e19><strong>장학</strong>
+                            </font>생 신청기한 연장 (~1/6 월)</strong></a>
+                            <span class="tit_date">2025.01.02</span>
+                        </dt>
+                        <dd>2025학년도 해동과학문학재단 <font color=#ff5e19><strong>장학</strong></font>생 추천 1. 관련 : 재단법인
+                            해동과학문화재단 (24. 11. 26.), '2025년도 해동<font color=#ff5e19><strong>장학</strong></font>생 선발 모집의
+                            건' 2. 학생지원처에서는 2025학년도 ...</dd>
+                    </dl>
+
+
+                    <dl class="resultsty_1">
+                        <dt>
+
+                            <a class="tit"
+                               href="https://inhapoly.inha.ac.kr/bbs/inhapoly/581/141933/artclView.do?layout=unknown"
+                               target="_blank"><strong>[고분자공학과-공지사항][학사]2024학년도 2학기 성적공시 안내</strong></a>
+                            <span class="tit_date">2025.01.02</span>
+                        </dt>
+                        <dd>... 성적 이의 신청 시 반드시 위 기간 내에 담당 교원에게 문의하시기 바랍니다. ※ 생활관 및 <font color=#ff5e19>
+                            <strong>장학</strong></font>생 선발 등에 불이익이 없도록 각별히 유념하여 주시기 바랍니다. [ 최종 성적표 (2025. 1. ...
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit"
+                               href="https://plaza.inha.ac.kr/plazaBbs/plaza/10010/5612922/artclView.do?layout=unknown"
+                               target="_blank"><strong>[아르바이트] 2층 생명과학연구소 근로학생 모집 &lt; **하루 두시간 근무** &gt;</strong></a>
+                            <span class="tit_date">2025.01.02</span>
+                        </dt>
+                        <dd>... 7-241 업무 : 동물 케이지 세척, 연구실 청소, 기타 잡일 급여 : 월 461,380원 (근로<font color=#ff5e19>
+                            <strong>장학</strong></font>금형식) 자세한건 <font color=#ff5e19><strong>장학</strong></font>
+                            복지팀 문의 032-860-7074 희망하시는 분은 연락주시길 바랍니다. (힘쓰는 ...</dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://www.inha.ac.kr/bbs/kr/8/39509/artclView.do?layout=unknown"
+                               target="_blank"><strong>[공지사항] 2025학년도 1학기 학부·대학원 연계과정 신청 안내(25. 1. 13. ~ 31.)</strong></a>
+                            <span class="tit_date">2025.01.02</span>
+                        </dt>
+                        <dd>... 해당 서류 학과 사무실 제출 &rarr; 승인 여부 학생 개별통보 5. 연계과정 특전[대학원 <font color=#ff5e19>
+                            <strong>장학</strong></font>금 지원] 1) 지원 내용 : 학부&middot;대학원 연계과정을 이수하는 학생 중 아래 요건을 충족하는
+                            ...</dd>
+                    </dl>
+
+
+                    <dl class="resultsty_1">
+                        <dt>
+
+                            <a class="tit"
+                               href="https://instar.inha.ac.kr/bbs/instar/990/141923/artclView.do?layout=unknown"
+                               target="_blank"><strong>[인하융합연구원-INSTAR 공지사항]2025학년도 1학기 학부·대학원 연계과정 신청 안내(25. 1. 13. ~ 31.)</strong></a>
+                            <span class="tit_date">2025.01.02</span>
+                        </dt>
+                        <dd>... 해당 서류 학과 사무실 제출 &rarr; 승인 여부 학생 개별통보 5. 연계과정 특전[대학원 <font color=#ff5e19>
+                            <strong>장학</strong></font>금 지원] 1) 지원 내용 : 학부&middot;대학원 연계과정을 이수하는 학생 중 아래 요건을 충족하는
+                            ...</dd>
+                    </dl>
+
+
+                    <dl class="resultsty_1">
+                        <dt>
+
+                            <a class="tit"
+                               href="https://engrad.inha.ac.kr/bbs/engrad/2970/141920/artclView.do?layout=unknown"
+                               target="_blank"><strong>[공학대학원-공지사항](재학생)2025학년도 1학기 <font color=#ff5e19><strong>장학</strong>
+                            </font>금 신청 안내</strong></a>
+                            <span class="tit_date">2025.01.02</span>
+                        </dt>
+                        <dd>2025학년도 1학기 학비감면 <font color=#ff5e19><strong>장학</strong></font>금 지급과 관련하여 다음과 같이 <font
+                                color=#ff5e19><strong>장학</strong></font>금신청서 및 재직증명서(복무확인서) 제출을 요청하오니 해당 원생께서는 기한 내에
+                            제출하시기 바랍니다. 1. 대상자 ...</dd>
+                    </dl>
+
+
+                    <dl class="resultsty_1">
+                        <dt>
+
+                            <a class="tit"
+                               href="https://chinese.inha.ac.kr/bbs/chinese/1598/141919/artclView.do?layout=unknown"
+                               target="_blank"><strong>[중국학과-공지사항[학부]][공고] 중국학과 사무원 채용</strong></a>
+                            <span class="tit_date">2025.01.02</span>
+                        </dt>
+                        <dd>... 1일이 아닌 경우, 최초 계약은 1년 미만일 수 있음) 다. 재직 중 본교 특수대학원 진학 시 <font color=#ff5e19>
+                            <strong>장학</strong></font>금 혜택(별도 신청 필요) 라. 근무시간 : 주5일제(월~금), 09:00~18:00 ※ ...</dd>
+                    </dl>
+
+                    <a class="section_more" href="#" onClick="javascript:doCollection('inhabbs');">더보기</a>
+
+                </div>
+                <!-- 게시판 -->
+                <!--
+
+        <div class="sectit01">
+            <h2>동문SNS <span> [총 255건]</span></h2>
+
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="https://blog.naver.com/yottahunter/223011577390" target="_blank"><strong>idea 학과 - 국방부</strong></a>
+                    <span class="tit_date">2023.02.10</span>
+                </dt>
+                  <dd>... 등록6. 산업과 연계 - 설계도 까지만 완성회사에서 특허를 매입.직원으로 채용7. 산업에서 학교에 <font color=#ff5e19><strong>장학</strong></font>금 지원 약속8. .....산학 협동, 학생 직원 채용 or $$...https://m.blog...</dd>
+                  <dd class="duplicate">
+                    링크 : <a class="link" href="https://blog.naver.com/yottahunter/223011577390" target="_blank">https://blog.naver.com/yottahunter/223011577390</a>
+                </dd>
+            </dl>
+
+
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="https://blog.naver.com/inhanuri/223008810329" target="_blank"><strong>2023학년도 1학기 인하멘토링 멘토 모집 안내</strong></a>
+                    <span class="tit_date">2023.02.08</span>
+                </dt>
+                  <dd>... 진행 일정 안내 및 줌 링크는 멘토 확정 후 전달 예정 활동 혜택 - 멘토링 이수자에게 인하프로그램<font color=#ff5e19><strong>장학</strong></font>금 10 만원 지원 - 멘토링 이수자 중 SNS 후기 게재자에게 5 만원 추가 지원 - 멘토링 활동 ...</dd>
+                  <dd class="duplicate">
+                    링크 : <a class="link" href="https://blog.naver.com/inhanuri/223008810329" target="_blank">https://blog.naver.com/inhanuri/223008810329</a>
+                </dd>
+            </dl>
+
+
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="https://blog.naver.com/yottahunter/223008702010" target="_blank"><strong>My idea = drone letters man, 퀵 배달</strong></a>
+                    <span class="tit_date">2023.02.08</span>
+                </dt>
+                  <dd>... 등록6. 산업과 연계 - 설계도 까지만 완성회사에서 특허를 매입.직원으로 채용7. 산업에서 학교에 <font color=#ff5e19><strong>장학</strong></font>금 지원 약속8. .....산학 협동, 학생 직원 채용 or $$...https://m.blog...</dd>
+                  <dd class="duplicate">
+                    링크 : <a class="link" href="https://blog.naver.com/yottahunter/223008702010" target="_blank">https://blog.naver.com/yottahunter/223008702010</a>
+                </dd>
+            </dl>
+
+
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="https://blog.naver.com/yottahunter/223009332927" target="_blank"><strong>법률 미꾸라지 == s korea gov, moon(이건 개다) ,ET, NIS... = 저 세사람 스카웃 하고싶네</strong></a>
+                    <span class="tit_date">2023.02.08</span>
+                </dt>
+                  <dd>... 등록6. 산업과 연계 - 설계도 까지만 완성회사에서 특허를 매입.직원으로 채용7. 산업에서 학교에 <font color=#ff5e19><strong>장학</strong></font>금 지원 약속8. .....산학 협동, 학생 직원 채용 or $$...https://m.blog...</dd>
+                  <dd class="duplicate">
+                    링크 : <a class="link" href="https://blog.naver.com/yottahunter/223009332927" target="_blank">https://blog.naver.com/yottahunter/223009332927</a>
+                </dd>
+            </dl>
+
+
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="https://blog.naver.com/yottahunter/223009644500" target="_blank"><strong>특허청 IDEA 학과 == 세계 최초 신규 개설</strong></a>
+                    <span class="tit_date">2023.02.08</span>
+                </dt>
+                  <dd>... 등록6. 산업과 연계 - 설계도 까지만 완성회사에서 특허를 매입.직원으로 채용7. 산업에서 학교에 <font color=#ff5e19><strong>장학</strong></font>금 지원 약속8. .....산학 협동, 학생 직원 채용 or $$...https://m.blog...</dd>
+                  <dd class="duplicate">
+                    링크 : <a class="link" href="https://blog.naver.com/yottahunter/223009644500" target="_blank">https://blog.naver.com/yottahunter/223009644500</a>
+                </dd>
+            </dl>
+
+
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="https://blog.naver.com/inhanuri/223008774647" target="_blank"><strong>인하대학교, 경인지역 학생처장협의회 제1차 세미나 개최</strong></a>
+                    <span class="tit_date">2023.02.08</span>
+                </dt>
+                  <dd>... 학생처장협의회는 34개 회원 대학으로 구성됐다. 전국학생처장협의회와 함께 학생 지도, 학생 복지, <font color=#ff5e19><strong>장학</strong></font>금, 신입생 적응 프로그램, 총학생회 선거 등 학생 지원에 대한 정보를 교환하고 관련 제도를 개선하는 ...</dd>
+                  <dd class="duplicate">
+                    링크 : <a class="link" href="https://blog.naver.com/inhanuri/223008774647" target="_blank">https://blog.naver.com/inhanuri/223008774647</a>
+                </dd>
+            </dl>
+
+
+
+            <dl class="resultsty_1">
+                <dt>
+                    <a class="tit" href="https://blog.naver.com/yottahunter/223008249341" target="_blank"><strong>대포통장 때문 ,,,, 하루 1인 100만원 까지만 입금 가능 == s korea gov bank</strong></a>
+                    <span class="tit_date">2023.02.07</span>
+                </dt>
+                  <dd>... 등록6. 산업과 연계 - 설계도 까지만 완성회사에서 특허를 매입.직원으로 채용7. 산업에서 학교에 <font color=#ff5e19><strong>장학</strong></font>금 지원 약속8. .....산학 협동, 학생 직원 채용 or $$...https://m.blog...</dd>
+                  <dd class="duplicate">
+                    링크 : <a class="link" href="https://blog.naver.com/yottahunter/223008249341" target="_blank">https://blog.naver.com/yottahunter/223008249341</a>
+                </dd>
+            </dl>
+
+
+            <a class="section_more" href="#" onClick="javascript:doCollection('sns');">더보기</a>
+
+    </div>
+-->
+                <!-- 동문SNS -->
+
+
+                <div class="sectit01">
+                    <h2>웹페이지 <span> [총 234건]</span></h2>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://designtech.inha.ac.kr/designtech/3083/subview.do"
+                               target="_blank">
+
+                                <strong>공지사항</strong>
+
+                            </a>
+                            <span class="tit_date">2024.12.26</span>
+                        </dt>
+
+                        <dd>... 316 [안내]2024학년도 2학기 학부 강의평가 실시 안내 김진주 2024.12.04 0 434 315 [안내] 초록우산 미술교육 분야 <font
+                                color=#ff5e19><strong>장학</strong></font>생 모집공고 김진주 2024.12.02 2 523 314 [안내]2025학년도
+                            제12기 운해<font color=#ff5e19><strong>장학</strong></font>재단 <font color=#ff5e19>
+                                <strong>장학</strong></font>생 신청 안내 김진주 2024.12.02 1 ...</dd>
+
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://designtech.inha.ac.kr/designtech/3083/subview.do"
+                                    target="_blank">https://designtech.inha.ac.kr/designtech/3083/subview.do</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://nscollege.inha.ac.kr/nscollege/3340/subview.do"
+                               target="_blank">
+
+                                <strong>공지사항</strong>
+
+                            </a>
+                            <span class="tit_date">2024.12.26</span>
+                        </dt>
+
+                        <dd>... 심재구 2024.12.11 0 87 84 [취업] 자기소개서 온라인 1:1 첨삭 프로그램 안내 심재구 2024.12.09 2 92 83 [<font
+                                color=#ff5e19><strong>장학</strong></font>] 2024학년도 2학기 <font color=#ff5e19>
+                            <strong>장학</strong></font>사정관제 <font color=#ff5e19><strong>장학</strong></font>금 신청 안내
+                            심재구 2024.11.11 1 99 82 2024 인하 과학제(Inha Science Festival) ...</dd>
+
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://nscollege.inha.ac.kr/nscollege/3340/subview.do"
+                                    target="_blank">https://nscollege.inha.ac.kr/nscollege/3340/subview.do</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://cba.inha.ac.kr/cba/4005/subview.do" target="_blank">
+
+                                <strong>공지사항</strong>
+
+                            </a>
+                            <span class="tit_date">2024.12.26</span>
+                        </dt>
+
+                        <dd>... 2024.11.29 1 154 300 2025년 2월 졸업심사 대상자 영어졸업인증 대체특강 안내 장가은 2024.11.15 0 172 299 [
+                            <font color=#ff5e19><strong>장학</strong></font>] 2024학년도 2학기 <font color=#ff5e19>
+                                <strong>장학</strong></font>사정관제 <font color=#ff5e19><strong>장학</strong></font>금 선발 안내
+                            조영미 2024.11.08 1 538 298 학과별 재학생 대상 전공능력진단 참여 안내 장가은...</dd>
+
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://cba.inha.ac.kr/cba/4005/subview.do"
+                                    target="_blank">https://cba.inha.ac.kr/cba/4005/subview.do</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://sme.inha.ac.kr/sme/2874/subview.do" target="_blank">
+
+                                <strong><font color=#ff5e19><strong>장학</strong></font>안내</strong>
+
+                            </a>
+                            <span class="tit_date">2024.12.26</span>
+                        </dt>
+
+                        <dd>정보마당 공지사항 <font color=#ff5e19><strong>장학</strong></font>안내 학과 뉴스 취업/이벤트 학생 Q&A <font
+                                color=#ff5e19><strong>장학</strong></font>안내
+                            /WEB-INF/jsp/k2web/com/cop/site/layout.jsp sme_sub fnctId=bbs,fnctNo=3119 14 건 게시물 검색 제목
+                            작성자 게시글 리스트 <font color=#ff5e19><strong>장학</strong></font>금 번호 제목 작성자 ...</dd>
+
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://sme.inha.ac.kr/sme/2874/subview.do"
+                                    target="_blank">https://sme.inha.ac.kr/sme/2874/subview.do</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://nscollege.inha.ac.kr/nscollege/index.do" target="_blank">
+
+                                <strong>인하대학교 자연과학대학</strong>
+
+                            </a>
+                            <span class="tit_date">2024.12.26</span>
+                        </dt>
+
+                        <dd>... 프로그램 안내 작성일 2024.12.09. 작성자 심재구 자연과학대학에서는 2025년도 공채 대비 자기소개서 온라인 1:1 첨삭 프로그램을 다음과 [
+                            <font color=#ff5e19><strong>장학</strong></font>] 2024학년도 2학기 <font color=#ff5e19>
+                                <strong>장학</strong></font>사정관제 <font color=#ff5e19><strong>장학</strong></font>금 신청 안내
+                            작성일 2024.11.11. 작성자 심재구 2024학년도 2학기 <font color=#ff5e19><strong>장학</strong></font>사정관제
+                            <font color=#ff5e19><strong>장학</strong></font>금 신청 안내인하대학교에서는 ...</dd>
+
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://nscollege.inha.ac.kr/nscollege/index.do"
+                                    target="_blank">https://nscollege.inha.ac.kr/nscollege/index.do</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://cse.inha.ac.kr/cse/888/subview.do" target="_blank">
+
+                                <strong>공지사항</strong>
+
+                            </a>
+                            <span class="tit_date">2024.12.26</span>
+                        </dt>
+
+                        <dd>... 2024학년도 동계 계절학기 성적공시 안내 새글 김소현 2024.12.26 0 287 440 [학부] 2025학년도 1학기 관정이종환교육재단 국내대학
+                            <font color=#ff5e19><strong>장학</strong></font>생 신청 안내(~1/2) 새글 남수연 2024.12.26 1 116 439
+                            ★2024학년도 동계방학 집중휴무 기간 안내 (24.12.27~12.31)★ ...</dd>
+
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://cse.inha.ac.kr/cse/888/subview.do"
+                                    target="_blank">https://cse.inha.ac.kr/cse/888/subview.do</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="https://dmse.inha.ac.kr/dmse/2121/subview.do" target="_blank">
+
+                                <strong>공지사항</strong>
+
+                            </a>
+                            <span class="tit_date">2024.12.26</span>
+                        </dt>
+
+                        <dd>... 2024.12.24 1 108 627 2025학년도 1학기 재입학 시행안내 박은미 2024.12.23 1 92 626 2024학년도 2학기
+                            김창수·엄경숙 드림<font color=#ff5e19><strong>장학</strong></font>기금 <font color=#ff5e19>
+                                <strong>장학</strong></font>생 선발 및 <font color=#ff5e19><strong>장학</strong></font>금 신청
+                            안내 박은미 2024.12.23 1 137 625 2025-1학기 공학교육인증 예외자 신청 안내 박은미...</dd>
+
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="https://dmse.inha.ac.kr/dmse/2121/subview.do"
+                                    target="_blank">https://dmse.inha.ac.kr/dmse/2121/subview.do</a>
+                        </dd>
+                    </dl>
+
+                    <a class="section_more" href="#" onClick="javascript:doCollection('webpage');">더보기</a>
+
+                </div>
+                <!-- 웹페이지 -->
+
+
+                <div class="sectit01">
+                    <h2>규정집 <span> [총 55건]</span></h2>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=23#12"
+                               target="_blank">
+                                <strong>학사행정 > 교무행정 > 수강신청규정</strong>
+                            </a>
+                            <span class="tit_date">2024.12.12</span>
+                        </dt>
+                        <dd>... 수강과목을 포기하였을 때는 다른 과목을 대신 신청할 수 없다. &#9315; 포기 교과목이 있는 학생은 「<font color=#ff5e19>
+                            <strong>장학</strong></font>금지급규정」에 의거 <font color=#ff5e19><strong>장학</strong></font>금
+                            수혜제한을 받는다. &#9316; 수강과목을 포기한 학생은 학칙 제39조 제3항에 ...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=23#12"
+                                    target="_blank">/rules/kr/rulesList.do?layout=unknown&categorySeq=23#12</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=32#0"
+                               target="_blank">
+                                <strong>대학원 > 물류전문대학원 > 물류전문대학원 학칙시행세칙</strong>
+                            </a>
+                            <span class="tit_date">2024.12.09</span>
+                        </dt>
+                        <dd>... 제출하여야 한다. 1. 체류연장신청서 2. 여권 사본 1부 3. 외국인등록증 사본 1부 4. <font color=#ff5e19>
+                            <strong>장학</strong></font>확인서 1부 5. 재학증명서 1부 제8장 <font color=#ff5e19>
+                            <strong>장학</strong></font>금 제64조 (자격 및 선발) &#9312; 본 대학원의 ...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=32#0"
+                                    target="_blank">/rules/kr/rulesList.do?layout=unknown&categorySeq=32#0</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=26#0"
+                               target="_blank">
+                                <strong>대학원 > 대학원 > 일반대학원 학칙시행세칙</strong>
+                            </a>
+                            <span class="tit_date">2024.12.09</span>
+                        </dt>
+                        <dd>... 정하여 폐지 결정을 유예할 수 있다.&lt;신설 2023. 2. 20.&gt; 제23장 대학원<font color=#ff5e19>
+                            <strong>장학</strong></font>금 제161조 (적용범위) 본 대학원 <font color=#ff5e19>
+                            <strong>장학</strong></font>생의 선정과 <font color=#ff5e19><strong>장학</strong></font>금의
+                            지급은 별도의 규정이 없는 한 이 시행세칙에 ...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=26#0"
+                                    target="_blank">/rules/kr/rulesList.do?layout=unknown&categorySeq=26#0</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=36#93"
+                               target="_blank">
+                                <strong>산학협력단 및 부설연구소 > 인하대학교 이차전지사업단 내규</strong>
+                            </a>
+                            <span class="tit_date">2024.12.09</span>
+                        </dt>
+                        <dd>... 4회(설, 추석, 하계 및 동계휴가)의 상여금을 1회당 400,000원까지 지급할 수 있다. &#9314; <font color=#ff5e19>
+                            <strong>장학</strong></font>금의 종류에는 성적 <font color=#ff5e19><strong>장학</strong></font>
+                            금, 마일리지 <font color=#ff5e19><strong>장학</strong></font>금, 근로 <font color=#ff5e19>
+                                <strong>장학</strong></font>금, 취업연계 현장실습 생활비성 <font color=#ff5e19><strong>장학</strong>
+                            </font>금이 있다. ...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=36#93"
+                                    target="_blank">/rules/kr/rulesList.do?layout=unknown&categorySeq=36#93</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=34#1"
+                               target="_blank">
+                                <strong>대학원 > 법학전문대학원 > 법학전문대학원 법무석사과정 학사관리규정</strong>
+                            </a>
+                            <span class="tit_date">2024.12.09</span>
+                        </dt>
+                        <dd>... 사항을 그 내용으로 한다. 1. 수업 및 실무수습에 관한 문제 2. 진로 및 취업에 관한 문제 3. <font color=#ff5e19>
+                            <strong>장학</strong></font>금 등 학교생활에 관한 문제 4. 개인 신상 등에 관한 문제 제69조 (지도방식) 학생지도는 개인상담,
+                            ...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=34#1"
+                                    target="_blank">/rules/kr/rulesList.do?layout=unknown&categorySeq=34#1</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=17#2"
+                               target="_blank">
+                                <strong>학칙 > 학칙 > 학칙시행세칙</strong>
+                            </a>
+                            <span class="tit_date">2024.12.09</span>
+                        </dt>
+                        <dd>... 2010. 6. 15., 개정 2024. 9. 27.&gt; 1. 해외교환학생으로 선발되어 <font color=#ff5e19>
+                            <strong>장학</strong></font>금을 수령할 경우 2. 복학학기에 부분(학점)등록을 희망할 경우 3. 기타 외부기관으로부터 학자금 지원을
+                            ...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=17#2"
+                                    target="_blank">/rules/kr/rulesList.do?layout=unknown&categorySeq=17#2</a>
+                        </dd>
+                    </dl>
+
+                    <dl class="resultsty_1">
+                        <dt>
+                            <a class="tit" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=23#142"
+                               target="_blank">
+                                <strong>학사행정 > 교무행정 > 학부․대학원 연계과정에 관한 규정</strong>
+                            </a>
+                            <span class="tit_date">2024.12.09</span>
+                        </dt>
+                        <dd>... 수 있다. &#9313; 대학원은 다음 각 호의 요건을 모두 충족하는 연계과정 학생은 별도의 <font color=#ff5e19>
+                            <strong>장학</strong></font>생으로 선발한다. 1. 학사과정 7차학기까지 졸업학점, 졸업에 필요한 전공이수 학점(제1전공),
+                            영어졸업인증 ...</dd>
+                        <dd class="duplicate">
+                            링크 : <a class="link" href="/rules/kr/rulesList.do?layout=unknown&categorySeq=23#142"
+                                    target="_blank">/rules/kr/rulesList.do?layout=unknown&categorySeq=23#142</a>
+                        </dd>
+                    </dl>
+
+                    <a class="section_more" href="#" onClick="javascript:doCollection('rules');">더보기</a>
+
+                </div>
+                <!-- 규정집 -->
+
+
+            </div>
+            <!-- //contents -->
+
+            <!-- paginate -->
+
+            <!-- //paginate -->
+            <!-- rightArea -->
+            <div class="rightArea">
+                <div class="my_keyword" id="mykeyword">
+                </div>
+                <div class="pop">
+                    <p>인기 검색어</p>
+                    <ul>
+                        <li><a class="on" href="#" id="pop_day">일간</a></li>
+                        <!--<li><a  href="#" id="pop_week">주간</a></li>-->
+                    </ul>
+                </div>
+                <div class="rank" id="popword">
+                </div>
+            </div>
+            <!-- //rightArea -->
+        </div>
+        <!-- //container -->
+
+    </form>
+</div>
+</body>
+
+</html>
