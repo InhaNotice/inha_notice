@@ -9,26 +9,28 @@ class SearchPage extends StatefulWidget {
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
-
 class _SearchPageState extends State<SearchPage> {
   final SearchAPI _searchAPI = SearchAPI();
   final TextEditingController _searchController = TextEditingController();
   Map<String, dynamic> _notices = {'notices': [], 'pages': []};
   List<Map<String, dynamic>> _initialPages = [];
-  bool _isLoading = true;
+  bool _isLoading = false; // 초기 로딩 상태 false
   String _error = '';
+  String _warning = ''; // 경고 메시지
   int _currentPage = 1;
-  String _query = ''; // 초기 검색어
-
-  @override
-  void initState() {
-    super.initState();
-    _loadNotices(); // 초기 데이터 로드
-  }
+  String _query = ''; // 초기 검색어 빈 문자열
 
   Future<void> _loadNotices({int startCount = 0}) async {
+    if (_query.isEmpty || _query.length < 2) {
+      setState(() {
+        _warning = '검색어는 두 글자 이상 입력해주세요.'; // 경고 메시지 설정
+      });
+      return;
+    }
+
     setState(() {
       _isLoading = true; // 로딩 상태
+      _warning = ''; // 경고 메시지 초기화
     });
 
     try {
@@ -67,21 +69,33 @@ class _SearchPageState extends State<SearchPage> {
                   hintStyle: TextStyle(color: Color(0xFFBAB6B6)),
                   border: InputBorder.none,
                 ),
-                onSubmitted: (value) { // 엔터 키 입력 시 호출
-                  setState(() {
-                    _query = value; // 입력된 검색어 저장
-                  });
-                  _loadNotices(); // 새로운 검색어로 데이터 로드
+                onSubmitted: (value) {
+                  if (value.length < 2) {
+                    setState(() {
+                      _warning = '검색어는 두 글자 이상 입력해주세요.'; // 경고 메시지 설정
+                    });
+                  } else {
+                    setState(() {
+                      _query = value; // 입력된 검색어 저장
+                    });
+                    _loadNotices(); // 새로운 검색어로 데이터 로드
+                  }
                 },
               ),
             ),
             IconButton(
               icon: const Icon(Icons.search, color: Colors.white),
               onPressed: () {
-                setState(() {
-                  _query = _searchController.text; // 입력된 검색어 저장
-                });
-                _loadNotices(); // 새로운 검색어로 데이터 로드
+                if (_searchController.text.length < 2) {
+                  setState(() {
+                    _warning = '검색어는 두 글자 이상 입력해주세요.'; // 경고 메시지 설정
+                  });
+                } else {
+                  setState(() {
+                    _query = _searchController.text; // 입력된 검색어 저장
+                  });
+                  _loadNotices(); // 새로운 검색어로 데이터 로드
+                }
               },
             ),
           ],
@@ -89,18 +103,36 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Column(
         children: [
+          if (_warning.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                _warning,
+                style: const TextStyle(color: Colors.red, fontSize: 14),
+              ),
+            ), // 경고 메시지 표시
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
                 color: Color(0xEB292929), // 배경색 #292929, 투명도 92%
               ),
-              child: _isLoading
+              child: _query.isEmpty
+                  ? const Center(
+                child: Text(
+                  '검색어를 입력하세요',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 18,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ) // 검색어가 없으면 빈 화면 표시
+                  : _isLoading
                   ? const Center(child: CircularProgressIndicator()) // 로딩 표시
                   : _error.isNotEmpty
                   ? Center(child: Text('Error: $_error')) // 오류 표시
                   : ListView(
                 children: [
-                  // 공지사항 목록
                   if (_notices['notices'].isNotEmpty)
                     ..._notices['notices'].map((notice) {
                       return Container(
@@ -139,8 +171,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
-          // 페이지네이션 버튼
-          if (_initialPages.isNotEmpty)
+          if (_query.isNotEmpty && _initialPages.isNotEmpty)
             Container(
               color: const Color(0xFF292929), // 하단 배경색
               padding: const EdgeInsets.symmetric(vertical: 8.0),
