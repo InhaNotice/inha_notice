@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart' as html_parser; // HTML 파싱용
-import 'package:http/http.dart' as http;
+
+import '../../services/search_api.dart'; // SearchAPI 클래스가 정의된 파일 경로
+import '../web_page.dart'; // WebViewPage가 정의된 파일 경로
 
 class ScholarshipNoticePage extends StatefulWidget {
   const ScholarshipNoticePage({Key? key}) : super(key: key);
@@ -10,52 +11,38 @@ class ScholarshipNoticePage extends StatefulWidget {
 }
 
 class _ScholarshipNoticePageState extends State<ScholarshipNoticePage> {
-  List<Map<String, String>> _boardNotices = [];
-  bool _isLoading = false;
+  final SearchAPI _searchAPI = SearchAPI();
+  Map<String, dynamic> _notices = {'notices': [], 'pages': []};
+  bool _isLoading = true;
   String _error = '';
+  int _currentPage = 1;
 
   @override
   void initState() {
     super.initState();
-    _fetchBoardNotices();
+    _fetchNotices(); // 초기 데이터 로드
   }
 
-  Future<void> _fetchBoardNotices() async {
+  Future<void> _fetchNotices({int page = 1}) async {
     setState(() {
       _isLoading = true;
       _error = '';
     });
 
     try {
-        // 게시판 요소 추출 및 URL 생성
-        final boardLink = 'https://www.inha.ac.kr/search/search.jsp?query=장학&collection=inhabbs';
+      final notices = await _searchAPI.fetchNoticesWithLinks(
+        'https://www.inha.ac.kr/search/search.jsp?query=장학&collection=inhabbs&page=$page',
+        '장학',
+      );
 
-        // 게시판 데이터 요청
-        final boardResponse = await http.get(Uri.parse(boardLink));
-        if (boardResponse.statusCode == 200) {
-          final boardDocument = html_parser.parse(boardResponse.body);
-
-          // 공지사항 제목과 링크 크롤링
-          final notices = boardDocument.querySelectorAll('dl.resultsty_1');
-          setState(() {
-            _boardNotices = notices.map((notice) {
-              final titleElement = notice.querySelector('dt > a.tit');
-              final link = titleElement?.attributes['href'];
-              final title = titleElement?.text.trim() ?? 'No Title';
-              return {'title': title, 'link': link ?? ''};
-            }).toList();
-          });
-        } else {
-          setState(() {
-            _error = 'Failed to load board page';
-          });
-        }
+      setState(() {
+        _notices = notices;
+        _currentPage = page;
+        _isLoading = false;
+      });
     } catch (e) {
       setState(() {
-        _error = 'Error: ${e.toString()}';
-      });
-    } finally {
-      setState(() {
+        _error = e.toString();
         _isLoading = false;
       });
     }
@@ -64,51 +51,89 @@ class _ScholarshipNoticePageState extends State<ScholarshipNoticePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Scholarship Notices'),
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _error.isNotEmpty
-          ? Center(child: Text(_error))
-          : ListView.builder(
-        itemCount: _boardNotices.length,
-        itemBuilder: (context, index) {
-          final notice = _boardNotices[index];
-          return ListTile(
-            title: Text(
-              notice['title'] ?? 'No Title',
-              style: const TextStyle(color: Colors.black),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color(0xEB292929), // 배경색 #292929, 투명도 92%
+              ),
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator()) // 로딩 표시
+                  : _error.isNotEmpty
+                  ? Center(child: Text('Error: $_error')) // 오류 표시
+                  : ListView(
+                children: [
+                  // 공지사항 목록
+                  if (_notices['notices'].isNotEmpty)
+                    ..._notices['notices'].map((notice) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF222222), // 항목 배경색
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Color(0xFF444444), // 하단 테두리
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            notice['title'] ?? 'No Title',
+                            style: const TextStyle(
+                              fontFamily: 'Pretendard',
+                              fontSize: 16,
+                              color: Colors.white, // 제목 글자색
+                            ),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => WebPage(
+                                  url: notice['link'] ?? '',
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }).toList(),
+                ],
+              ),
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      WebViewPage(url: notice['link'] ?? ''),
+          ),
+          // 페이지네이션 버튼
+          if (_notices['pages'].isNotEmpty)
+            Container(
+              color: const Color(0xFF292929), // 하단 배경색
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _notices['pages'].map<Widget>((pageData) {
+                    final String pageNumber = pageData['pageNumber'].toString();
+                    final bool isCurrentPage = pageData['isCurrent'] as bool;
+                    return TextButton(
+                      onPressed: isCurrentPage
+                          ? null
+                          : () => _fetchNotices(page: int.parse(pageNumber)),
+                      child: Text(
+                        pageNumber,
+                        style: TextStyle(
+                          color: isCurrentPage ? Colors.white : Colors.white60,
+                          fontWeight: isCurrentPage
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    );
+                  }).toList(),
                 ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class WebViewPage extends StatelessWidget {
-  final String url;
-
-  const WebViewPage({required this.url});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notice Detail'),
-      ),
-      body: Center(
-        child: Text('WebView for $url'), // WebView 위젯으로 변경 필요
+              ),
+            ),
+        ],
       ),
     );
   }

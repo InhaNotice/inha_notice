@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
+
 class WholeAPI {
   Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, String name, {int page = 1}) async {
     try {
