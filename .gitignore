@@ -26,7 +26,7 @@ android/app/*.iml
 .DS_Store
 
 # Github 관련
-README.md8
+README.md
 
 # 환경변수
 .env

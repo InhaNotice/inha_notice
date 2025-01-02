@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../services/search_api.dart'; // SearchAPI 클래스가 정의된 파일 경로
 import '../web_page.dart'; // WebViewPage가 정의된 파일 경로
@@ -34,8 +35,10 @@ class _SearchPageState extends State<SearchPage> {
     });
 
     try {
+      final searchUrl = dotenv.get('SEARCH_URL', fallback: '');
+      final collection = dotenv.get('COLLECTION', fallback: '');
       final url =
-          'https://www.inha.ac.kr/search/search.jsp?query=$_query&collection=inhabbs&startCount=$startCount';
+          '$searchUrl?query=$_query&collection=$collection&startCount=$startCount';
       final notices = await _searchAPI.fetchNoticesWithLinks(url, _query);
       setState(() {
         _notices = notices; // 공지사항 데이터 저장

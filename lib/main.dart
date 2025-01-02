@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Import screens
 import 'screens/bottom_navigation/main_notice_page.dart';
@@ -7,8 +8,9 @@ import 'screens/bottom_navigation/bookmark_page.dart';
 import 'screens/bottom_navigation/search_page.dart';
 import 'screens/bottom_navigation/more_page.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
