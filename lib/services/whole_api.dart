@@ -7,6 +7,7 @@ class WholeAPI {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final document = parse(response.body);
+
         // name과 도메인 매핑
         final domainMap = {
           "whole": "https://www.inha.ac.kr",
@@ -16,12 +17,19 @@ class WholeAPI {
         final headlineElements = document.querySelectorAll(
             '.artclTable .headline ._artclTdTitle'); // headline CSS 셀렉터
         final headlineNotices = headlineElements.map((element) {
-          final title = element.querySelector('.artclLinkView')?.text.trim() ?? '';
+          final aTag = element.querySelector('.artclLinkView');
+          if (aTag == null) return null; // a 태그가 없는 경우 null 반환
+
+          // a 태그의 텍스트 노드만 선택 (span 태그 내용 제외)
+          final title = aTag.nodes
+              .where((node) => node.nodeType == 3) // 텍스트 노드만 선택
+              .map((node) => node.text?.trim())
+              .join() ?? ''; // 텍스트 노드 병합 및 공백 제거
+
           final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
-          final attribute = element.querySelector('.artclLinkView')?.attributes['href'];
-          final link = baseUrl + (attribute ?? '');
+          final link = baseUrl + (aTag.attributes['href'] ?? '');
           return {'title': title, 'link': link};
-        }).toList();
+        }).whereType<Map<String, String>>().toList(); // null 제거
 
         // 일반 공지사항
         final generalElements = document.querySelectorAll(
@@ -29,11 +37,18 @@ class WholeAPI {
 
         // 첫 번째 <tr> 태그(테이블 헤더)를 제외
         final generalNotices = generalElements.skip(1).map((element) {
-          final title = element.querySelector('._artclTdTitle a')?.text.trim() ?? '';
-          final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
-          final link = baseUrl + (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
+          final aTag = element.querySelector('._artclTdTitle a');
+          if (aTag == null) return null; // a 태그가 없는 경우 null 반환
+
+          final title = aTag.nodes
+              .where((node) => node.nodeType == 3) // 텍스트 노드만 선택
+              .map((node) => node.text?.trim())
+              .join() ?? ''; // 텍스트 병합
+
+          final baseUrl = domainMap[name] ?? "";
+          final link = baseUrl + (aTag.attributes['href'] ?? '');
           return {'title': title, 'link': link};
-        }).toList();
+        }).whereType<Map<String, String>>().toList(); // null 제거
 
         // 페이지 번호 크롤링
         final pageElements = document.querySelectorAll('._paging ._inner ul li');
