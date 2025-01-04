@@ -47,18 +47,6 @@
 	<true/>
 	<key>io.flutter.embedded_views_preview</key>
     <true/>
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-      ...
-      <key>LSApplicationQueriesSchemes</key>
-      <array>
-        <string>https</string>
-        <string>http</string>
-      </array>
-    </dict>
-    </plist>
 	<key>UIBackgroundModes</key>
 	<array>
         <string>fetch</string>

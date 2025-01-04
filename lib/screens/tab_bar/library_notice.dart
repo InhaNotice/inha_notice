@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../services/library_api.dart';
 import '../web_page.dart';
 
-class LibNoticePage extends StatefulWidget {
-  const LibNoticePage({super.key});
+class LibraryNoticePage extends StatefulWidget {
+  const LibraryNoticePage({super.key});
 
   @override
-  State<LibNoticePage> createState() => _LibNoticePageState();
+  State<LibraryNoticePage> createState() => _LibraryNoticePageState();
 }
 
-class _LibNoticePageState extends State<LibNoticePage> {
+class _LibraryNoticePageState extends State<LibraryNoticePage> {
   final LibraryAPI _apiService = LibraryAPI();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   bool _isLoading = true;
@@ -26,14 +26,13 @@ class _LibNoticePageState extends State<LibNoticePage> {
     _loadNotices(); // 초기 데이터 로드
   }
 
-  Future<void> _loadNotices({int page = 1}) async {
+  Future<void> _loadNotices({int page = 1, String offset = '0'}) async {
     setState(() {
       _isLoading = true; // 로딩 상태
     });
 
     try {
-      final notices = await _apiService.fetchNoticesWithLinks(
-          'https://lib.inha.ac.kr/guide/bulletins/notice', "lib");
+      final notices = await _apiService.fetchNoticesWithLinks(offset);
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         _currentPage = page; // 현재 페이지 업데이트
@@ -180,17 +179,16 @@ class _LibNoticePageState extends State<LibNoticePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: _notices['pages']!.map<Widget>((pageData) {
-                    final String pageNumber = pageData['page'].toString(); // 페이지 번호 추출
-                    final bool isCurrentPage =
-                    pageData['isCurrent'] as bool; // 현재 페이지 여부 확인
+                    final int page = pageData['page']; // 페이지 번호 추출
+                    final bool isCurrentPage = page == _currentPage;
                     return TextButton(
                       onPressed: isCurrentPage
                           ? null
                           : () {
-                        _loadNotices(page: int.parse(pageNumber)); // 해당 페이지로 이동
+                        _loadNotices(page: page, offset: pageData['offset']); // 해당 페이지로 이동
                       },
                       child: Text(
-                        pageNumber,
+                        page.toString(),
                         style: TextStyle(
                           color: isCurrentPage ? Colors.white : Colors.white60,
                           fontWeight: isCurrentPage

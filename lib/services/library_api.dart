@@ -1,75 +1,80 @@
+import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:html/parser.dart';
-
 
 class LibraryAPI {
-  Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, String name, {int page = 1}) async {
+  Future<Map<String, dynamic>> fetchNoticesWithLinks(String offset) async {
     try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final document = parse(response.body);
+      const String inhaAPI = "https://lib.inha.ac.kr/pyxis-api/1/bulletin-boards/1/bulletins";
+      const String connectUrl = "https://lib.inha.ac.kr/guide/bulletins/notice";
 
-        // name과 도메인 매핑
-        final domainMap = {
-          "lib": "https://lib.inha.ac.kr/guide/bulletins/notice",
-        };
-        // headline 공지사항
-        final headlineElements = document.querySelectorAll(
-            '.ikc-bulletins-notice'); // headline CSS 셀렉터
-        final headlineNotices = headlineElements.map((element) {
-          final aTag = element.querySelector('.ikc-bulletins-title .ng-star-inserted');
-          print("hi");
-          if (aTag == null) return null; // a 태그가 없는 경우 null 반환
-          // a 태그의 텍스트 노드만 선택 (span 태그 내용 제외)
-          final title = aTag.nodes
-              .where((node) => node.nodeType == 3) // 텍스트 노드만 선택
-              .map((node) => node.text?.trim())
-              .join() ?? ''; // 텍스트 노드 병합 및 공백 제거
+      Future<List<Map<String, String>>> fetchNotices(Map<String, String> params) async {
+        var uri = Uri.parse(inhaAPI).replace(queryParameters: params);
+        var response = await http.get(uri);
 
-          // final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
-          // final link = baseUrl + (aTag.attributes['href'] ?? '');
-          const link = "link";
-          return {'title': title, 'link': link};
-        }).whereType<Map<String, String>>().toList(); // null 제거
+        if (response.statusCode == 200) {
+          final data = json.decode(response.body);
+          final notices = data["data"]?["list"] as List<dynamic>?;
 
-        // 일반 공지사항
-        final generalElements = document.querySelectorAll('tbody:not(.ikc-bulletins-notice) .ikc-bulletins-title');
+          if (notices != null && notices.isNotEmpty) {
+            List<Map<String, String>> noticeList = [];
+            for (var notice in notices) {
+              if (notice is Map<String, dynamic>) {
+                final title = notice['title'] ?? 'No Title';
+                final id = notice['id'];
+                final link = id != null ? "$connectUrl/$id" : null;
+                if (link != null) {
+                  noticeList.add({
+                    'title': title.toString(),
+                    'link': link.toString(),
+                  });
+                }
+              }
+            }
+            return noticeList;
+          }
+        } else {
+          throw Exception('Failed to load notices: ${response.statusCode}');
+        }
 
-        // 첫 번째 <tr> 태그(테이블 헤더)를 제외
-        final generalNotices = generalElements.map((element) {
-          final aTag = element.querySelector('span');
-          if (aTag == null) return null; // a 태그가 없는 경우 null 반환
-
-          final title = aTag.text.trim();
-
-          // final baseUrl = domainMap[name] ?? "";
-          // final link = baseUrl + (aTag.attributes['href'] ?? '');
-          // return {'title': title, 'link': link};
-          const link = "link";
-          return {'title': title, 'link': link};
-        }).whereType<Map<String, String>>().toList(); // null 제거
-
-        // 페이지 번호 크롤링
-        final pageElements = document.querySelectorAll('.mat-icon-button');
-        final pages = pageElements.map((element) {
-          final title = element.attributes['title'] ?? ''; // title 속성
-          final text = element.text.trim(); // 버튼 텍스트
-          final isCurrent = title.contains('현재 페이지'); // 현재 페이지 여부 확인
-          return {
-            'page': text,
-            'isCurrent': isCurrent,
-          };
-        }).toList();
-
-        return {
-          'headline': headlineNotices,
-          'general': generalNotices,
-          'pages': pages,
-        };
-      } else {
-        throw Exception('Failed to load notices: ${response.statusCode}');
+        return []; // 빈 리스트 반환
       }
+
+      // 중요 공지사항
+      final Map<String, String> headlineParams = {
+        "onlyNoticableBulletin": "true",
+      };
+      final List<Map<String, String>> headlineNotices = await fetchNotices(headlineParams);
+
+      // 일반 공지사항
+      final Map<String, String> generalParams = {
+        "onlyNoticableBulletin": "false",
+        "nameOption": "",
+        "onlyWriter": "false",
+        "max": "10",
+        "offset": offset,
+      };
+      final List<Map<String, String>> generalNotices = await fetchNotices(generalParams);
+
+      // 페이지 번호 생성
+      final List<String> setOffsets = List.generate(10, (i) => (i * 10).toString());
+      int count = 0;
+      final pages = setOffsets.map((setOffset) {
+        count += 1;
+        final isCurrent = count == 1; // 첫 번째 페이지를 현재 페이지로 설정
+        return {
+          'page': count,
+          'offset': setOffset,
+          'isCurrent': isCurrent,
+        };
+      }).toList();
+
+      return {
+        'headline': headlineNotices,
+        'general': generalNotices,
+        'pages': pages,
+      };
     } catch (e) {
+      print('Error: $e');
       throw Exception('Error fetching notices: $e');
     }
   }

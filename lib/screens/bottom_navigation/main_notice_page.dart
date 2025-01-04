@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_crawling/screens/tab_bar/international_notice.dart';
-import 'package:practice_crawling/screens/tab_bar/lib_notice.dart';
+import 'package:practice_crawling/screens/tab_bar/library_notice.dart';
 import 'package:practice_crawling/screens/tab_bar/recruitment_notice.dart';
 import 'package:practice_crawling/screens/tab_bar/scholarship_notice.dart';
 
@@ -69,7 +69,7 @@ class MainNoticePage extends StatelessWidget {
             MajorNoticePage(),
             ScholarshipNoticePage(),
             RecruitmentNoticePage(),
-            LibNoticePage(),
+            LibraryNoticePage(),
             InternationalNoticePage(),
           ],
         ),

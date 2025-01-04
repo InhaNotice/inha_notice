@@ -5,7 +5,7 @@ import '../../services/search_api.dart'; // SearchAPI 클래스가 정의된 파
 import '../web_page.dart'; // WebViewPage가 정의된 파일 경로
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   State<SearchPage> createState() => _SearchPageState();

@@ -59,7 +59,6 @@ class WholeAPI {
             'isCurrent': isCurrent,
           };
         }).toList();
-
         return {
           'headline': headlineNotices,
           'general': generalNotices,
