@@ -8,25 +8,35 @@ class WebPage extends StatelessWidget {
 
   Future<void> _launchInAppWebView(String url, BuildContext context) async {
     final Uri uri = Uri.parse(url);
-
-    // In-App WebView를 사용하여 URL 열기
-    if (!await launchUrl(
-      uri,
-      mode: LaunchMode.inAppWebView, // 앱 내에서 브라우저 열기
-      webViewConfiguration: const WebViewConfiguration(
-        enableJavaScript: true, // JavaScript 활성화
-      ),
-    )) {
-      throw Exception('Could not launch $url');
+    try {
+      if (await canLaunchUrl(uri)) {
+        launchUrl(
+          uri,
+          mode: LaunchMode.inAppWebView,
+          webViewConfiguration: const WebViewConfiguration(
+            enableJavaScript: true,
+          ),
+        );
+      } else {
+        throw Exception("Could not launch the URL: $url");
+      }
+    } catch (e) {
+      // 예외 처리: 에러 발생 시 사용자에게 알림
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to open URL: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      // URL이 열리지 않아도 현재 화면 닫기
+      Navigator.pop(context);
     }
-
-    // URL이 열리고 나면 현재 페이지를 닫음
-    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<void>(
       future: _launchInAppWebView(url, context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -41,7 +51,7 @@ class WebPage extends StatelessWidget {
             ),
           );
         } else {
-          // URL이 열렸으면 자동으로 뒤로 가게 하기
+          // URL이 열렸으면 빈 화면 반환
           return const SizedBox.shrink();
         }
       },

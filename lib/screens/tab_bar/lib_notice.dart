@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/api.dart';
+import '../../services/library_api.dart';
 import '../web_page.dart';
 
 class LibNoticePage extends StatefulWidget {
@@ -11,7 +11,7 @@ class LibNoticePage extends StatefulWidget {
 }
 
 class _LibNoticePageState extends State<LibNoticePage> {
-  final ApiService _apiService = ApiService();
+  final LibraryAPI _apiService = LibraryAPI();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   bool _isLoading = true;
   String _error = '';
