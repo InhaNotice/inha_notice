@@ -14,9 +14,11 @@ class _RecruitmentNoticePageState extends State<RecruitmentNoticePage> {
   final SearchAPI _searchAPI = SearchAPI();
   Map<String, dynamic> _notices = {'notices': [], 'pages': []};
   List<Map<String, dynamic>> _initialPages = [];
+
   bool _isLoading = true;
   String _error = '';
   int _currentPage = 1;
+  static const String kQuery = '채용';
 
   @override
   void initState() {
@@ -30,9 +32,7 @@ class _RecruitmentNoticePageState extends State<RecruitmentNoticePage> {
     });
 
     try {
-      final url =
-          'https://www.inha.ac.kr/search/search.jsp?query=채용&collection=inhabbs&startCount=$startCount';
-      final notices = await _searchAPI.fetchNoticesWithLinks(url, '채용');
+      final notices = await _searchAPI.fetchNotices(kQuery, startCount);
       setState(() {
         _notices = notices; // 공지사항 데이터 저장
         if (startCount == 0) {

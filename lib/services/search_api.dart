@@ -1,57 +1,79 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 
 class SearchAPI {
-  Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, String query, {int page = 1}) async {
+  static const String kTagNoticeBoard = 'dl.resultsty_1';
+  static const String kTagNoticeTitle = 'dt > a.tit';
+  static const String kAttributeHref = 'href';
+  static const String kAttributeTitle = 'title';
+  static const String kAttributeOnClick = 'onclick';
+  static const String kTagPage = 'div.btn_num > a.num';
+  static const String kTagCurrentPage = 'div.btn_num > a.click > strong';
+  static const int kHttpStatusOk = 200;
+
+  late String baseUrl;
+  late String collectionType;
+
+  SearchAPI() {
+    baseUrl = dotenv.get('SEARCH_URL');
+    collectionType = dotenv.get('COLLECTION');
+  }
+
+  Future<Map<String, dynamic>> fetchNotices(String query, int startCount) async {
     try {
-      final boardLink = url;
+      // Set baseUrl from query, startCount
+      final String connectedUrl = '$baseUrl?query=$query&collection=$collectionType&startCount=$startCount';
 
-      final boardResponse = await http.get(Uri.parse(boardLink));
-      if (boardResponse.statusCode == 200) {
-        final document = html_parser.parse(boardResponse.body);
+      // Request to baseUrl
+      final response = await http.get(Uri.parse(connectedUrl));
 
-        // 공지사항 크롤링
-        final noticesElements = document.querySelectorAll('dl.resultsty_1');
+      // Check http status code
+      if (response.statusCode == kHttpStatusOk) {
+        final document = html_parser.parse(response.body);
+
+        // Craw notices from searched results
+        final noticesElements = document.querySelectorAll(kTagNoticeBoard);
+
         final notices = noticesElements.map((notice) {
-          final titleElement = notice.querySelector('dt > a.tit');
-          final link = titleElement?.attributes['href'];
+          final titleElement = notice.querySelector(kTagNoticeTitle);
+          final link = titleElement?.attributes[kAttributeHref];
           final title = titleElement?.text.trim() ?? 'No Title';
           return {'title': title, 'link': link ?? ''};
         }).toList();
 
-        // 페이지 정보 크롤링
-        final pageElements = document.querySelectorAll('div.btn_num > a.num'); // 모든 페이지네이션 요소 선택
-        final currentPageElement = document.querySelector('div.btn_num > a.click > strong'); // 현재 페이지 요소 (<strong> 태그)
+        // Craw pages from searched results
+        final pageElements = document.querySelectorAll(kTagPage);
+        final currentPageElement = document.querySelector(kTagCurrentPage);
+
         final pages = <Map<String, dynamic>>[];
-
         pages.add({
-          'page': currentPageElement?.text.trim(), // 현재 페이지 번호
-          'startCount': '0', // 첫 번째 페이지의 startCount는 항상 0
-          'isCurrent': true, // 현재 페이지
+          'page': currentPageElement?.text.trim(),
+          'startCount': '0',
+          'isCurrent': true,
         });
-
-        // 나머지 페이지 처리
         pages.addAll(pageElements.where((pageElement) {
-          final title = pageElement.attributes['title']; // title 속성 가져오기
-          return title == '페이징'; // title="페이징"인 것만 필터링
+          final title = pageElement.attributes[kAttributeTitle];
+          return title == '페이징';
         }).map((pageElement) {
-          final pageNumber = pageElement.text.trim(); // 페이지 번호
-          final pageLink = pageElement.attributes['onclick'] ?? ''; // onclick 속성 값
-          final match = RegExp(r"doPaging\('(\d+)'\)").firstMatch(pageLink); // doPaging 값 추출
-          final startCount = match?.group(1) ?? ''; // null일 경우 기본값 '' 사용
+          final pageNumber = pageElement.text.trim();
+          final pageLink = pageElement.attributes[kAttributeOnClick] ?? '';
+          final match = RegExp(r"doPaging\('(\d+)'\)").firstMatch(pageLink);
+          final startCount = match?.group(1) ?? '';
           return {
             'page': pageNumber,
-            'startCount': startCount, // 페이지 이동에 필요한 값
-            'isCurrent': false, // 나머지 페이지는 기본적으로 false
+            'startCount': startCount,
+            'isCurrent': false,
           };
         }));
 
+        // Return notices, pages
         return {
           'notices': notices,
           'pages': pages,
         };
       } else {
-        throw Exception('Failed to load board page: ${boardResponse.statusCode}');
+        throw Exception('Failed to load board page: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Error fetching notices: $e');

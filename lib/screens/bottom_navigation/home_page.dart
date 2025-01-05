@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:practice_crawling/screens/tab_bar/international_notice.dart';
-import 'package:practice_crawling/screens/tab_bar/library_notice.dart';
-import 'package:practice_crawling/screens/tab_bar/recruitment_notice.dart';
-import 'package:practice_crawling/screens/tab_bar/scholarship_notice.dart';
 
-import '../tab_bar/whole_notice.dart';
-import '../tab_bar/major_notice.dart';
+import 'package:inha_notice/screens/tab_bar/international_notice.dart';
+import 'package:inha_notice/screens/tab_bar/library_notice.dart';
+import 'package:inha_notice/screens/tab_bar/recruitment_notice.dart';
+import 'package:inha_notice/screens/tab_bar/scholarship_notice.dart';
+import 'package:inha_notice/screens/tab_bar/whole_notice.dart';
+import 'package:inha_notice/screens/tab_bar/major_notice.dart';
 
-class MainNoticePage extends StatelessWidget {
-  const MainNoticePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {

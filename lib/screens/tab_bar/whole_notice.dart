@@ -100,6 +100,10 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                                   title: Text(
                                     notice['title'] ?? 'No Title',
                                     style: const TextStyle(
+                                        fontFamily: 'Pretendard',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 1.2,
                                         color: Colors.white), // 제목 글자색
                                   ),
                                   onTap: () {
@@ -140,7 +144,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                               border: Border(
                                 bottom: BorderSide(
                                   color: Color(0x8C525050), // 하단 테두리 색상
-                                  width: 2.0,
+                                  width: 1.0,
                                 ),
                               ),
                             ),
@@ -149,8 +153,8 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                                 notice['title'] ?? 'No Title',
                                 style: const TextStyle(
                                     fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.normal,
                                     fontSize: 16,
+                                    fontWeight: FontWeight.normal,
                                     color: Colors.white), // 제목 글자색
                               ),
                               onTap: () {

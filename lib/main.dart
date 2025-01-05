@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Import screens
-import 'screens/bottom_navigation/main_notice_page.dart';
-import 'screens/bottom_navigation/subscription_page.dart';
+import 'screens/bottom_navigation/home_page.dart';
 import 'screens/bottom_navigation/bookmark_page.dart';
 import 'screens/bottom_navigation/search_page.dart';
 import 'screens/bottom_navigation/more_page.dart';
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CSE Notices',
+      title: '인하공지',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
@@ -42,10 +41,9 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   // 하단 탭별 화면
   final List<Widget> _pages = [
-    const MainNoticePage(), // 기존 공지사항 탭
-    const SubscriptionPage(), // 구독 화면
-    const BookmarkPage(), // 북마크 화면
+    const HomePage(), // 기존 공지사항 탭
     const SearchPage(), // 검색 화면
+    const BookmarkPage(), // 북마크 화면
     const MorePage(), // 더보기 화면
   ];
 
@@ -64,36 +62,22 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
         backgroundColor: const Color(0xFF292929), // 배경 색상
         selectedItemColor: Colors.white, // 선택된 아이콘 및 텍스트 색상
         unselectedItemColor: Colors.white60, // 선택되지 않은 아이콘 및 텍스트 색상
-        selectedLabelStyle: const TextStyle( // 선택된 텍스트 스타일
-          fontFamily: 'Pretendard',
-          fontWeight: FontWeight.bold,
-          fontSize: 13,
-        ),
-        unselectedLabelStyle: const TextStyle( // 선택되지 않은 텍스트 스타일
-          fontFamily: 'Pretendard',
-          fontWeight: FontWeight.normal,
-          fontSize: 13,
-        ),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: '공지사항',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.subscriptions),
-            label: '구독',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: '북마크',
+            icon: Icon(Icons.home),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: '검색',
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
-            label: '더보기',
+            label: '',
           ),
         ],
       ),
