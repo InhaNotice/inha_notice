@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
           title: const Align(
             alignment: Alignment.centerLeft, // 제목을 왼쪽 정렬
             child: Text(
-              '인하공유',
+              '인하공지',
               style: TextStyle(
                 fontFamily: 'Pretendard',
                 fontSize: 16,

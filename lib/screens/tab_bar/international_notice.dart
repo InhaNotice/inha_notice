@@ -181,8 +181,7 @@ class _InternationalNoticePageState extends State<InternationalNoticePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: _notices['pages']!.map<Widget>((pageData) {
                     final String pageNumber = pageData['page'].toString(); // 페이지 번호 추출
-                    final bool isCurrentPage =
-                    pageData['isCurrent'] as bool; // 현재 페이지 여부 확인
+                    final bool isCurrentPage = int.parse(pageNumber) == _currentPage;
                     return TextButton(
                       onPressed: isCurrentPage
                           ? null
