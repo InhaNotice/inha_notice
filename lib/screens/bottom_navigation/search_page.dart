@@ -11,9 +11,12 @@ class SearchPage extends StatefulWidget {
   State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   final TextEditingController _searchController = TextEditingController();
   final TrendingTopicsAPI _trendingTopicsApi = TrendingTopicsAPI();
+
+  late final List<AnimationController> _controllers = [];
+  late final List<Animation<double>> _animations = [];
 
   TopicsList _topicsList = [];
   String _warning = '';
@@ -25,6 +28,15 @@ class _SearchPageState extends State<SearchPage> {
     _fetchTrendingTopics();
   }
 
+  @override
+  void dispose() {
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    _controllers.clear();
+    super.dispose();
+  }
+
   Future<void> _fetchTrendingTopics() async {
     try {
       final response = await _trendingTopicsApi.fetchTrendingTopics();
@@ -34,11 +46,51 @@ class _SearchPageState extends State<SearchPage> {
           _makeTimes = response.first['makeTimes'] ?? '';
         }
       });
+      _initializeAnimations();
+      _triggerAnimations();
     } catch (error) {
       setState(() {
         _topicsList = [];
         _warning = '인기검색어를 불러오지 못하였습니다.';
       });
+    }
+  }
+
+  void _initializeAnimations() {
+    if (_topicsList.isEmpty) {
+      return;
+    }
+    try {
+      for (int i = 0; i < _topicsList.length; i++) {
+        final controller = AnimationController(
+          duration: const Duration(seconds: 1),
+          vsync: this,
+        );
+        _controllers.add(controller);
+        final animation = Tween(begin: 0.0, end: 1.0).animate(controller);
+        _animations.add(animation);
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> _triggerAnimations() async {
+    for (int i = 0; i < _controllers.length; i++) {
+      // 순차적으로 지연
+      await Future.delayed(Duration(milliseconds: 300 * i));
+
+      // mounted 확인
+      if (!mounted) {
+        print('Widget disposed, stopping animations');
+        return;
+      }
+
+      try {
+        await _controllers[i].forward();
+      } catch (e) {
+        print('Error during animation: $e');
+      }
     }
   }
 
@@ -168,22 +220,23 @@ class _SearchPageState extends State<SearchPage> {
                 Expanded(
                   child: _topicsList.isEmpty
                       ? const Center(
-                          child: Text(
-                          '실시간 인기 검색어를 불러오고 있습니다...',
-                          style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                          ),
-                        ))
-                      : ListView.builder(
-                          itemCount: _topicsList.length,
-                          itemBuilder: (context, index) {
-                            final topics = _topicsList[index];
-                            return _buildSearchItem(topics, index + 1);
-                          },
+                      child: Text(
+                        '실시간 인기 검색어를 불러오고 있습니다...',
+                        style: TextStyle(
+                          fontFamily: 'Pretendard',
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
                         ),
+                      ))
+                      : ListView.builder(
+                    itemCount: _topicsList.length,
+                    itemBuilder: (context, index) {
+                      final topics = _topicsList[index];
+                      return _buildSearchItem(
+                          context, topics, index + 1, _animations);
+                    },
+                  ),
                 ),
               ],
             )));
@@ -204,70 +257,94 @@ Widget _buildTag(String text) {
   );
 }
 
-Widget _buildSearchItem(Map<String, dynamic> topic, int rank) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Row(
-      children: [
-        // 순위 출력
-        Text(
-          '$rank',
-          style: const TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
-        ),
-        const SizedBox(width: 16),
-
-        // 검색어 출력
-        Expanded(
-          child: Text(
-            topic['text'] ?? 'N/A', // 검색어 텍스트
-            style: const TextStyle(
+Widget _buildSearchItem(BuildContext context, Map<String, dynamic> topic,
+    int rank, List<Animation<double>> animations) {
+  final animation = animations[rank - 1];
+  return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                SearchResultPage(query: topic['text'] ?? ''),
+            )
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          children: [
+            // 순위 출력
+            Text(
+              '$rank',
+              style: const TextStyle(
                 fontFamily: 'Pretendard',
                 fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: Colors.white
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
-          ),
-        ),
+            const SizedBox(width: 16),
 
-        // 상승/하락 아이콘 및 값 출력
-        if (topic['updown'] == 'U')
-          Row(
-            children: [
-              const Icon(Icons.arrow_upward, color: Colors.red, size: 16),
-              const SizedBox(width: 4),
-              Text(
-                topic['count'] ?? '0', // 상승 수치
-                style: const TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.red
-                ),
+            // 검색어에만 회전 효과 적용
+            Expanded(
+              child: AnimatedBuilder(
+                animation: animation,
+                builder: (context, child) {
+                  return Transform(
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.001) // 3D 효과 추가
+                      ..rotateX(animation.value * 2 * 3.14), // X축으로 360도 회전
+                    alignment: Alignment.center,
+                    child: Text(
+                      topic['text'] ?? 'N/A',
+                      style: const TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
-        if (topic['updown'] == 'D')
-          Row(
-            children: [
-              const Icon(Icons.arrow_downward, color: Colors.blue, size: 16),
-              const SizedBox(width: 4),
-              Text(
-                topic['count'] ?? '0', // 하락 수치
-                style: const TextStyle(
-                    fontFamily: 'Pretendard',
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.blue
-                ),
+            ),
+
+            // 상승/하락 아이콘 및 값 출력
+            if (topic['updown'] == 'U')
+              Row(
+                children: [
+                  const Icon(Icons.arrow_upward, color: Colors.red, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    topic['count'] ?? '0', // 상승 수치
+                    style: const TextStyle(
+                      fontFamily: 'Pretendard',
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-      ],
-    ),
+            if (topic['updown'] == 'D')
+              Row(
+                children: [
+                  const Icon(
+                      Icons.arrow_downward, color: Colors.blue, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    topic['count'] ?? '0', // 하락 수치
+                    style: const TextStyle(
+                      fontFamily: 'Pretendard',
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+          ],
+        ),
+      )
   );
 }
