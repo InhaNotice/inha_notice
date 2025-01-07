@@ -1,4 +1,3 @@
-
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart';
 
@@ -16,12 +15,17 @@ class ApiService {
 
         // headline 공지사항
         final headlineElements = document.querySelectorAll(
-            '.artclTable .headline ._artclTdTitle a'); // headline CSS 셀렉터
+            '.artclTable .headline ._artclTdTitle a');
         final headlineNotices = headlineElements.map((element) {
           final title = element.querySelector('strong')?.text.trim() ?? '';
-          final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
-          final link = baseUrl + (element.attributes['href'] ?? '');
-          return {'title': title, 'link': link};
+          final baseUrl = domainMap[name] ?? "";
+          final postUrl = element.attributes['href'] ?? '';
+          final link = baseUrl + postUrl;
+
+          List<String> parts = postUrl.split('/');
+          String postId = (parts.length > 4) ? parts[4] :'unknown';
+
+          return {'title': title, 'link': link, 'postId': postId};
         }).toList();
 
         // 일반 공지사항
@@ -32,8 +36,13 @@ class ApiService {
         final generalNotices = generalElements.skip(1).map((element) {
           final title = element.querySelector('._artclTdTitle a strong')?.text.trim() ?? '';
           final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
-          final link = baseUrl + (element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '');
-          return {'title': title, 'link': link};
+          final postUrl = element.querySelector('._artclTdTitle a')?.attributes['href'] ?? '';
+          final link = baseUrl + postUrl;
+
+          List<String> parts = postUrl.split('/');
+          String postId = (parts.length > 4) ? parts[4] :'unknown';
+
+          return {'title': title, 'link': link, 'postId': postId};
         }).toList();
 
         // 페이지 번호 크롤링

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:path_provider/path_provider.dart';
 
 // Import screens
 import 'screens/bottom_navigation/home_page.dart';
@@ -10,7 +13,16 @@ import 'screens/bottom_navigation/more_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+  await _initializeStorage();
   runApp(const MyApp());
+}
+
+Future<void> _initializeStorage() async {
+  final directory = await getApplicationDocumentsDirectory();
+  final storageDir = Directory('${directory.path}/storage');
+  if (!await storageDir.exists()) {
+    await storageDir.create();
+  }
 }
 
 class MyApp extends StatelessWidget {
