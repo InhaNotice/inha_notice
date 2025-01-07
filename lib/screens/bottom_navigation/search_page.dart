@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/services/trending_topics_api.dart';
+import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 
 typedef TopicsList = List<Map<String, dynamic>>;
 
@@ -233,8 +234,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     itemCount: _topicsList.length,
                     itemBuilder: (context, index) {
                       final topics = _topicsList[index];
-                      return _buildSearchItem(
-                          context, topics, index + 1, _animations);
+                      return TopicsItem(
+                          topic: topics, rank: index + 1, animation: _animations[index]);
                     },
                   ),
                 ),
@@ -254,97 +255,5 @@ Widget _buildTag(String text) {
       text,
       style: const TextStyle(color: Colors.white),
     ),
-  );
-}
-
-Widget _buildSearchItem(BuildContext context, Map<String, dynamic> topic,
-    int rank, List<Animation<double>> animations) {
-  final animation = animations[rank - 1];
-  return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>
-                SearchResultPage(query: topic['text'] ?? ''),
-            )
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          children: [
-            // 순위 출력
-            Text(
-              '$rank',
-              style: const TextStyle(
-                fontFamily: 'Pretendard',
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(width: 16),
-
-            // 검색어에만 회전 효과 적용
-            Expanded(
-              child: AnimatedBuilder(
-                animation: animation,
-                builder: (context, child) {
-                  return Transform(
-                    transform: Matrix4.identity()
-                      ..setEntry(3, 2, 0.001) // 3D 효과 추가
-                      ..rotateX(animation.value * 2 * 3.14), // X축으로 360도 회전
-                    alignment: Alignment.center,
-                    child: Text(
-                      topic['text'] ?? 'N/A',
-                      style: const TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-            // 상승/하락 아이콘 및 값 출력
-            if (topic['updown'] == 'U')
-              Row(
-                children: [
-                  const Icon(Icons.arrow_upward, color: Colors.red, size: 16),
-                  const SizedBox(width: 4),
-                  Text(
-                    topic['count'] ?? '0', // 상승 수치
-                    style: const TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-            if (topic['updown'] == 'D')
-              Row(
-                children: [
-                  const Icon(
-                      Icons.arrow_downward, color: Colors.blue, size: 16),
-                  const SizedBox(width: 4),
-                  Text(
-                    topic['count'] ?? '0', // 하락 수치
-                    style: const TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ],
-              ),
-          ],
-        ),
-      )
   );
 }
