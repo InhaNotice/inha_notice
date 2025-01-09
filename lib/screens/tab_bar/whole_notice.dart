@@ -20,6 +20,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
 
   bool _isLoading = true;
   bool _showHeadlines = false;
+  bool _showGeneral = true;
   int _currentPage = kInitialPage;
   String _error = kEmptyString;
 
@@ -51,6 +52,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +60,15 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: const Color(0xFF222222),
+            decoration: const BoxDecoration(
+              color: Color(0xFF292929),
+              border: Border(
+                bottom: BorderSide(
+                  color: Color(0xFF101010),
+                  width: 2.0,
+                ),
+              ),
+            ),
             padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -66,27 +76,36 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      _showHeadlines = true;
+                      _showHeadlines = !_showHeadlines; // 상태 토글
+                      if (!_showHeadlines && !_showGeneral) {
+                        // 둘 다 선택되지 않은 경우 기본적으로 하나 선택
+                        _showHeadlines = true;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('최소 하나의 옵션을 선택해야 합니다!'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
                     });
-                    print('중요 버튼 클릭됨');
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 8.0),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 2.0,
-                      ),
+                      border: _showHeadlines
+                          ? Border.all(color: Colors.blue, width: 2.0)
+                          : Border.all(color: Colors.grey, width: 2.0),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: const Text(
+                    child: Text(
                       '중요',
                       style: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 13.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey,
+                        color: _showHeadlines ? Colors.blue : Colors.grey,
                       ),
                     ),
                   ),
@@ -95,32 +114,43 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      _showHeadlines = false;
+                      _showGeneral = !_showGeneral; // 상태 토글
+                      if (!_showHeadlines && !_showGeneral) {
+                        // 둘 다 선택되지 않은 경우 기본적으로 하나 선택
+                        _showGeneral = true;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('최소 하나의 옵션을 선택해야 합니다!'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
                     });
-                    print('일반 버튼 클릭됨');
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 8.0),
                     decoration: BoxDecoration(
-                      color:  Colors.transparent,
-                      border: Border.all(color: Colors.blue, width: 2.0),
+                      color: Colors.transparent,
+                      border: _showGeneral
+                          ? Border.all(color: Colors.blue, width: 2.0)
+                          : Border.all(color: Colors.grey, width: 2.0),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: const Text(
+                    child: Text(
                       '일반',
                       style: TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontSize: 13.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
+                          fontFamily: 'Pretendard',
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.bold,
+                          color: _showGeneral ? Colors.blue : Colors.grey),
                     ),
                   ),
                 ),
                 const Spacer(),
                 GestureDetector(
                   onTap: () {
-                    print('새로고침 버튼 클릭됨');
+                    _loadNotices(kInitialPage);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(4.0),
@@ -129,16 +159,102 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                       border: Border.all(color: Colors.white, width: 2.0),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.refresh, color: Colors.white, size: 16.0),
-                      ],
-                    ),
+                    child: const Icon(Icons.refresh,
+                        color: Colors.white, size: 16.0),
                   ),
-                )
+                ),
               ],
             ),
           ),
+          Expanded(
+            child: Container(
+              color: const Color(0xFF222222),
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      itemCount: _showHeadlines && _showGeneral
+                          ? _notices['headline'].length +
+                              _notices['general'].length
+                          : _showHeadlines
+                              ? _notices['headline'].length
+                              : _notices['general'].length,
+                      itemBuilder: (context, index) {
+                        if (_showHeadlines &&
+                            index < _notices['headline'].length) {
+                          final notice = _notices['headline'][index];
+                          return Container(
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF222222),
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Color(0xFF222222),
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  notice['title'] ?? 'No title',
+                                  style: const TextStyle(
+                                    fontFamily: 'Pretendard',
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => WebPage(
+                                        url: notice['link'] ?? '',
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ));
+                        }
+                        final generalIndex = index -
+                            (_showHeadlines ? _notices['headline'].length : 0);
+                        if (_showGeneral &&
+                            generalIndex < _notices['general'].length) {
+                          final notice = _notices['general'][generalIndex];
+                          return Container(
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF292929),
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Color(0xFF222222),
+                                    width: 2.0,
+                                  ),
+                                ),
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  notice['title'] ?? 'No title',
+                                  style: const TextStyle(
+                                    fontFamily: 'Pretendard',
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => WebPage(
+                                        url: notice['link'] ?? '',
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ));
+                        }
+                        return const SizedBox.shrink();
+                      }),
+            ),
+          )
         ],
       ),
     );
