@@ -1,64 +1,47 @@
-import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
+import 'package:http/http.dart' as http;
 
+class HeadlineTagSelectors {
+  static const String kNoticeBoard = '.artclTable .headline ._artclTdTitle';
+  static const String kNoticeLink = '.artclLinkView';
+}
+
+class GeneralTagSelectors {
+  static const String kNoticeBoard = '.artclTable tr:not(.headline)';
+  static const String kNoticeLink = '._artclTdTitle a';
+}
+
+class PageTagSelectors {
+  static const String kPageBoard = '._paging ._inner ul li';
+}
 
 class WholeAPI {
-  Future<Map<String, dynamic>> fetchNoticesWithLinks(String url, String name, {int page = 1}) async {
+  late final String baseUrl;
+  late final String queryUrl;
+
+  WholeAPI() {
+    baseUrl = dotenv.get('WHOLE_URL');
+    queryUrl = dotenv.get('WHOLE_QUERY_URL');
+  }
+
+  Future<Map<String, dynamic>> fetchNotices(int page) async {
     try {
-      final response = await http.get(Uri.parse(url));
+      final String connectUrl = '$queryUrl$page';
+      final response = await http.get(Uri.parse(connectUrl));
+
       if (response.statusCode == 200) {
         final document = parse(response.body);
-        // name과 도메인 매핑
-        final domainMap = {
-          "whole": "https://www.inha.ac.kr",
-        };
 
-        // headline 공지사항
-        final headlineElements = document.querySelectorAll(
-            '.artclTable .headline ._artclTdTitle'); // headline CSS 셀렉터
-        final headlineNotices = headlineElements.map((element) {
-          final aTag = element.querySelector('.artclLinkView');
-          if (aTag == null) return null; // a 태그가 없는 경우 null 반환
+        // 중요 공지사항 가져오기
+        final headlineNotices = _fetchHeadlineNotices(document);
 
-          // a 태그의 텍스트 노드만 선택 (span 태그 내용 제외)
-          final title = aTag.nodes
-              .where((node) => node.nodeType == 3) // 텍스트 노드만 선택
-              .map((node) => node.text?.trim())
-              .join() ?? ''; // 텍스트 노드 병합 및 공백 제거
+        // 일반 공지사항 가져오기
+        final generalNotices = _fetchGeneralNotices(document);
 
-          final baseUrl = domainMap[name] ?? ""; // name에 따라 도메인 결정
-          final link = baseUrl + (aTag.attributes['href'] ?? '');
-          return {'title': title, 'link': link};
-        }).whereType<Map<String, String>>().toList(); // null 제거
+        // 페이지 번호 가져오기
+        final pages = _fetchPages(document);
 
-        // 일반 공지사항
-        final generalElements = document.querySelectorAll(
-            '.artclTable tr:not(.headline)');
-
-        // 첫 번째 <tr> 태그(테이블 헤더)를 제외
-        final generalNotices = generalElements.skip(1).map((element) {
-          final aTag = element.querySelector('._artclTdTitle a');
-          if (aTag == null) return null; // a 태그가 없는 경우 null 반환
-
-          final title = aTag.nodes
-              .where((node) => node.nodeType == 3) // 텍스트 노드만 선택
-              .map((node) => node.text?.trim())
-              .join() ?? ''; // 텍스트 병합
-
-          final baseUrl = domainMap[name] ?? "";
-          final link = baseUrl + (aTag.attributes['href'] ?? '');
-          return {'title': title, 'link': link};
-        }).whereType<Map<String, String>>().toList(); // null 제거
-
-        // 페이지 번호 크롤링
-        final pageElements = document.querySelectorAll('._paging ._inner ul li');
-        final pages = pageElements.map((element) {
-          final isCurrent = element.localName == 'strong'; // 현재 페이지는 <strong> 태그
-          return {
-            'page': element.text.trim(),
-            'isCurrent': isCurrent,
-          };
-        }).toList();
         return {
           'headline': headlineNotices,
           'general': generalNotices,
@@ -70,5 +53,61 @@ class WholeAPI {
     } catch (e) {
       throw Exception('Error fetching notices: $e');
     }
+  }
+
+  // 중요 공지사항 가져오는 함수
+  List<Map<String, String>> _fetchHeadlineNotices(document) {
+    final headlines = document.querySelectorAll(HeadlineTagSelectors.kNoticeBoard);
+
+    final List<Map<String, String>> results = [];
+    for (var headline in headlines) {
+      final aTag = headline.querySelector(HeadlineTagSelectors.kNoticeLink);
+      if (aTag == null) continue;
+
+      final title = aTag.nodes
+          .where((node) => node.nodeType == 3)
+          .map((node) => node.text?.trim())
+          .join() ??
+          '';
+      final link = baseUrl + (aTag.attributes['href'] ?? '');
+
+      results.add({'title': title, 'link': link});
+    }
+    return results;
+  }
+
+  // 일반 공지사항 가져오는 함수
+  List<Map<String, String>> _fetchGeneralNotices(document) {
+    final generals = document.querySelectorAll(GeneralTagSelectors.kNoticeBoard);
+    final List<Map<String, String>> results = [];
+    for (var general in generals.skip(1)) {
+      final aTag = general.querySelector(GeneralTagSelectors.kNoticeLink);
+      if (aTag == null) continue;
+
+      final title = aTag.nodes
+          .where((node) => node.nodeType == 3)
+          .map((node) => node.text?.trim())
+          .join() ??
+          '';
+      final link = baseUrl + (aTag.attributes['href'] ?? '');
+
+      results.add({'title': title, 'link': link});
+    }
+    return results;
+  }
+
+  // 페이지 번호 가져오는 함수
+  List<Map<String, dynamic>> _fetchPages(document) {
+    final pages = document.querySelectorAll(PageTagSelectors.kPageBoard);
+    final List<Map<String, dynamic>> results = [];
+    for (var page in pages) {
+      final bool isCurrent = page.localName == 'strong';
+
+      results.add({
+        'page': int.parse(page.text.trim()),
+        'isCurrent': isCurrent,
+      });
+    }
+    return results;
   }
 }

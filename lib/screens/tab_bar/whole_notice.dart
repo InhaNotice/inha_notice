@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../services/whole_api.dart';
-import '../web_page.dart';
+import 'package:inha_notice/services/whole_api.dart';
+import 'package:inha_notice/screens/web_page.dart';
 
 class WholeNoticePage extends StatefulWidget {
   const WholeNoticePage({super.key});
@@ -11,38 +11,43 @@ class WholeNoticePage extends StatefulWidget {
 }
 
 class _WholeNoticePageState extends State<WholeNoticePage> {
-  final WholeAPI _whole_api = WholeAPI();
-  Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
-  bool _isLoading = true;
-  String _error = '';
-  int _currentPage = 1; // 현재 페이지 번호
+  static const int kInitialPage = 1;
+  static const String kEmptyString = '';
 
-  // 헤드라인 공지사항 표시 여부를 관리하는 상태
+  final WholeAPI _wholeApi = WholeAPI();
+  Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
+  List<Map<String, dynamic>> _initialPages = [];
+
+  bool _isLoading = true;
   bool _showHeadlines = false;
+  int _currentPage = kInitialPage;
+  String _error = kEmptyString;
 
   @override
   void initState() {
     super.initState();
-    _loadNotices(); // 초기 데이터 로드
+    _loadNotices(kInitialPage);
   }
 
-  Future<void> _loadNotices({int page = 1}) async {
+  Future<void> _loadNotices(int page) async {
     setState(() {
-      _isLoading = true; // 로딩 상태
+      _isLoading = true;
     });
 
     try {
-      final notices = await _whole_api.fetchNoticesWithLinks(
-          'http://www.inha.ac.kr/bbs/kr/8/artclList.do?page=$page', "whole");
+      final notices = await _wholeApi.fetchNotices(page);
       setState(() {
-        _notices = notices; // 공지사항 데이터 저장
-        _currentPage = page; // 현재 페이지 업데이트
-        _isLoading = false; // 로딩 상태 종료
+        _notices = notices;
+        if (page == kInitialPage) {
+          _initialPages = List<Map<String, dynamic>>.from(notices['pages']);
+        }
+        _currentPage = page;
+        _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _error = e.toString(); // 오류 메시지 저장
-        _isLoading = false; // 로딩 상태 종료
+        _error = e.toString();
+        _isLoading = false;
       });
     }
   }
@@ -55,15 +60,14 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
-                color: Color(0xEB292929), // 배경색 #292929, 투명도 92%
+                color: Color(0xEB292929),
               ),
               child: _isLoading
-                  ? const Center(child: CircularProgressIndicator()) // 로딩 표시
+                  ? const Center(child: CircularProgressIndicator())
                   : _error.isNotEmpty
-                  ? Center(child: Text('Error: $_error')) // 오류 메시지 표시
+                  ? Center(child: Text('Error: $_error'))
                   : ListView(
                 children: [
-                  // 중요 공지사항(Headline Notices)
                   if (_notices['headline']!.isNotEmpty)
                     GestureDetector(
                       onTap: () {
@@ -183,17 +187,17 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: _notices['pages']!.map<Widget>((pageData) {
-                    final String pageNumber = pageData['page'].toString(); // 페이지 번호 추출
-                    final bool isCurrentPage = int.parse(pageNumber) == _currentPage;
+                  children: _initialPages.map<Widget>((pageData) {
+                    final int pageNumber = pageData['page']; // 페이지 번호 추출
+                    final bool isCurrentPage = (pageNumber == _currentPage);
                     return TextButton(
                       onPressed: isCurrentPage
                           ? null
                           : () {
-                        _loadNotices(page: int.parse(pageNumber)); // 해당 페이지로 이동
+                        _loadNotices(pageNumber); // 해당 페이지로 이동
                       },
                       child: Text(
-                        pageNumber,
+                        pageNumber.toString(),
                         style: TextStyle(
                           color: isCurrentPage ? Colors.white : Colors.white60,
                           fontWeight: isCurrentPage
