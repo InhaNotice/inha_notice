@@ -13,7 +13,6 @@ class WholeNoticePage extends StatefulWidget {
 
 class _WholeNoticePageState extends State<WholeNoticePage> {
   static const int kInitialPage = 1;
-  static const String kEmptyString = '';
 
   final WholeAPI _wholeApi = WholeAPI();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
@@ -23,7 +22,6 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
   bool _showHeadlines = false;
   bool _showGeneral = true;
   int _currentPage = kInitialPage;
-  String _error = kEmptyString;
 
   @override
   void initState() {
@@ -48,7 +46,6 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
       });
     } catch (e) {
       setState(() {
-        _error = e.toString();
         _isLoading = false;
       });
     }
