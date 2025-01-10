@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:inha_notice/services/whole_api.dart';
-import 'package:inha_notice/screens/web_page.dart';
+import 'package:inha_notice/widgets/notice_list_tile.dart';
+import 'package:inha_notice/widgets/page_selector.dart';
 
 class WholeNoticePage extends StatefulWidget {
   const WholeNoticePage({super.key});
@@ -76,13 +77,16 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      _showHeadlines = !_showHeadlines; // 상태 토글
+                      _showHeadlines = !_showHeadlines;
                       if (!_showHeadlines && !_showGeneral) {
-                        // 둘 다 선택되지 않은 경우 기본적으로 하나 선택
                         _showHeadlines = true;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('최소 하나의 옵션을 선택해야 합니다!'),
+                            content: Text('최소 하나의 옵션을 선택해야 합니다!',
+                                style: TextStyle(
+                                    fontFamily: 'Pretendard',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal)),
                             duration: Duration(seconds: 2),
                           ),
                         );
@@ -114,13 +118,17 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      _showGeneral = !_showGeneral; // 상태 토글
+                      _showGeneral = !_showGeneral;
                       if (!_showHeadlines && !_showGeneral) {
-                        // 둘 다 선택되지 않은 경우 기본적으로 하나 선택
                         _showGeneral = true;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('최소 하나의 옵션을 선택해야 합니다!'),
+                            content: Text('최소 하나의 옵션을 선택해야 합니다!',
+                                style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                )),
                             duration: Duration(seconds: 2),
                           ),
                         );
@@ -182,79 +190,38 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                         if (_showHeadlines &&
                             index < _notices['headline'].length) {
                           final notice = _notices['headline'][index];
-                          return Container(
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF222222),
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Color(0xFF222222),
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  notice['title'] ?? 'No title',
-                                  style: const TextStyle(
-                                    fontFamily: 'Pretendard',
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => WebPage(
-                                        url: notice['link'] ?? '',
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ));
+                          return NoticeListTile(
+                            notice: notice,
+                            backgroundColor: const Color(0xFF1A1A1A),
+                            borderColor: const Color(0xFF222222),
+                            textColor: const Color(0xFFFFFFFF),
+                          );
                         }
                         final generalIndex = index -
                             (_showHeadlines ? _notices['headline'].length : 0);
                         if (_showGeneral &&
                             generalIndex < _notices['general'].length) {
                           final notice = _notices['general'][generalIndex];
-                          return Container(
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF292929),
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Color(0xFF222222),
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  notice['title'] ?? 'No title',
-                                  style: const TextStyle(
-                                    fontFamily: 'Pretendard',
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => WebPage(
-                                        url: notice['link'] ?? '',
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ));
+                          return NoticeListTile(
+                            notice: notice,
+                            backgroundColor: const Color(0xFF292929),
+                            borderColor: const Color(0xFF222222),
+                            textColor: const Color(0xFFFFFFFF),
+                          );
                         }
-                        return const SizedBox.shrink();
-                      }),
+                        return null;
+                      },
+                    ),
             ),
-          )
+          ),
+          if (_initialPages.isNotEmpty)
+            PageSelector(
+              pages: _initialPages,
+              currentPage: _currentPage,
+              onPageSelected: (page) {
+                _loadNotices(page);
+              },
+            ),
         ],
       ),
     );
