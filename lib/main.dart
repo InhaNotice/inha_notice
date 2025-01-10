@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path_provider/path_provider.dart';
 
-// Import screens
+import 'themes/theme.dart';
 import 'screens/bottom_navigation/home_page.dart';
 import 'screens/bottom_navigation/bookmark_page.dart';
 import 'screens/bottom_navigation/search_page.dart';
@@ -25,23 +25,30 @@ Future<void> _initializeStorage() async {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode _themeMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '인하공지',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: const BottomNavBarPage(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: _themeMode,
+      home: BottomNavBarPage(),
     );
   }
 }
 
 class BottomNavBarPage extends StatefulWidget {
+
   const BottomNavBarPage({super.key});
 
   @override
@@ -53,10 +60,10 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   // 하단 탭별 화면
   final List<Widget> _pages = [
-    const HomePage(), // 기존 공지사항 탭
-    const SearchPage(), // 검색 화면
-    const BookmarkPage(), // 북마크 화면
-    const MorePage(), // 더보기 화면
+    const HomePage(),
+    const SearchPage(),
+    const BookmarkPage(),
+    const MorePage(),
   ];
 
   @override
@@ -67,13 +74,13 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // 현재 선택된 탭 인덱스 업데이트
+            _currentIndex = index;
           });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFF292929), // 배경 색상
-        selectedItemColor: Colors.white, // 선택된 아이콘 및 텍스트 색상
-        unselectedItemColor: Colors.white60, // 선택되지 않은 아이콘 및 텍스트 색상
+        backgroundColor: const Color(0xFF292929),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white60,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

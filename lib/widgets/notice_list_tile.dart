@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/web_page.dart';
 
-class NoticeListTile extends StatelessWidget {
+class NoticeListTile extends StatefulWidget {
   final Map<String, dynamic> notice;
-  final Color backgroundColor;
-  final Color borderColor;
-  final Color textColor;
+  final String noticeType;
+
   const NoticeListTile({
     super.key,
     required this.notice,
-    required this.backgroundColor,
-    required this.borderColor,
-    required this.textColor,
+    required this.noticeType,
   });
 
   @override
+  State<NoticeListTile> createState() => _NoticeListTileState();
+}
+
+class _NoticeListTileState extends State<NoticeListTile> {
+  @override
   Widget build(BuildContext context) {
+    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final borderColor = Theme.of(context).dividerColor;
+    final textColor = Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black;
+
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -28,7 +34,7 @@ class NoticeListTile extends StatelessWidget {
       ),
       child: ListTile(
         title: Text(
-          notice['title'] ?? 'No title',
+          widget.notice['title'] ?? 'No title',
           style: TextStyle(
             fontFamily: 'Pretendard',
             fontSize: 16.0,
@@ -41,7 +47,7 @@ class NoticeListTile extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => WebPage(
-                url: notice['link'] ?? '',
+                url: widget.notice['link'] ?? '',
               ),
             ),
           );

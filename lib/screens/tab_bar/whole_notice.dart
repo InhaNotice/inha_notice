@@ -189,9 +189,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                           final notice = _notices['headline'][index];
                           return NoticeListTile(
                             notice: notice,
-                            backgroundColor: const Color(0xFF1A1A1A),
-                            borderColor: const Color(0xFF222222),
-                            textColor: const Color(0xFFFFFFFF),
+                            noticeType: 'headline',
                           );
                         }
                         final generalIndex = index -
@@ -201,9 +199,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                           final notice = _notices['general'][generalIndex];
                           return NoticeListTile(
                             notice: notice,
-                            backgroundColor: const Color(0xFF292929),
-                            borderColor: const Color(0xFF222222),
-                            textColor: const Color(0xFFFFFFFF),
+                            noticeType: 'general',
                           );
                         }
                         return null;
