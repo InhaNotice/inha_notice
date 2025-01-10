@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:inha_notice/screens/tab_bar/international_notice.dart';
-import 'package:inha_notice/screens/tab_bar/library_notice.dart';
-import 'package:inha_notice/screens/tab_bar/recruitment_notice.dart';
-import 'package:inha_notice/screens/tab_bar/scholarship_notice.dart';
-import 'package:inha_notice/screens/tab_bar/whole_notice.dart';
-import 'package:inha_notice/screens/tab_bar/major_notice.dart';
+import 'package:inha_notice/screens/notices_categories/international_notice.dart';
+import 'package:inha_notice/screens/notices_categories/library_notice.dart';
+import 'package:inha_notice/screens/notices_categories/recruitment_notice.dart';
+import 'package:inha_notice/screens/notices_categories/scholarship_notice.dart';
+import 'package:inha_notice/screens/notices_categories/whole_notice.dart';
+import 'package:inha_notice/screens/notices_categories/major_notice.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

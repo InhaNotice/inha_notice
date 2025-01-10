@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/bookmark/bookmark_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
