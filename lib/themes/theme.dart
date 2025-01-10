@@ -39,5 +39,5 @@ final ThemeData darkTheme = ThemeData(
     bodyLarge: TextStyle(color: Colors.white),
   ),
   iconTheme: const IconThemeData(color: Colors.white),
-  dividerColor: Colors.grey[300],
+  dividerColor: Color(0xFF292929)
 );
