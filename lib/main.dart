@@ -78,25 +78,22 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color(0xFF292929),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white60,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '',
+            label: '홈',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: '',
+            label: '검색',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark),
-            label: '',
+            label: '북마크',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
-            label: '',
+            label: '더보기',
           ),
         ],
       ),

@@ -58,14 +58,8 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: const BoxDecoration(
-              color: Color(0xFF292929),
-              border: Border(
-                bottom: BorderSide(
-                  color: Color(0xFF101010),
-                  width: 2.0,
-                ),
-              ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
             ),
             padding: const EdgeInsets.all(10),
             child: Row(
@@ -161,11 +155,14 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                     padding: const EdgeInsets.all(4.0),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
-                      border: Border.all(color: Colors.white, width: 2.0),
+                      border: Border.all(color: Theme.of(context).iconTheme.color!, width: 2.0),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                    child: const Icon(Icons.refresh,
-                        color: Colors.white, size: 16.0),
+                    child: Icon(
+                      Icons.refresh,
+                      color: Theme.of(context).iconTheme.color,
+                      size: 16.0,
+                    ),
                   ),
                 ),
               ],
@@ -173,7 +170,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
           ),
           Expanded(
             child: Container(
-              color: const Color(0xFF222222),
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(

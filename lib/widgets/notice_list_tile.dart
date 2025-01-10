@@ -18,41 +18,44 @@ class NoticeListTile extends StatefulWidget {
 class _NoticeListTileState extends State<NoticeListTile> {
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
     final borderColor = Theme.of(context).dividerColor;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        border: Border(
-          bottom: BorderSide(
-            color: borderColor,
-            width: 2.0,
-          ),
-        ),
-      ),
-      child: ListTile(
-        title: Text(
-          widget.notice['title'] ?? 'No title',
-          style: TextStyle(
-            fontFamily: 'Pretendard',
-            fontSize: 16.0,
-            fontWeight: FontWeight.normal,
-            color: textColor,
-          ),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WebPage(
-                url: widget.notice['link'] ?? '',
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                color: borderColor,
+                width: 1.0,
               ),
             ),
-          );
-        },
-      ),
+          ),
+        ),
+        ListTile(
+          title: Text(
+            widget.notice['title'] ?? 'No title',
+            style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 16.0,
+              fontWeight: FontWeight.normal,
+              color: textColor,
+            ),
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WebPage(
+                  url: widget.notice['link'] ?? '',
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

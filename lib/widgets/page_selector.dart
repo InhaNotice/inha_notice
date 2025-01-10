@@ -15,11 +15,16 @@ class PageSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (pages.isEmpty) {
-      return const SizedBox.shrink(); // 페이지가 없을 경우 빈 위젯 반환
+      return const SizedBox.shrink();
     }
 
+    // 테마 기반 색상 설정
+    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final currentPageColor = Theme.of(context).textTheme.bodyLarge?.color;
+    const otherPageColor = Colors.grey;
+
     return Container(
-      color: const Color(0xFF292929),
+      color: backgroundColor,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -38,9 +43,8 @@ class PageSelector extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 14,
-                  fontWeight:
-                  isCurrentPage ? FontWeight.bold : FontWeight.normal,
-                  color: isCurrentPage ? Colors.white : Colors.white60,
+                  fontWeight: isCurrentPage ? FontWeight.bold : FontWeight.normal,
+                  color: isCurrentPage ? currentPageColor : otherPageColor,
                 ),
               ),
             );

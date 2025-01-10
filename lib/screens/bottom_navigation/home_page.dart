@@ -13,12 +13,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6, // 두 개의 탭
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF222222), // AppBar 배경색
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           title: const Align(
-            alignment: Alignment.centerLeft, // 제목을 왼쪽 정렬
+            alignment: Alignment.centerLeft,
             child: Text.rich(
               TextSpan(
                 children: [
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontSize: 16,
-                      color: Color(0xFF12B8FF), // '인' 글자 색상
+                      color: Color(0xFF12B8FF),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontSize: 16,
-                      color: Color(0xFFBAB6B6), // '하' 글자 기본 색상
+                      color: Color(0xFFBAB6B6),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontSize: 16,
-                      color: Color(0xFFBAB6B6), // '공' 글자 색상
+                      color: Color(0xFF12B8FF),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -54,7 +54,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Pretendard',
                       fontSize: 16,
-                      color: Color(0xFFBAB6B6), // '지' 글자 기본 색상
+                      color: Color(0xFFBAB6B6),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -65,28 +65,22 @@ class HomePage extends StatelessWidget {
           actions: [
             IconButton(
               icon: const Icon(Icons.notifications),
-              color: const Color(0xFFBAB6B6), // 알림 버튼 색상
+              color: Theme.of(context).iconTheme.color,
               onPressed: () {
-                // 알림 버튼 동작 추가
                 print('알림 버튼 클릭됨');
               },
             ),
           ],
           bottom: const TabBar(
             indicatorColor: Color(0xFF12B8FF),
-            // 탭 선택 시 하단 표시줄 색상
             labelColor: Color(0xFF12B8FF),
-            // 선택된 탭 텍스트 색상 12B8FF
             unselectedLabelColor: Color(0xFFBAB6B6),
-            // 선택되지 않은 탭 텍스트 색상 BAB6B6
             labelStyle: TextStyle(
-              // 선택된 탭 텍스트 스타일
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.bold,
               fontSize: 13,
             ),
             unselectedLabelStyle: TextStyle(
-              // 선택되지 않은 탭 텍스트 스타일
               fontFamily: 'Pretendard',
               fontWeight: FontWeight.bold,
               fontSize: 13,
