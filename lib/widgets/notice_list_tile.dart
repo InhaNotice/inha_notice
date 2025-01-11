@@ -18,7 +18,8 @@ class NoticeListTile extends StatefulWidget {
 class _NoticeListTileState extends State<NoticeListTile> {
   @override
   Widget build(BuildContext context) {
-    final borderColor = Theme.of(context).dividerColor;
+    const headlineBorderColor = Colors.blue;
+    final generalBorderColor = Theme.of(context).dividerColor;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black;
 
     return Column(
@@ -28,9 +29,12 @@ class _NoticeListTileState extends State<NoticeListTile> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: borderColor,
+                color: (widget.noticeType == 'headline') ? headlineBorderColor: generalBorderColor,
                 width: 1.0,
               ),
+              top: BorderSide.none,
+              left: BorderSide.none,
+              right: BorderSide.none,
             ),
           ),
         ),
