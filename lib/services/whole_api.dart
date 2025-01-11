@@ -19,8 +19,8 @@ class GeneralTagSelectors {
 }
 
 class PageTagSelectors {
-  static const String kPageBoard = '._paging ._inner ul li';
-  static const String kCurrentPage = 'strong';
+  static const String kPageBoard = '._paging ._inner';
+  static const String kLastPage = 'a._last';
 }
 
 class WholeAPI {
@@ -132,15 +132,19 @@ class WholeAPI {
 
   // 페이지 번호 가져오는 함수
   List<Map<String, dynamic>> _fetchPages(document) {
-    final pages = document.querySelectorAll(PageTagSelectors.kPageBoard);
     final List<Map<String, dynamic>> results = [];
-    for (var page in pages) {
-      final bool isCurrent = (page.localName == PageTagSelectors.kCurrentPage);
+    final pages = document.querySelector(PageTagSelectors.kPageBoard);
+    if (pages == null) return results;
 
-      results.add({
-        'page': int.parse(page.text.trim()),
-        'isCurrent': isCurrent,
-      });
+    final lastPageHref = pages.querySelector(PageTagSelectors.kLastPage).attributes['href'] ?? '';
+    if (lastPageHref == '') return results;
+
+    final match = RegExp(r"page_link\('(\d+)'\)").firstMatch(lastPageHref);
+    final lastPage = int.parse(match?.group(1) ?? '1');
+    for (int i = 1; i <= lastPage; i++) {
+      final page = i;
+      final bool isCurrent = (i == 1) ? true : false;
+      results.add({'page': page, 'isCurrent': isCurrent});
     }
     return results;
   }
