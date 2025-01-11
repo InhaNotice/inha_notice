@@ -44,6 +44,15 @@ class _NoticeListTileState extends State<NoticeListTile> {
               color: textColor,
             ),
           ),
+          subtitle: Text(
+            widget.notice['date'] ?? 'No date',
+            style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontSize: 14.0,
+              fontWeight: FontWeight.normal,
+              color: textColor.withOpacity(0.6),
+            ),
+          ),
           onTap: () {
             Navigator.push(
               context,
