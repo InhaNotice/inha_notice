@@ -4,7 +4,7 @@ import 'package:inha_notice/screens/notices_categories/international_notice.dart
 import 'package:inha_notice/screens/notices_categories/library_notice.dart';
 import 'package:inha_notice/screens/notices_categories/recruitment_notice.dart';
 import 'package:inha_notice/screens/notices_categories/scholarship_notice.dart';
-import 'package:inha_notice/screens/notices_categories/whole_notice.dart';
+import 'package:inha_notice/screens/notices_categories/whole_notice_page.dart';
 import 'package:inha_notice/screens/notices_categories/major_notice.dart';
 
 class HomePage extends StatelessWidget {
