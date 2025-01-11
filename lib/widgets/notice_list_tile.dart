@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/web_page.dart';
+import 'package:inha_notice/utils/read_notice_manager.dart';
 
 class NoticeListTile extends StatefulWidget {
   final Map<String, dynamic> notice;
@@ -16,11 +17,47 @@ class NoticeListTile extends StatefulWidget {
 }
 
 class _NoticeListTileState extends State<NoticeListTile> {
+  bool _isRead = false;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeNotice();
+  }
+
+  Future<void> _initializeNotice() async {
+    await _checkReadStatus();
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _checkReadStatus() async {
+    final readIds = await ReadNoticeManager.loadReadNotices();
+    _isRead = readIds.contains(widget.notice['id'].toString());
+  }
+
+  Future<void> _markAsRead() async {
+    final readIds = await ReadNoticeManager.loadReadNotices();
+    readIds.add(widget.notice['id'].toString());
+    await ReadNoticeManager.saveReadNotices(readIds);
+    setState(() {
+      _isRead = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const SizedBox.shrink();
+    }
     const headlineBorderColor = Colors.blue;
     final generalBorderColor = Theme.of(context).dividerColor;
-    final textColor = Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black;
+    const readTextColor = Colors.grey;
+    final textColor = _isRead
+        ? readTextColor
+        : Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black;
 
     return Column(
       children: [
@@ -29,7 +66,9 @@ class _NoticeListTileState extends State<NoticeListTile> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: (widget.noticeType == 'headline') ? headlineBorderColor: generalBorderColor,
+                color: (widget.noticeType == 'headline')
+                    ? headlineBorderColor
+                    : generalBorderColor,
                 width: 1.0,
               ),
               top: BorderSide.none,
@@ -57,7 +96,8 @@ class _NoticeListTileState extends State<NoticeListTile> {
               color: textColor.withOpacity(0.6),
             ),
           ),
-          onTap: () {
+          onTap: () async {
+            await _markAsRead();
             Navigator.push(
               context,
               MaterialPageRoute(
