@@ -119,10 +119,10 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         appBar: AppBar(
           backgroundColor: Color(0xFF292929),
           centerTitle: false,
-          title: const Text(
+          title: Text(
             '검색',
             style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
                 fontFamily: 'Pretendard',
                 fontWeight: FontWeight.bold,
                 fontSize: 20),
