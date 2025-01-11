@@ -43,9 +43,11 @@ class _NoticeListTileState extends State<NoticeListTile> {
     final readIds = await ReadNoticeManager.loadReadNotices();
     readIds.add(widget.notice['id'].toString());
     await ReadNoticeManager.saveReadNotices(readIds);
-    setState(() {
-      _isRead = true;
-    });
+    if (mounted) {
+      setState(() {
+        _isRead = true;
+      });
+    }
   }
 
   Future<void> _navigateToWebPage() async {
@@ -62,15 +64,13 @@ class _NoticeListTileState extends State<NoticeListTile> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const SizedBox.shrink();
-    }
     final headlineBorderColor = Theme.of(context).headlineBorderColor;
     final generalBorderColor = Theme.of(context).generalBorderColor;
     final readTextColor = Theme.of(context).readTextColor;
     final textColor = _isRead
         ? readTextColor
-        : Theme.of(context).textTheme.bodyLarge?.color ?? Theme.of(context).defaultColor;
+        : Theme.of(context).textTheme.bodyLarge?.color ??
+            Theme.of(context).defaultColor;
 
     return Column(
       children: [
