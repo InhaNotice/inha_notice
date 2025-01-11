@@ -10,9 +10,9 @@ final ThemeData lightTheme = ThemeData(
     titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: Colors.white, // 네비게이션 바 배경색
-    selectedItemColor: Colors.black, // 선택된 아이템 색상
-    unselectedItemColor: Colors.black54, // 선택되지 않은 아이템 색상
+    backgroundColor: Colors.white,
+    selectedItemColor: Colors.black,
+    unselectedItemColor: Colors.black54,
   ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.black),
@@ -41,3 +41,16 @@ final ThemeData darkTheme = ThemeData(
   iconTheme: const IconThemeData(color: Colors.white),
   dividerColor: Color(0xFF292929)
 );
+
+extension DefaultColors on ThemeData {
+  Color get defaultColor => brightness == Brightness.light ? Colors.black : Colors.white;
+}
+
+extension TextColors on ThemeData {
+  Color get readTextColor => brightness == Brightness.light ? Colors.grey : Colors.grey;
+}
+
+extension BorderColors on ThemeData {
+  Color get headlineBorderColor => Colors.blue;
+  Color get generalBorderColor => dividerColor ?? Colors.grey;
+}

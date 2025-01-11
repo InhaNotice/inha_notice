@@ -1,41 +1,70 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:async';
+import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class ReadNoticeManager {
-  static const String fileName = 'read_notices.json';
+  static const String tableName = 'read_notices';
+  static Database? _database;
 
-  static Set<String> _cachedReadIds = {};
+  // SQLite 초기화
+  static Future<Database> _initDatabase() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final path = join(directory.path, 'read_notices.db');
 
-  static Future<File> _getFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File('${directory.path}/storage/$fileName');
+      return await openDatabase(
+        path,
+        version: 1,
+        onCreate: (db, version) {
+          return db.execute(
+            'CREATE TABLE $tableName (id TEXT PRIMARY KEY)',
+          );
+        },
+      );
+    } catch (e) {
+      print('Error initializing database: $e');
+      rethrow; // 에러를 다시 던져 상위에서 처리할 수 있도록
+    }
   }
 
-  static Future<Set<String>> loadReadNotices() async {
-    if (_cachedReadIds.isNotEmpty) {
-      return _cachedReadIds;
-    }
-
+  static Future<Database> getDatabase() async {
     try {
-      final file = await _getFile();
-      if (await file.exists()) {
-        final content = await file.readAsString();
-        final ids = jsonDecode(content) as List<dynamic>;
-        _cachedReadIds = ids.map((e) => e.toString()).toSet();
-      }
+      if (_database != null) return _database!;
+      _database = await _initDatabase();
+      return _database!;
+    } catch (e) {
+      print('Error getting database: $e');
+      rethrow;
+    }
+  }
+
+  // 읽은 공지사항 로드
+  static Future<Set<String>> loadReadNotices() async {
+    try {
+      final db = await getDatabase();
+      final result = await db.query(tableName);
+      return result.map((row) => row['id'] as String).toSet();
     } catch (e) {
       print('Error loading read notices: $e');
+      return {}; // 에러 발생 시 빈 Set 반환
     }
-    return _cachedReadIds;
   }
 
+  // 읽은 공지사항 저장
   static Future<void> saveReadNotices(Set<String> readIds) async {
     try {
-      _cachedReadIds = readIds;
-      final file = await _getFile();
-      final content = jsonEncode(readIds.toList());
-      await file.writeAsString(content);
+      final db = await getDatabase();
+      final batch = db.batch();
+
+      // 기존 데이터 삭제
+      await db.delete(tableName);
+
+      // 새로운 데이터 삽입
+      for (final id in readIds) {
+        batch.insert(tableName, {'id': id});
+      }
+      await batch.commit(noResult: true);
     } catch (e) {
       print('Error saving read notices: $e');
     }

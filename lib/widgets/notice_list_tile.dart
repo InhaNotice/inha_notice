@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/web_page.dart';
+import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/read_notice_manager.dart';
 
 class NoticeListTile extends StatefulWidget {
@@ -47,17 +48,29 @@ class _NoticeListTileState extends State<NoticeListTile> {
     });
   }
 
+  Future<void> _navigateToWebPage() async {
+    if (!mounted) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WebPage(
+          url: widget.notice['link'] ?? '',
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const SizedBox.shrink();
     }
-    const headlineBorderColor = Colors.blue;
-    final generalBorderColor = Theme.of(context).dividerColor;
-    const readTextColor = Colors.grey;
+    final headlineBorderColor = Theme.of(context).headlineBorderColor;
+    final generalBorderColor = Theme.of(context).generalBorderColor;
+    final readTextColor = Theme.of(context).readTextColor;
     final textColor = _isRead
         ? readTextColor
-        : Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black;
+        : Theme.of(context).textTheme.bodyLarge?.color ?? Theme.of(context).defaultColor;
 
     return Column(
       children: [
@@ -78,36 +91,28 @@ class _NoticeListTileState extends State<NoticeListTile> {
           ),
         ),
         ListTile(
-          title: Text(
-            widget.notice['title'] ?? 'No title',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 16.0,
-              fontWeight: FontWeight.normal,
-              color: textColor,
-            ),
-          ),
-          subtitle: Text(
-            widget.notice['date'] ?? 'No date',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontSize: 14.0,
-              fontWeight: FontWeight.normal,
-              color: textColor.withOpacity(0.6),
-            ),
-          ),
-          onTap: () async {
-            await _markAsRead();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => WebPage(
-                  url: widget.notice['link'] ?? '',
-                ),
+            title: Text(
+              widget.notice['title'] ?? 'No title',
+              style: TextStyle(
+                fontFamily: 'Pretendard',
+                fontSize: 16.0,
+                fontWeight: FontWeight.normal,
+                color: textColor,
               ),
-            );
-          },
-        ),
+            ),
+            subtitle: Text(
+              widget.notice['date'] ?? 'No date',
+              style: TextStyle(
+                fontFamily: 'Pretendard',
+                fontSize: 14.0,
+                fontWeight: FontWeight.normal,
+                color: textColor.withOpacity(0.6),
+              ),
+            ),
+            onTap: () async {
+              await _markAsRead();
+              await _navigateToWebPage();
+            }),
       ],
     );
   }
