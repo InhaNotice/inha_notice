@@ -16,6 +16,7 @@ final ThemeData lightTheme = ThemeData(
   ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.black),
+    bodyMedium: TextStyle(color: Colors.black),
   ),
   iconTheme: const IconThemeData(color: Colors.grey),
   dividerColor: Colors.grey[300],
@@ -37,6 +38,7 @@ final ThemeData darkTheme = ThemeData(
   ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.white),
+    bodyMedium: TextStyle(color: Colors.white),
   ),
   iconTheme: const IconThemeData(color: Colors.white),
   dividerColor: Color(0xFF292929)
