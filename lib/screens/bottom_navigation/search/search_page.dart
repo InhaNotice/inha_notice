@@ -117,7 +117,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF292929),
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           centerTitle: false,
           title: Text(
             '검색',
@@ -128,7 +128,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 fontSize: 20),
           ),
         ),
-        backgroundColor: Color(0xFF292929),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -138,12 +138,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   height: 50.0,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF424242),
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.search, color: Colors.white),
+                      Icon(Icons.search, color: Theme.of(context).iconTheme.color),
                       const SizedBox(width: 10),
                       Expanded(
                         child: TextField(
@@ -170,7 +170,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -179,7 +179,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                         fontFamily: 'Pretendard',
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     Text(
@@ -188,7 +188,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                         fontFamily: 'Pretendard',
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
-                        color: Colors.white,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     )
                   ],
@@ -197,22 +197,22 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       '실시간 인기 검색어',
                       style: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     Text(
                       _makeTimes,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
-                        color: Colors.white,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                   ],
@@ -220,14 +220,14 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 const SizedBox(height: 12),
                 Expanded(
                   child: _topicsList.isEmpty
-                      ? const Center(
+                      ? Center(
                       child: Text(
                         '실시간 인기 검색어를 불러오고 있습니다...',
                         style: TextStyle(
                           fontFamily: 'Pretendard',
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
-                          color: Colors.white,
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                         ),
                       ))
                       : ListView.builder(
@@ -244,7 +244,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   }
 }
 
-Widget _buildTag(String text) {
+Widget _buildTag(BuildContext context, String text) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
     decoration: BoxDecoration(
@@ -253,7 +253,7 @@ Widget _buildTag(String text) {
     ),
     child: Text(
       text,
-      style: const TextStyle(color: Colors.white),
+      style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color,),
     ),
   );
 }
