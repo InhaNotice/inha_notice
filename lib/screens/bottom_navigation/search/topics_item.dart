@@ -31,11 +31,11 @@ class TopicsItem extends StatelessWidget {
             // 순위 출력
             Text(
               '$rank',
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Pretendard',
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             const SizedBox(width: 16),
@@ -43,11 +43,11 @@ class TopicsItem extends StatelessWidget {
             Expanded(
               child: Text(
                 topic['text'] ?? 'N/A',
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Pretendard',
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.bodyLarge?.color,
                 ),
               ),
             ),
