@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inha_notice/fonts/font.dart';
 
 class PageSelector extends StatelessWidget {
   final List<Map<String, dynamic>> pages;
@@ -41,7 +42,7 @@ class PageSelector extends StatelessWidget {
               child: Text(
                 pageNumber.toString(),
                 style: TextStyle(
-                  fontFamily: 'Pretendard',
+                  fontFamily: Font.kDefaultFont,
                   fontSize: 14,
                   fontWeight: isCurrentPage ? FontWeight.bold : FontWeight.normal,
                   color: isCurrentPage ? currentPageColor : otherPageColor,

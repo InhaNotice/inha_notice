@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:inha_notice/screens/notices_categories/international_notice.dart';
 import 'package:inha_notice/screens/notices_categories/library_notice.dart';
 import 'package:inha_notice/screens/notices_categories/recruitment_notice.dart';
 import 'package:inha_notice/screens/notices_categories/scholarship_notice.dart';
 import 'package:inha_notice/screens/notices_categories/whole_notice_page.dart';
 import 'package:inha_notice/screens/notices_categories/major_notice.dart';
+import 'package:inha_notice/fonts/font.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
                   TextSpan(
                     text: '인',
                     style: TextStyle(
-                      fontFamily: 'Pretendard',
+                      fontFamily: Font.kDefaultFont,
                       fontSize: 16,
                       color: Color(0xFF12B8FF),
                       fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                   TextSpan(
                     text: '하',
                     style: TextStyle(
-                      fontFamily: 'Pretendard',
+                      fontFamily: Font.kDefaultFont,
                       fontSize: 16,
                       color: Color(0xFFBAB6B6),
                       fontWeight: FontWeight.bold,
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                   TextSpan(
                     text: '공',
                     style: TextStyle(
-                      fontFamily: 'Pretendard',
+                      fontFamily: Font.kDefaultFont,
                       fontSize: 16,
                       color: Color(0xFF12B8FF),
                       fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                   TextSpan(
                     text: '지',
                     style: TextStyle(
-                      fontFamily: 'Pretendard',
+                      fontFamily: Font.kDefaultFont,
                       fontSize: 16,
                       color: Color(0xFFBAB6B6),
                       fontWeight: FontWeight.bold,
@@ -76,12 +76,12 @@ class HomePage extends StatelessWidget {
             labelColor: Color(0xFF12B8FF),
             unselectedLabelColor: Color(0xFFBAB6B6),
             labelStyle: TextStyle(
-              fontFamily: 'Pretendard',
+              fontFamily: Font.kDefaultFont,
               fontWeight: FontWeight.bold,
               fontSize: 13,
             ),
             unselectedLabelStyle: TextStyle(
-              fontFamily: 'Pretendard',
+              fontFamily: Font.kDefaultFont,
               fontWeight: FontWeight.bold,
               fontSize: 13,
             ),

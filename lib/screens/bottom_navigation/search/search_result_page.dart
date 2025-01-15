@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:inha_notice/services/search_api.dart';
 import 'package:inha_notice/screens/web_page.dart';
+import 'package:inha_notice/fonts/font.dart';
 
 typedef NoticesMap = Map<String, dynamic>;
 typedef PagesList = List<Map<String, dynamic>>;
@@ -22,8 +23,8 @@ class _SearchResultPageState extends State<SearchResultPage> {
   PagesList _initialPages = [];
 
   bool _isLoading = false;
-  String _error = '';
-  int _currentPage = 1;
+  String _error = Font.kEmptyString;
+  int _currentPage = Font.kInitialPage;
 
   Future<void> loadNotices({int startCount = 0}) async {
     setState(() {
@@ -65,7 +66,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
         ),
         title: Text('검색 결과: ${widget.query}',
             style: const TextStyle(
-              fontFamily: 'Pretendard',
+              fontFamily: Font.kDefaultFont,
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -103,7 +104,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                         title: Text(
                           notice['title'] ?? 'No Title',
                           style: const TextStyle(
-                            fontFamily: 'Pretendard',
+                            fontFamily: Font.kDefaultFont,
                             fontWeight: FontWeight.normal,
                             fontSize: 16,
                             color: Colors.white,

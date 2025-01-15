@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/services/trending_topics_api.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
+import 'package:inha_notice/fonts/font.dart';
 
 typedef TopicsList = List<Map<String, dynamic>>;
 
@@ -20,8 +21,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   late final List<Animation<double>> _animations = [];
 
   TopicsList _topicsList = [];
-  String _warning = '';
-  String _makeTimes = '';
+  String _warning = Font.kEmptyString;
+  String _makeTimes = Font.kEmptyString;
 
   @override
   void initState() {
@@ -103,7 +104,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       return;
     }
     setState(() {
-      _warning = '';
+      _warning = Font.kEmptyString;
     });
     Navigator.push(
       context,
@@ -123,7 +124,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             '검색',
             style: TextStyle(
                 color: Theme.of(context).textTheme.bodyLarge?.color,
-                fontFamily: 'Pretendard',
+                fontFamily: Font.kDefaultFont,
                 fontWeight: FontWeight.bold,
                 fontSize: 20),
           ),
@@ -149,7 +150,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                         child: TextField(
                           controller: _searchController,
                           style: const TextStyle(
-                            fontFamily: 'Pretendard',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color: Colors.white,
@@ -157,7 +158,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                           decoration: const InputDecoration(
                             hintText: '검색어를 입력하세요',
                             hintStyle: TextStyle(
-                              fontFamily: 'Pretendard',
+                              fontFamily: Font.kDefaultFont,
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color: Color(0xFFC4C4C4),
@@ -176,7 +177,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     Text(
                       '최근 검색 기록',
                       style: TextStyle(
-                        fontFamily: 'Pretendard',
+                        fontFamily: Font.kDefaultFont,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -185,7 +186,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     Text(
                       '전체 삭제',
                       style: TextStyle(
-                        fontFamily: 'Pretendard',
+                        fontFamily: Font.kDefaultFont,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -200,7 +201,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     Text(
                       '실시간 인기 검색어',
                       style: TextStyle(
-                        fontFamily: 'Pretendard',
+                        fontFamily: Font.kDefaultFont,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -209,7 +210,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                     Text(
                       _makeTimes,
                       style: TextStyle(
-                        fontFamily: 'Pretendard',
+                        fontFamily: Font.kDefaultFont,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -224,7 +225,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                       child: Text(
                         '실시간 인기 검색어를 불러오고 있습니다...',
                         style: TextStyle(
-                          fontFamily: 'Pretendard',
+                          fontFamily: Font.kDefaultFont,
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                           color: Theme.of(context).textTheme.bodyLarge?.color,

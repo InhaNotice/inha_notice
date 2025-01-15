@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/utils/read_notice_manager.dart';
 
 class NoticeListTile extends StatefulWidget {
@@ -56,7 +57,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
       context,
       MaterialPageRoute(
         builder: (context) => WebPage(
-          url: widget.notice['link'] ?? '',
+          url: widget.notice['link'] ?? Font.kEmptyString,
         ),
       ),
     );
@@ -94,7 +95,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
             title: Text(
               widget.notice['title'] ?? 'No title',
               style: TextStyle(
-                fontFamily: 'Pretendard',
+                fontFamily: Font.kDefaultFont,
                 fontSize: 16.0,
                 fontWeight: FontWeight.normal,
                 color: textColor,
@@ -103,7 +104,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
             subtitle: Text(
               widget.notice['date'] ?? 'No date',
               style: TextStyle(
-                fontFamily: 'Pretendard',
+                fontFamily: Font.kDefaultFont,
                 fontSize: 14.0,
                 fontWeight: FontWeight.normal,
                 color: textColor.withOpacity(0.6),
