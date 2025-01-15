@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/services/whole_api.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/page_selector.dart';
+import 'package:inha_notice/fonts/font.dart';
 
 class WholeNoticePage extends StatefulWidget {
   const WholeNoticePage({super.key});
@@ -12,8 +13,6 @@ class WholeNoticePage extends StatefulWidget {
 }
 
 class _WholeNoticePageState extends State<WholeNoticePage> {
-  static const int kInitialPage = 1;
-
   final WholeAPI _wholeApi = WholeAPI();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   List<Map<String, dynamic>> _initialPages = [];
@@ -21,12 +20,12 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
   bool _isLoading = true;
   bool _showHeadlines = false;
   bool _showGeneral = true;
-  int _currentPage = kInitialPage;
+  int _currentPage = Font.kInitialPage;
 
   @override
   void initState() {
     super.initState();
-    _loadNotices(kInitialPage);
+    _loadNotices(Font.kInitialPage);
   }
 
   Future<void> _loadNotices(int page) async {
@@ -38,7 +37,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
       final notices = await _wholeApi.fetchNotices(page);
       setState(() {
         _notices = notices;
-        if (page == kInitialPage) {
+        if (page == Font.kInitialPage) {
           _initialPages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         _currentPage = page;
@@ -75,7 +74,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                           const SnackBar(
                             content: Text('최소 하나의 옵션을 선택해야 합니다!',
                                 style: TextStyle(
-                                    fontFamily: 'Pretendard',
+                                    fontFamily: Font.kDefaultFont,
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal)),
                             duration: Duration(seconds: 2),
@@ -97,7 +96,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                     child: Text(
                       '중요',
                       style: TextStyle(
-                        fontFamily: 'Pretendard',
+                        fontFamily: Font.kDefaultFont,
                         fontSize: 13.0,
                         fontWeight: FontWeight.bold,
                         color: _showHeadlines ? Colors.blue : Colors.grey,
@@ -116,7 +115,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                           const SnackBar(
                             content: Text('최소 하나의 옵션을 선택해야 합니다!',
                                 style: TextStyle(
-                                  fontFamily: 'Pretendard',
+                                  fontFamily: Font.kDefaultFont,
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
                                 )),
@@ -139,7 +138,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                     child: Text(
                       '일반',
                       style: TextStyle(
-                          fontFamily: 'Pretendard',
+                          fontFamily: Font.kDefaultFont,
                           fontSize: 13.0,
                           fontWeight: FontWeight.bold,
                           color: _showGeneral ? Colors.blue : Colors.grey),
@@ -149,7 +148,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                 const Spacer(),
                 GestureDetector(
                   onTap: () {
-                    _loadNotices(kInitialPage);
+                    _loadNotices(Font.kInitialPage);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(4.0),
