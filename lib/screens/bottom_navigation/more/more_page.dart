@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/main.dart';
 import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
 
 class MorePage extends StatelessWidget {
   const MorePage({super.key});
@@ -14,7 +15,7 @@ class MorePage extends StatelessWidget {
           title: Text(
             '더보기',
             style: TextStyle(
-              fontFamily: 'Pretendard',
+              fontFamily: Font.kDefaultFont,
               fontWeight: FontWeight.bold,
               fontSize: 20,
               color: Theme.of(context).textTheme.bodyLarge?.color ??
@@ -41,7 +42,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '공지사항',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
@@ -63,21 +64,31 @@ class MorePage extends StatelessWidget {
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '학과설정',
-                          style: TextStyle(
-                            fontFamily: 'Pretendart',
-                            fontSize: 19,
-                            fontWeight: FontWeight.normal,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color ??
-                                    Theme.of(context).defaultColor,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MajorSettingPage()
+                            ),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '학과 설정',
+                            style: TextStyle(
+                              fontFamily: Font.kDefaultFont,
+                              fontSize: 19,
+                              fontWeight: FontWeight.normal,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium?.color ??
+                                      Theme.of(context).defaultColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -92,7 +103,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '공지사항 알림 설정',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
@@ -116,7 +127,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '피드백',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
@@ -144,7 +155,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '피드백 보내기',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
@@ -168,7 +179,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '앱 정보',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
@@ -196,7 +207,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '공지사항',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
@@ -219,7 +230,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '앱 버전',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
@@ -242,7 +253,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '개인정보 처리방침',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
@@ -265,7 +276,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '이용약관',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
@@ -288,7 +299,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '사용된 오픈소스',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
@@ -311,7 +322,7 @@ class MorePage extends StatelessWidget {
                         Text(
                           '앱소개',
                           style: TextStyle(
-                            fontFamily: 'Pretendart',
+                            fontFamily: Font.kDefaultFont,
                             fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
