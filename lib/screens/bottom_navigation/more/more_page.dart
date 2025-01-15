@@ -70,7 +70,7 @@ class MorePage extends StatelessWidget {
                           '학과설정',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -93,7 +93,7 @@ class MorePage extends StatelessWidget {
                           '공지사항 알림 설정',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -145,7 +145,7 @@ class MorePage extends StatelessWidget {
                           '피드백 보내기',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -197,7 +197,7 @@ class MorePage extends StatelessWidget {
                           '공지사항',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -220,7 +220,7 @@ class MorePage extends StatelessWidget {
                           '앱 버전',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -243,7 +243,7 @@ class MorePage extends StatelessWidget {
                           '개인정보 처리방침',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -266,7 +266,7 @@ class MorePage extends StatelessWidget {
                           '이용약관',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -289,7 +289,7 @@ class MorePage extends StatelessWidget {
                           '사용된 오픈소스',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -312,7 +312,7 @@ class MorePage extends StatelessWidget {
                           '앱소개',
                           style: TextStyle(
                             fontFamily: 'Pretendart',
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
