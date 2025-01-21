@@ -41,7 +41,7 @@ final ThemeData darkTheme = ThemeData(
     bodyMedium: TextStyle(color: Colors.white),
   ),
   iconTheme: const IconThemeData(color: Colors.white),
-  dividerColor: Color(0xFF292929)
+  dividerColor: const Color(0xFF292929)
 );
 
 extension DefaultColors on ThemeData {
