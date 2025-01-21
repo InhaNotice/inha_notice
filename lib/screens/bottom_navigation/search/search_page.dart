@@ -249,7 +249,7 @@ Widget _buildTag(BuildContext context, String text) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
     decoration: BoxDecoration(
-      color: Color(0xFF424242),
+      color: const Color(0xFF424242),
       borderRadius: BorderRadius.circular(20.0),
     ),
     child: Text(
