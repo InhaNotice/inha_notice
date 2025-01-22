@@ -13,7 +13,7 @@ dependencies:
   http: ^1.2.2
   html: ^0.15.0
   flutter_background_service: ^2.0.0
-  flutter_local_notifications: ^15.0.0
+  flutter_local_notifications: ^18.0.1
   path_provider: ^2.0.14
   cupertino_icons: ^1.0.8
   url_launcher: ^6.1.8
