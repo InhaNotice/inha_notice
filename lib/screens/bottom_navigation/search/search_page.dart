@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:inha_notice/main.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/services/trending_topics_api.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/themes/theme.dart';
 
 typedef TopicsList = List<Map<String, dynamic>>;
 
@@ -149,11 +151,11 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                       Expanded(
                         child: TextField(
                           controller: _searchController,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: Font.kDefaultFont,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Colors.white,
+                            color: Theme.of(context).textTheme.bodyMedium?.color ?? Theme.of(context).defaultColor,
                           ),
                           decoration: const InputDecoration(
                             hintText: '검색어를 입력하세요',
@@ -162,6 +164,30 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color: Color(0xFFC4C4C4),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey, // 비활성 상태 경계선 색상
+                                width: 2.0,
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey, // 포커스 상태 경계선 색상
+                                width: 2.0,
+                              ),
+                            ),
+                            errorBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey, // 에러 상태 경계선 색상
+                                width: 2.0,
+                              ),
+                            ),
+                            disabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey, // 비활성화 상태 경계선 색상
+                                width: 2.0,
+                              ),
                             ),
                           ),
                           onSubmitted: (_) => _search(),
