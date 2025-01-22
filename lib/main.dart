@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
-import 'firebase_options.dart';
+import 'firebase/firebase_options.dart';
 
 // Firebase 메시지 백그라운드 핸들러
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
