@@ -53,6 +53,5 @@ extension TextColors on ThemeData {
 }
 
 extension BorderColors on ThemeData {
-  Color get headlineBorderColor => Colors.blue;
-  Color get generalBorderColor => dividerColor ?? Colors.grey;
+  Color get noticeBorderColor => dividerColor ?? Colors.grey;
 }

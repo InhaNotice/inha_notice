@@ -65,12 +65,10 @@ class _NoticeListTileState extends State<NoticeListTile> {
 
   @override
   Widget build(BuildContext context) {
-    final headlineBorderColor = Theme.of(context).headlineBorderColor;
-    final generalBorderColor = Theme.of(context).generalBorderColor;
     final readTextColor = Theme.of(context).readTextColor;
     final textColor = _isRead
         ? readTextColor
-        : Theme.of(context).textTheme.bodyLarge?.color ??
+        : Theme.of(context).textTheme.bodyMedium?.color ??
             Theme.of(context).defaultColor;
 
     return Column(
@@ -80,9 +78,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: (widget.noticeType == 'headline')
-                    ? headlineBorderColor
-                    : generalBorderColor,
+                color: Theme.of(context).noticeBorderColor,
                 width: 1.0,
               ),
               top: BorderSide.none,
@@ -97,7 +93,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16.0,
-                fontWeight: FontWeight.normal,
+                fontWeight: (widget.noticeType == 'headline') ? FontWeight.w600 : FontWeight.normal,
                 color: textColor,
               ),
             ),
