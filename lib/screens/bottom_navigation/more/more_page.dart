@@ -54,7 +54,7 @@ class MorePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                      width: 400,
+                      width: double.infinity,
                       child: Divider(
                           color: Theme.of(context).dividerColor,
                           thickness: 2.0)),
@@ -139,7 +139,7 @@ class MorePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                      width: 400,
+                      width: double.infinity,
                       child: Divider(
                           color: Theme.of(context).dividerColor,
                           thickness: 2.0)),
@@ -191,7 +191,7 @@ class MorePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                      width: 400,
+                      width: double.infinity,
                       child: Divider(
                           color: Theme.of(context).dividerColor,
                           thickness: 2.0)),
