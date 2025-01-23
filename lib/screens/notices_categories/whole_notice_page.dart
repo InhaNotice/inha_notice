@@ -50,6 +50,18 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
     }
   }
 
+  void _toggleOption(String option) {
+    setState(() {
+      if (option == 'headline') {
+        _showHeadlines = true;
+        _showGeneral = false;
+      } else if (option == 'general') {
+        _showHeadlines = false;
+        _showGeneral = true;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,24 +77,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _showHeadlines = !_showHeadlines;
-                      if (!_showHeadlines && !_showGeneral) {
-                        _showHeadlines = true;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('최소 하나의 옵션을 선택해야 합니다!',
-                                style: TextStyle(
-                                    fontFamily: Font.kDefaultFont,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal)),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      }
-                    });
-                  },
+                  onTap: () => _toggleOption('headline'),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 8.0),
@@ -106,25 +101,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _showGeneral = !_showGeneral;
-                      if (!_showHeadlines && !_showGeneral) {
-                        _showGeneral = true;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('최소 하나의 옵션을 선택해야 합니다!',
-                                style: TextStyle(
-                                  fontFamily: Font.kDefaultFont,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                )),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      }
-                    });
-                  },
+                  onTap: () => _toggleOption('general'),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 8.0),
@@ -154,7 +131,9 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                     padding: const EdgeInsets.all(4.0),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
-                      border: Border.all(color: Theme.of(context).iconTheme.color!, width: 2.0),
+                      border: Border.all(
+                          color: Theme.of(context).iconTheme.color!,
+                          width: 2.0),
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                     child: Icon(
@@ -173,32 +152,22 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(
-                      itemCount: _showHeadlines && _showGeneral
-                          ? _notices['headline'].length +
-                              _notices['general'].length
-                          : _showHeadlines
-                              ? _notices['headline'].length
-                              : _notices['general'].length,
+                      itemCount: _showHeadlines
+                          ? _notices['headline'].length
+                          : _notices['general'].length,
                       itemBuilder: (context, index) {
-                        if (_showHeadlines &&
-                            index < _notices['headline'].length) {
+                        if (_showHeadlines) {
                           final notice = _notices['headline'][index];
                           return NoticeListTile(
                             notice: notice,
                             noticeType: 'headline',
                           );
                         }
-                        final generalIndex = index -
-                            (_showHeadlines ? _notices['headline'].length : 0);
-                        if (_showGeneral &&
-                            generalIndex < _notices['general'].length) {
-                          final notice = _notices['general'][generalIndex];
-                          return NoticeListTile(
-                            notice: notice,
-                            noticeType: 'general',
-                          );
-                        }
-                        return null;
+                        final notice = _notices['general'][index];
+                        return NoticeListTile(
+                          notice: notice,
+                          noticeType: 'general',
+                        );
                       },
                     ),
             ),

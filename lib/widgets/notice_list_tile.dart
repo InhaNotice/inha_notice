@@ -78,7 +78,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: Theme.of(context).noticeBorderColor,
+                color:  Theme.of(context).noticeBorderColor,
                 width: 1.0,
               ),
               top: BorderSide.none,
@@ -89,16 +89,16 @@ class _NoticeListTileState extends State<NoticeListTile> {
         ),
         ListTile(
             title: Text(
-              widget.notice['title'] ?? 'No title',
+              widget.notice['title'] ?? '제목이 없습니다',
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16.0,
-                fontWeight: (widget.noticeType == 'headline') ? FontWeight.w600 : FontWeight.normal,
+                fontWeight: FontWeight.normal,
                 color: textColor,
               ),
             ),
             subtitle: Text(
-              widget.notice['date'] ?? 'No date',
+              widget.notice['date'] ?? '',
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 14.0,
