@@ -2,74 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/utils/read_notice_manager.dart';
 
-class NoticeListTile extends StatefulWidget {
+class NoticeListTile extends StatelessWidget {
   final Map<String, dynamic> notice;
   final String noticeType;
+  final bool isRead;
+  final Future<void> Function(String noticeId) markAsRead;
 
   const NoticeListTile({
     super.key,
     required this.notice,
     required this.noticeType,
+    required this.isRead,
+    required this.markAsRead,
   });
-
-  @override
-  State<NoticeListTile> createState() => _NoticeListTileState();
-}
-
-class _NoticeListTileState extends State<NoticeListTile> {
-  bool _isRead = false;
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeNotice();
-  }
-
-  Future<void> _initializeNotice() async {
-    await _checkReadStatus();
-    setState(() {
-      _isLoading = false;
-    });
-  }
-
-  Future<void> _checkReadStatus() async {
-    final readIds = await ReadNoticeManager.loadReadNotices();
-    _isRead = readIds.contains(widget.notice['id'].toString());
-  }
-
-  Future<void> _markAsRead() async {
-    final readIds = await ReadNoticeManager.loadReadNotices();
-    readIds.add(widget.notice['id'].toString());
-    await ReadNoticeManager.saveReadNotices(readIds);
-    if (mounted) {
-      setState(() {
-        _isRead = true;
-      });
-    }
-  }
-
-  Future<void> _navigateToWebPage() async {
-    if (!mounted) return;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => WebPage(
-          url: widget.notice['link'] ?? Font.kEmptyString,
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     final readTextColor = Theme.of(context).readTextColor;
-    final textColor = _isRead
+    // 읽음 상태를 전달받아서 제목 텍스트 색상을 결정합니다.
+    final textColor = isRead
         ? readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
-            Theme.of(context).defaultColor;
+        Theme.of(context).defaultColor;
 
     return Column(
       children: [
@@ -78,7 +33,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
           decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color:  Theme.of(context).noticeBorderColor,
+                color: Theme.of(context).noticeBorderColor,
                 width: 1.0,
               ),
               top: BorderSide.none,
@@ -89,7 +44,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
         ),
         ListTile(
             title: Text(
-              widget.notice['title'] ?? '제목이 없습니다',
+              notice['title'] ?? '제목이 없습니다',
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16.0,
@@ -98,7 +53,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
               ),
             ),
             subtitle: Text(
-              widget.notice['date'] ?? '',
+              notice['date'] ?? '',
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 14.0,
@@ -107,8 +62,15 @@ class _NoticeListTileState extends State<NoticeListTile> {
               ),
             ),
             onTap: () async {
-              await _markAsRead();
-              await _navigateToWebPage();
+              await markAsRead(notice['id'].toString());
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WebPage(
+                    url: notice['link'] ?? Font.kEmptyString,
+                  ),
+                ),
+              );
             }),
       ],
     );
