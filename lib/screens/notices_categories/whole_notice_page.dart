@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:inha_notice/services/whole_api.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/page_selector.dart';
 import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/utils/read_notice_manager.dart';
 
 class WholeNoticePage extends StatefulWidget {
   const WholeNoticePage({super.key});
@@ -16,6 +16,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
   final WholeAPI _wholeApi = WholeAPI();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   List<Map<String, dynamic>> _initialPages = [];
+  Set<String> _readNotices = {}; // 읽은 공지를 관리하는 캐시값
 
   bool _isLoading = true;
   bool _showHeadlines = false;
@@ -25,7 +26,28 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
   @override
   void initState() {
     super.initState();
+    _initializeReadNotices();
     _loadNotices(Font.kInitialPage);
+  }
+
+  // 읽은 공지 로드
+  Future<void> _initializeReadNotices() async {
+    final readIds = await ReadNoticeManager.loadReadNotices();
+    setState(() {
+      _readNotices = readIds.toSet();
+    });
+  }
+
+  // 공지를 읽었는지 확인
+  bool _isNoticeRead(String noticeId) {
+    return _readNotices.contains(noticeId);
+  }
+
+  // 공지를 읽음으로 표시
+  Future<void> _markNoticeAsRead(String noticeId) async {
+    _readNotices.add(noticeId);
+    await ReadNoticeManager.saveReadNotices(_readNotices);
+    setState(() {});
   }
 
   Future<void> _loadNotices(int page) async {
@@ -83,6 +105,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                         vertical: 4.0, horizontal: 8.0),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
+                      // 옵션 버튼의 경계 색상 지정
                       border: _showHeadlines
                           ? Border.all(color: Colors.blue, width: 2.0)
                           : Border.all(color: Colors.grey, width: 2.0),
@@ -107,6 +130,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                         vertical: 4.0, horizontal: 8.0),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
+                      // 옵션 버튼의 경계 색상 지정
                       border: _showGeneral
                           ? Border.all(color: Colors.blue, width: 2.0)
                           : Border.all(color: Colors.grey, width: 2.0),
@@ -152,24 +176,24 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ListView.builder(
-                      itemCount: _showHeadlines
-                          ? _notices['headline'].length
-                          : _notices['general'].length,
-                      itemBuilder: (context, index) {
-                        if (_showHeadlines) {
-                          final notice = _notices['headline'][index];
-                          return NoticeListTile(
-                            notice: notice,
-                            noticeType: 'headline',
-                          );
-                        }
-                        final notice = _notices['general'][index];
-                        return NoticeListTile(
-                          notice: notice,
-                          noticeType: 'general',
-                        );
-                      },
-                    ),
+                // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
+                itemCount: _showHeadlines
+                    ? _notices['headline'].length
+                    : _notices['general'].length,
+                itemBuilder: (context, index) {
+                  final notice = _showHeadlines
+                      ? _notices['headline'][index]
+                      : _notices['general'][index];
+                  // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
+                  final isRead = _isNoticeRead(notice['id'].toString());
+                  return NoticeListTile(
+                    notice: notice,
+                    noticeType: _showHeadlines ? 'headline' : 'general',
+                    isRead: isRead, // 읽은 상태 전달
+                    markAsRead: _markNoticeAsRead, // 읽음 처리 함수 전달
+                  );
+                },
+              ),
             ),
           ),
           if (_initialPages.isNotEmpty)
