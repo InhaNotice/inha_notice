@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/fonts/font.dart';
 
@@ -26,7 +25,6 @@ class NoticeListTile extends StatefulWidget {
 }
 
 class _NoticeListTileState extends State<NoticeListTile> {
-
   @override
   void initState() {
     super.initState();
@@ -39,67 +37,73 @@ class _NoticeListTileState extends State<NoticeListTile> {
     final textColor = widget.isRead
         ? readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
-        Theme.of(context).defaultColor;
+            Theme.of(context).defaultColor;
 
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Theme.of(context).noticeBorderColor,
-                width: 1.0,
-              ),
-              top: BorderSide.none,
-              left: BorderSide.none,
-              right: BorderSide.none,
+    return Column(children: [
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20.0),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Theme.of(context).noticeBorderColor,
+              width: 1.0,
             ),
+            top: BorderSide.none,
+            left: BorderSide.none,
+            right: BorderSide.none,
           ),
         ),
-        ListTile(
-            title: Text(
-              widget.notice['title'] ?? '제목이 없는 게시글입니다',
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 16.0,
-                fontWeight: FontWeight.normal,
-                color: textColor,
+      ),
+      ListTile(
+          title: Text(
+            widget.notice['title'] ?? '제목이 없는 게시글입니다',
+            style: TextStyle(
+              fontFamily: Font.kDefaultFont,
+              fontSize: 16.0,
+              fontWeight: FontWeight.normal,
+              color: textColor,
+            ),
+          ),
+          subtitle: Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    if (widget.notice['date'] != null)
+                      Text(
+                        widget.notice['date'] ?? '',
+                        style: TextStyle(
+                          fontFamily: Font.kDefaultFont,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.normal,
+                          color: textColor.withOpacity(0.6),
+                        ),
+                      ),
+                    const SizedBox(width: 8),
+                    if (widget.notice['access'] != null)
+                      Text(
+                        '조회 ${widget.notice['access']}' ?? '',
+                        style: TextStyle(
+                          fontFamily: Font.kDefaultFont,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.normal,
+                          color: textColor.withOpacity(0.6),
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  widget.notice['date'] ?? '',
-                  style: TextStyle(
-                    fontFamily: Font.kDefaultFont,
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.normal,
-                    color: textColor.withOpacity(0.6),
-                  ),
+              IconButton(
+                icon: Icon(
+                  widget.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                  color: widget.isBookmarked ? Colors.yellow : Colors.grey,
                 ),
-                IconButton(
-                  icon: Icon(
-                    widget.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                    color: widget.isBookmarked ? Colors.yellow : Colors.grey,
-                  ),
-                  onPressed: () async { await widget.toggleBookmark(widget.notice['id'].toString()); },
-                ),
-              ],
-            ),
-            onTap: () async {
-              await widget.markAsRead(widget.notice['id'].toString());
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WebPage(
-                    url: widget.notice['link'] ?? Font.kEmptyString,
-                  ),
-                ),
-              );
-            }),
-      ],
-    );
+                onPressed: () async {
+                  await widget.toggleBookmark(widget.notice['id'].toString());
+                },
+              ),
+            ],
+          ))
+    ]);
   }
 }
