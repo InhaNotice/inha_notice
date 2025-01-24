@@ -38,6 +38,11 @@ class _NoticeListTileState extends State<NoticeListTile> {
         ? readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
             Theme.of(context).defaultColor;
+    // 안전한 데이터 접근
+    final title = widget.notice.containsKey('title') ? widget.notice['title'] ?? '제목이 없는 게시글입니다' : '제목이 없는 게시글입니다';
+    final date = widget.notice.containsKey('date') ? widget.notice['date'] ?? '' : '';
+    final access = widget.notice.containsKey('access') ? widget.notice['access'] : null;
+
 
     return Column(children: [
       Container(
@@ -56,7 +61,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
       ),
       ListTile(
           title: Text(
-            widget.notice['title'] ?? '제목이 없는 게시글입니다',
+            title,
             style: TextStyle(
               fontFamily: Font.kDefaultFont,
               fontSize: 16.0,
@@ -71,7 +76,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
                   children: [
                     if (widget.notice['date'] != null)
                       Text(
-                        widget.notice['date'] ?? '',
+                        date,
                         style: TextStyle(
                           fontFamily: Font.kDefaultFont,
                           fontSize: 14.0,
@@ -79,10 +84,10 @@ class _NoticeListTileState extends State<NoticeListTile> {
                           color: textColor.withOpacity(0.6),
                         ),
                       ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: Theme.of(context).visualDensity.horizontal),
                     if (widget.notice['access'] != null)
                       Text(
-                        '조회 ${widget.notice['access']}' ?? '',
+                        '조회 $access',
                         style: TextStyle(
                           fontFamily: Font.kDefaultFont,
                           fontSize: 14.0,
@@ -99,7 +104,9 @@ class _NoticeListTileState extends State<NoticeListTile> {
                   color: widget.isBookmarked ? Colors.yellow : Colors.grey,
                 ),
                 onPressed: () async {
-                  await widget.toggleBookmark(widget.notice['id'].toString());
+                  if (widget.notice.containsKey('id') && widget.notice['id'] != null) {
+                    await widget.toggleBookmark(widget.notice['id'].toString());
+                  }
                 },
               ),
             ],
