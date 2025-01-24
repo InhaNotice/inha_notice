@@ -4,6 +4,7 @@ import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/page_selector.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/utils/read_notice_manager.dart';
+import 'package:inha_notice/utils/bookmark_manager.dart';
 
 class WholeNoticePage extends StatefulWidget {
   const WholeNoticePage({super.key});
@@ -17,6 +18,7 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   List<Map<String, dynamic>> _initialPages = [];
   Set<String> _readNotices = {}; // 읽은 공지를 관리하는 캐시값
+  Set<String> _bookmarkedNotices = {}; // 북마크된 공지 캐시
 
   bool _isLoading = true;
   bool _showHeadlines = false;
@@ -26,15 +28,17 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
   @override
   void initState() {
     super.initState();
-    _initializeReadNotices();
+    _initializeReadAndBookmark();
     _loadNotices(Font.kInitialPage);
   }
 
-  // 읽은 공지 로드
-  Future<void> _initializeReadNotices() async {
+  // 읽은 공지와 북마크 초기화
+  Future<void> _initializeReadAndBookmark() async {
     final readIds = await ReadNoticeManager.loadReadNotices();
+    final bookmarkedIds = await BookmarkManager.getAllBookmarks();
     setState(() {
       _readNotices = readIds.toSet();
+      _bookmarkedNotices = bookmarkedIds.toSet();
     });
   }
 
@@ -43,10 +47,27 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
     return _readNotices.contains(noticeId);
   }
 
+  // 공지가 북마크되었는지 확인
+  bool _isNoticeBookmarked(String noticeId) {
+    return _bookmarkedNotices.contains(noticeId);
+  }
+
   // 공지를 읽음으로 표시
   Future<void> _markNoticeAsRead(String noticeId) async {
     _readNotices.add(noticeId);
     await ReadNoticeManager.saveReadNotices(_readNotices);
+    setState(() {});
+  }
+
+  // 공지의 북마크 상태를 토글
+  Future<void> _toggleBookmark(String noticeId) async {
+    if (_bookmarkedNotices.contains(noticeId)) {
+      _bookmarkedNotices.remove(noticeId);
+      await BookmarkManager.removeBookmark(noticeId);
+    } else {
+      _bookmarkedNotices.add(noticeId);
+      await BookmarkManager.addBookmark(noticeId);
+    }
     setState(() {});
   }
 
@@ -186,11 +207,15 @@ class _WholeNoticePageState extends State<WholeNoticePage> {
                       : _notices['general'][index];
                   // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
                   final isRead = _isNoticeRead(notice['id'].toString());
+                  final isBookmarked =
+                  _isNoticeBookmarked(notice['id'].toString());
                   return NoticeListTile(
                     notice: notice,
                     noticeType: _showHeadlines ? 'headline' : 'general',
-                    isRead: isRead, // 읽은 상태 전달
+                    isRead: isRead,
+                    isBookmarked: isBookmarked,
                     markAsRead: _markNoticeAsRead, // 읽음 처리 함수 전달
+                    toggleBookmark: _toggleBookmark,
                   );
                 },
               ),

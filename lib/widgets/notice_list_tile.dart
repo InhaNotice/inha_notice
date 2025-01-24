@@ -3,25 +3,40 @@ import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/fonts/font.dart';
 
-class NoticeListTile extends StatelessWidget {
+class NoticeListTile extends StatefulWidget {
   final Map<String, dynamic> notice;
   final String noticeType;
   final bool isRead;
+  final bool isBookmarked;
   final Future<void> Function(String noticeId) markAsRead;
+  final Future<void> Function(String noticeId) toggleBookmark;
 
   const NoticeListTile({
     super.key,
     required this.notice,
     required this.noticeType,
     required this.isRead,
+    required this.isBookmarked,
     required this.markAsRead,
+    required this.toggleBookmark,
   });
+
+  @override
+  State<NoticeListTile> createState() => _NoticeListTileState();
+}
+
+class _NoticeListTileState extends State<NoticeListTile> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final readTextColor = Theme.of(context).readTextColor;
     // 읽음 상태를 전달받아서 제목 텍스트 색상을 결정합니다.
-    final textColor = isRead
+    final textColor = widget.isRead
         ? readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
         Theme.of(context).defaultColor;
@@ -44,7 +59,7 @@ class NoticeListTile extends StatelessWidget {
         ),
         ListTile(
             title: Text(
-              notice['title'] ?? '제목이 없는 게시글입니다',
+              widget.notice['title'] ?? '제목이 없는 게시글입니다',
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16.0,
@@ -52,22 +67,34 @@ class NoticeListTile extends StatelessWidget {
                 color: textColor,
               ),
             ),
-            subtitle: Text(
-              notice['date'] ?? '',
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 14.0,
-                fontWeight: FontWeight.normal,
-                color: textColor.withOpacity(0.6),
-              ),
+            subtitle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.notice['date'] ?? '',
+                  style: TextStyle(
+                    fontFamily: Font.kDefaultFont,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.normal,
+                    color: textColor.withOpacity(0.6),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(
+                    widget.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                    color: widget.isBookmarked ? Colors.yellow : Colors.grey,
+                  ),
+                  onPressed: () async { await widget.toggleBookmark(widget.notice['id'].toString()); },
+                ),
+              ],
             ),
             onTap: () async {
-              await markAsRead(notice['id'].toString());
+              await widget.markAsRead(widget.notice['id'].toString());
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => WebPage(
-                    url: notice['link'] ?? Font.kEmptyString,
+                    url: widget.notice['link'] ?? Font.kEmptyString,
                   ),
                 ),
               );
