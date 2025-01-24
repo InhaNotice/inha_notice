@@ -37,12 +37,12 @@ class _NoticeListTileState extends State<NoticeListTile> {
     final textColor = widget.isRead
         ? readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
-            Theme.of(context).defaultColor;
+        Theme.of(context).defaultColor;
     // 안전한 데이터 접근
     final title = widget.notice.containsKey('title') ? widget.notice['title'] ?? '제목이 없는 게시글입니다' : '제목이 없는 게시글입니다';
     final date = widget.notice.containsKey('date') ? widget.notice['date'] ?? '' : '';
     final access = widget.notice.containsKey('access') ? widget.notice['access'] : null;
-
+    // final writer = widget.notice.containsKey('writer') ? widget.notice['writer'] ?? '' : '';
 
     return Column(children: [
       Container(
