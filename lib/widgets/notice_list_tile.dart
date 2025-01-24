@@ -44,7 +44,7 @@ class NoticeListTile extends StatelessWidget {
         ),
         ListTile(
             title: Text(
-              notice['title'] ?? '제목이 없습니다',
+              notice['title'] ?? '제목이 없는 게시글입니다',
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16.0,
