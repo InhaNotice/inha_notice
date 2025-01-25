@@ -1,33 +1,13 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:inha_notice/selectors/tag_selectors.dart';
 
-abstract class HeadlineTagSelectors {
-  static const String kNoticeBoard = '.artclTable .headline';
-  static const String kNoticeTitle = '._artclTdTitle .artclLinkView';
-  static const String kNoticeDate = '._artclTdRdate';
-  static const String kNoticeWriter = '._artclTdWriter';
-  static const String kNoticeAccess = '._artclTdAccess';
-}
-
-abstract class GeneralTagSelectors {
-  static const String kNoticeBoard = '.artclTable tr:not(.headline)';
-  static const String kNoticeTitle = '._artclTdTitle .artclLinkView';
-  static const String kNoticeDate = '._artclTdRdate';
-  static const String kNoticeWriter = '._artclTdWriter';
-  static const String kNoticeAccess = '._artclTdAccess';
-}
-
-abstract class PageTagSelectors {
-  static const String kPageBoard = '._paging ._inner';
-  static const String kLastPage = 'a._last';
-}
-
-class WholeAPI {
+class WholeNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
 
-  WholeAPI() {
+  WholeNoticeScraper() {
     baseUrl = dotenv.get('WHOLE_URL');
     queryUrl = dotenv.get('WHOLE_QUERY_URL');
   }
