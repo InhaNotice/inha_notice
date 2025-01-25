@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path_provider/path_provider.dart';
@@ -44,13 +45,22 @@ Future<void> _initializeFirebase() async {
     sound: true,
   );
 
-  print('User granted permission: ${settings.authorizationStatus}');
-
   // Firebase 메시지 리스너
   FirebaseMessaging.onMessage.listen(_onForegroundMessageHandler);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print(fcmToken);
+
+  try {
+    String? apnsToken = await messaging.getAPNSToken();
+    if (apnsToken != null) {
+      print('APNS Token: $apnsToken');
+      final fcmToken = await messaging.getToken();
+      print('Firebase Token: $fcmToken');
+    } else {
+      print('APNS Token not set. Make sure the device has network access and notifications are enabled.');
+    }
+  } catch (e) {
+    print('Error fetching APNS token: $e');
+  }
 }
 
 /// Firebase 알림 메시지 핸들러
