@@ -90,8 +90,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
                             color: textColor.withOpacity(0.6),
                           ),
                         ),
-                      SizedBox(
-                          width: Theme.of(context).visualDensity.horizontal),
+                      const SizedBox(width: 5),
                       if (widget.notice['access'] != null)
                         Text(
                           '조회 $access',
