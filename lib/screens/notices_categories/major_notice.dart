@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../services/api.dart';
-import '../web_page.dart';
+import 'package:inha_notice/services/api.dart';
+import 'package:inha_notice/screens/web_page.dart';
+import 'package:inha_notice/fonts/font.dart';
 
 class MajorNoticePage extends StatefulWidget {
   const MajorNoticePage({super.key});
