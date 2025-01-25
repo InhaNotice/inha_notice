@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/services/whole_api.dart';
+import 'package:inha_notice/services/whole_notice_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/page_selector.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -14,7 +14,7 @@ class WholeNoticePage extends StatefulWidget {
 }
 
 class _WholeNoticePageState extends State<WholeNoticePage> {
-  final WholeAPI _wholeApi = WholeAPI();
+  final WholeNoticeScraper _wholeApi = WholeNoticeScraper();
   Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
   List<Map<String, dynamic>> _initialPages = [];
   Set<String> _readNotices = {}; // 읽은 공지를 관리하는 캐시값
