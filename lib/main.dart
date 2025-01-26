@@ -38,7 +38,7 @@ Future<void> _initializeFirebase() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   // 알림 권한 요청
-  NotificationSettings settings = await messaging.requestPermission(
+  await messaging.requestPermission(
     alert: true,
     badge: true,
     sound: true,
@@ -51,10 +51,10 @@ Future<void> _initializeFirebase() async {
   try {
     String? apnsToken = await messaging.getAPNSToken();
     if (apnsToken != null) {
-      print('APNS Token: $apnsToken');
-      final fcmToken = await messaging.getToken();
-      print('Firebase Token: $fcmToken');
+      print('APNS Token and FCM Token were successfully created.');
     } else {
+      // APNS 토큰은 공용 와이파이로 연결된 시뮬레이터에서는 불러올 수 없습니다.
+      // 시뮬레이터로 실행시 반드시 핫스팟으로 연결해주세요.
       print('APNS Token not set. Make sure the device has network access and notifications are enabled.');
     }
   } catch (e) {
