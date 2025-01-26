@@ -24,8 +24,9 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> 
   @override
   void initState() {
     super.initState();
-    initializeReadAndBookmark();
-    loadNotices(PageSettings.kInitialPage);
+    initializeReadAndBookmark().then((_) {
+      loadNotices(PageSettings.kInitialPage);
+    });
   }
 
   // override 필요
@@ -34,10 +35,8 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> 
   Future<void> initializeReadAndBookmark() async {
     final readIds = await ReadNoticeManager.loadReadNotices();
     final bookmarkedIds = await BookmarkManager.getAllBookmarks();
-    setState(() {
-      readNotices = readIds.toSet();
-      bookmarkedNotices = bookmarkedIds.toSet();
-    });
+    readNotices = readIds.toSet();
+    bookmarkedNotices = bookmarkedIds.toSet();
   }
 
   // 공지를 읽었는지 확인

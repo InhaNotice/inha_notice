@@ -25,9 +25,10 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     });
     try {
       final fetchedNotices = await wholeApi.fetchNotices(page, widget.noticeType);
+      if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (page == PageSettings.kInitialPage) {
+        if (page == PageSettings.kInitialPage && initialPages.isEmpty) {
           initialPages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         currentPage = page;
