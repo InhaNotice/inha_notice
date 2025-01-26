@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/notice_boards/base_notice_board.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/constants/font_constants.dart';
+import 'package:inha_notice/services/major_notice_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/page_selector.dart';
+import 'package:inha_notice/services/whole_notice_scraper.dart';
 
 // noticeType에 따라 공지사항 페이지를 구현합니다.
 class NoticeBoard extends BaseNoticeBoard {
@@ -19,12 +21,41 @@ class NoticeBoard extends BaseNoticeBoard {
 
 class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
   @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      await initializeScraper(); // 스크레이퍼 초기화
+      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
+      await loadNotices(PageSettings.kInitialPage); // 공지사항 로드
+    } catch (e) {
+      // 에러 처리
+      debugPrint('Initialization error: $e');
+    }
+  }
+
+
+  Future<void> initializeScraper() async {
+    if (widget.noticeType == 'whole') {
+      noticeScraper = WholeNoticeScraper();
+    } else if (widget.noticeType == 'major') {
+      final majorScraper = MajorNoticeScraper();
+      await majorScraper.initialize(); // 비동기 초기화
+      noticeScraper = majorScraper;
+    }
+    setState(() {});
+  }
+
+  @override
   Future<void> loadNotices(int page) async {
     setState(() {
       isLoading = true;
     });
     try {
-      final fetchedNotices = await wholeApi.fetchNotices(page, widget.noticeType);
+      final fetchedNotices = await noticeScraper.fetchNotices(page, widget.noticeType);
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
