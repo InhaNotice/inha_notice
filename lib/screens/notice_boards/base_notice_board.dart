@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/utils/read_notice_manager.dart';
 import 'package:inha_notice/utils/bookmark_manager.dart';
 import 'package:inha_notice/constants/page_constants.dart';
-import 'package:inha_notice/services/whole_notice_scraper.dart';
+import 'package:inha_notice/services/base_notice_scraper.dart';
 
 // 공지사항 페이지의 인터페이스를 제공합니다.
 abstract class BaseNoticeBoard extends StatefulWidget {
@@ -10,7 +10,7 @@ abstract class BaseNoticeBoard extends StatefulWidget {
 }
 
 abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> {
-  final WholeNoticeScraper wholeApi = WholeNoticeScraper();
+  late BaseNoticeScraper noticeScraper;
   late Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
   late List<Map<String, dynamic>> initialPages = [];
   late Set<String> readNotices = {};
@@ -20,14 +20,6 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> 
   bool showHeadlines = false;
   bool showGeneral = true;
   int currentPage = PageSettings.kInitialPage;
-
-  @override
-  void initState() {
-    super.initState();
-    initializeReadAndBookmark().then((_) {
-      loadNotices(PageSettings.kInitialPage);
-    });
-  }
 
   // override 필요
   Future<void> loadNotices(int page);
