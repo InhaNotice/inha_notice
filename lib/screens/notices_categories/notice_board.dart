@@ -1,0 +1,172 @@
+import 'package:flutter/material.dart';
+import 'package:inha_notice/screens/notices_categories/base_notice_board.dart';
+import 'package:inha_notice/constants/page_constants.dart';
+import 'package:inha_notice/constants/font_constants.dart';
+import 'package:inha_notice/widgets/notice_list_tile.dart';
+import 'package:inha_notice/widgets/page_selector.dart';
+
+// noticeType에 따라 공지사항 페이지를 구현합니다.
+class NoticeBoard extends BaseNoticeBoard {
+  final String noticeType;
+  const NoticeBoard({
+    super.key,
+    required this.noticeType
+  });
+
+  @override
+  State<NoticeBoard> createState() => WholeNoticePageState();
+}
+
+class WholeNoticePageState extends BaseNoticeBoardState<NoticeBoard> {
+  @override
+  Future<void> loadNotices(int page) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final fetchedNotices = await wholeApi.fetchNotices(page, widget.noticeType);
+      setState(() {
+        notices = fetchedNotices;
+        if (page == PageSettings.kInitialPage) {
+          initialPages = List<Map<String, dynamic>>.from(notices['pages']);
+        }
+        currentPage = page;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget buildHeader() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: () => toggleOption('headline'),
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 4.0, horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                // 옵션 버튼의 경계 색상 지정
+                border: showHeadlines
+                    ? Border.all(color: Colors.blue, width: 2.0)
+                    : Border.all(color: Colors.grey, width: 2.0),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Text(
+                '중요',
+                style: TextStyle(
+                  fontFamily: FontSettings.kDefaultFont,
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                  color: showHeadlines ? Colors.blue : Colors.grey,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          GestureDetector(
+            onTap: () => toggleOption('general'),
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 4.0, horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                // 옵션 버튼의 경계 색상 지정
+                border: showGeneral
+                    ? Border.all(color: Colors.blue, width: 2.0)
+                    : Border.all(color: Colors.grey, width: 2.0),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Text(
+                '일반',
+                style: TextStyle(
+                    fontFamily: FontSettings.kDefaultFont,
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold,
+                    color: showGeneral ? Colors.blue : Colors.grey),
+              ),
+            ),
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+              loadNotices(PageSettings.kInitialPage);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                border: Border.all(
+                    color: Theme.of(context).iconTheme.color!,
+                    width: 2.0),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Icon(
+                Icons.refresh,
+                color: Theme.of(context).iconTheme.color,
+                size: 16.0,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget buildMain() {
+    return Expanded(
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+          // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
+          itemCount: showHeadlines
+              ? notices['headline'].length
+              : notices['general'].length,
+          itemBuilder: (context, index) {
+            final notice = showHeadlines
+                ? notices['headline'][index]
+                : notices['general'][index];
+            // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
+            final isRead = isNoticeRead(notice['id'].toString());
+            final isBookmarked =
+            isNoticeBookmarked(notice['id'].toString());
+            return NoticeListTile(
+              notice: notice,
+              noticeType: showHeadlines ? 'headline' : 'general',
+              isRead: isRead,
+              isBookmarked: isBookmarked,
+              markAsRead: markNoticeAsRead, // 읽음 처리 함수 전달
+              toggleBookmark: toggleBookmark,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget buildFooter() {
+    if (initialPages.isEmpty) return const SizedBox();
+    return PageSelector(
+      pages: initialPages,
+      currentPage: currentPage,
+      onPageSelected: (page) {
+        loadNotices(page);
+      },
+    );
+  }
+}

@@ -4,16 +4,16 @@ import 'package:http/http.dart' as http;
 import 'package:inha_notice/selectors/tag_selectors.dart';
 import 'package:inha_notice/constants/identifier_constants.dart';
 
-class WholeNoticeScraper {
+class NoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
 
-  WholeNoticeScraper() {
+  NoticeScraper() {
     baseUrl = dotenv.get('WHOLE_URL');
     queryUrl = dotenv.get('WHOLE_QUERY_URL');
   }
 
-  Future<Map<String, dynamic>> fetchNotices(int page) async {
+  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType) async {
     try {
       // 크롤링 진행
       final String connectUrl = '$queryUrl$page';
