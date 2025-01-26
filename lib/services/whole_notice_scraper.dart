@@ -2,6 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/selectors/tag_selectors.dart';
+import 'package:inha_notice/constants/identifier_constants.dart';
 
 class WholeNoticeScraper {
   late final String baseUrl;
@@ -69,8 +70,8 @@ class WholeNoticeScraper {
       final writer = writerTag.text?.trim();
       final access = accessTag.text?.trim();
 
-      final List<String> postUrlList = postUrl.split('/');
-      final String id = (postUrlList.length > 4) ? postUrlList[4] :'unknownId';
+      // 게시물에 대한 uniqueNoticeId 생성
+      final String id = _makeUniqueNoticeId(postUrl);
 
       results.add({'id': id, 'title': title, 'link': link, 'date': date, 'writer': writer, 'access': access});
     }
@@ -102,9 +103,7 @@ class WholeNoticeScraper {
       final writer = writerTag.text?.trim();
       final access = accessTag.text?.trim();
 
-      final List<String> postUrlList = postUrl.split('/');
-      final String id = (postUrlList.length > 4) ? postUrlList[4] :'unknownId';
-
+      final String id = _makeUniqueNoticeId(postUrl);
       results.add({'id': id,'title': title, 'link': link, 'date': date, 'writer': writer, 'access': access});
     }
     return results;
@@ -127,5 +126,23 @@ class WholeNoticeScraper {
       results.add({'page': page, 'isCurrent': isCurrent});
     }
     return results;
+  }
+
+  String _makeUniqueNoticeId(String postUrl) {
+    // postUrl이 빈 문자열인지 확인합니다.
+    if (postUrl.isEmpty) {
+      return IdentifierConstants.kUnknownId;
+    }
+
+    final List<String> postUrlList = postUrl.split('/');
+    // postUrlList가 정해진 규격을 따르는지 확인합니다.
+    if (postUrlList.length <= 4) {
+      return IdentifierConstants.kUnknownId;
+    }
+
+    final String provider = postUrlList[2];
+    final String postId = postUrlList[4];
+    final String uniqueNoticeId = '$provider-$postId';
+    return uniqueNoticeId;
   }
 }
