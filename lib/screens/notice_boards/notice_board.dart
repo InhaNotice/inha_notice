@@ -14,10 +14,10 @@ class NoticeBoard extends BaseNoticeBoard {
   });
 
   @override
-  State<NoticeBoard> createState() => WholeNoticePageState();
+  State<NoticeBoard> createState() => NoticeBoardState();
 }
 
-class WholeNoticePageState extends BaseNoticeBoardState<NoticeBoard> {
+class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
   @override
   Future<void> loadNotices(int page) async {
     setState(() {
