@@ -1,18 +1,19 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/selectors/tag_selectors.dart';
-import 'package:inha_notice/constants/identifier_constants.dart';
+import 'package:inha_notice/selectors/whole_tag_selectors.dart';
+import 'package:inha_notice/services/base_notice_scraper.dart';
 
-class NoticeScraper {
+class WholeNoticeScraper extends BaseNoticeScraper{
   late final String baseUrl;
   late final String queryUrl;
 
-  NoticeScraper() {
+  WholeNoticeScraper() {
     baseUrl = dotenv.get('WHOLE_URL');
     queryUrl = dotenv.get('WHOLE_QUERY_URL');
   }
 
+  @override
   Future<Map<String, dynamic>> fetchNotices(int page, String noticeType) async {
     try {
       // 크롤링 진행
@@ -23,13 +24,13 @@ class NoticeScraper {
         final document = parse(response.body);
 
         // 중요 공지사항 가져오기
-        final headlineNotices = _fetchHeadlineNotices(document);
+        final headlineNotices = fetchHeadlineNotices(document);
 
         // 일반 공지사항 가져오기
-        final generalNotices = _fetchGeneralNotices(document);
+        final generalNotices = fetchGeneralNotices(document);
 
         // 페이지 번호 가져오기
-        final pages = _fetchPages(document);
+        final pages = fetchPages(document);
 
         return {
           'headline': headlineNotices,
@@ -45,7 +46,8 @@ class NoticeScraper {
   }
 
   // 중요 공지사항 가져오는 함수
-  List<Map<String, String>> _fetchHeadlineNotices(document) {
+  @override
+  List<Map<String, String>> fetchHeadlineNotices(document) {
     final headlines = document.querySelectorAll(HeadlineTagSelectors.kNoticeBoard);
 
     final List<Map<String, String>> results = [];
@@ -66,12 +68,12 @@ class NoticeScraper {
       final postUrl = titleTag.attributes['href'] ?? '';
       final link = baseUrl + postUrl;
 
-      final date = dateTag.text?.trim();
-      final writer = writerTag.text?.trim();
-      final access = accessTag.text?.trim();
+      final String date = dateTag.text.trim();
+      final String writer = writerTag.text.trim();
+      final String access = accessTag.text.trim();
 
       // 게시물에 대한 uniqueNoticeId 생성
-      final String id = _makeUniqueNoticeId(postUrl);
+      final String id = makeUniqueNoticeId(postUrl);
 
       results.add({'id': id, 'title': title, 'link': link, 'date': date, 'writer': writer, 'access': access});
     }
@@ -79,7 +81,8 @@ class NoticeScraper {
   }
 
   // 일반 공지사항 가져오는 함수
-  List<Map<String, String>> _fetchGeneralNotices(document) {
+  @override
+  List<Map<String, String>> fetchGeneralNotices(document) {
     final generals = document.querySelectorAll(GeneralTagSelectors.kNoticeBoard);
     final List<Map<String, String>> results = [];
     for (var general in generals.skip(1)) {
@@ -99,23 +102,24 @@ class NoticeScraper {
       final postUrl = titleTag.attributes['href'] ?? '';
       final link = baseUrl + postUrl;
 
-      final date = dateTag.text?.trim();
-      final writer = writerTag.text?.trim();
-      final access = accessTag.text?.trim();
+      final String date = dateTag.text.trim();
+      final String writer = writerTag.text.trim();
+      final String access = accessTag.text.trim();
 
-      final String id = _makeUniqueNoticeId(postUrl);
+      final String id = makeUniqueNoticeId(postUrl);
       results.add({'id': id,'title': title, 'link': link, 'date': date, 'writer': writer, 'access': access});
     }
     return results;
   }
 
   // 페이지 번호 가져오는 함수
-  List<Map<String, dynamic>> _fetchPages(document) {
+  @override
+  List<Map<String, dynamic>> fetchPages(document) {
     final List<Map<String, dynamic>> results = [];
     final pages = document.querySelector(PageTagSelectors.kPageBoard);
     if (pages == null) return results;
 
-    final lastPageHref = pages.querySelector(PageTagSelectors.kLastPage).attributes['href'] ?? '';
+    final lastPageHref = pages.querySelector(PageTagSelectors.kLastPage)?.attributes['href'] ?? '';
     if (lastPageHref == '') return results;
 
     final match = RegExp(r"page_link\('(\d+)'\)").firstMatch(lastPageHref);
@@ -126,23 +130,5 @@ class NoticeScraper {
       results.add({'page': page, 'isCurrent': isCurrent});
     }
     return results;
-  }
-
-  String _makeUniqueNoticeId(String postUrl) {
-    // postUrl이 빈 문자열인지 확인합니다.
-    if (postUrl.isEmpty) {
-      return IdentifierConstants.kUnknownId;
-    }
-
-    final List<String> postUrlList = postUrl.split('/');
-    // postUrlList가 정해진 규격을 따르는지 확인합니다.
-    if (postUrlList.length <= 4) {
-      return IdentifierConstants.kUnknownId;
-    }
-
-    final String provider = postUrlList[2];
-    final String postId = postUrlList[4];
-    final String uniqueNoticeId = '$provider-$postId';
-    return uniqueNoticeId;
   }
 }
