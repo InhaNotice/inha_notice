@@ -83,7 +83,6 @@ class MajorNoticeScraper extends BaseNoticeScraper {
       final accessTag = headline.querySelector(HeadlineTagSelectors.kNoticeAccess);
 
       if (titleLinkTag == null || titleStrongTag == null || dateTag == null || writerTag == null || accessTag == null) {
-        print(dateTag == null);
         continue;}
 
       final title = titleStrongTag.nodes
