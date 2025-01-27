@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/screens/notice_boards/international_notice.dart';
-import 'package:inha_notice/screens/notice_boards/library_notice.dart';
-import 'package:inha_notice/screens/notice_boards/recruitment_notice.dart';
-import 'package:inha_notice/screens/notice_boards/scholarship_notice.dart';
-import 'package:inha_notice/screens/notice_boards/notice_board.dart';
+import 'package:inha_notice/screens/notice_board/international_notice.dart';
+import 'package:inha_notice/screens/notice_board/library_notice.dart';
+import 'package:inha_notice/screens/notice_board/recruitment_notice.dart';
+import 'package:inha_notice/screens/notice_board/scholarship_notice.dart';
+import 'package:inha_notice/screens/notice_board/notice_board.dart';
 import 'package:inha_notice/fonts/font.dart';
 
 class HomePage extends StatelessWidget {
