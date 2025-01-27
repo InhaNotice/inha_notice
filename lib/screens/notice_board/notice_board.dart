@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/screens/notice_boards/base_notice_board.dart';
+import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/constants/font_constants.dart';
 import 'package:inha_notice/services/major_notice_scraper.dart';
