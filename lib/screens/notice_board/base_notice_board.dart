@@ -10,19 +10,20 @@ abstract class BaseNoticeBoard extends StatefulWidget {
 }
 
 abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> {
+  // 오버라이딩 필요
   late BaseNoticeScraper noticeScraper;
-  late Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
-  late List<Map<String, dynamic>> initialPages = [];
-  late Set<String> readNotices = {};
-  late Set<String> bookmarkedNotices = {};
+  Future<void> loadNotices(int page);
+
+  // 멤버변수
+  Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
+  List<Map<String, dynamic>> initialPages = [];
+  Set<String> readNotices = {};
+  Set<String> bookmarkedNotices = {};
 
   bool isLoading = true;
   bool showHeadlines = false;
   bool showGeneral = true;
   int currentPage = PageSettings.kInitialPage;
-
-  // override 필요
-  Future<void> loadNotices(int page);
 
   Future<void> initializeReadAndBookmark() async {
     final readIds = await ReadNoticeManager.loadReadNotices();
