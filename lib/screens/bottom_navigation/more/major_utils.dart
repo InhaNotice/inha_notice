@@ -28,7 +28,7 @@ abstract class MajorUtils {
     },
     '경영대학': {
       '식품영양학과': 'FOODNUTRI',
-      '경영학과': 'GFIBA',
+      '경영학과': 'BIZ',
       '글로벌금융학과': 'GFIBA',
       '아태물류학과': 'APSL',
       '국제통상학과': 'STAR',
@@ -72,14 +72,14 @@ abstract class MajorUtils {
       '의류디자인학과': 'FASHION',
     },
     '국제학부': {
-      'IBT학과': 'SGCS',
-      'ISE학과': 'SGCS',
+      'IBT학과': 'SGCSA',
+      'ISE학과': 'SGCSB',
     },
     '미래융합대학': {
-      '메카트로닉스공학과': 'FCCOLLEGE',
-      '소프트웨어융합공학과': 'FCCOLLEGE',
-      '산업경영학과': 'IE',
-      '금융투자학과': 'FCCOLLEGE',
+      '메카트로닉스공학과': 'FCCOLLEGEA',
+      '소프트웨어융합공학과': 'FCCOLLEGEB',
+      '산업경영학과': 'FCCOLLEGEC',
+      '금융투자학과': 'FCCOLLEGED',
     },
     '소프트웨어융합대학': {
       '인공지능공학과': 'DOAI',
@@ -89,7 +89,7 @@ abstract class MajorUtils {
       '컴퓨터공학과': 'CSE',
     },
     '프런티어학부대학': {
-      '자유전공학부': 'NONE',
+      '자유전공학부': 'LAS',
     }
   };
 
