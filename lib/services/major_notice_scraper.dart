@@ -14,28 +14,8 @@ class MajorNoticeScraper extends BaseNoticeScraper {
   Future<void> initialize() async {
     await MajorStorage.init();
     String? major = await MajorStorage.getMajor();
-    String majorKey = translateToEnglish(major);
-    baseUrl = dotenv.get('${majorKey}_URL');
-    queryUrl = dotenv.get('${majorKey}_QUERY_URL');
-  }
-
-  String translateToEnglish(final String? major) {
-    late String result;
-    switch(major) {
-      case '데이터사이언스학과':
-        result = 'DATASCIENCE';
-        break;
-      case '컴퓨터공학과':
-        result = 'CSE';
-        break;
-      case '인공지능공학과':
-        result = 'DOAI';
-        break;
-      default:
-        result = 'WHOLE';
-        break;
-    }
-    return result;
+    baseUrl = dotenv.get('${major}_URL');
+    queryUrl = dotenv.get('${major}_QUERY_URL');
   }
 
   @override
