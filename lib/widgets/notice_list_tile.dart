@@ -31,6 +31,17 @@ class _NoticeListTileState extends State<NoticeListTile> {
     super.initState();
   }
 
+  Future<void> navigateToWebPage(BuildContext context) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WebPage(
+          url: widget.notice['link'] ?? Font.kEmptyString,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final readTextColor = Theme.of(context).readTextColor;
@@ -123,14 +134,10 @@ class _NoticeListTileState extends State<NoticeListTile> {
             ),
             onTap: () async {
               await widget.markAsRead(widget.notice['id'].toString());
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WebPage(
-                    url: widget.notice['link'] ?? Font.kEmptyString,
-                  ),
-                ),
-              );
+              if (mounted) {
+                // ignore: use_build_context_synchronously
+                await navigateToWebPage(context);
+              }
             }),
       ],
     );

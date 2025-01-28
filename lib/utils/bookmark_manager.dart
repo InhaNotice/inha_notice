@@ -5,7 +5,7 @@ class BookmarkManager {
   static Database? _database;
 
   // 데이터베이스 초기화
-  static Future<void> _initDatabase() async {
+  static Future<void> initDatabase() async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'bookmarks.db');
 
@@ -25,7 +25,7 @@ class BookmarkManager {
   // 데이터베이스 가져오기
   static Future<Database> _getDatabase() async {
     if (_database == null) {
-      await _initDatabase();
+      await initDatabase();
     }
     return _database!;
   }

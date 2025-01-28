@@ -13,7 +13,6 @@ class MajorNoticeScraper extends BaseNoticeScraper {
   MajorNoticeScraper();
 
   Future<void> initialize() async {
-    await MajorStorage.init();
     String? major = await MajorStorage.getMajor();
     baseUrl = dotenv.get('${major}_URL');
     queryUrl = dotenv.get('${major}_QUERY_URL');

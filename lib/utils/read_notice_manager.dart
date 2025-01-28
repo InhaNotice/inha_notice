@@ -8,7 +8,7 @@ class ReadNoticeManager {
   static Database? _database;
 
   // SQLite 초기화
-  static Future<Database> _initDatabase() async {
+  static Future<Database> initDatabase() async {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final path = join(directory.path, 'read_notices.db');
@@ -31,7 +31,7 @@ class ReadNoticeManager {
   static Future<Database> getDatabase() async {
     try {
       if (_database != null) return _database!;
-      _database = await _initDatabase();
+      _database = await initDatabase();
       return _database!;
     } catch (e) {
       print('Error getting database: $e');

@@ -1,12 +1,13 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'firebase/firebase_options.dart';
+import 'package:inha_notice/utils/bookmark_manager.dart';
+import 'package:inha_notice/utils/major_storage.dart';
+import 'package:inha_notice/utils/read_notice_manager.dart';
 
 // Firebase 메시지 백그라운드 핸들러
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -55,7 +56,8 @@ Future<void> _initializeFirebase() async {
     } else {
       // APNS 토큰은 공용 와이파이로 연결된 시뮬레이터에서는 불러올 수 없습니다.
       // 시뮬레이터로 실행시 반드시 핫스팟으로 연결해주세요.
-      print('APNS Token not set. Make sure the device has network access and notifications are enabled.');
+      print(
+          'APNS Token not set. Make sure the device has network access and notifications are enabled.');
     }
   } catch (e) {
     print('Error fetching APNS token: $e');
@@ -74,10 +76,15 @@ void _onForegroundMessageHandler(RemoteMessage message) {
 
 /// 스토리지 초기화 함수
 Future<void> _initializeStorage() async {
-  final directory = await getApplicationDocumentsDirectory();
-  final storageDir = Directory('${directory.path}/storage');
-  if (!await storageDir.exists()) {
-    await storageDir.create();
+  try {
+    await Future.wait([
+      MajorStorage.initDatabase(),
+      BookmarkManager.initDatabase(),
+      ReadNoticeManager.initDatabase(),
+    ]);
+  } catch (e, stackTrace) {
+    debugPrint('Error initializing storage: $e');
+    debugPrint('Stack trace: $stackTrace');
   }
 }
 

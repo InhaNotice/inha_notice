@@ -20,13 +20,8 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   @override
   void initState() {
     super.initState();
-    _initializeStorage();
+    _loadCurrentMajor();
     _setupFields();
-  }
-
-  Future<void> _initializeStorage() async {
-    await MajorStorage.init();
-    await _loadCurrentMajor();
   }
 
   void _setupFields() {

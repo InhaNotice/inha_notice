@@ -7,9 +7,10 @@ class MajorStorage {
   static const int _databaseVersion = 1;
 
   static Database? _database;
+  static String? _cachedMajor;
 
   // Initialize the database
-  static Future<void> init() async {
+  static Future<void> initDatabase() async {
     if (_database != null) return;
 
     String dbPath = await getDatabasesPath();
@@ -31,6 +32,7 @@ class MajorStorage {
 
   // Save selected major
   static Future<void> saveMajor(String major) async {
+    _cachedMajor = major;
     await _database?.delete(_tableName); // Clear existing data
     await _database?.insert(
       _tableName,
@@ -41,6 +43,13 @@ class MajorStorage {
 
   // Get the saved major
   static Future<String?> getMajor() async {
+    if (_database == null) {
+      initDatabase();
+    }
+    if (_cachedMajor != null) {
+      // 캐싱된 값이 있다면 반환
+      return _cachedMajor;
+    }
     List<Map<String, dynamic>>? results = await _database?.query(_tableName);
     if (results != null && results.isNotEmpty) {
       return results.first['major'] as String;
