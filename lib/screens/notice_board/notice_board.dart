@@ -191,7 +191,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
 
   @override
   Widget buildFooter() {
-    if (initialPages.isEmpty) return const SizedBox();
+    if (initialPages.isEmpty || showHeadlines) return const SizedBox();
     return PageSelector(
       pages: initialPages,
       currentPage: currentPage,
