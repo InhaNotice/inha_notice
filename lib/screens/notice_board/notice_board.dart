@@ -46,7 +46,6 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
       await majorScraper.initialize(); // 비동기 초기화
       noticeScraper = majorScraper;
     }
-    setState(() {});
   }
 
   @override
