@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/utils/major_storage.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/major_groups.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 
 class MajorSettingPage extends StatefulWidget {
   const MajorSettingPage({super.key});
@@ -24,44 +24,31 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     _setupFields();
   }
 
-  void _setupFields() {
-    _searchController = TextEditingController();
-    _filteredMajorGroups = majorGroups;
-    _filteredMajors = [];
-    _currentMajor = '';
-  }
-
   Future<void> _loadCurrentMajor() async {
     String? majorKey = await MajorStorage.getMajor();
     setState(() {
-      _currentMajor = _translateToKorean(majorKey);
+      _currentMajor = MajorUtils.translateToKorean(majorKey);
     });
   }
 
-  // 저장된 영문 학과명을 국문 학과명으로 번역합니다.
-  String? _translateToKorean(String? majorKey) {
-    if (majorKey == null) return null;
-    for (var group in majorGroups.values) {
-      for (var entry in group.entries) {
-        if (entry.value == majorKey) {
-          return entry.key;
-        }
-      }
-    }
-    return null;
+  void _setupFields() {
+    _searchController = TextEditingController();
+    _filteredMajorGroups = MajorUtils.majorGroups;
+    _filteredMajors = [];
+    _currentMajor = '';
   }
 
   void _filterMajors(String query) {
     setState(() {
       if (query.isEmpty) {
         // 검색어가 없으면 단과대학 그룹으로 표시
-        _filteredMajorGroups = majorGroups;
+        _filteredMajorGroups = MajorUtils.majorGroups;
         _filteredMajors = [];
       } else {
         // 검색어가 있으면 학과 리스트만 표시
         _filteredMajorGroups = {};
         _filteredMajors = [
-          for (var group in majorGroups.values)
+          for (var group in MajorUtils.majorGroups.values)
             for (var major in group.keys)
               if (major.contains(query)) major,
         ];
@@ -70,8 +57,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   }
 
   Future<void> _saveMajor(String major) async {
-    String majorKey = _translateToEnglish(major);
-    print(majorKey);
+    String majorKey = MajorUtils.translateToEnglish(major);
     await MajorStorage.saveMajor(majorKey);
     setState(() {
       _currentMajor = major;
@@ -88,16 +74,6 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
     );
-  }
-
-  // 국문 학과명을 영문 학과명으로 저장합니다.
-  String _translateToEnglish(String major) {
-    for (var group in majorGroups.values) {
-      if (group.containsKey(major)) {
-        return group[major]!;
-      }
-    }
-    throw Exception('학과를 찾을 수 없습니다.');
   }
 
   @override
