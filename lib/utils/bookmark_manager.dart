@@ -62,9 +62,9 @@ class BookmarkManager {
   }
 
   // 모든 북마크 가져오기
-  static Future<List<String>> getAllBookmarks() async {
+  static Future<Set<String>> getAllBookmarks() async {
     final db = await _getDatabase();
     final result = await db.query('bookmarks');
-    return result.map((row) => row['id'] as String).toList();
+    return result.map((row) => row['id'] as String).toSet();
   }
 }

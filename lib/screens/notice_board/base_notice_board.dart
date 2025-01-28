@@ -9,14 +9,17 @@ abstract class BaseNoticeBoard extends StatefulWidget {
   const BaseNoticeBoard({super.key});
 }
 
-abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> {
+abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
+    extends State<T> {
   // 오버라이딩 필요
   late BaseNoticeScraper noticeScraper;
+
   Future<void> loadNotices(int page);
 
-  // 멤버변수
   Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
   List<Map<String, dynamic>> initialPages = [];
+
+  // 읽은 공지사항과 북마크된 공지사항을 캐싱하여 메모리에서 관리.
   Set<String> readNotices = {};
   Set<String> bookmarkedNotices = {};
 
@@ -26,20 +29,15 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> 
   int currentPage = PageSettings.kInitialPage;
 
   Future<void> initializeReadAndBookmark() async {
-    final readIds = await ReadNoticeManager.loadReadNotices();
-    final bookmarkedIds = await BookmarkManager.getAllBookmarks();
-    readNotices = readIds.toSet();
-    bookmarkedNotices = bookmarkedIds.toSet();
+    final Set<String> readIds = await ReadNoticeManager.loadReadNotices();
+    final Set<String> bookmarkedIds = await BookmarkManager.getAllBookmarks();
+    readNotices = readIds;
+    bookmarkedNotices = bookmarkedIds;
   }
 
   // 공지를 읽었는지 확인
   bool isNoticeRead(String noticeId) {
     return readNotices.contains(noticeId);
-  }
-
-  // 공지가 북마크되었는지 확인
-  bool isNoticeBookmarked(String noticeId) {
-    return bookmarkedNotices.contains(noticeId);
   }
 
   // 공지를 읽음으로 표시
@@ -49,14 +47,29 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard> extends State<T> 
     setState(() {});
   }
 
+  // 공지가 북마크되었는지 확인
+  bool isNoticeBookmarked(String noticeId) {
+    return bookmarkedNotices.contains(noticeId);
+  }
+
+  // 북마크 추가
+  Future<void> addNoticeBookmarked(String noticeId) async {
+    bookmarkedNotices.add(noticeId);
+    await BookmarkManager.addBookmark(noticeId);
+  }
+
+  // 북마크 삭제
+  Future<void> removeNoticeBookmarked(String noticeId) async {
+    bookmarkedNotices.remove(noticeId);
+    await BookmarkManager.removeBookmark(noticeId);
+  }
+
   // 공지의 북마크 상태를 토글
   Future<void> toggleBookmark(String noticeId) async {
-    if (bookmarkedNotices.contains(noticeId)) {
-      bookmarkedNotices.remove(noticeId);
-      await BookmarkManager.removeBookmark(noticeId);
+    if (isNoticeBookmarked(noticeId)) {
+      removeNoticeBookmarked(noticeId);
     } else {
-      bookmarkedNotices.add(noticeId);
-      await BookmarkManager.addBookmark(noticeId);
+      addNoticeBookmarked(noticeId);
     }
     setState(() {});
   }
