@@ -81,31 +81,33 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          GestureDetector(
-            onTap: () => toggleOption('headline'),
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 4.0, horizontal: 8.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                // 옵션 버튼의 경계 색상 지정
-                border: showHeadlines
-                    ? Border.all(color: Colors.blue, width: 2.0)
-                    : Border.all(color: Colors.grey, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Text(
-                '중요',
-                style: TextStyle(
-                  fontFamily: FontSettings.kDefaultFont,
-                  fontSize: 13.0,
-                  fontWeight: FontWeight.bold,
-                  color: showHeadlines ? Colors.blue : Colors.grey,
+          // 중요공지가 있을때만 토글 버튼이 생성됩니다.
+          if(notices['headline'].isNotEmpty)
+            GestureDetector(
+              onTap: () => toggleOption('headline'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 4.0, horizontal: 8.0),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  // 옵션 버튼의 경계 색상 지정
+                  border: showHeadlines
+                      ? Border.all(color: Colors.blue, width: 2.0)
+                      : Border.all(color: Colors.grey, width: 2.0),
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Text(
+                  '중요',
+                  style: TextStyle(
+                    fontFamily: FontSettings.kDefaultFont,
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold,
+                    color: showHeadlines ? Colors.blue : Colors.grey,
+                  ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(width: 10),
+            const SizedBox(width: 10),
           GestureDetector(
             onTap: () => toggleOption('general'),
             child: Container(
