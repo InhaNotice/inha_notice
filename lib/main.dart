@@ -45,6 +45,14 @@ Future<void> _initializeFirebase() async {
     sound: true,
   );
 
+  // 모든 사용자가 'all-users' 토픽을 구독하도록 설정
+  try {
+    await messaging.subscribeToTopic('all-users');
+    print("✅ Successfully subscribed to 'all-users' topic");
+  } catch (e) {
+    print("🚨 Error subscribing to 'all-users' topic: $e");
+  }
+
   // Firebase 메시지 리스너
   FirebaseMessaging.onMessage.listen(_onForegroundMessageHandler);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
