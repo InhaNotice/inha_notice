@@ -43,7 +43,7 @@ class MorePage extends StatelessWidget {
                           '공지사항',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 16,
+                            fontSize: 20,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -53,11 +53,6 @@ class MorePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                      width: double.infinity,
-                      child: Divider(
-                          color: Theme.of(context).dividerColor,
-                          thickness: 2.0)),
                   Container(
                     height: 50.0,
                     decoration: BoxDecoration(
@@ -80,7 +75,7 @@ class MorePage extends StatelessWidget {
                             '학과 설정',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
-                              fontSize: 19,
+                              fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color:
                                   Theme.of(context).textTheme.bodyMedium?.color ??
@@ -104,7 +99,7 @@ class MorePage extends StatelessWidget {
                           '공지사항 알림 설정',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -114,7 +109,11 @@ class MorePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(
+                      width: double.infinity,
+                      child: Divider(
+                          color: Theme.of(context).dividerColor,
+                          thickness: 2.0)),
                   Container(
                     height: 50.0,
                     decoration: BoxDecoration(
@@ -128,7 +127,7 @@ class MorePage extends StatelessWidget {
                           '피드백',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 16,
+                            fontSize: 20,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -138,11 +137,6 @@ class MorePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                      width: double.infinity,
-                      child: Divider(
-                          color: Theme.of(context).dividerColor,
-                          thickness: 2.0)),
                   Container(
                     height: 50.0,
                     decoration: BoxDecoration(
@@ -156,30 +150,6 @@ class MorePage extends StatelessWidget {
                           '피드백 보내기',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
-                            fontWeight: FontWeight.normal,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color ??
-                                    Theme.of(context).defaultColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Container(
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '앱 정보',
-                          style: TextStyle(
-                            fontFamily: Font.kDefaultFont,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
@@ -205,10 +175,33 @@ class MorePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
+                          '앱 정보',
+                          style: TextStyle(
+                            fontFamily: Font.kDefaultFont,
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color ??
+                                    Theme.of(context).defaultColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
                           '공지사항',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -231,7 +224,7 @@ class MorePage extends StatelessWidget {
                           '앱 버전',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -254,7 +247,7 @@ class MorePage extends StatelessWidget {
                           '개인정보 처리방침',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -277,7 +270,7 @@ class MorePage extends StatelessWidget {
                           '이용약관',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -300,7 +293,7 @@ class MorePage extends StatelessWidget {
                           '사용된 오픈소스',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
@@ -320,10 +313,10 @@ class MorePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '앱소개',
+                          '앱 소개',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color:
                                 Theme.of(context).textTheme.bodyMedium?.color ??
