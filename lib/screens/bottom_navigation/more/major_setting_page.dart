@@ -165,7 +165,21 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                   final major = _filteredMajors[index];
                   return ListTile(
                     title: Text(major),
-                    onTap: () => _saveMajor(major),
+                      onTap: () async {
+                        if (!mounted) return;
+                        try {
+                          await _saveMajor(major);
+                          if (!mounted) return;
+                          Future.microtask(() {
+                            if (mounted) Navigator.pop(context);
+                          });
+                        } catch (e) {
+                          debugPrint('Error saving major: $e');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('학과 설정 중 오류가 발생했습니다. 다시 시도해주세요.')),
+                          );
+                        }
+                      }
                   );
                 },
               )
