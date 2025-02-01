@@ -80,11 +80,12 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: Text('학과 설정',
             style: TextStyle(
                 fontFamily: Font.kDefaultFont,
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
                     Theme.of(context).defaultColor)),
       ),
@@ -121,9 +122,38 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
             TextField(
               controller: _searchController,
               onChanged: _filterMajors,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: '학과 검색',
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(
+                  fontFamily: Font.kDefaultFont,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                  color: Theme.of(context).textTheme.bodyMedium?.color ?? Theme.of(context).defaultColor,
+                ),
+                enabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey, // 비활성 상태 경계선 색상
+                    width: 2.0,
+                  ),
+                ),
+                focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey, // 포커스 상태 경계선 색상
+                    width: 2.0,
+                  ),
+                ),
+                errorBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey, // 에러 상태 경계선 색상
+                    width: 2.0,
+                  ),
+                ),
+                disabledBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.grey, // 비활성화 상태 경계선 색상
+                    width: 2.0,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 16),
