@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
 
 class MorePage extends StatelessWidget {
   const MorePage({super.key});
@@ -53,21 +54,21 @@ class MorePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MajorSettingPage()
-                            ),
-                        );
-                      },
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MajorSettingPage(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -77,36 +78,44 @@ class MorePage extends StatelessWidget {
                               fontFamily: Font.kDefaultFont,
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
-                              color:
-                                  Theme.of(context).textTheme.bodyMedium?.color ??
-                                      Theme.of(context).defaultColor,
+                              color: Theme.of(context).textTheme.bodyMedium?.color ??
+                                  Theme.of(context).defaultColor,
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  Container(
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '공지사항 알림 설정',
-                          style: TextStyle(
-                            fontFamily: Font.kDefaultFont,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color ??
-                                    Theme.of(context).defaultColor,
-                          ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NotificationSettingPage(),
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '알림 설정',
+                            style: TextStyle(
+                              fontFamily: Font.kDefaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context).textTheme.bodyMedium?.color ??
+                                  Theme.of(context).defaultColor,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
