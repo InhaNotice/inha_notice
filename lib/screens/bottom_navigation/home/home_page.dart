@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/screens/notice_board/international_notice.dart';
 import 'package:inha_notice/screens/notice_board/library_notice.dart';
 import 'package:inha_notice/screens/notice_board/recruitment_notice.dart';
 import 'package:inha_notice/screens/notice_board/scholarship_notice.dart';
@@ -110,7 +109,7 @@ class HomePage extends StatelessWidget {
             ScholarshipNoticePage(),
             RecruitmentNoticePage(),
             LibraryNoticePage(),
-            InternationalNoticePage(),
+            NoticeBoard(noticeType: 'international'),
           ],
         ),
       ),

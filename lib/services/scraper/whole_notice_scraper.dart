@@ -2,7 +2,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/selectors/whole_tag_selectors.dart';
-import 'package:inha_notice/services/base_notice_scraper.dart';
+import 'package:inha_notice/services/scraper/base_notice_scraper.dart';
 import 'package:inha_notice/constants/status_code_constants.dart';
 
 class WholeNoticeScraper extends BaseNoticeScraper {
