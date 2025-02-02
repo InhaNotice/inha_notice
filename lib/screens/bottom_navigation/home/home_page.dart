@@ -70,28 +70,37 @@ class HomePage extends StatelessWidget {
               },
             ),
           ],
-          bottom: const TabBar(
-            indicatorColor: Color(0xFF12B8FF),
-            labelColor: Color(0xFF12B8FF),
-            unselectedLabelColor: Color(0xFFBAB6B6),
-            labelStyle: TextStyle(
-              fontFamily: Font.kDefaultFont,
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(48), // `TabBar` 높이 조절
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                splashFactory: NoSplash.splashFactory, // 물결 효과 제거
+                highlightColor: Colors.transparent, // 하이라이트 효과 제거
+              ),
+              child: const TabBar(
+                indicatorColor: Color(0xFF12B8FF),
+                labelColor: Color(0xFF12B8FF),
+                unselectedLabelColor: Color(0xFFBAB6B6),
+                labelStyle: TextStyle(
+                  fontFamily: Font.kDefaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+                unselectedLabelStyle: TextStyle(
+                  fontFamily: Font.kDefaultFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+                tabs: [
+                  Tab(text: '학사'),
+                  Tab(text: '학과'),
+                  Tab(text: '장학'),
+                  Tab(text: '채용'),
+                  Tab(text: '정석'),
+                  Tab(text: '국제')
+                ],
+              ),
             ),
-            unselectedLabelStyle: TextStyle(
-              fontFamily: Font.kDefaultFont,
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
-            ),
-            tabs: [
-              Tab(text: '학사'),
-              Tab(text: '학과'),
-              Tab(text: '장학'),
-              Tab(text: '채용'),
-              Tab(text: '정석'),
-              Tab(text: '국제')
-            ],
           ),
         ),
         body: const TabBarView(
