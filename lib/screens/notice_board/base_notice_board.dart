@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/utils/read_notice_manager.dart';
 import 'package:inha_notice/utils/bookmark_manager.dart';
 import 'package:inha_notice/constants/page_constants.dart';
-import 'package:inha_notice/services/base_notice_scraper.dart';
+import 'package:inha_notice/services/scraper/base_notice_scraper.dart';
 
 // 공지사항 페이지의 인터페이스를 제공합니다.
 abstract class BaseNoticeBoard extends StatefulWidget {

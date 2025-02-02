@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/constants/font_constants.dart';
-import 'package:inha_notice/services/major_notice_scraper.dart';
+import 'package:inha_notice/services/scraper/international_notice_scraper.dart';
+import 'package:inha_notice/services/scraper/major_notice_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/page_selector.dart';
-import 'package:inha_notice/services/whole_notice_scraper.dart';
+import 'package:inha_notice/services/scraper/whole_notice_scraper.dart';
 
 // noticeType에 따라 공지사항 페이지를 구현합니다.
 class NoticeBoard extends BaseNoticeBoard {
@@ -45,6 +46,8 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
       final majorScraper = MajorNoticeScraper();
       await majorScraper.initialize(); // 비동기 초기화
       noticeScraper = majorScraper;
+    } else if (widget.noticeType == 'international') {
+      noticeScraper = InternationalNoticeScraper();
     }
   }
 
