@@ -24,34 +24,39 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
+        body: _pages[_currentIndex],
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+            splashFactory: NoSplash.splashFactory, // 물결 효과 제거
+            highlightColor: Colors.transparent, // 하이라이트 효과 제거
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '검색',
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: '홈',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: '검색',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark),
+                label: '북마크',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.more_horiz),
+                label: '더보기',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: '북마크',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: '더보기',
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
