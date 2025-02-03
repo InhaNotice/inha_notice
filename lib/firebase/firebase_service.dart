@@ -23,7 +23,7 @@ class FirebaseService {
   /// Firebase 초기화 및 기본 구독 설정
   Future<void> initialize() async {
     await _requestPermission();
-    await _subscribeToAllUsers();
+    await _subscribeToAllUsersAndNotices();
 
     FirebaseMessaging.onMessage.listen(_onForegroundMessageHandler);
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -50,12 +50,15 @@ class FirebaseService {
     );
   }
 
-  /// 'all-users' 토픽 구독 (최초 1회)
-  Future<void> _subscribeToAllUsers() async {
+  /// 'all-users & all-notices' 토픽 구독 (최초 1회)
+  Future<void> _subscribeToAllUsersAndNotices() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isSubscribed = prefs.getBool('isSubscribedToAllUsers') ?? false;
+    bool isSubscribedUsers = prefs.getBool('isSubscribedToAllUsers') ?? false;
+    bool isSubscribedNotices =
+        prefs.getBool('isSubscribedToAllNotices') ?? false;
 
-    if (!isSubscribed) {
+    // 'all-users' 토픽은 앱 공지사항 관련 알림
+    if (!isSubscribedUsers) {
       try {
         await _messaging.subscribeToTopic('all-users');
         await prefs.setBool('isSubscribedToAllUsers', true);
@@ -63,8 +66,17 @@ class FirebaseService {
       } catch (e) {
         logger.e("🚨 Error subscribing to 'all-users' topic: $e");
       }
-    } else {
-      logger.d("⚡ Already subscribed to 'all-users' topic");
+    }
+
+    // 'all-notices' 토픽은 학사 공지사항 관련 알림
+    if (!isSubscribedNotices) {
+      try {
+        await _messaging.subscribeToTopic('all-notices');
+        await prefs.setBool('isSubscribedToAllNotices', true);
+        logger.d("✅ Successfully subscribed to 'all-notices' topic");
+      } catch (e) {
+        logger.e("🚨 Error subscribing to 'all-notices' topic: $e");
+      }
     }
   }
 
