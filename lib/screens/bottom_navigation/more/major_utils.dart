@@ -1,4 +1,9 @@
-abstract class MajorUtils {
+import 'package:inha_notice/firebase/firebase_service.dart';
+import 'package:inha_notice/utils/major_storage.dart';
+import 'package:logger/logger.dart';
+
+class MajorUtils {
+  static final Logger logger = Logger();
   static const Map<String, Map<String, String>> majorGroups = {
     '공과대학': {
       '기계공학과': 'MECH',
@@ -94,25 +99,39 @@ abstract class MajorUtils {
   };
 
   // 저장된 영문 학과명을 국문 학과명으로 번역합니다.
-  static String? translateToKorean(String? majorKey) {
-    if (majorKey == null) return null;
-    for (var group in MajorUtils.majorGroups.values) {
-      for (var entry in group.entries) {
-        if (entry.value == majorKey) {
-          return entry.key;
-        }
-      }
-    }
-    return null;
+  static String translateToKorean(String? majorKey) {
+    return majorGroups.entries
+        .expand((group) => group.value.entries)
+        .firstWhere((entry) => entry.value == majorKey,
+            orElse: () => const MapEntry('Unknown Major', ''))
+        .key;
   }
 
   // 국문 학과명을 영문 학과명으로 저장합니다.
   static String translateToEnglish(String major) {
-    for (var group in MajorUtils.majorGroups.values) {
-      if (group.containsKey(major)) {
-        return group[major]!;
+    return majorGroups.entries
+        .expand((group) => group.value.entries)
+        .firstWhere((entry) => entry.key == major,
+            orElse: () => const MapEntry('', 'Unknown Major'))
+        .value;
+  }
+
+  static Future<void> subscribeToMajor(
+      String? currentMajorKey, String newMajorKey) async {
+    try {
+      final firebaseService = FirebaseService(); // 싱글톤 인스턴스 사용
+
+      if (currentMajorKey != null && currentMajorKey != newMajorKey) {
+        await firebaseService.unsubscribeFromTopic(currentMajorKey);
       }
+
+      await firebaseService.subscribeToTopic(newMajorKey);
+    } catch (e) {
+      logger.e('🚨 Error handling FCM topic subscription: $e');
     }
-    throw Exception('학과를 찾을 수 없습니다.');
+  }
+
+  static Future<void> saveMajor(String newMajorKey) async {
+    await MajorStorage.saveMajor(newMajorKey);
   }
 }
