@@ -1,7 +1,9 @@
-import 'package:sqflite/sqflite.dart';
+import 'package:logger/logger.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class MajorStorage {
+  static final Logger logger = Logger();
   static const String _databaseName = 'major_database.db';
   static const String _tableName = 'selected_major';
   static const int _databaseVersion = 1;
@@ -39,6 +41,7 @@ class MajorStorage {
       {'major': major},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    logger.d('✅ 새로운 학과 저장 성공!');
   }
 
   // Get the saved major
