@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vibration/vibration.dart';
 
 class FirebaseService {
   // 싱글톤 인스턴스 정의
@@ -108,12 +109,15 @@ class FirebaseService {
   }
 
   /// 포그라운드 메시지 핸들러
-  void _onForegroundMessageHandler(RemoteMessage message) {
+  void _onForegroundMessageHandler(RemoteMessage message) async {
     logger.d('📩 Foreground message received!');
     logger.d('Message data: ${message.data}');
 
     if (message.notification != null) {
       logger.d('🔔 Notification: ${message.notification}');
+      if (await Vibration.hasVibrator()) {
+        Vibration.vibrate();
+      }
     }
   }
 }
