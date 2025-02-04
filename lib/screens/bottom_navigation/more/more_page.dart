@@ -276,7 +276,7 @@ class MorePage extends StatelessWidget {
                             size: 20, color: Theme.of(context).iconTheme.color),
                         const SizedBox(width: 8),
                         Text(
-                          '새로운 내용',
+                          '앱 소개',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
                             fontSize: 16,
