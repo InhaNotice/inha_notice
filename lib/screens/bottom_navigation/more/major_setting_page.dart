@@ -128,14 +128,25 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                   fontFamily: Font.kDefaultFont,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
-                  color: Theme.of(context).textTheme.bodyMedium?.color ??
-                      Theme.of(context).defaultColor,
+                  color: Theme.of(context).hintColor,
                 ),
-                enabledBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                filled: false,
+                prefixIcon: Icon(Icons.search,
+                    color: Theme.of(context).iconTheme.color),
+                // 검색 아이콘 추가
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).boxBorderColor,
+                    width: 2.0,
+                  ),
                 ),
-                focusedBorder: const UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(
+                    color: Colors.blue,
+                    width: 2.5,
+                  ),
                 ),
               ),
             ),
@@ -156,31 +167,36 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                     )
                   : ListView(
                       children: _filteredMajorGroups.entries.map((entry) {
-                        return ExpansionTile(
-                          title: Text(
-                            entry.key,
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
+                        return Theme(
+                            data: Theme.of(context).copyWith(
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                             ),
-                          ),
-                          children: entry.value.keys
-                              .map(
-                                (major) => ListTile(
-                                  title: Text(major),
-                                  onTap: () async {
-                                    await _handleMajorSelection(major);
-                                  },
+                            child: ExpansionTile(
+                              title: Text(
+                                entry.key,
+                                style: TextStyle(
+                                  fontFamily: Font.kDefaultFont,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                  color: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.color ??
+                                      Theme.of(context).defaultColor,
                                 ),
-                              )
-                              .toList(),
-                        );
+                              ),
+                              children: entry.value.keys
+                                  .map(
+                                    (major) => ListTile(
+                                      title: Text(major),
+                                      onTap: () async {
+                                        await _handleMajorSelection(major);
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                            ));
                       }).toList(),
                     ),
             ),
