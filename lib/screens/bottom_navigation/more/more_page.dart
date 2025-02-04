@@ -71,16 +71,26 @@ class MorePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '학과 설정',
-                        style: TextStyle(
-                          fontFamily: Font.kDefaultFont,
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                          color:
-                              Theme.of(context).textTheme.bodyMedium?.color ??
+                      Row(
+                        children: [
+                          Icon(Icons.school_outlined,
+                              size: 20,
+                              color: Theme.of(context).iconTheme.color),
+                          const SizedBox(width: 8),
+                          Text(
+                            '학과 설정',
+                            style: TextStyle(
+                              fontFamily: Font.kDefaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color ??
                                   Theme.of(context).defaultColor,
-                        ),
+                            ),
+                          )
+                        ],
                       ),
                       Icon(Icons.arrow_forward_ios,
                           size: 16,
@@ -108,16 +118,26 @@ class MorePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '알림 설정',
-                        style: TextStyle(
-                          fontFamily: Font.kDefaultFont,
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                          color:
-                              Theme.of(context).textTheme.bodyMedium?.color ??
+                      Row(
+                        children: [
+                          Icon(Icons.notifications_outlined,
+                              size: 20,
+                              color: Theme.of(context).iconTheme.color),
+                          const SizedBox(width: 8),
+                          Text(
+                            '알림 설정',
+                            style: TextStyle(
+                              fontFamily: Font.kDefaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color ??
                                   Theme.of(context).defaultColor,
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
                       Icon(Icons.arrow_forward_ios,
                           size: 16, color: Theme.of(context).iconTheme.color),
