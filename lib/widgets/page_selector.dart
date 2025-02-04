@@ -34,17 +34,23 @@ class PageSelector extends StatelessWidget {
             final int pageNumber = pageData['page'];
             final bool isCurrentPage = (pageNumber == currentPage);
             return TextButton(
+              style: TextButton.styleFrom(
+                splashFactory: NoSplash.splashFactory,
+                foregroundColor: Colors.transparent,
+                shape: const RoundedRectangleBorder(),
+              ),
               onPressed: isCurrentPage
                   ? null
                   : () {
-                onPageSelected(pageNumber);
-              },
+                      onPageSelected(pageNumber);
+                    },
               child: Text(
                 pageNumber.toString(),
                 style: TextStyle(
                   fontFamily: Font.kDefaultFont,
                   fontSize: 14,
-                  fontWeight: isCurrentPage ? FontWeight.bold : FontWeight.normal,
+                  fontWeight:
+                      isCurrentPage ? FontWeight.bold : FontWeight.normal,
                   color: isCurrentPage ? currentPageColor : otherPageColor,
                 ),
               ),
