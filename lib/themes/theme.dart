@@ -19,6 +19,7 @@ final ThemeData lightTheme = ThemeData(
     bodyMedium: TextStyle(color: Colors.black),
     bodySmall: TextStyle(color: Colors.grey),
   ),
+  primaryColorLight: Colors.blue,
   iconTheme: const IconThemeData(color: Colors.grey),
   dividerColor: Colors.grey[300],
 );
@@ -42,6 +43,7 @@ final ThemeData darkTheme = ThemeData(
       bodyMedium: TextStyle(color: Colors.white),
       bodySmall: TextStyle(color: Colors.grey),
     ),
+    primaryColorLight: Colors.blue,
     iconTheme: const IconThemeData(color: Colors.white),
     dividerColor: const Color(0xFF292929));
 
@@ -60,5 +62,6 @@ extension BorderColors on ThemeData {
 }
 
 extension BoxBorderColors on ThemeData {
-  Color get boxBorderColor => Colors.black26;
+  Color get boxBorderColor =>
+      brightness == Brightness.light ? Colors.black26 : Colors.white24;
 }

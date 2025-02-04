@@ -177,7 +177,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                                 entry.key,
                                 style: TextStyle(
                                   fontFamily: Font.kDefaultFont,
-                                  fontSize: 20,
+                                  fontSize: 19,
                                   fontWeight: FontWeight.normal,
                                   color: Theme.of(context)
                                           .textTheme
