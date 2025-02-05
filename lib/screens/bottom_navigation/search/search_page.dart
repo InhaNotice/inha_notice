@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/main.dart';
-import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
-import 'package:inha_notice/services/trending_topics_api.dart';
-import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
+import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
 import 'package:inha_notice/themes/theme.dart';
 
 typedef TopicsList = List<Map<String, dynamic>>;
@@ -146,7 +145,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.search, color: Theme.of(context).iconTheme.color),
+                      Icon(Icons.search,
+                          color: Theme.of(context).iconTheme.color),
                       const SizedBox(width: 10),
                       Expanded(
                         child: TextField(
@@ -155,7 +155,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                             fontFamily: Font.kDefaultFont,
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
-                            color: Theme.of(context).textTheme.bodyMedium?.color ?? Theme.of(context).defaultColor,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color ??
+                                    Theme.of(context).defaultColor,
                           ),
                           decoration: const InputDecoration(
                             hintText: '검색어를 입력하세요',
@@ -248,23 +250,25 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 Expanded(
                   child: _topicsList.isEmpty
                       ? Center(
-                      child: Text(
-                        '실시간 인기 검색어를 불러오고 있습니다...',
-                        style: TextStyle(
-                          fontFamily: Font.kDefaultFont,
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
-                        ),
-                      ))
+                          child: Text(
+                          '실시간 인기 검색어를 불러오고 있습니다...',
+                          style: TextStyle(
+                            fontFamily: Font.kDefaultFont,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                          ),
+                        ))
                       : ListView.builder(
-                    itemCount: _topicsList.length,
-                    itemBuilder: (context, index) {
-                      final topics = _topicsList[index];
-                      return TopicsItem(
-                          topic: topics, rank: index + 1, animation: _animations[index]);
-                    },
-                  ),
+                          itemCount: _topicsList.length,
+                          itemBuilder: (context, index) {
+                            final topics = _topicsList[index];
+                            return TopicsItem(
+                                topic: topics,
+                                rank: index + 1,
+                                animation: _animations[index]);
+                          },
+                        ),
                 ),
               ],
             )));
@@ -280,7 +284,9 @@ Widget _buildTag(BuildContext context, String text) {
     ),
     child: Text(
       text,
-      style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color,),
+      style: TextStyle(
+        color: Theme.of(context).textTheme.bodyLarge?.color,
+      ),
     ),
   );
 }
