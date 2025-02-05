@@ -5,8 +5,8 @@ import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/scraper/base_notice_scraper.dart';
 import 'package:inha_notice/services/scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/scraper/whole_notice_scraper.dart';
-import 'package:inha_notice/widgets/absolute_pagination.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
+import 'package:inha_notice/widgets/page/absolute_pagination.dart';
 
 // noticeType에 따라 공지사항 페이지를 구현합니다.
 // 지원하는 공지: 학사, 학과, 국제처, SW중심대학

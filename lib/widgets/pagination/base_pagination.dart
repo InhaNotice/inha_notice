@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 
-class AbsolutePagination extends StatelessWidget {
+abstract class BasePagination extends StatelessWidget {
   final List<Map<String, dynamic>> pages;
   final int currentPage;
   final Function(int) loadNotices;
 
-  const AbsolutePagination({
+  const BasePagination({
     super.key,
     required this.pages,
     required this.currentPage,
@@ -19,7 +19,6 @@ class AbsolutePagination extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    // 테마 기반 색상 설정
     final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
     final currentPageColor = Theme.of(context).textTheme.bodyLarge?.color;
     const otherPageColor = Colors.grey;
@@ -33,17 +32,15 @@ class AbsolutePagination extends StatelessWidget {
           children: pages.map<Widget>((pageData) {
             final int pageNumber = pageData['page'];
             final bool isCurrentPage = (pageNumber == currentPage);
+            final int relativePage = getRelativePage(pageData);
+
             return TextButton(
               style: TextButton.styleFrom(
                 splashFactory: NoSplash.splashFactory,
                 foregroundColor: Colors.transparent,
                 shape: const RoundedRectangleBorder(),
               ),
-              onPressed: isCurrentPage
-                  ? null
-                  : () {
-                      loadNotices(pageNumber);
-                    },
+              onPressed: isCurrentPage ? null : () => loadNotices(relativePage),
               child: Text(
                 pageNumber.toString(),
                 style: TextStyle(
@@ -60,4 +57,7 @@ class AbsolutePagination extends StatelessWidget {
       ),
     );
   }
+
+  /// **각 서브 클래스에서 페이지 계산 방식이 다르므로 오버라이딩 필수**
+  int getRelativePage(Map<String, dynamic> pageData);
 }
