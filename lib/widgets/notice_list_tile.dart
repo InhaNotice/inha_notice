@@ -77,14 +77,33 @@ class _NoticeListTileState extends State<NoticeListTile> {
           ),
         ),
         ListTile(
-            title: Text(
-              title,
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 16.0,
-                fontWeight: FontWeight.normal,
-                color: textColor,
-              ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontFamily: Font.kDefaultFont,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.normal,
+                    color: textColor,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                if (widget.notice.containsKey('body') &&
+                    widget.notice['body'] != null)
+                  Text(
+                    widget.notice['body'],
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: Font.kDefaultFont,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.normal,
+                      color: textColor.withOpacity(0.8),
+                    ),
+                  ),
+              ],
             ),
             subtitle: Row(
               children: [
