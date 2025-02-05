@@ -21,8 +21,6 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
   Set<String> bookmarkedNotices = {};
 
   bool isLoading = true;
-  bool showHeadlines = false;
-  bool showGeneral = true;
   int currentPage = PageSettings.kInitialAbsolutePage;
 
   Future<void> initializeReadAndBookmark() async {
@@ -71,17 +69,7 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
     setState(() {});
   }
 
-  void toggleOption(String option) {
-    setState(() {
-      if (option == 'headline') {
-        showHeadlines = true;
-        showGeneral = false;
-      } else if (option == 'general') {
-        showHeadlines = false;
-        showGeneral = true;
-      }
-    });
-  }
+  void toggleOption(String option);
 
   @override
   Widget build(BuildContext context) {
