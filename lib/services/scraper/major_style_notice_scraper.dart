@@ -1,16 +1,23 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:inha_notice/constants/status_code_constants.dart';
+import 'package:inha_notice/selectors/major_tag_selectors.dart';
 import 'package:inha_notice/services/scraper/base_notice_scraper.dart';
 import 'package:inha_notice/utils/major_storage.dart';
-import 'package:inha_notice/selectors/major_tag_selectors.dart';
-import 'package:inha_notice/constants/status_code_constants.dart';
 
 class MajorNoticeScraper extends BaseNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
+  late final String noticeType;
 
-  MajorNoticeScraper();
+  MajorNoticeScraper(this.noticeType) {
+    if (noticeType == 'MAJOR') {
+      return;
+    }
+    baseUrl = dotenv.get('${noticeType}_URL');
+    queryUrl = dotenv.get('${noticeType}_QUERY_URL');
+  }
 
   Future<void> initialize() async {
     String? major = await MajorStorage.getMajor();
