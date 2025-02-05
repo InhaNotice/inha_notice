@@ -15,11 +15,11 @@ class SearchScraper {
   }
 
   Future<Map<String, dynamic>> fetchNotices(
-      String query, int startCount) async {
+      String query, int startCount, String sortedType) async {
     try {
       // 크롤링 진행
       final String connectUrl =
-          '$baseUrl?query=$query&collection=$collectionType&startCount=$startCount';
+          '$baseUrl?query=$query&collection=$collectionType&startCount=$startCount&sort=$sortedType';
       final response = await http.get(Uri.parse(connectUrl));
 
       if (response.statusCode == StatusCodeSettings.kStatusOkay) {
@@ -45,28 +45,43 @@ class SearchScraper {
   }
 
   List<Map<String, dynamic>> fetchSearchedNotices(document) {
+    // dl.resultsty_1 태그를 가져오기(여러 개일 수 있음)
     final notices = document.querySelectorAll(NoticeTagSelectors.kNoticeBoard);
     final List<Map<String, String>> results = [];
 
+    // dl.resultsty_1 태그를 순회하면서 공지사항을 가져오기
     for (var notice in notices) {
-      final titleTag = notice.querySelector(NoticeTagSelectors.kNoticeTitle);
-      final bodyTag = notice.querySelector(NoticeTagSelectors.kNoticeBody);
-      final dateTag = notice.querySelector(NoticeTagSelectors.kNoticeDate);
+      final titleTags =
+          notice.querySelectorAll(NoticeTagSelectors.kNoticeTitle);
+      final bodyTags = notice.querySelectorAll(NoticeTagSelectors.kNoticeBody);
+      final dateTags = notice.querySelectorAll(NoticeTagSelectors.kNoticeDate);
 
-      if (titleTag == null || bodyTag == null || dateTag == null) {
-        continue;
+      for (int i = 0; i < titleTags.length; i++) {
+        final titleTag = (i < titleTags.length) ? titleTags[i] : null;
+        final bodyTag = (i < bodyTags.length) ? bodyTags[i] : null;
+        final dateTag = (i < dateTags.length) ? dateTags[i] : null;
+
+        if (titleTag == null || dateTag == null) {
+          continue;
+        }
+
+        final postUrl =
+            titleTag.attributes[NoticeTagSelectors.kNoticeTitleHref] ?? '';
+
+        final id = makeUniqueNoticeId(postUrl);
+        final title = titleTag.text.trim();
+        final body = bodyTag.text.trim();
+        final link = postUrl;
+        final date = dateTag.text.trim();
+
+        results.add({
+          'id': id,
+          'title': title,
+          'body': body,
+          'link': link,
+          'date': date
+        });
       }
-
-      final postUrl = titleTag.attributes[NoticeTagSelectors.kNoticeTitleHref];
-
-      final id = makeUniqueNoticeId(postUrl);
-      final title = titleTag.text?.trim() ?? '';
-      final body = bodyTag.text?.trim() ?? '';
-      final link = postUrl;
-      final date = dateTag.text.trim();
-
-      results.add(
-          {'id': id, 'title': title, 'body': body, 'link': link, 'date': date});
     }
     return results;
   }
@@ -83,8 +98,8 @@ class SearchScraper {
     int lastPage = int.parse(match?.group(1) ?? '1');
     if (lastPage != 1) {
       lastPage = lastPage ~/ 10 + 1;
-      // 최대 10페이지로 제한
-      lastPage = (lastPage > 10) ? 10 : lastPage;
+      // 최대 50페이지로 제한
+      lastPage = (lastPage > 50) ? 50 : lastPage;
     }
     for (int i = 1; i <= lastPage; i++) {
       final int page = i;

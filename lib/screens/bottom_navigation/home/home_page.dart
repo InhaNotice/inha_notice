@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/screens/notice_board/library_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_board.dart';
+import 'package:inha_notice/widgets/search_result_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
