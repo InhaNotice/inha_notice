@@ -6,10 +6,10 @@ class RelativePagination extends BasePagination {
   const RelativePagination({
     super.key,
     required this.pageType,
-    required List<Map<String, dynamic>> pages,
-    required int currentPage,
-    required Function(int) loadNotices,
-  }) : super(pages: pages, currentPage: currentPage, loadNotices: loadNotices);
+    required super.pages,
+    required super.currentPage,
+    required super.loadNotices,
+  });
 
   @override
   int getRelativePage(Map<String, dynamic> pageData) {

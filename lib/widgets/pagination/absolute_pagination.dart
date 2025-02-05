@@ -3,10 +3,10 @@ import 'base_pagination.dart';
 class AbsolutePagination extends BasePagination {
   const AbsolutePagination({
     super.key,
-    required List<Map<String, dynamic>> pages,
-    required int currentPage,
-    required Function(int) loadNotices,
-  }) : super(pages: pages, currentPage: currentPage, loadNotices: loadNotices);
+    required super.pages,
+    required super.currentPage,
+    required super.loadNotices,
+  });
 
   @override
   int getRelativePage(Map<String, dynamic> pageData) {
