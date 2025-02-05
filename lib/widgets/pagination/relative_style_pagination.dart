@@ -1,9 +1,9 @@
 import 'base_pagination.dart';
 
-class RelativePagination extends BasePagination {
+class RelativeStylePagination extends BasePagination {
   final String pageType;
 
-  const RelativePagination({
+  const RelativeStylePagination({
     super.key,
     required this.pageType,
     required super.pages,

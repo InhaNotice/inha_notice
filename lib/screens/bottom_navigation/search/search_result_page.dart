@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/web_page.dart';
-import 'package:inha_notice/services/search_scraper.dart';
+import 'package:inha_notice/services/relative_style_scraper/search_scraper.dart';
 
 typedef NoticesMap = Map<String, dynamic>;
 typedef PagesList = List<Map<String, dynamic>>;
@@ -17,7 +17,6 @@ class SearchResultPage extends StatefulWidget {
 
 class _SearchResultPageState extends State<SearchResultPage> {
   final SearchScraper _searchAPI = SearchScraper();
-  final TextEditingController _searchController = TextEditingController();
   NoticesMap _notices = {'notices': [], 'pages': []};
   PagesList _initialPages = [];
 

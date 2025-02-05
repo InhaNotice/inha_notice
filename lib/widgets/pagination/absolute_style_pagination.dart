@@ -1,7 +1,7 @@
 import 'base_pagination.dart';
 
-class AbsolutePagination extends BasePagination {
-  const AbsolutePagination({
+class AbsoluteStylePagination extends BasePagination {
+  const AbsoluteStylePagination({
     super.key,
     required super.pages,
     required super.currentPage,

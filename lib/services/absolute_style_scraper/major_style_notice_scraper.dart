@@ -1,17 +1,30 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/selectors/whole_tag_selectors.dart';
-import 'package:inha_notice/services/scraper/base_notice_scraper.dart';
 import 'package:inha_notice/constants/status_code_constants.dart';
+import 'package:inha_notice/selectors/major_style_tag_selectors.dart';
+import 'package:inha_notice/services/absolute_style_scraper/base_notice_scraper.dart';
+import 'package:inha_notice/utils/major_storage.dart';
 
-class WholeNoticeScraper extends BaseNoticeScraper {
+class MajorStyleNoticeScraper extends BaseNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
+  late final String noticeType;
 
-  WholeNoticeScraper() {
-    baseUrl = dotenv.get('WHOLE_URL');
-    queryUrl = dotenv.get('WHOLE_QUERY_URL');
+  MajorStyleNoticeScraper(this.noticeType) {
+    if (noticeType == 'MAJOR') {
+      return;
+    }
+
+    baseUrl = dotenv.get('${noticeType}_URL');
+    queryUrl = dotenv.get('${noticeType}_QUERY_URL');
+  }
+
+  // noticeType이 'MAJOR'인 경우에만 초기화
+  Future<void> initialize() async {
+    String? major = await MajorStorage.getMajor();
+    baseUrl = dotenv.get('${major}_URL');
+    queryUrl = dotenv.get('${major}_QUERY_URL');
   }
 
   @override
@@ -46,7 +59,6 @@ class WholeNoticeScraper extends BaseNoticeScraper {
     }
   }
 
-  // 중요 공지사항 가져오는 함수
   @override
   List<Map<String, String>> fetchHeadlineNotices(document) {
     final headlines =
@@ -54,23 +66,28 @@ class WholeNoticeScraper extends BaseNoticeScraper {
 
     final List<Map<String, String>> results = [];
     for (var headline in headlines) {
-      final titleTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeTitle);
+      final titleLinkTag =
+          headline.querySelector(HeadlineTagSelectors.kNoticeTitleLink);
+      final titleStrongTag =
+          headline.querySelector(HeadlineTagSelectors.kNoticeTitleStrong);
       final dateTag = headline.querySelector(HeadlineTagSelectors.kNoticeDate);
       final writerTag =
           headline.querySelector(HeadlineTagSelectors.kNoticeWriter);
       final accessTag =
           headline.querySelector(HeadlineTagSelectors.kNoticeAccess);
 
-      if (titleTag == null ||
+      if (titleLinkTag == null ||
+          titleStrongTag == null ||
           dateTag == null ||
           writerTag == null ||
-          accessTag == null) continue;
+          accessTag == null) {
+        continue;
+      }
 
-      final postUrl = titleTag.attributes['href'] ?? '';
+      final postUrl = titleLinkTag.attributes['href'] ?? '';
 
       final String id = makeUniqueNoticeId(postUrl);
-      final String title = titleTag.nodes
+      final String title = titleStrongTag.nodes
               .where((node) => node.nodeType == 3)
               .map((node) => node.text?.trim())
               .join() ??
@@ -92,29 +109,32 @@ class WholeNoticeScraper extends BaseNoticeScraper {
     return results;
   }
 
-  // 일반 공지사항 가져오는 함수
   @override
   List<Map<String, String>> fetchGeneralNotices(document) {
     final generals =
         document.querySelectorAll(GeneralTagSelectors.kNoticeBoard);
     final List<Map<String, String>> results = [];
     for (var general in generals.skip(1)) {
-      final titleTag = general.querySelector(GeneralTagSelectors.kNoticeTitle);
+      final titleLinkTag =
+          general.querySelector(GeneralTagSelectors.kNoticeTitleLink);
+      final titleStrongTag =
+          general.querySelector(GeneralTagSelectors.kNoticeTitleStrong);
       final dateTag = general.querySelector(GeneralTagSelectors.kNoticeDate);
       final writerTag =
           general.querySelector(GeneralTagSelectors.kNoticeWriter);
       final accessTag =
           general.querySelector(GeneralTagSelectors.kNoticeAccess);
 
-      if (titleTag == null ||
+      if (titleLinkTag == null ||
+          titleStrongTag == null ||
           dateTag == null ||
           writerTag == null ||
           accessTag == null) continue;
 
-      final String postUrl = titleTag.attributes['href'] ?? '';
-
+      final postUrl = titleLinkTag.attributes['href'] ?? '';
       final String id = makeUniqueNoticeId(postUrl);
-      final String title = titleTag.nodes
+
+      final String title = titleStrongTag.nodes
               .where((node) => node.nodeType == 3)
               .map((node) => node.text?.trim())
               .join() ??
@@ -136,13 +156,11 @@ class WholeNoticeScraper extends BaseNoticeScraper {
     return results;
   }
 
-  // 페이지 번호 가져오는 함수
   @override
   List<Map<String, dynamic>> fetchPages(document) {
     final List<Map<String, dynamic>> results = [];
     final pages = document.querySelector(PageTagSelectors.kPageBoard);
     if (pages == null) return results;
-
     final lastPageHref =
         pages.querySelector(PageTagSelectors.kLastPage)?.attributes['href'] ??
             '';
