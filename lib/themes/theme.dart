@@ -65,3 +65,11 @@ extension BoxBorderColors on ThemeData {
   Color get boxBorderColor =>
       brightness == Brightness.light ? Colors.black26 : Colors.white24;
 }
+
+extension SnackBarColors on ThemeData {
+  Color get snackBarBackgroundColor =>
+      brightness == Brightness.light ? Colors.black87 : const Color(0xFF424242);
+
+  Color get snackBarTextColor =>
+      brightness == Brightness.light ? Colors.white : Colors.white70;
+}
