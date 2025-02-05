@@ -232,7 +232,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   @override
   Widget buildFooter() {
     // 중요공지 옵션일 경우 페이지 버튼을 숨기기
-    if (initialPages.isEmpty || showHeadlines) return const SizedBox();
+    if (initialPages.isEmpty) return const SizedBox();
 
     // SearchResultPage가 아닌 경우 padding을 추가하지 않음
     if (!widget.isSearchResultPage) {

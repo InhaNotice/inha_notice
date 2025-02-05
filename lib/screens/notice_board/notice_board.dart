@@ -21,6 +21,8 @@ class NoticeBoard extends BaseNoticeBoard {
 
 class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
   late BaseNoticeScraper noticeScraper;
+  bool showHeadlines = false;
+  bool showGeneral = true;
 
   @override
   void initState() {
@@ -50,6 +52,19 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
         widget.noticeType == 'SWUNIV') {
       noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
     }
+  }
+
+  @override
+  void toggleOption(String option) {
+    setState(() {
+      if (option == 'headline') {
+        showHeadlines = true;
+        showGeneral = false;
+      } else if (option == 'general') {
+        showHeadlines = false;
+        showGeneral = true;
+      }
+    });
   }
 
   @override

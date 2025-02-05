@@ -16,6 +16,21 @@ class LibraryNoticeBoard extends BaseNoticeBoard {
 class _LibraryNoticeBoardState
     extends BaseNoticeBoardState<LibraryNoticeBoard> {
   LibraryScraper libraryScraper = LibraryScraper();
+  bool showHeadlines = false;
+  bool showGeneral = true;
+
+  @override
+  void toggleOption(String option) {
+    setState(() {
+      if (option == 'headline') {
+        showHeadlines = true;
+        showGeneral = false;
+      } else if (option == 'general') {
+        showHeadlines = false;
+        showGeneral = true;
+      }
+    });
+  }
 
   @override
   void initState() {
