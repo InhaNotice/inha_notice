@@ -171,7 +171,7 @@ class _LibraryNoticeBoardState
                     noticeType: showHeadlines ? 'headline' : 'general',
                     isRead: isRead,
                     isBookmarked: isBookmarked,
-                    markAsRead: markNoticeAsRead,
+                    markNoticeAsRead: markNoticeAsRead,
                     // 읽음 처리 함수 전달
                     toggleBookmark: toggleBookmark,
                   );
