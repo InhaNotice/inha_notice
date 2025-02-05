@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/font_constants.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
-import 'package:inha_notice/services/library_scraper.dart';
+import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
-import 'package:inha_notice/widgets/pagination/relative_pagination.dart';
+import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
 
 class LibraryNoticeBoard extends BaseNoticeBoard {
   const LibraryNoticeBoard({super.key});
@@ -184,7 +184,7 @@ class _LibraryNoticeBoardState
   @override
   Widget buildFooter() {
     if (initialPages.isEmpty || showHeadlines) return const SizedBox();
-    return RelativePagination(
+    return RelativeStylePagination(
       pageType: 'LIBRARY',
       pages: initialPages,
       currentPage: currentPage,
