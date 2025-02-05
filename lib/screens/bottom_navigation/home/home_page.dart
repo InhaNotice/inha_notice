@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/notice_board/library_notice.dart';
 import 'package:inha_notice/screens/notice_board/notice_board.dart';
-import 'package:inha_notice/screens/notice_board/recruitment_notice.dart';
-import 'package:inha_notice/screens/notice_board/scholarship_notice.dart';
+import 'package:inha_notice/screens/notice_board/search_style/recruitment_notice.dart';
+import 'package:inha_notice/screens/notice_board/search_style/scholarship_notice.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
             NoticeBoard(noticeType: 'MAJOR'),
             ScholarshipNoticePage(),
             RecruitmentNoticePage(),
-            LibraryNoticePage(),
+            LibraryNoticeBoard(),
             NoticeBoard(noticeType: 'INTERNATIONAL'),
             NoticeBoard(noticeType: 'SWUNIV'),
           ],

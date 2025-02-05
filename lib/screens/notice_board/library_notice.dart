@@ -1,208 +1,194 @@
 import 'package:flutter/material.dart';
+import 'package:inha_notice/constants/font_constants.dart';
+import 'package:inha_notice/constants/page_constants.dart';
+import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/services/library_scraper.dart';
+import 'package:inha_notice/widgets/notice_list_tile.dart';
+import 'package:inha_notice/widgets/relative_pagination.dart';
 
-import '../../services/library_api.dart';
-import '../web_page.dart';
-
-class LibraryNoticePage extends StatefulWidget {
-  const LibraryNoticePage({super.key});
+class LibraryNoticeBoard extends BaseNoticeBoard {
+  const LibraryNoticeBoard({super.key});
 
   @override
-  State<LibraryNoticePage> createState() => _LibraryNoticePageState();
+  State<LibraryNoticeBoard> createState() => _LibraryNoticeBoardState();
 }
 
-class _LibraryNoticePageState extends State<LibraryNoticePage> {
-  final LibraryAPI _apiService = LibraryAPI();
-  Map<String, dynamic> _notices = {'headline': [], 'general': [], 'pages': []};
-  bool _isLoading = true;
-  String _error = '';
-  int _currentPage = 1; // 현재 페이지 번호
-
-  // 헤드라인 공지사항 표시 여부를 관리하는 상태
-  bool _showHeadlines = false;
+class _LibraryNoticeBoardState
+    extends BaseNoticeBoardState<LibraryNoticeBoard> {
+  LibraryScraper libraryScraper = LibraryScraper();
 
   @override
   void initState() {
     super.initState();
-    _loadNotices(); // 초기 데이터 로드
+    _initialize();
   }
 
-  Future<void> _loadNotices({int page = 1, String offset = '0'}) async {
-    setState(() {
-      _isLoading = true; // 로딩 상태
-    });
-
+  Future<void> _initialize() async {
     try {
-      final notices = await _apiService.fetchNoticesWithLinks(offset);
+      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
+      await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
+    } catch (e) {
+      // 에러 처리
+      debugPrint('Initialization error: $e');
+    }
+  }
+
+  @override
+  Future<void> loadNotices(int offset) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final fetchedNotices = await libraryScraper.fetchNotices(offset);
+      if (!mounted) return;
       setState(() {
-        _notices = notices; // 공지사항 데이터 저장
-        _currentPage = page; // 현재 페이지 업데이트
-        _isLoading = false; // 로딩 상태 종료
+        notices = fetchedNotices;
+        if (offset == PageSettings.kInitialRelativePage &&
+            initialPages.isEmpty) {
+          initialPages = List<Map<String, dynamic>>.from(notices['pages']);
+        }
+        // offset을 통한 현재 페이지로 변환
+        currentPage = (offset ~/ 10) + 1;
+        isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _error = e.toString(); // 오류 메시지 저장
-        _isLoading = false; // 로딩 상태 종료
+        isLoading = false;
       });
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+  Widget buildHeader() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Color(0xEB292929), // 배경색 #292929, 투명도 92%
-              ),
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator()) // 로딩 표시
-                  : _error.isNotEmpty
-                  ? Center(child: Text('Error: $_error')) // 오류 메시지 표시
-                  : ListView(
-                children: [
-                  // 헤드라인 공지사항
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _showHeadlines = !_showHeadlines;
-                      });
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            '중요 공지사항',
-                            style: TextStyle(
-                                fontFamily: 'Pretendard',
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
-                        ),
-                        if (_showHeadlines &&
-                            _notices['headline']!.isNotEmpty)
-                          ..._notices['headline']!.map((notice) {
-                            return Container(
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF222222), // 배경색
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Color(0x8C525050), // 하단 테두리 색상
-                                    width: 2.0,
-                                  ),
-                                ),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  notice['title'] ?? 'No Title',
-                                  style: const TextStyle(
-                                      color: Colors.white), // 제목 글자색
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => WebPage(
-                                          url: notice['link'] ?? ''),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          }).toList(),
-                      ],
-                    ),
+          // 중요공지가 있을때만 토글 버튼이 생성됩니다.
+          if (notices['headline'].isNotEmpty)
+            // 중요공지 버튼을 정의
+            GestureDetector(
+              onTap: () => toggleOption('headline'),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  // 옵션 버튼의 경계 색상 지정
+                  border: showHeadlines
+                      ? Border.all(color: Colors.blue, width: 2.0)
+                      : Border.all(color: Colors.grey, width: 2.0),
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Text(
+                  '중요',
+                  style: TextStyle(
+                    fontFamily: FontSettings.kDefaultFont,
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold,
+                    color: showHeadlines ? Colors.blue : Colors.grey,
                   ),
-
-                  // 일반 공지사항
-                  if (_notices['general']!.isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            '일반 공지사항',
-                            style: TextStyle(
-                                fontFamily: 'Pretendard',
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
-                        ),
-                        ..._notices['general']!.map((notice) {
-                          return Container(
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF292929), // 배경색
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Color(0x8C525050), // 하단 테두리 색상
-                                  width: 2.0,
-                                ),
-                              ),
-                            ),
-                            child: ListTile(
-                              title: Text(
-                                notice['title'] ?? 'No Title',
-                                style: const TextStyle(
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16,
-                                    color: Colors.white), // 제목 글자색
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => WebPage(
-                                        url: notice['link'] ?? ''),
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        }).toList(),
-                      ],
-                    ),
-                ],
-              ),
-            ),
-          ),
-          if (_notices['pages']!.isNotEmpty)
-            Container(
-              color: const Color(0xFF292929), // 하단 배경색
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _notices['pages']!.map<Widget>((pageData) {
-                    final int page = pageData['page']; // 페이지 번호 추출
-                    final bool isCurrentPage = page == _currentPage;
-                    return TextButton(
-                      onPressed: isCurrentPage
-                          ? null
-                          : () {
-                        _loadNotices(page: page, offset: pageData['offset']); // 해당 페이지로 이동
-                      },
-                      child: Text(
-                        page.toString(),
-                        style: TextStyle(
-                          color: isCurrentPage ? Colors.white : Colors.white60,
-                          fontWeight: isCurrentPage
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
-                      ),
-                    );
-                  }).toList(),
                 ),
               ),
             ),
+          const SizedBox(width: 10),
+          // 일반공지 버튼을 정의
+          GestureDetector(
+            onTap: () => toggleOption('general'),
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                // 옵션 버튼의 경계 색상 지정
+                border: showGeneral
+                    ? Border.all(color: Colors.blue, width: 2.0)
+                    : Border.all(color: Colors.grey, width: 2.0),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Text(
+                '일반',
+                style: TextStyle(
+                    fontFamily: FontSettings.kDefaultFont,
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold,
+                    color: showGeneral ? Colors.blue : Colors.grey),
+              ),
+            ),
+          ),
+          const Spacer(),
+          // 새로고침 버튼을 정의
+          GestureDetector(
+            onTap: () {
+              loadNotices(PageSettings.kInitialRelativePage);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                border: Border.all(
+                    color: Theme.of(context).iconTheme.color!, width: 2.0),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Icon(
+                Icons.refresh,
+                color: Theme.of(context).iconTheme.color,
+                size: 16.0,
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget buildMain() {
+    return Expanded(
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
+                itemCount: showHeadlines
+                    ? notices['headline'].length
+                    : notices['general'].length,
+                itemBuilder: (context, index) {
+                  final notice = showHeadlines
+                      ? notices['headline'][index]
+                      : notices['general'][index];
+                  // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
+                  final isRead = isNoticeRead(notice['id'].toString());
+                  final isBookmarked =
+                      isNoticeBookmarked(notice['id'].toString());
+                  return NoticeListTile(
+                    notice: notice,
+                    noticeType: showHeadlines ? 'headline' : 'general',
+                    isRead: isRead,
+                    isBookmarked: isBookmarked,
+                    markAsRead: markNoticeAsRead,
+                    // 읽음 처리 함수 전달
+                    toggleBookmark: toggleBookmark,
+                  );
+                },
+              ),
+      ),
+    );
+  }
+
+  @override
+  Widget buildFooter() {
+    if (initialPages.isEmpty || showHeadlines) return const SizedBox();
+    return RelativePagination(
+      pageType: 'LIBRARY',
+      pages: initialPages,
+      currentPage: currentPage,
+      loadNotices: loadNotices,
     );
   }
 }

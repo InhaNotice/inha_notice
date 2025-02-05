@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 
-class PageSelector extends StatelessWidget {
+class AbsolutePagination extends StatelessWidget {
   final List<Map<String, dynamic>> pages;
   final int currentPage;
-  final Function(int) onPageSelected;
+  final Function(int) loadNotices;
 
-  const PageSelector({
+  const AbsolutePagination({
     super.key,
     required this.pages,
     required this.currentPage,
-    required this.onPageSelected,
+    required this.loadNotices,
   });
 
   @override
@@ -42,7 +42,7 @@ class PageSelector extends StatelessWidget {
               onPressed: isCurrentPage
                   ? null
                   : () {
-                      onPageSelected(pageNumber);
+                      loadNotices(pageNumber);
                     },
               child: Text(
                 pageNumber.toString(),

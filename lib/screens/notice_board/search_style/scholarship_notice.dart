@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../services/scraper/search_scraper.dart'; // SearchAPI 클래스가 정의된 파일 경로
-import '../web_page.dart'; // WebViewPage가 정의된 파일 경로
+import '../../../services/search_scraper.dart'; // SearchAPI 클래스가 정의된 파일 경로
+import '../../web_page.dart'; // WebViewPage가 정의된 파일 경로
 
 class ScholarshipNoticePage extends StatefulWidget {
   const ScholarshipNoticePage({super.key});

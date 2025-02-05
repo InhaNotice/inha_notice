@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/web_page.dart';
-import 'package:inha_notice/services/scraper/search_scraper.dart';
+import 'package:inha_notice/services/search_scraper.dart';
 
 typedef NoticesMap = Map<String, dynamic>;
 typedef PagesList = List<Map<String, dynamic>>;
