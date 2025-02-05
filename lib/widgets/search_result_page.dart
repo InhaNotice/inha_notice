@@ -21,6 +21,10 @@ class SearchResultPage extends BaseNoticeBoard {
 
 class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   SearchScraper searchScraper = SearchScraper();
+  bool showRank = true;
+  bool showDate = false;
+
+  String sortedType = '';
 
   @override
   void initState() {
@@ -44,8 +48,8 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       isLoading = true;
     });
     try {
-      final fetchedNotices =
-          await searchScraper.fetchNotices(widget.query, startCount);
+      final fetchedNotices = await searchScraper.fetchNotices(
+          widget.query, startCount, sortedType);
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
@@ -62,6 +66,21 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
         isLoading = false;
       });
     }
+  }
+
+  @override
+  void toggleOption(String option) {
+    setState(() {
+      if (option == 'RANK') {
+        showRank = true;
+        showDate = false;
+      } else {
+        showRank = false;
+        showDate = true;
+      }
+      sortedType = option;
+      loadNotices(PageSettings.kInitialRelativePage);
+    });
   }
 
   @override
@@ -108,41 +127,15 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // 중요공지가 있을때만 토글 버튼이 생성됩니다.
-          if (notices['headline'].isNotEmpty)
-            GestureDetector(
-              onTap: () => toggleOption('headline'),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  // 옵션 버튼의 경계 색상 지정
-                  border: showHeadlines
-                      ? Border.all(color: Colors.blue, width: 2.0)
-                      : Border.all(color: Colors.grey, width: 2.0),
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: Text(
-                  '중요',
-                  style: TextStyle(
-                    fontFamily: FontSettings.kDefaultFont,
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold,
-                    color: showHeadlines ? Colors.blue : Colors.grey,
-                  ),
-                ),
-              ),
-            ),
-          const SizedBox(width: 10),
           GestureDetector(
-            onTap: () => toggleOption('general'),
+            onTap: () => toggleOption('RANK'),
             child: Container(
               padding:
                   const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 // 옵션 버튼의 경계 색상 지정
-                border: showGeneral
+                border: showRank
                     ? Border.all(color: Colors.blue, width: 2.0)
                     : Border.all(color: Colors.grey, width: 2.0),
                 borderRadius: BorderRadius.circular(30.0),
@@ -150,10 +143,35 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
               child: Text(
                 '정확도순',
                 style: TextStyle(
+                  fontFamily: FontSettings.kDefaultFont,
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                  color: showRank ? Colors.blue : Colors.grey,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          GestureDetector(
+            onTap: () => toggleOption('DATE'),
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                // 옵션 버튼의 경계 색상 지정
+                border: showDate
+                    ? Border.all(color: Colors.blue, width: 2.0)
+                    : Border.all(color: Colors.grey, width: 2.0),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Text(
+                '최신순',
+                style: TextStyle(
                     fontFamily: FontSettings.kDefaultFont,
                     fontSize: 13.0,
                     fontWeight: FontWeight.bold,
-                    color: showGeneral ? Colors.blue : Colors.grey),
+                    color: showDate ? Colors.blue : Colors.grey),
               ),
             ),
           ),
@@ -190,21 +208,16 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
             : ListView.builder(
-                // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
-                itemCount: showHeadlines
-                    ? notices['headline'].length
-                    : notices['general'].length,
+                itemCount: notices['general'].length,
                 itemBuilder: (context, index) {
-                  final notice = showHeadlines
-                      ? notices['headline'][index]
-                      : notices['general'][index];
+                  final notice = notices['general'][index];
                   // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
                   final isRead = isNoticeRead(notice['id'].toString());
                   final isBookmarked =
                       isNoticeBookmarked(notice['id'].toString());
                   return NoticeListTile(
                     notice: notice,
-                    noticeType: showHeadlines ? 'headline' : 'general',
+                    noticeType: 'general',
                     isRead: isRead,
                     isBookmarked: isBookmarked,
                     markNoticeAsRead: markNoticeAsRead,
