@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/bookmark/bookmark_page.dart';
-import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});
@@ -38,6 +38,13 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
               });
             },
             type: BottomNavigationBarType.fixed,
+            selectedLabelStyle: const TextStyle(
+              fontSize: 12, // 선택된 탭 글자 크기
+              fontWeight: FontWeight.bold,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontSize: 10, // 선택되지 않은 탭 글자 크기
+            ),
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
