@@ -32,7 +32,8 @@ class SearchScraper {
         final pages = fetchPages(document);
 
         return {
-          'notices': searchedNotices,
+          'headline': [],
+          'general': searchedNotices,
           'pages': pages,
         };
       } else {
@@ -82,6 +83,8 @@ class SearchScraper {
     int lastPage = int.parse(match?.group(1) ?? '1');
     if (lastPage != 1) {
       lastPage = lastPage ~/ 10 + 1;
+      // 최대 10페이지로 제한
+      lastPage = (lastPage > 10) ? 10 : lastPage;
     }
     for (int i = 1; i <= lastPage; i++) {
       final int page = i;
