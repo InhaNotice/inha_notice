@@ -208,7 +208,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
                     isRead: isRead,
                     isBookmarked: isBookmarked,
                     markNoticeAsRead: markNoticeAsRead,
-                    // 읽음 처리 함수 전달
                     toggleBookmark: toggleBookmark,
                   );
                 },
@@ -219,7 +218,10 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
 
   @override
   Widget buildFooter() {
+    // 중요공지 옵션일 경우 페이지 버튼을 숨기기
     if (initialPages.isEmpty || showHeadlines) return const SizedBox();
+
+    // SearchResultPage가 아닌 경우 padding을 추가하지 않음
     if (!widget.isSearchResultPage) {
       return RelativeStylePagination(
         pageType: 'SEARCH',
@@ -229,8 +231,9 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       );
     }
 
+    // SearchResultPage인 경우 padding을 추가함
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0), // ✅ 위아래 여백 추가
+      padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: RelativeStylePagination(
         pageType: 'SEARCH',
         pages: initialPages,
