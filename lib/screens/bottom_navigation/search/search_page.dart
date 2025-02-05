@@ -47,6 +47,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         _topicsList = response;
         if (response.isNotEmpty) {
           _makeTimes = response.first['makeTimes'] ?? '';
+          _warning = '';
+        } else {
+          _warning = '인기 검색어가 없습니다.'; // 빈 배열일 경우 경고 메시지 출력
         }
       });
       _initializeAnimations();
@@ -269,7 +272,9 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                   child: _topicsList.isEmpty
                       ? Center(
                           child: Text(
-                          '실시간 인기 검색어를 불러오고 있습니다...',
+                          _warning.isNotEmpty
+                              ? _warning
+                              : '실시간 인기 검색어를 불러오고 있습니다...',
                           style: TextStyle(
                             fontFamily: Font.kDefaultFont,
                             fontSize: 14,
