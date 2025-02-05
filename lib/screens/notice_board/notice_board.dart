@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/font_constants.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/services/scraper/base_notice_scraper.dart';
 import 'package:inha_notice/services/scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/scraper/whole_notice_scraper.dart';
+import 'package:inha_notice/widgets/absolute_pagination.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
-import 'package:inha_notice/widgets/page_selector.dart';
 
 // noticeType에 따라 공지사항 페이지를 구현합니다.
+// 지원하는 공지: 학사, 학과, 국제처, SW중심대학
 class NoticeBoard extends BaseNoticeBoard {
   final String noticeType;
 
@@ -18,6 +20,8 @@ class NoticeBoard extends BaseNoticeBoard {
 }
 
 class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
+  late BaseNoticeScraper noticeScraper;
+
   @override
   void initState() {
     super.initState();
@@ -28,7 +32,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     try {
       await initializeScraper(); // 스크레이퍼 초기화
       await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
-      await loadNotices(PageSettings.kInitialPage); // 공지사항 로드
+      await loadNotices(PageSettings.kInitialAbsolutePage); // 공지사항 로드
     } catch (e) {
       // 에러 처리
       debugPrint('Initialization error: $e');
@@ -42,9 +46,8 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
       final majorScraper = MajorStyleNoticeScraper(widget.noticeType);
       await majorScraper.initialize();
       noticeScraper = majorScraper;
-    } else if (widget.noticeType == 'INTERNATIONAL') {
-      noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
-    } else if (widget.noticeType == 'SWUNIV') {
+    } else if (widget.noticeType == 'INTERNATIONAL' ||
+        widget.noticeType == 'SWUNIV') {
       noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
     }
   }
@@ -60,7 +63,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (page == PageSettings.kInitialPage && initialPages.isEmpty) {
+        if (page == PageSettings.kInitialAbsolutePage && initialPages.isEmpty) {
           initialPages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         currentPage = page;
@@ -136,7 +139,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
           const Spacer(),
           GestureDetector(
             onTap: () {
-              loadNotices(PageSettings.kInitialPage);
+              loadNotices(PageSettings.kInitialAbsolutePage);
             },
             child: Container(
               padding: const EdgeInsets.all(4.0),
@@ -196,12 +199,10 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
   @override
   Widget buildFooter() {
     if (initialPages.isEmpty || showHeadlines) return const SizedBox();
-    return PageSelector(
+    return AbsolutePagination(
       pages: initialPages,
       currentPage: currentPage,
-      onPageSelected: (page) {
-        loadNotices(page);
-      },
+      loadNotices: loadNotices,
     );
   }
 }

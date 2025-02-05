@@ -87,12 +87,12 @@ class MajorStyleNoticeScraper extends BaseNoticeScraper {
       final postUrl = titleLinkTag.attributes['href'] ?? '';
 
       final String id = makeUniqueNoticeId(postUrl);
-      final title = titleStrongTag.nodes
+      final String title = titleStrongTag.nodes
               .where((node) => node.nodeType == 3)
               .map((node) => node.text?.trim())
               .join() ??
           '';
-      final link = baseUrl + postUrl;
+      final String link = baseUrl + postUrl;
       final String date = dateTag.text.trim();
       final String writer = writerTag.text.trim();
       final String access = accessTag.text.trim();
@@ -134,12 +134,12 @@ class MajorStyleNoticeScraper extends BaseNoticeScraper {
       final postUrl = titleLinkTag.attributes['href'] ?? '';
       final String id = makeUniqueNoticeId(postUrl);
 
-      final title = titleStrongTag.nodes
+      final String title = titleStrongTag.nodes
               .where((node) => node.nodeType == 3)
               .map((node) => node.text?.trim())
               .join() ??
           '';
-      final link = baseUrl + postUrl;
+      final String link = baseUrl + postUrl;
       final String date = dateTag.text.trim();
       final String writer = writerTag.text.trim();
       final String access = accessTag.text.trim();
