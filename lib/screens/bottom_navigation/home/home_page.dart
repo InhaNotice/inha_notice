@@ -59,15 +59,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              color: Theme.of(context).iconTheme.color,
-              onPressed: () {
-                print('알림 버튼 클릭됨');
-              },
-            ),
-          ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48), // `TabBar` 높이 조절
             child: Theme(
