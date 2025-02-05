@@ -3,7 +3,7 @@ import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/utils/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice_manager.dart';
 
-// 공지사항 페이지의 인터페이스를 제공합니다.
+// BaseNoticeBoard는 읽은/읽지 않은 공지와 북마크 기능을 제공하는 공지사항 인터페이스를 제공하는 클래스입니다.
 abstract class BaseNoticeBoard extends StatefulWidget {
   const BaseNoticeBoard({super.key});
 }
