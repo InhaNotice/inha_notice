@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
-import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/constants/font_constants.dart';
-import 'package:inha_notice/services/scraper/international_notice_scraper.dart';
-import 'package:inha_notice/services/scraper/major_notice_scraper.dart';
+import 'package:inha_notice/constants/page_constants.dart';
+import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/services/scraper/major_style_notice_scraper.dart';
+import 'package:inha_notice/services/scraper/whole_notice_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/page_selector.dart';
-import 'package:inha_notice/services/scraper/whole_notice_scraper.dart';
 
 // noticeType에 따라 공지사항 페이지를 구현합니다.
 class NoticeBoard extends BaseNoticeBoard {
   final String noticeType;
-  const NoticeBoard({
-    super.key,
-    required this.noticeType
-  });
+
+  const NoticeBoard({super.key, required this.noticeType});
 
   @override
   State<NoticeBoard> createState() => NoticeBoardState();
@@ -38,16 +35,17 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     }
   }
 
-
   Future<void> initializeScraper() async {
-    if (widget.noticeType == 'whole') {
+    if (widget.noticeType == 'WHOLE') {
       noticeScraper = WholeNoticeScraper();
-    } else if (widget.noticeType == 'major') {
-      final majorScraper = MajorNoticeScraper();
-      await majorScraper.initialize(); // 비동기 초기화
+    } else if (widget.noticeType == 'MAJOR') {
+      final majorScraper = MajorStyleNoticeScraper(widget.noticeType);
+      await majorScraper.initialize();
       noticeScraper = majorScraper;
-    } else if (widget.noticeType == 'international') {
-      noticeScraper = InternationalNoticeScraper();
+    } else if (widget.noticeType == 'INTERNATIONAL') {
+      noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
+    } else if (widget.noticeType == 'SWUNIV') {
+      noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
     }
   }
 
@@ -57,7 +55,8 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
       isLoading = true;
     });
     try {
-      final fetchedNotices = await noticeScraper.fetchNotices(page, widget.noticeType);
+      final fetchedNotices =
+          await noticeScraper.fetchNotices(page, widget.noticeType);
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
@@ -85,12 +84,12 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // 중요공지가 있을때만 토글 버튼이 생성됩니다.
-          if(notices['headline'].isNotEmpty)
+          if (notices['headline'].isNotEmpty)
             GestureDetector(
               onTap: () => toggleOption('headline'),
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 4.0, horizontal: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                   // 옵션 버튼의 경계 색상 지정
@@ -110,12 +109,12 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+          const SizedBox(width: 10),
           GestureDetector(
             onTap: () => toggleOption('general'),
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 4.0, horizontal: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 // 옵션 버튼의 경계 색상 지정
@@ -144,8 +143,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 border: Border.all(
-                    color: Theme.of(context).iconTheme.color!,
-                    width: 2.0),
+                    color: Theme.of(context).iconTheme.color!, width: 2.0),
                 borderRadius: BorderRadius.circular(30.0),
               ),
               child: Icon(
@@ -168,28 +166,29 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
             : ListView.builder(
-          // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
-          itemCount: showHeadlines
-              ? notices['headline'].length
-              : notices['general'].length,
-          itemBuilder: (context, index) {
-            final notice = showHeadlines
-                ? notices['headline'][index]
-                : notices['general'][index];
-            // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
-            final isRead = isNoticeRead(notice['id'].toString());
-            final isBookmarked =
-            isNoticeBookmarked(notice['id'].toString());
-            return NoticeListTile(
-              notice: notice,
-              noticeType: showHeadlines ? 'headline' : 'general',
-              isRead: isRead,
-              isBookmarked: isBookmarked,
-              markAsRead: markNoticeAsRead, // 읽음 처리 함수 전달
-              toggleBookmark: toggleBookmark,
-            );
-          },
-        ),
+                // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
+                itemCount: showHeadlines
+                    ? notices['headline'].length
+                    : notices['general'].length,
+                itemBuilder: (context, index) {
+                  final notice = showHeadlines
+                      ? notices['headline'][index]
+                      : notices['general'][index];
+                  // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
+                  final isRead = isNoticeRead(notice['id'].toString());
+                  final isBookmarked =
+                      isNoticeBookmarked(notice['id'].toString());
+                  return NoticeListTile(
+                    notice: notice,
+                    noticeType: showHeadlines ? 'headline' : 'general',
+                    isRead: isRead,
+                    isBookmarked: isBookmarked,
+                    markAsRead: markNoticeAsRead,
+                    // 읽음 처리 함수 전달
+                    toggleBookmark: toggleBookmark,
+                  );
+                },
+              ),
       ),
     );
   }

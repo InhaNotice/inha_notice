@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/notice_board/library_notice.dart';
+import 'package:inha_notice/screens/notice_board/notice_board.dart';
 import 'package:inha_notice/screens/notice_board/recruitment_notice.dart';
 import 'package:inha_notice/screens/notice_board/scholarship_notice.dart';
-import 'package:inha_notice/screens/notice_board/notice_board.dart';
-import 'package:inha_notice/fonts/font.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6,
+      length: 7,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -77,6 +77,8 @@ class HomePage extends StatelessWidget {
                 highlightColor: Colors.transparent, // 하이라이트 효과 제거
               ),
               child: const TabBar(
+                tabAlignment: TabAlignment.start,
+                isScrollable: true,
                 indicatorColor: Color(0xFF12B8FF),
                 labelColor: Color(0xFF12B8FF),
                 unselectedLabelColor: Color(0xFFBAB6B6),
@@ -96,7 +98,8 @@ class HomePage extends StatelessWidget {
                   Tab(text: '장학'),
                   Tab(text: '채용'),
                   Tab(text: '정석'),
-                  Tab(text: '국제')
+                  Tab(text: '국제'),
+                  Tab(text: 'SW중심대학'),
                 ],
               ),
             ),
@@ -104,12 +107,13 @@ class HomePage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            NoticeBoard(noticeType: 'whole'),
-            NoticeBoard(noticeType: 'major'),
+            NoticeBoard(noticeType: 'WHOLE'),
+            NoticeBoard(noticeType: 'MAJOR'),
             ScholarshipNoticePage(),
             RecruitmentNoticePage(),
             LibraryNoticePage(),
-            NoticeBoard(noticeType: 'international'),
+            NoticeBoard(noticeType: 'INTERNATIONAL'),
+            NoticeBoard(noticeType: 'SWUNIV'),
           ],
         ),
       ),
