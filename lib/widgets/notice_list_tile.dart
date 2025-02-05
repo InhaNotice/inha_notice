@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/web_page.dart';
+import 'package:inha_notice/themes/theme.dart';
 
 class NoticeListTile extends StatefulWidget {
   final Map<String, dynamic> notice;
   final String noticeType;
   final bool isRead;
   final bool isBookmarked;
-  final Future<void> Function(String noticeId) markAsRead;
+  final Future<void> Function(String noticeId) markNoticeAsRead;
   final Future<void> Function(String noticeId) toggleBookmark;
 
   const NoticeListTile({
@@ -17,7 +17,7 @@ class NoticeListTile extends StatefulWidget {
     required this.noticeType,
     required this.isRead,
     required this.isBookmarked,
-    required this.markAsRead,
+    required this.markNoticeAsRead,
     required this.toggleBookmark,
   });
 
@@ -133,7 +133,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
               ],
             ),
             onTap: () async {
-              await widget.markAsRead(widget.notice['id'].toString());
+              await widget.markNoticeAsRead(widget.notice['id'].toString());
               if (mounted) {
                 // ignore: use_build_context_synchronously
                 await navigateToWebPage(context);
