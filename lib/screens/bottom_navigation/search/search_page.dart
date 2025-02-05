@@ -97,11 +97,28 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     }
   }
 
+  /// 스낵바 표시 함수
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: TextStyle(
+            fontFamily: Font.kDefaultFont,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).snackBarTextColor,
+          ),
+        ),
+        backgroundColor: Theme.of(context).snackBarBackgroundColor,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
   void _search() {
     if (_searchController.text.length < 2) {
-      setState(() {
-        _warning = '검색어는 두 글자 이상 입력해주세요.';
-      });
+      _showSnackBar('검색어는 두 글자 이상 입력해주세요.');
       return;
     }
     setState(() {
