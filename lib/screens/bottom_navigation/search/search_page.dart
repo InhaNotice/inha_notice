@@ -110,7 +110,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SearchResultPage(query: _searchController.text),
+        builder: (context) => SearchResultPage(
+            query: _searchController.text, isSearchResultPage: true),
       ),
     );
   }
