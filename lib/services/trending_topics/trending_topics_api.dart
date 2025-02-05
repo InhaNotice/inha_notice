@@ -1,7 +1,7 @@
-import 'package:intl/intl.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:inha_notice/constants/status_code_constants.dart';
+import 'package:intl/intl.dart';
 import 'package:xml/xml.dart';
 
 class TrendingTopicsAPI {
@@ -16,9 +16,9 @@ class TrendingTopicsAPI {
       final url = Uri.parse(baseUrl);
       var response = await http.get(url);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == StatusCodeSettings.kStatusOkay) {
         final document = XmlDocument.parse(response.body);
-        var makeTime = document.findAllElements('MakeTime').first.innerText;
+        String makeTime = document.findAllElements('MakeTime').first.innerText;
         DateTime dateTime = DateTime.parse(makeTime);
         makeTime = DateFormat('HH:mm').format(dateTime);
 
@@ -46,4 +46,3 @@ class TrendingTopicsAPI {
     }
   }
 }
-
