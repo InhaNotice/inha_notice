@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/search_api.dart'; // SearchAPI 클래스가 정의된 파일 경로
+import '../../services/scraper/search_scraper.dart'; // SearchAPI 클래스가 정의된 파일 경로
 import '../web_page.dart'; // WebViewPage가 정의된 파일 경로
 
 class RecruitmentNoticePage extends StatefulWidget {
@@ -11,7 +11,7 @@ class RecruitmentNoticePage extends StatefulWidget {
 }
 
 class _RecruitmentNoticePageState extends State<RecruitmentNoticePage> {
-  final SearchAPI _searchAPI = SearchAPI();
+  final SearchScraper _searchAPI = SearchScraper();
   Map<String, dynamic> _notices = {'notices': [], 'pages': []};
   List<Map<String, dynamic>> _initialPages = [];
 
@@ -62,46 +62,46 @@ class _RecruitmentNoticePageState extends State<RecruitmentNoticePage> {
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator()) // 로딩 표시
                   : _error.isNotEmpty
-                  ? Center(child: Text('Error: $_error')) // 오류 표시
-                  : ListView(
-                children: [
-                  // 공지사항 목록
-                  if (_notices['notices'].isNotEmpty)
-                    ..._notices['notices'].map((notice) {
-                      return Container(
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF222222), // 항목 배경색
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Color(0xFF444444), // 하단 테두리
-                              width: 1.0,
-                            ),
-                          ),
+                      ? Center(child: Text('Error: $_error')) // 오류 표시
+                      : ListView(
+                          children: [
+                            // 공지사항 목록
+                            if (_notices['notices'].isNotEmpty)
+                              ..._notices['notices'].map((notice) {
+                                return Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF222222), // 항목 배경색
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Color(0xFF444444), // 하단 테두리
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    title: Text(
+                                      notice['title'] ?? 'No Title',
+                                      style: const TextStyle(
+                                        fontFamily: 'Pretendard',
+                                        fontSize: 16,
+                                        color: Colors.white, // 제목 글자색
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => WebPage(
+                                            url: notice['link'] ?? '',
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              }).toList(),
+                          ],
                         ),
-                        child: ListTile(
-                          title: Text(
-                            notice['title'] ?? 'No Title',
-                            style: const TextStyle(
-                              fontFamily: 'Pretendard',
-                              fontSize: 16,
-                              color: Colors.white, // 제목 글자색
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => WebPage(
-                                  url: notice['link'] ?? '',
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    }).toList(),
-                ],
-              ),
             ),
           ),
           // 페이지네이션 버튼
@@ -114,15 +114,19 @@ class _RecruitmentNoticePageState extends State<RecruitmentNoticePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: _initialPages.map<Widget>((pageData) {
-                    final String pageNumber = pageData['page'].toString(); // 페이지 번호 추출
-                    final String startCount = pageData['startCount'].toString(); // startCount 값
+                    final String pageNumber =
+                        pageData['page'].toString(); // 페이지 번호 추출
+                    final String startCount =
+                        pageData['startCount'].toString(); // startCount 값
                     final bool isCurrentPage =
-                        (int.parse(startCount) ~/ 10) + 1 == _currentPage; // 현재 페이지 여부 확인
+                        (int.parse(startCount) ~/ 10) + 1 ==
+                            _currentPage; // 현재 페이지 여부 확인
 
                     return TextButton(
                       onPressed: isCurrentPage
                           ? null
-                          : () => _loadNotices(startCount: int.parse(startCount)),
+                          : () =>
+                              _loadNotices(startCount: int.parse(startCount)),
                       child: Text(
                         pageNumber,
                         style: TextStyle(
