@@ -1,72 +1,102 @@
 import 'dart:async';
-import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ReadNoticeManager {
   static const String tableName = 'read_notices';
   static Database? _database;
 
-  // SQLite 초기화
-  static Future<Database> initDatabase() async {
+  // 읽은 공지사항 캐싱 (Set으로 유지)
+  static Set<String> _cachedReadNoticeIds = {};
+
+  /// **📌 SQLite 초기화 + 캐싱 로드**
+  static Future<void> initDatabase() async {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final path = join(directory.path, 'read_notices.db');
 
-      return await openDatabase(
+      _database = await openDatabase(
         path,
         version: 1,
-        onCreate: (db, version) {
-          return db.execute(
+        onCreate: (db, version) async {
+          await db.execute(
             'CREATE TABLE $tableName (id TEXT PRIMARY KEY)',
           );
         },
       );
+
+      // ✅ 데이터베이스 초기화 후 캐시 업데이트
+      await _loadCachedReadNotices();
     } catch (e) {
-      print('Error initializing database: $e');
-      rethrow; // 에러를 다시 던져 상위에서 처리할 수 있도록
+      print('🚨 Error initializing database: $e');
     }
   }
 
-  static Future<Database> getDatabase() async {
-    try {
-      if (_database != null) return _database!;
-      _database = await initDatabase();
-      return _database!;
-    } catch (e) {
-      print('Error getting database: $e');
-      rethrow;
+  /// **📌 데이터베이스 가져오기 (최적화)**
+  static Future<Database> _getDatabase() async {
+    if (_database == null) {
+      await initDatabase();
     }
+    return _database!;
   }
 
-  // 읽은 공지사항 로드
-  static Future<Set<String>> loadReadNotices() async {
+  /// **📌 DB에서 읽은 공지 목록 불러와 캐싱**
+  static Future<void> _loadCachedReadNotices() async {
     try {
-      final db = await getDatabase();
+      final db = await _getDatabase();
       final result = await db.query(tableName);
-      return result.map((row) => row['id'] as String).toSet();
+      _cachedReadNoticeIds = result.map((row) => row['id'] as String).toSet();
     } catch (e) {
-      print('Error loading read notices: $e');
-      return {}; // 에러 발생 시 빈 Set 반환
+      print("🚨 Error loading cached read notices: $e");
     }
   }
 
-  // 읽은 공지사항 저장
-  static Future<void> saveReadNotices(Set<String> readIds) async {
+  /// **📌 읽은 공지사항 로드 (캐싱 활용)**
+  static Set<String> getReadNoticeIds() {
+    return _cachedReadNoticeIds;
+  }
+
+  /// **📌 읽은 공지사항 추가 (캐싱 및 DB 반영)**
+  static Future<void> addReadNotice(String noticeId) async {
+    if (_cachedReadNoticeIds.contains(noticeId)) return; // 중복 방지
+
     try {
-      final db = await getDatabase();
-      final batch = db.batch();
+      final db = await _getDatabase();
+      await db.insert(
+        tableName,
+        {'id': noticeId},
+        conflictAlgorithm: ConflictAlgorithm.ignore,
+      );
 
-      // 기존 데이터 삭제
-      await db.delete(tableName);
-
-      // 새로운 데이터 삽입
-      for (final id in readIds) {
-        batch.insert(tableName, {'id': id});
-      }
-      await batch.commit(noResult: true);
+      // ✅ 캐싱 업데이트
+      _cachedReadNoticeIds.add(noticeId);
     } catch (e) {
-      print('Error saving read notices: $e');
+      print("🚨 Error adding read notice: $e");
     }
+  }
+
+  /// **📌 특정 읽은 공지사항 삭제 (캐싱 및 DB 반영)**
+  static Future<void> removeReadNotice(String noticeId) async {
+    if (!_cachedReadNoticeIds.contains(noticeId)) return; // 존재하지 않으면 패스
+
+    try {
+      final db = await _getDatabase();
+      await db.delete(
+        tableName,
+        where: 'id = ?',
+        whereArgs: [noticeId],
+      );
+
+      // ✅ 캐싱 업데이트
+      _cachedReadNoticeIds.remove(noticeId);
+    } catch (e) {
+      print("🚨 Error removing read notice: $e");
+    }
+  }
+
+  static bool isReadNotice(String noticeId) {
+    return _cachedReadNoticeIds.contains(noticeId);
   }
 }
