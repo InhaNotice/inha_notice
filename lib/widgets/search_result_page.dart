@@ -29,10 +29,11 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    initialize();
   }
 
-  Future<void> _initialize() async {
+  @override
+  Future<void> initialize() async {
     try {
       await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
       await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
@@ -40,6 +41,21 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       // 에러 처리
       debugPrint('Initialization error: $e');
     }
+  }
+
+  @override
+  void toggleOption(String option) {
+    setState(() {
+      if (option == 'RANK') {
+        showRank = true;
+        showDate = false;
+      } else {
+        showRank = false;
+        showDate = true;
+      }
+      sortedType = option;
+      loadNotices(PageSettings.kInitialRelativePage);
+    });
   }
 
   @override
@@ -66,21 +82,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
         isLoading = false;
       });
     }
-  }
-
-  @override
-  void toggleOption(String option) {
-    setState(() {
-      if (option == 'RANK') {
-        showRank = true;
-        showDate = false;
-      } else {
-        showRank = false;
-        showDate = true;
-      }
-      sortedType = option;
-      loadNotices(PageSettings.kInitialRelativePage);
-    });
   }
 
   @override

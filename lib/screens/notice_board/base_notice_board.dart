@@ -10,8 +10,12 @@ abstract class BaseNoticeBoard extends StatefulWidget {
 
 abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
     extends State<T> {
-  // 오버라이딩 필요
+  // 추상 메서드
+  Future<void> initialize();
+
   Future<void> loadNotices(int page);
+
+  void toggleOption(String option);
 
   Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
   List<Map<String, dynamic>> initialPages = [];
@@ -68,8 +72,6 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
     }
     setState(() {});
   }
-
-  void toggleOption(String option);
 
   @override
   Widget build(BuildContext context) {
