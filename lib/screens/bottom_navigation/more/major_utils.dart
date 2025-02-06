@@ -1,5 +1,4 @@
 import 'package:inha_notice/firebase/firebase_service.dart';
-import 'package:inha_notice/utils/major_storage.dart';
 import 'package:logger/logger.dart';
 
 class MajorUtils {
@@ -119,7 +118,7 @@ class MajorUtils {
   static Future<void> subscribeToMajor(
       String? currentMajorKey, String newMajorKey) async {
     try {
-      final firebaseService = FirebaseService(); // 싱글톤 인스턴스 사용
+      final firebaseService = FirebaseService();
 
       if (currentMajorKey != null && currentMajorKey != newMajorKey) {
         await firebaseService.unsubscribeFromTopic(currentMajorKey);
@@ -129,9 +128,5 @@ class MajorUtils {
     } catch (e) {
       logger.e('🚨 Error handling FCM topic subscription: $e');
     }
-  }
-
-  static Future<void> saveMajor(String newMajorKey) async {
-    await MajorStorage.saveMajor(newMajorKey);
   }
 }

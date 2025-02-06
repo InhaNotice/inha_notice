@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:inha_notice/utils/shared_prefs_manager.dart';
 
 class NotificationSettingPage extends StatefulWidget {
   const NotificationSettingPage({super.key});
@@ -23,19 +23,16 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
 
   /// 저장된 알림 설정 불러오기
   Future<void> _loadNotificationPreference() async {
-    final prefs = await SharedPreferences.getInstance();
     setState(() {
       _isAcademicNotificationOn =
-          prefs.getBool('academic_notification') ?? false;
-      _isMajorNotificationOn = prefs.getBool('major_notification') ?? false;
+          SharedPrefsManager().getAcademicNotificationOn();
+      _isMajorNotificationOn = SharedPrefsManager().getMajorNotificationOn();
     });
   }
 
   /// 학사 알림 설정 변경 및 저장
   Future<void> _toggleNotification(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('academic_notification', value);
-
+    await SharedPrefsManager().setAcademicNotificationOn(value);
     setState(() {
       _isAcademicNotificationOn = value;
     });
@@ -43,8 +40,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
 
   /// 학과 알림 설정 변경 및 저장
   Future<void> _toggleMajorNotification(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('major_notification', value);
+    await SharedPrefsManager().setMajorNotificationOn(value);
 
     setState(() {
       _isMajorNotificationOn = value;

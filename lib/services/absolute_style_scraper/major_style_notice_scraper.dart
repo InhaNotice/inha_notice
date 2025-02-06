@@ -4,27 +4,15 @@ import 'package:http/http.dart' as http;
 import 'package:inha_notice/constants/status_code_constants.dart';
 import 'package:inha_notice/selectors/major_style_tag_selectors.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_notice_scraper.dart';
-import 'package:inha_notice/utils/major_storage.dart';
 
 class MajorStyleNoticeScraper extends BaseNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
-  late final String noticeType;
+  late String noticeType;
 
   MajorStyleNoticeScraper(this.noticeType) {
-    if (noticeType == 'MAJOR') {
-      return;
-    }
-
     baseUrl = dotenv.get('${noticeType}_URL');
     queryUrl = dotenv.get('${noticeType}_QUERY_URL');
-  }
-
-  // noticeType이 'MAJOR'인 경우에만 초기화
-  Future<void> initialize() async {
-    String? major = await MajorStorage.getMajor();
-    baseUrl = dotenv.get('${major}_URL');
-    queryUrl = dotenv.get('${major}_QUERY_URL');
   }
 
   @override
