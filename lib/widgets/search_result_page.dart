@@ -21,8 +21,8 @@ class SearchResultPage extends BaseNoticeBoard {
 
 class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   SearchScraper searchScraper = SearchScraper();
-  bool showRank = true;
-  bool showDate = false;
+  bool showRank = false;
+  bool showDate = true;
 
   String sortedType = '';
 

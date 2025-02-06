@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/utils/major_storage.dart';
+import 'package:inha_notice/utils/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
 class MajorSettingPage extends StatefulWidget {
@@ -26,18 +26,20 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   @override
   void initState() {
     super.initState();
-    _loadCurrentMajor();
+    _loadMajorPreference();
   }
 
-  Future<void> _loadCurrentMajor() async {
-    _currentMajorKey = await MajorStorage.getMajor();
+  /// 저장된 나의 학과 설정 불러오기
+  Future<void> _loadMajorPreference() async {
     setState(() {
+      _currentMajorKey = SharedPrefsManager().getMajorKey();
       if (_currentMajorKey != null) {
         _currentMajor = MajorUtils.translateToKorean(_currentMajorKey);
       }
     });
   }
 
+  /// 사용자 입력에 따른 학과를 필터링
   void _filterMajors(String query) {
     if (query.isEmpty) {
       if (_filteredMajorGroups != MajorUtils.majorGroups) {
@@ -61,6 +63,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     });
   }
 
+  /// 학과 선택 핸들러
   Future<void> _handleMajorSelection(String major) async {
     // 화면 먼저 닫기
     if (mounted) Navigator.pop(context);
@@ -70,7 +73,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     // 백그라운드에서 비동기적으로 실행
     try {
       await MajorUtils.subscribeToMajor(currentMajorKey, newMajorKey);
-      await MajorUtils.saveMajor(newMajorKey);
+      await SharedPrefsManager().setMajorKey(newMajorKey);
     } catch (e) {
       logger.e('Error saving major: $e');
     }
