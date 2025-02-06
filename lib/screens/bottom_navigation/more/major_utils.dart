@@ -1,4 +1,3 @@
-import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:logger/logger.dart';
 
 class MajorUtils {
@@ -113,20 +112,5 @@ class MajorUtils {
         .firstWhere((entry) => entry.key == major,
             orElse: () => const MapEntry('', 'Unknown Major'))
         .value;
-  }
-
-  static Future<void> subscribeToMajor(
-      String? currentMajorKey, String newMajorKey) async {
-    try {
-      final firebaseService = FirebaseService();
-
-      if (currentMajorKey != null && currentMajorKey != newMajorKey) {
-        await firebaseService.unsubscribeFromTopic(currentMajorKey);
-      }
-
-      await firebaseService.subscribeToTopic(newMajorKey);
-    } catch (e) {
-      logger.e('🚨 Error handling FCM topic subscription: $e');
-    }
   }
 }

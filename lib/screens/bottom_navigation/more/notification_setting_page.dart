@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs_manager.dart';
@@ -12,6 +13,7 @@ class NotificationSettingPage extends StatefulWidget {
 }
 
 class _NotificationSettingPageState extends State<NotificationSettingPage> {
+  final String _academicTopic = 'all-notices';
   bool _isAcademicNotificationOn = false;
   bool _isMajorNotificationOn = false;
 
@@ -31,7 +33,12 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
   }
 
   /// 학사 알림 설정 변경 및 저장
-  Future<void> _toggleNotification(bool value) async {
+  Future<void> _toggleAcademicNotification(bool value) async {
+    if (value) {
+      await FirebaseService().subscribeToTopic(_academicTopic);
+    } else {
+      await FirebaseService().unsubscribeFromTopic(_academicTopic);
+    }
     await SharedPrefsManager().setAcademicNotificationOn(value);
     setState(() {
       _isAcademicNotificationOn = value;
@@ -40,6 +47,38 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
 
   /// 학과 알림 설정 변경 및 저장
   Future<void> _toggleMajorNotification(bool value) async {
+    /// 학과 키 확인
+    final majorKey = SharedPrefsManager().getMajorKey();
+
+    if (majorKey == null) {
+      // 학과가 설정되지 않은 경우 토글을 차단하고 스낵바 경고 표시
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '학과를 먼저 설정해주세요!',
+            style: TextStyle(
+              fontFamily: Font.kDefaultFont,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Theme.of(context).snackBarTextColor,
+            ),
+          ),
+          backgroundColor: Theme.of(context).snackBarBackgroundColor,
+        ),
+      );
+      return;
+    }
+
+    // 학과가 설정된 경우
+    // true: 이전학과 존재시 구독 해제 및 현재 학과 구독 진행
+    // false: 현재 학과 구독 해제
+    if (value) {
+      await FirebaseService().updateMajorSubscription();
+    } else {
+      await FirebaseService().unsubscribeFromTopic(majorKey);
+    }
+
+    /// 현재 설정값 저장
     await SharedPrefsManager().setMajorNotificationOn(value);
 
     setState(() {
@@ -101,7 +140,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                         ),
                         Switch(
                           value: _isAcademicNotificationOn,
-                          onChanged: _toggleNotification,
+                          onChanged: _toggleAcademicNotification,
                           activeColor: Theme.of(context).primaryColorLight,
                         ),
                       ],
@@ -140,6 +179,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                         ),
                       ],
                     ),
+
                     Text(
                       '현재 설정된 학과로 알림을 받을 수 있습니다.',
                       style: TextStyle(
