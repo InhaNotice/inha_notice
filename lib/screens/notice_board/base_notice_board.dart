@@ -20,55 +20,32 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
   Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
   List<Map<String, dynamic>> initialPages = [];
 
-  // 읽은 공지사항과 북마크된 공지사항을 캐싱하여 메모리에서 관리.
-  Set<String> readNotices = {};
-  Set<String> bookmarkedNotices = {};
-
   bool isLoading = true;
   int currentPage = PageSettings.kInitialAbsolutePage;
 
-  Future<void> initializeReadAndBookmark() async {
-    final Set<String> readIds = await ReadNoticeManager.loadReadNotices();
-    final Set<String> bookmarkedIds = await BookmarkManager.getAllBookmarks();
-    readNotices = readIds;
-    bookmarkedNotices = bookmarkedIds;
-  }
-
-  // 공지를 읽었는지 확인
+  /// **공지 읽음 여부 확인**
   bool isNoticeRead(String noticeId) {
-    return readNotices.contains(noticeId);
+    return ReadNoticeManager.isReadNotice(noticeId);
   }
 
-  // 공지를 읽음으로 표시
-  Future<void> markNoticeAsRead(String noticeId) async {
-    readNotices.add(noticeId);
-    await ReadNoticeManager.saveReadNotices(readNotices);
-    setState(() {});
-  }
-
-  // 공지가 북마크되었는지 확인
+  /// **공지 북마크 여부 확인 (캐싱 활용)**
   bool isNoticeBookmarked(String noticeId) {
-    return bookmarkedNotices.contains(noticeId);
+    return BookmarkManager.isBookmarked(noticeId);
   }
 
-  // 북마크 추가
-  Future<void> addNoticeBookmarked(String noticeId) async {
-    bookmarkedNotices.add(noticeId);
-    await BookmarkManager.addBookmark(noticeId);
+  /// **공지 읽음 처리 (캐싱 활용)**
+  void markNoticeAsRead(String noticeId) {
+    setState(() {
+      ReadNoticeManager.addReadNotice(noticeId);
+    });
   }
 
-  // 북마크 삭제
-  Future<void> removeNoticeBookmarked(String noticeId) async {
-    bookmarkedNotices.remove(noticeId);
-    await BookmarkManager.removeBookmark(noticeId);
-  }
-
-  // 공지의 북마크 상태를 토글
-  Future<void> toggleBookmark(String noticeId) async {
-    if (isNoticeBookmarked(noticeId)) {
-      removeNoticeBookmarked(noticeId);
+  /// **공지의 북마크 상태 토글 (캐싱 반영)**
+  Future<void> toggleBookmark(Map<String, dynamic> notice) async {
+    if (isNoticeBookmarked(notice['id'])) {
+      await BookmarkManager.removeBookmark(notice['id']);
     } else {
-      addNoticeBookmarked(noticeId);
+      await BookmarkManager.addBookmark(notice);
     }
     setState(() {});
   }
