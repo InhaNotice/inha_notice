@@ -74,7 +74,16 @@ class _NoticeListTileState extends State<NoticeListTile> {
             ),
           ),
         ),
-        ListTile(
+        InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onTap: () async {
+            widget.markNoticeAsRead(widget.notice['id'].toString());
+            if (mounted) {
+              await navigateToWebPage(context);
+            }
+          },
+          child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -148,13 +157,8 @@ class _NoticeListTileState extends State<NoticeListTile> {
                 ),
               ],
             ),
-            onTap: () async {
-              widget.markNoticeAsRead(widget.notice['id'].toString());
-              if (mounted) {
-                // ignore: use_build_context_synchronously
-                await navigateToWebPage(context);
-              }
-            }),
+          ),
+        )
       ],
     );
   }
