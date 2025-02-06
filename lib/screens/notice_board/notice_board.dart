@@ -61,7 +61,6 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
   Future<void> initialize() async {
     try {
       await initializeScraper(); // 스크레이퍼 초기화
-      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
       await loadNotices(PageSettings.kInitialAbsolutePage); // 공지사항 로드
     } catch (e) {
       // 에러 처리
@@ -267,17 +266,14 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
                       final notice = showHeadlines
                           ? notices['headline'][index]
                           : notices['general'][index];
-                      // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
                       final isRead = isNoticeRead(notice['id'].toString());
                       final isBookmarked =
                           isNoticeBookmarked(notice['id'].toString());
                       return NoticeListTile(
                         notice: notice,
-                        noticeType: showHeadlines ? 'headline' : 'general',
                         isRead: isRead,
                         isBookmarked: isBookmarked,
                         markNoticeAsRead: markNoticeAsRead,
-                        // 읽음 처리 함수 전달
                         toggleBookmark: toggleBookmark,
                       );
                     },
