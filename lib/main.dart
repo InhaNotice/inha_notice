@@ -5,8 +5,8 @@ import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/bookmark_manager.dart';
-import 'package:inha_notice/utils/major_storage.dart';
 import 'package:inha_notice/utils/read_notice_manager.dart';
+import 'package:inha_notice/utils/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 /// 앱 초기화 함수
 Future<void> _initializeApp() async {
   await dotenv.load(fileName: ".env");
-  _prefs = await SharedPreferences.getInstance(); // 한 번만 생성
+  await SharedPrefsManager().initialize();
   await _initializeStorage();
 }
 
@@ -71,7 +71,6 @@ Future<void> _initializeStorage() async {
   final Logger logger = Logger();
   try {
     await Future.wait([
-      MajorStorage.initDatabase(),
       BookmarkManager.initDatabase(),
       ReadNoticeManager.initDatabase(),
     ]);

@@ -73,3 +73,8 @@ extension SnackBarColors on ThemeData {
   Color get snackBarTextColor =>
       brightness == Brightness.light ? Colors.white : Colors.white70;
 }
+
+extension ButtonColors on ThemeData {
+  Color get buttonBackgroundColor =>
+      brightness == Brightness.light ? Colors.grey[200]! : Colors.grey[800]!;
+}
