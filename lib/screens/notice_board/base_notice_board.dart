@@ -34,10 +34,9 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
   }
 
   /// **공지 읽음 처리 (캐싱 활용)**
-  void markNoticeAsRead(String noticeId) {
-    setState(() {
-      ReadNoticeManager.addReadNotice(noticeId);
-    });
+  Future<void> markNoticeAsRead(String noticeId) async {
+    await ReadNoticeManager.addReadNotice(noticeId);
+    setState(() {});
   }
 
   /// **공지의 북마크 상태 토글 (캐싱 반영)**
