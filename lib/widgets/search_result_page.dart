@@ -35,7 +35,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   @override
   Future<void> initialize() async {
     try {
-      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
       await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
     } catch (e) {
       // 에러 처리
@@ -218,7 +217,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
                       isNoticeBookmarked(notice['id'].toString());
                   return NoticeListTile(
                     notice: notice,
-                    noticeType: 'general',
                     isRead: isRead,
                     isBookmarked: isBookmarked,
                     markNoticeAsRead: markNoticeAsRead,

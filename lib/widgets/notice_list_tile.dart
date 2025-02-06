@@ -5,16 +5,14 @@ import 'package:inha_notice/themes/theme.dart';
 
 class NoticeListTile extends StatefulWidget {
   final Map<String, dynamic> notice;
-  final String noticeType;
   final bool isRead;
   final bool isBookmarked;
-  final Future<void> Function(String noticeId) markNoticeAsRead;
-  final Future<void> Function(String noticeId) toggleBookmark;
+  final void Function(String noticeId) markNoticeAsRead;
+  final Future<void> Function(Map<String, dynamic>) toggleBookmark;
 
   const NoticeListTile({
     super.key,
     required this.notice,
-    required this.noticeType,
     required this.isRead,
     required this.isBookmarked,
     required this.markNoticeAsRead,
@@ -144,15 +142,14 @@ class _NoticeListTileState extends State<NoticeListTile> {
                   onPressed: () async {
                     if (widget.notice.containsKey('id') &&
                         widget.notice['id'] != null) {
-                      await widget
-                          .toggleBookmark(widget.notice['id'].toString());
+                      await widget.toggleBookmark(widget.notice);
                     }
                   },
                 ),
               ],
             ),
             onTap: () async {
-              await widget.markNoticeAsRead(widget.notice['id'].toString());
+              widget.markNoticeAsRead(widget.notice['id'].toString());
               if (mounted) {
                 // ignore: use_build_context_synchronously
                 await navigateToWebPage(context);
