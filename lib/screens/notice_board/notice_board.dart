@@ -27,18 +27,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
   @override
   void initState() {
     super.initState();
-    _initialize();
-  }
-
-  Future<void> _initialize() async {
-    try {
-      await initializeScraper(); // 스크레이퍼 초기화
-      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
-      await loadNotices(PageSettings.kInitialAbsolutePage); // 공지사항 로드
-    } catch (e) {
-      // 에러 처리
-      debugPrint('Initialization error: $e');
-    }
+    initialize();
   }
 
   Future<void> initializeScraper() async {
@@ -51,6 +40,19 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     } else if (widget.noticeType == 'INTERNATIONAL' ||
         widget.noticeType == 'SWUNIV') {
       noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
+    }
+  }
+
+  // override 메서드
+  @override
+  Future<void> initialize() async {
+    try {
+      await initializeScraper(); // 스크레이퍼 초기화
+      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
+      await loadNotices(PageSettings.kInitialAbsolutePage); // 공지사항 로드
+    } catch (e) {
+      // 에러 처리
+      debugPrint('Initialization error: $e');
     }
   }
 

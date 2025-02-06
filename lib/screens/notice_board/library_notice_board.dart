@@ -20,6 +20,23 @@ class _LibraryNoticeBoardState
   bool showGeneral = true;
 
   @override
+  void initState() {
+    super.initState();
+    initialize();
+  }
+
+  @override
+  Future<void> initialize() async {
+    try {
+      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
+      await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
+    } catch (e) {
+      // 에러 처리
+      debugPrint('Initialization error: $e');
+    }
+  }
+
+  @override
   void toggleOption(String option) {
     setState(() {
       if (option == 'headline') {
@@ -30,22 +47,6 @@ class _LibraryNoticeBoardState
         showGeneral = true;
       }
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initialize();
-  }
-
-  Future<void> _initialize() async {
-    try {
-      await initializeReadAndBookmark(); // 읽은 공지와 북마크 초기화
-      await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
-    } catch (e) {
-      // 에러 처리
-      debugPrint('Initialization error: $e');
-    }
   }
 
   @override
