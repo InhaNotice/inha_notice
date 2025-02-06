@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -72,8 +73,12 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
 
     // 백그라운드에서 비동기적으로 실행
     try {
-      await MajorUtils.subscribeToMajor(currentMajorKey, newMajorKey);
-      await SharedPrefsManager().setMajorKey(newMajorKey);
+      await SharedPrefsManager().setMajorKey(currentMajorKey, newMajorKey);
+      final isMajorNotificationOn =
+          SharedPrefsManager().getMajorNotificationOn();
+      if (isMajorNotificationOn) {
+        await FirebaseService().updateMajorSubscription();
+      }
     } catch (e) {
       logger.e('Error saving major: $e');
     }
