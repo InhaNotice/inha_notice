@@ -20,7 +20,8 @@ Future<void> main() async {
 
   await _initializeApp();
   _firebaseInitFuture = _initializeFirebase(); // 한 번만 초기화
-  await _firebaseInitFuture;
+  // 백그라운드에서 실행
+  _firebaseInitFuture;
 
   runApp(const MyApp());
 }
