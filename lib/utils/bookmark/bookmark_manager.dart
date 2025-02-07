@@ -12,11 +12,11 @@ class BookmarkManager {
   static Future<void> initDatabase() async {
     try {
       final databasePath = await getDatabasesPath();
-      final path = join(databasePath, 'bookmarks.db');
+      final path = join(databasePath, 'notice_bookmarks.db');
 
       _database = await openDatabase(
         path,
-        version: 1,
+        version: 2,
         onCreate: (db, version) async {
           await db.execute('''
             CREATE TABLE $tableName (
