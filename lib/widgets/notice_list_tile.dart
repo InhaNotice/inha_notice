@@ -3,6 +3,8 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/themes/theme.dart';
 
+/// **NoticeListTile**
+/// 이 클래스는 공지사항 하나에 대한 정보를 출력하는 클래스입니다.
 class NoticeListTile extends StatefulWidget {
   final Map<String, dynamic> notice;
   final bool isRead;
@@ -29,6 +31,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
     super.initState();
   }
 
+  /// **사파리 웹 페이지를 띄우는 함수**
   Future<void> navigateToWebPage(BuildContext context) async {
     Navigator.push(
       context,
@@ -42,21 +45,21 @@ class _NoticeListTileState extends State<NoticeListTile> {
 
   @override
   Widget build(BuildContext context) {
-    final readTextColor = Theme.of(context).readTextColor;
-    // 읽음 상태를 전달받아서 제목 텍스트 색상을 결정합니다.
+    // 읽은 공지면 readTextColor, 읽지 않은 공지면 기본 색상을 표시
     final textColor = widget.isRead
-        ? readTextColor
+        ? Theme.of(context).readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
             Theme.of(context).defaultColor;
-    // 안전한 데이터 접근
+    // 공지사항 제목
     final title = widget.notice.containsKey('title')
         ? widget.notice['title'] ?? '제목이 없는 게시글입니다'
         : '제목이 없는 게시글입니다';
+    // 공지사항 날짜
     final date =
         widget.notice.containsKey('date') ? widget.notice['date'] ?? '' : '';
+    // 공지사항 조회수
     final access =
         widget.notice.containsKey('access') ? widget.notice['access'] : null;
-    // final writer = widget.notice.containsKey('writer') ? widget.notice['writer'] ?? '' : '';
 
     return Column(
       children: [
@@ -141,6 +144,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
                     ],
                   ),
                 ),
+                // 북마크 아이콘 정의
                 IconButton(
                   icon: Icon(
                     widget.isBookmarked

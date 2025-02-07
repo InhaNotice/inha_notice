@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// **RefreshButton**
+/// 이 클래스는 새로고침 버튼을 제공하는 클래스입니다.
 class RefreshButton extends StatelessWidget {
   final VoidCallback onTap;
 

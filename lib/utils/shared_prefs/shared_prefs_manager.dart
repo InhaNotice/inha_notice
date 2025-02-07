@@ -1,13 +1,15 @@
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// **SharedPrefsManager**
+/// 이 클래스는 싱글톤으로 정의된 shared_preferences를 관리하는 클래스입니다.
 class SharedPrefsManager {
   static final SharedPrefsManager _instance = SharedPrefsManager._internal();
   static final logger = Logger();
 
   SharedPreferences? _prefs;
 
-  // 캐싱을 위한 변수
+  // 캐싱을 위한 변수 정의
   static String? _cachedPreviousMajorKey;
   static String? _cachedMajorKey;
   static bool? _cachedAcademicNotification;
