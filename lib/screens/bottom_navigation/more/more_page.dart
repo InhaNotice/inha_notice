@@ -5,6 +5,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.da
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
 import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/widgets/themed_app_bar.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -19,6 +20,7 @@ class _MorePageState extends State<MorePage> {
   late String _termsAndConditionsOfServiceUrl;
   late String _openSourcesUrl;
   late String _aboutTeamUrl;
+  late String _appVersion;
 
   @override
   void initState() {
@@ -33,25 +35,13 @@ class _MorePageState extends State<MorePage> {
         dotenv.get('TERMS_AND_CONDITIONS_OF_SERVICE_URL');
     _openSourcesUrl = dotenv.get('OPEN_SOURCES_URL');
     _aboutTeamUrl = dotenv.get('ABOUT_TEAM_URL');
+    _appVersion = dotenv.get('APP_VERSION');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        centerTitle: false,
-        title: Text(
-          '더보기',
-          style: TextStyle(
-            fontFamily: Font.kDefaultFont,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: Theme.of(context).textTheme.bodyLarge?.color ??
-                Theme.of(context).defaultColor,
-          ),
-        ),
-      ),
+      appBar: const ThemedAppBar(title: '더보기', titleSize: 20, isCenter: false),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(
@@ -227,7 +217,7 @@ class _MorePageState extends State<MorePage> {
                       ],
                     ),
                     Text(
-                      '1.0.1',
+                      _appVersion,
                       style: TextStyle(
                         fontFamily: Font.kDefaultFont,
                         fontSize: 16,
