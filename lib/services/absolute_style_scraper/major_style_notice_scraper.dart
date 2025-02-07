@@ -3,9 +3,9 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/constants/status_code_constants.dart';
 import 'package:inha_notice/selectors/major_style_tag_selectors.dart';
-import 'package:inha_notice/services/absolute_style_scraper/base_notice_scraper.dart';
+import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
-class MajorStyleNoticeScraper extends BaseNoticeScraper {
+class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
   late String noticeType;

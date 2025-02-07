@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_button.dart';
 import 'package:inha_notice/widgets/rounded_toggle_button.dart';
 
-class LibraryNoticeBoard extends BaseNoticeBoard {
-  const LibraryNoticeBoard({super.key});
+class RelativeStyleNoticeBoard extends BaseNoticeBoard {
+  final String noticeType;
+
+  const RelativeStyleNoticeBoard({super.key, required this.noticeType});
 
   @override
-  State<LibraryNoticeBoard> createState() => _LibraryNoticeBoardState();
+  State<RelativeStyleNoticeBoard> createState() =>
+      _RelativeStyleNoticeBoardState();
 }
 
-class _LibraryNoticeBoardState
-    extends BaseNoticeBoardState<LibraryNoticeBoard> {
-  LibraryScraper libraryScraper = LibraryScraper();
+class _RelativeStyleNoticeBoardState
+    extends BaseNoticeBoardState<RelativeStyleNoticeBoard> {
+  late BaseRelativeStyleNoticeScraper libraryScraper;
   bool showHeadlines = false;
   bool showGeneral = true;
 
@@ -24,6 +28,12 @@ class _LibraryNoticeBoardState
   void initState() {
     super.initState();
     initialize();
+  }
+
+  Future<void> initializeScraper() async {
+    if (widget.noticeType == 'LIBRARY') {
+      libraryScraper = LibraryScraper();
+    }
   }
 
   @override

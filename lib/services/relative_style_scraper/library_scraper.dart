@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/constants/status_code_constants.dart';
+import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 
-class LibraryScraper {
+class LibraryScraper extends BaseRelativeStyleNoticeScraper {
   late String baseUrl;
   late String queryUrl;
 
@@ -13,6 +14,7 @@ class LibraryScraper {
     queryUrl = dotenv.get('LIBRARY_QUERY_URL');
   }
 
+  @override
   Future<Map<String, dynamic>> fetchNotices(int offset) async {
     try {
       // 중요 공지사항 매개변수
@@ -49,6 +51,7 @@ class LibraryScraper {
     }
   }
 
+  @override
   Future<List<Map<String, String>>> fetchNoticesWithParams(
       Map<String, String> params) async {
     var connectUrl = Uri.parse(baseUrl).replace(queryParameters: params);
@@ -84,6 +87,7 @@ class LibraryScraper {
     return results;
   }
 
+  @override
   List<Map<String, dynamic>> fetchPages() {
     final List<Map<String, dynamic>> results = [];
 
@@ -100,6 +104,7 @@ class LibraryScraper {
     return results;
   }
 
+  @override
   String makeUniqueNoticeId(String postId) {
     const String provider = 'lib';
     final String uniqueNoticeId = '$provider-$postId';
