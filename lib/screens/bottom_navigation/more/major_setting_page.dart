@@ -22,6 +22,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   List<String> _filteredMajors = [];
   String? _currentMajor; // 한글 학과명
   String? _currentMajorKey; // 영문 학과명
+  bool _isProcessing = false;
 
   String? get currentMajorKey => _currentMajorKey;
 
@@ -67,22 +68,80 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
 
   /// 학과 선택 핸들러
   Future<void> _handleMajorSelection(String major) async {
-    // 화면 먼저 닫기
-    if (mounted) Navigator.pop(context);
+    if (_isProcessing) return;
+
+    setState(() {
+      _isProcessing = true;
+      _showLoadingDialog();
+    });
 
     String newMajorKey = MajorUtils.translateToEnglish(major);
 
-    // 백그라운드에서 비동기적으로 실행
     try {
       await SharedPrefsManager().setMajorKey(currentMajorKey, newMajorKey);
+
       final isMajorNotificationOn =
           SharedPrefsManager().getMajorNotificationOn();
       if (isMajorNotificationOn) {
         await FirebaseService().updateMajorSubscription();
       }
+      _showSnackbar('성공적으로 저장하였습니다!');
+      await Future.delayed(const Duration(seconds: 1));
+      if (mounted) {
+        Navigator.pop(context);
+      }
     } catch (e) {
-      logger.e('Error saving major: $e');
+      logger.e('❌ Error saving major: $e');
+      _showSnackbar('저장 중 오류가 발생했습니다. 다시 시도해주세요!');
+    } finally {
+      _dismissLoadingDialog();
+      if (mounted) {
+        setState(() {
+          _isProcessing = false;
+        });
+      }
     }
+  }
+
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // 사용자가 닫을 수 없도록 설정
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// 다이얼로그 닫기
+  void _dismissLoadingDialog() {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  }
+
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: TextStyle(
+            fontFamily: Font.kDefaultFont,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).snackBarTextColor,
+          ),
+        ),
+        backgroundColor: Theme.of(context).snackBarBackgroundColor,
+      ),
+    );
   }
 
   @override
