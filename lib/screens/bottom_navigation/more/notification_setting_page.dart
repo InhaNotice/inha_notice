@@ -4,6 +4,7 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
+import 'package:logger/logger.dart';
 
 class NotificationSettingPage extends StatefulWidget {
   const NotificationSettingPage({super.key});
@@ -15,8 +16,10 @@ class NotificationSettingPage extends StatefulWidget {
 
 class _NotificationSettingPageState extends State<NotificationSettingPage> {
   final String _academicTopic = 'all-notices';
+  final logger = Logger();
   bool _isAcademicNotificationOn = false;
   bool _isMajorNotificationOn = false;
+  bool _isProcessing = false;
 
   @override
   void initState() {
@@ -35,56 +38,118 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
 
   /// 학사 알림 설정 변경 및 저장
   Future<void> _toggleAcademicNotification(bool value) async {
-    if (value) {
-      await FirebaseService().subscribeToTopic(_academicTopic);
-    } else {
-      await FirebaseService().unsubscribeFromTopic(_academicTopic);
-    }
-    await SharedPrefsManager().setAcademicNotificationOn(value);
+    if (_isProcessing) return;
+
     setState(() {
-      _isAcademicNotificationOn = value;
+      _isProcessing = true;
+      _showLoadingDialog();
     });
+
+    try {
+      if (value) {
+        await FirebaseService().subscribeToTopic(_academicTopic);
+      } else {
+        await FirebaseService().unsubscribeFromTopic(_academicTopic);
+      }
+
+      await SharedPrefsManager().setAcademicNotificationOn(value);
+
+      setState(() {
+        _isAcademicNotificationOn = value;
+      });
+      _showSnackbar(value ? '학사 알림이 활성화되었습니다.' : '학사 알림이 비활성화되었습니다.');
+      await Future.delayed(const Duration(seconds: 1));
+    } catch (e) {
+      logger.e("❌ Error updating academic notification: $e");
+      _showSnackbar('알림 설정 중 오류가 발생했습니다.');
+    } finally {
+      _dismissLoadingDialog();
+      setState(() {
+        _isProcessing = false;
+      });
+    }
   }
 
   /// 학과 알림 설정 변경 및 저장
   Future<void> _toggleMajorNotification(bool value) async {
-    /// 학과 키 확인
-    final majorKey = SharedPrefsManager().getMajorKey();
-
-    if (majorKey == null) {
-      // 학과가 설정되지 않은 경우 토글을 차단하고 스낵바 경고 표시
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '학과를 먼저 설정해주세요!',
-            style: TextStyle(
-              fontFamily: Font.kDefaultFont,
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Theme.of(context).snackBarTextColor,
-            ),
-          ),
-          backgroundColor: Theme.of(context).snackBarBackgroundColor,
-        ),
-      );
-      return;
-    }
-
-    // 학과가 설정된 경우
-    // true: 이전학과 존재시 구독 해제 및 현재 학과 구독 진행
-    // false: 현재 학과 구독 해제
-    if (value) {
-      await FirebaseService().updateMajorSubscription();
-    } else {
-      await FirebaseService().unsubscribeFromTopic(majorKey);
-    }
-
-    /// 현재 설정값 저장
-    await SharedPrefsManager().setMajorNotificationOn(value);
+    if (_isProcessing) return;
 
     setState(() {
-      _isMajorNotificationOn = value;
+      _isProcessing = true;
+      _showLoadingDialog();
     });
+
+    try {
+      final majorKey = SharedPrefsManager().getMajorKey();
+      if (majorKey == null) {
+        _dismissLoadingDialog();
+        _showSnackbar('학과를 먼저 설정해주세요!');
+        return;
+      }
+
+      if (value) {
+        await FirebaseService().updateMajorSubscription();
+      } else {
+        await FirebaseService().unsubscribeFromTopic(majorKey);
+      }
+
+      await SharedPrefsManager().setMajorNotificationOn(value);
+
+      setState(() {
+        _isMajorNotificationOn = value;
+      });
+      _showSnackbar(value ? '학과 알림이 활성화되었습니다.' : '학과 알림이 비활성화되었습니다.');
+      await Future.delayed(const Duration(seconds: 1));
+    } catch (e) {
+      logger.e("❌ Error updating major notification: $e");
+      _showSnackbar('학과 알림 설정 중 오류가 발생했습니다.');
+    } finally {
+      _dismissLoadingDialog();
+      setState(() {
+        _isProcessing = false;
+      });
+    }
+  }
+
+  void _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // 사용자가 닫을 수 없도록 설정
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Center(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// 다이얼로그 닫기
+  void _dismissLoadingDialog() {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
+  }
+
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: TextStyle(
+            fontFamily: Font.kDefaultFont,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).snackBarTextColor,
+          ),
+        ),
+        backgroundColor: Theme.of(context).snackBarBackgroundColor,
+      ),
+    );
   }
 
   @override
