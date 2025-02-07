@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/screens/notice_board/library_notice_board.dart';
-import 'package:inha_notice/screens/notice_board/notice_board.dart';
+import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
+import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
 import 'package:inha_notice/widgets/search_result_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -97,13 +97,13 @@ class HomePage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            NoticeBoard(noticeType: 'WHOLE'),
-            NoticeBoard(noticeType: 'MAJOR'),
+            AbsoluteStyleNoticeBoard(noticeType: 'WHOLE'),
+            AbsoluteStyleNoticeBoard(noticeType: 'MAJOR'),
             SearchResultPage(query: '장학', isSearchResultPage: false),
             SearchResultPage(query: '채용', isSearchResultPage: false),
-            LibraryNoticeBoard(),
-            NoticeBoard(noticeType: 'INTERNATIONAL'),
-            NoticeBoard(noticeType: 'SWUNIV'),
+            RelativeStyleNoticeBoard(noticeType: 'LIBRARY'),
+            AbsoluteStyleNoticeBoard(noticeType: 'INTERNATIONAL'),
+            AbsoluteStyleNoticeBoard(noticeType: 'SWUNIV'),
           ],
         ),
       ),

@@ -1,10 +1,13 @@
 import 'package:html/dom.dart';
 import 'package:inha_notice/constants/identifier_constants.dart';
 
-abstract class BaseNoticeScraper {
+abstract class BaseAbsoluteStyleNoticeScraper {
   Future<Map<String, dynamic>> fetchNotices(int page, String noticeType);
+
   List<Map<String, String>> fetchHeadlineNotices(Document document);
+
   List<Map<String, String>> fetchGeneralNotices(Document document);
+
   List<Map<String, dynamic>> fetchPages(Document document);
 
   String makeUniqueNoticeId(String postUrl) {

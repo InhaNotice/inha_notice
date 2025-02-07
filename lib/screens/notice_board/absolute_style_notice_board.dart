@@ -3,7 +3,7 @@ import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
-import 'package:inha_notice/services/absolute_style_scraper/base_notice_scraper.dart';
+import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -14,24 +14,26 @@ import 'package:inha_notice/widgets/refresh_button.dart';
 import 'package:inha_notice/widgets/rounded_toggle_button.dart';
 import 'package:logger/logger.dart';
 
-/// **NoticeBoard**
+/// **AbsoluteStyleNoticeBoard**
 ///
 /// 이 클래스는 noticeType에 따른 공지사항을 제공하는 클래스입니다.
 ///
 /// ### 주요 기능:
 /// - noticeType에 따른 공지사항 제공
 /// - 지원하는 noticeType: 학사공지, 학과공지, 국제처 공지, SW중심대학 공지
-class NoticeBoard extends BaseNoticeBoard {
+class AbsoluteStyleNoticeBoard extends BaseNoticeBoard {
   final String noticeType;
 
-  const NoticeBoard({super.key, required this.noticeType});
+  const AbsoluteStyleNoticeBoard({super.key, required this.noticeType});
 
   @override
-  State<NoticeBoard> createState() => NoticeBoardState();
+  State<AbsoluteStyleNoticeBoard> createState() =>
+      _AbsoluteStyleNoticeBoardState();
 }
 
-class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
-  late BaseNoticeScraper noticeScraper;
+class _AbsoluteStyleNoticeBoardState
+    extends BaseNoticeBoardState<AbsoluteStyleNoticeBoard> {
+  late BaseAbsoluteStyleNoticeScraper noticeScraper;
   late String? majorKey;
   bool showHeadlines = false;
   bool showGeneral = true;
