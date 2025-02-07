@@ -85,7 +85,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
       if (isMajorNotificationOn) {
         await FirebaseService().updateMajorSubscription();
       }
-      _showSnackbar('성공적으로 저장하였습니다!');
+      _showSnackbar('$major로 설정되었습니다!');
       await Future.delayed(const Duration(seconds: 1));
       if (mounted) {
         Navigator.pop(context);
