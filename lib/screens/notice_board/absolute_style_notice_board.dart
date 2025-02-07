@@ -7,7 +7,7 @@ import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_button.dart';

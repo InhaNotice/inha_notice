@@ -3,7 +3,7 @@ import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
 import 'package:logger/logger.dart';
 
