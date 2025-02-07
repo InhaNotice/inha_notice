@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
-import 'package:inha_notice/utils/bookmark_manager.dart';
-import 'package:inha_notice/utils/read_notice_manager.dart';
+import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
+import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 
 /// **BaseNoticeBoard**
 ///

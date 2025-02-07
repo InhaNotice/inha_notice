@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
-import 'package:inha_notice/services/relative_style_scraper/search_scraper.dart';
+import 'package:inha_notice/services/search/search_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_button.dart';
