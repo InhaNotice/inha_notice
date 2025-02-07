@@ -4,6 +4,7 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/widgets/themed_app_bar.dart';
 import 'package:logger/logger.dart';
 
 class MajorSettingPage extends StatefulWidget {
@@ -87,16 +88,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        title: Text('학과 설정',
-            style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultColor)),
-      ),
+      appBar: const ThemedAppBar(title: '학과 설정', titleSize: 20, isCenter: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
