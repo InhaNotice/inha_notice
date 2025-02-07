@@ -78,3 +78,13 @@ extension ButtonColors on ThemeData {
   Color get buttonBackgroundColor =>
       brightness == Brightness.light ? Colors.grey[200]! : Colors.grey[800]!;
 }
+
+extension ToggleColors on ThemeData {
+  Color get selectedToggleBorder => Colors.blue;
+
+  Color get unSelectedToggleBorder => Colors.grey;
+
+  Color get selectedToggleText => Colors.blue;
+
+  Color get unSelectedToggleText => Colors.grey;
+}

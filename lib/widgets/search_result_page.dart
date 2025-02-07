@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/font_constants.dart';
 import 'package:inha_notice/constants/page_constants.dart';
-import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/relative_style_scraper/search_scraper.dart';
-import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
+import 'package:inha_notice/widgets/refresh_button.dart';
+import 'package:inha_notice/widgets/rounded_toggle_button.dart';
+import 'package:inha_notice/widgets/themed_app_bar.dart';
 
 class SearchResultPage extends BaseNoticeBoard {
   final String query;
@@ -57,7 +57,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
     });
   }
 
-  @override
   Future<void> loadNotices(int startCount) async {
     setState(() {
       isLoading = true;
@@ -86,25 +85,20 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   @override
   Widget build(BuildContext context) {
     if (!widget.isSearchResultPage) {
-      return super.build(context);
+      return Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildHeader(),
+            buildMain(),
+            buildFooter(),
+          ],
+        ),
+      );
     }
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        iconTheme: IconThemeData(
-          color: Theme.of(context).appBarTheme.iconTheme?.color,
-        ),
-        title: Text(
-          '검색 결과: ${widget.query}',
-          style: TextStyle(
-            fontFamily: Font.kDefaultFont,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-            color: Theme.of(context).textTheme.bodyMedium?.color ??
-                Theme.of(context).defaultColor,
-          ),
-        ),
-      ),
+      appBar: ThemedAppBar(
+          title: '검색 결과: ${widget.query}', titleSize: 17, isCenter: true),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,74 +121,21 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // 중요공지가 있을때만 토글 버튼이 생성됩니다.
-          GestureDetector(
-            onTap: () => toggleOption('RANK'),
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                // 옵션 버튼의 경계 색상 지정
-                border: showRank
-                    ? Border.all(color: Colors.blue, width: 2.0)
-                    : Border.all(color: Colors.grey, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Text(
-                '정확도순',
-                style: TextStyle(
-                  fontFamily: FontSettings.kDefaultFont,
-                  fontSize: 13.0,
-                  fontWeight: FontWeight.bold,
-                  color: showRank ? Colors.blue : Colors.grey,
-                ),
-              ),
-            ),
-          ),
+          RoundedToggleButton(
+              text: '정확도순',
+              option: 'RANK',
+              isSelected: showRank,
+              onTap: toggleOption),
           const SizedBox(width: 10),
-          GestureDetector(
-            onTap: () => toggleOption('DATE'),
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                // 옵션 버튼의 경계 색상 지정
-                border: showDate
-                    ? Border.all(color: Colors.blue, width: 2.0)
-                    : Border.all(color: Colors.grey, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Text(
-                '최신순',
-                style: TextStyle(
-                    fontFamily: FontSettings.kDefaultFont,
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold,
-                    color: showDate ? Colors.blue : Colors.grey),
-              ),
-            ),
-          ),
+          RoundedToggleButton(
+              text: '최신순',
+              option: 'DATE',
+              isSelected: showDate,
+              onTap: toggleOption),
           const Spacer(),
-          GestureDetector(
-            onTap: () {
-              loadNotices(PageSettings.kInitialRelativePage);
-            },
-            child: Container(
-              padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                    color: Theme.of(context).iconTheme.color!, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Icon(
-                Icons.refresh,
-                color: Theme.of(context).iconTheme.color,
-                size: 16.0,
-              ),
-            ),
-          ),
+          RefreshButton(onTap: () {
+            loadNotices(PageSettings.kInitialRelativePage);
+          }),
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/widgets/themed_app_bar.dart';
 
 class NotificationSettingPage extends StatefulWidget {
   const NotificationSettingPage({super.key});
@@ -89,19 +90,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        title: Text(
-          '알림 설정',
-          style: TextStyle(
-            fontFamily: Font.kDefaultFont,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.bodyMedium?.color ??
-                Theme.of(context).defaultColor,
-          ),
-        ),
-      ),
+      appBar: const ThemedAppBar(title: '알림 설정', titleSize: 20, isCenter: true),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(

@@ -4,6 +4,7 @@ import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/search_result_page.dart';
+import 'package:inha_notice/widgets/themed_app_bar.dart';
 
 typedef TopicsList = List<Map<String, dynamic>>;
 
@@ -139,18 +140,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-          centerTitle: false,
-          title: Text(
-            '검색',
-            style: TextStyle(
-                color: Theme.of(context).textTheme.bodyLarge?.color,
-                fontFamily: Font.kDefaultFont,
-                fontWeight: FontWeight.bold,
-                fontSize: 20),
-          ),
-        ),
+        appBar: const ThemedAppBar(title: '검색', titleSize: 20, isCenter: false),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Padding(
             padding: const EdgeInsets.all(16.0),
