@@ -162,7 +162,11 @@ class _AbsoluteStyleNoticeBoardState
           const Spacer(),
           // 공지사항 새로고침 버튼
           RefreshButton(onTap: () {
-            loadNotices(PageSettings.kInitialAbsolutePage);
+            if (widget.noticeType == 'MAJOR') {
+              initialize();
+            } else {
+              loadNotices(PageSettings.kInitialAbsolutePage);
+            }
           }),
         ],
       ),

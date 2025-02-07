@@ -39,6 +39,7 @@ class _RelativeStyleNoticeBoardState
   @override
   Future<void> initialize() async {
     try {
+      await initializeScraper();
       await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
     } catch (e) {
       // 에러 처리
