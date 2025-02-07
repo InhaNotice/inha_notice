@@ -50,6 +50,10 @@ final ThemeData darkTheme = ThemeData(
 extension DefaultColors on ThemeData {
   Color get defaultColor =>
       brightness == Brightness.light ? Colors.black : Colors.white;
+
+  Color get fixedBlueText => Colors.blue;
+
+  Color get fixedLightGreyText => const Color(0xFFBAB6B6);
 }
 
 extension TextColors on ThemeData {
