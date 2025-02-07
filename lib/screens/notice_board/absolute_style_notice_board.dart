@@ -162,11 +162,7 @@ class _AbsoluteStyleNoticeBoardState
           const Spacer(),
           // 공지사항 새로고침 버튼
           RefreshButton(onTap: () {
-            if (widget.noticeType == 'MAJOR') {
-              initialize();
-            } else {
-              loadNotices(PageSettings.kInitialAbsolutePage);
-            }
+            loadNotices(PageSettings.kInitialAbsolutePage);
           }),
         ],
       ),
@@ -216,7 +212,9 @@ class _AbsoluteStyleNoticeBoardState
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const MajorSettingPage()),
-                            );
+                            ).then((_) {
+                              initialize();
+                            });
                           },
                           icon: Icon(Icons.school_outlined,
                               size: 20,
