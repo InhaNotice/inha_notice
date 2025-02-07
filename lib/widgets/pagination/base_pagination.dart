@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/themes/theme.dart';
 
+/// **BasePagination**
+/// 이 클래스는 페이지네이션을 정의하는 추상 클래스입니다.
 abstract class BasePagination extends StatelessWidget {
   final List<Map<String, dynamic>> pages;
   final int currentPage;
@@ -19,12 +22,14 @@ abstract class BasePagination extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
-    final currentPageColor = Theme.of(context).textTheme.bodyLarge?.color;
-    const otherPageColor = Colors.grey;
+    final pageButtonBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final selectedPageButtonTextColor =
+        Theme.of(context).selectedPageButtonTextColor;
+    final unSelectedPageButtonTextColor =
+        Theme.of(context).unSelectedPageButtonTextColor;
 
     return Container(
-      color: backgroundColor,
+      color: pageButtonBackgroundColor,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -48,7 +53,9 @@ abstract class BasePagination extends StatelessWidget {
                   fontSize: 14,
                   fontWeight:
                       isCurrentPage ? FontWeight.bold : FontWeight.normal,
-                  color: isCurrentPage ? currentPageColor : otherPageColor,
+                  color: isCurrentPage
+                      ? selectedPageButtonTextColor
+                      : unSelectedPageButtonTextColor,
                 ),
               ),
             );

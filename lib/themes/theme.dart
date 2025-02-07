@@ -92,3 +92,10 @@ extension ToggleColors on ThemeData {
 
   Color get unSelectedToggleText => Colors.grey;
 }
+
+extension PageButtonColors on ThemeData {
+  Color get selectedPageButtonTextColor =>
+      textTheme.bodyMedium?.color ?? defaultColor;
+
+  Color get unSelectedPageButtonTextColor => Colors.grey;
+}

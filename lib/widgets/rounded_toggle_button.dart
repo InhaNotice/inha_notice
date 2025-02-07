@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 
+/// **RoundedToggleButton**
+/// 이 클래스는 타원형태의 토글 버튼을 제공하는 클래스입니다.
 class RoundedToggleButton extends StatelessWidget {
   final String text;
   final String option;

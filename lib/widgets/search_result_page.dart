@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
+import 'package:inha_notice/constants/string_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/search/search_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
@@ -7,7 +8,10 @@ import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_button.dart';
 import 'package:inha_notice/widgets/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
+import 'package:logger/logger.dart';
 
+/// **SearchResultPage**
+/// 이 클래스는 사용자 입력에 따른 검색 결과를 불러오는 클래스입니다.
 class SearchResultPage extends BaseNoticeBoard {
   final String query;
   final bool isSearchResultPage;
@@ -20,11 +24,12 @@ class SearchResultPage extends BaseNoticeBoard {
 }
 
 class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
+  final logger = Logger();
   SearchScraper searchScraper = SearchScraper();
   bool showRank = false;
   bool showDate = true;
 
-  String sortedType = '';
+  String sortedType = StringConstants.kEmptyString;
 
   @override
   void initState() {
@@ -35,10 +40,9 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   @override
   Future<void> initialize() async {
     try {
-      await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
+      await loadNotices(PageSettings.kInitialRelativePage);
     } catch (e) {
-      // 에러 처리
-      debugPrint('Initialization error: $e');
+      logger.e('${runtimeType.toString()} - initialize() 오류: $e');
     }
   }
 
@@ -67,6 +71,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
+        // 최초 공지사항 로드시 페이지 리스트 초기화
         if (startCount == PageSettings.kInitialRelativePage &&
             initialPages.isEmpty) {
           initialPages = List<Map<String, dynamic>>.from(notices['pages']);
@@ -79,6 +84,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       setState(() {
         isLoading = false;
       });
+      logger.e('${runtimeType.toString()} - loadNotices() 오류: $e');
     }
   }
 
@@ -120,7 +126,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // 중요공지가 있을때만 토글 버튼이 생성됩니다.
           RoundedToggleButton(
               text: '정확도순',
               option: 'RANK',
@@ -152,7 +157,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
                 itemCount: notices['general'].length,
                 itemBuilder: (context, index) {
                   final notice = notices['general'][index];
-                  // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
                   final isRead = isNoticeRead(notice['id'].toString());
                   final isBookmarked =
                       isNoticeBookmarked(notice['id'].toString());

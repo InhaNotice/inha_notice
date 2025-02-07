@@ -55,18 +55,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 }
 
-/// 앱 초기화 함수
+/// **앱 초기화**
 Future<void> _initializeApp() async {
   await dotenv.load(fileName: ".env");
-  await SharedPrefsManager().initialize();
   await _initializeStorage();
 }
 
-/// 스토리지 초기화 함수
+/// **데이터베이스 초기화**
 Future<void> _initializeStorage() async {
   final Logger logger = Logger();
   try {
     await Future.wait([
+      SharedPrefsManager().initialize(),
       BookmarkManager.initDatabase(),
       ReadNoticeManager.initDatabase(),
     ]);
@@ -76,7 +76,7 @@ Future<void> _initializeStorage() async {
   }
 }
 
-/// Firebase 초기화 함수 (싱글톤 적용)
+/// **Firebase 초기화 함수 (싱글톤 적용)**
 Future<FirebaseApp> _initializeFirebase() async {
   final app = await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
