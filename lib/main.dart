@@ -8,20 +8,15 @@ import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase/firebase_options.dart';
-
-SharedPreferences? _prefs;
-Future<FirebaseApp>? _firebaseInitFuture;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await _initializeApp();
-  _firebaseInitFuture = _initializeFirebase(); // 한 번만 초기화
-  // 백그라운드에서 실행
-  _firebaseInitFuture;
+  // FCM 초기화는 백그라운드에서 진행
+  _initializeFirebase();
 
   runApp(const MyApp());
 }
