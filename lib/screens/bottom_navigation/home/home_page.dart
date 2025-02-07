@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
+import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/search_result_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-          title: const Align(
+          title: Align(
             alignment: Alignment.centerLeft,
             child: Text.rich(
               TextSpan(
@@ -24,7 +25,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: Font.kDefaultFont,
                       fontSize: 16,
-                      color: Color(0xFF12B8FF),
+                      color: Theme.of(context).fixedBlueText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: Font.kDefaultFont,
                       fontSize: 16,
-                      color: Color(0xFFBAB6B6),
+                      color: Theme.of(context).fixedLightGreyText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -42,7 +43,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: Font.kDefaultFont,
                       fontSize: 16,
-                      color: Color(0xFF12B8FF),
+                      color: Theme.of(context).fixedBlueText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -51,7 +52,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: Font.kDefaultFont,
                       fontSize: 16,
-                      color: Color(0xFFBAB6B6),
+                      color: Theme.of(context).fixedLightGreyText,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -88,7 +89,7 @@ class HomePage extends StatelessWidget {
                   Tab(text: '장학'),
                   Tab(text: '채용'),
                   Tab(text: '정석'),
-                  Tab(text: '국제'),
+                  Tab(text: '국제처'),
                   Tab(text: 'SW중심대학'),
                 ],
               ),
