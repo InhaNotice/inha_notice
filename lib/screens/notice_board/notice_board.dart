@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/font_constants.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
@@ -11,9 +10,17 @@ import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
+import 'package:inha_notice/widgets/refresh_button.dart';
+import 'package:inha_notice/widgets/rounded_toggle_button.dart';
+import 'package:logger/logger.dart';
 
-/// noticeType에 따른 공지사항 페이지 구현
-/// 지원하는 공지: 학사, 학과, 국제처, SW중심대학
+/// **NoticeBoard**
+///
+/// 이 클래스는 noticeType에 따른 공지사항을 제공하는 클래스입니다.
+///
+/// ### 주요 기능:
+/// - noticeType에 따른 공지사항 제공
+/// - 지원하는 noticeType: 학사공지, 학과공지, 국제처 공지, SW중심대학 공지
 class NoticeBoard extends BaseNoticeBoard {
   final String noticeType;
 
@@ -29,6 +36,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
   bool showHeadlines = false;
   bool showGeneral = true;
   bool isMajorKey = false;
+  final logger = Logger();
 
   @override
   void initState() {
@@ -43,10 +51,13 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
 
   Future<void> initializeScraper() async {
     if (widget.noticeType == 'MAJOR') {
+      // 저장된 나의 학과 불러오기
       await loadMajorPreference();
-      if (!isMajorKey) return; // 학과가 없으면 초기화하지 않음
+      // 저장된 나의 학과가 없다면 스크래퍼 초기화를 하지 않음
+      if (!isMajorKey) return;
     }
 
+    // 스크래퍼 초기화 진행
     if (widget.noticeType == 'WHOLE') {
       noticeScraper = WholeNoticeScraper();
     } else if (widget.noticeType == 'MAJOR') {
@@ -56,15 +67,14 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     }
   }
 
-  // override 메서드
+  /// 초기화 순서(순서를 보장해야함): 스크래퍼 초기화 -> 공지사항 불러오기
   @override
   Future<void> initialize() async {
     try {
-      await initializeScraper(); // 스크레이퍼 초기화
-      await loadNotices(PageSettings.kInitialAbsolutePage); // 공지사항 로드
+      await initializeScraper();
+      await loadNotices(PageSettings.kInitialAbsolutePage);
     } catch (e) {
-      // 에러 처리
-      debugPrint('Initialization error: $e');
+      logger.e('NoticeBoard 초기화 오류: $e');
     }
   }
 
@@ -81,7 +91,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     });
   }
 
-  @override
+  /// 공지사항 새로고침 진행하는 함수
   Future<void> loadNotices(int page) async {
     setState(() {
       isLoading = true;
@@ -92,6 +102,7 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
+        // 페이지 리스트는 최초 로딩시 할당됨
         if (page == PageSettings.kInitialAbsolutePage && initialPages.isEmpty) {
           initialPages = List<Map<String, dynamic>>.from(notices['pages']);
         }
@@ -105,6 +116,22 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     }
   }
 
+  /// NoticeBoard 구조: Header(토글 버튼), Main(공지사항 리스트), Footer(페이지 버튼)
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildHeader(),
+          buildMain(),
+          buildFooter(),
+        ],
+      ),
+    );
+  }
+
+  /// buildHeader: 토글 버튼 영역 정의
   @override
   Widget buildHeader() {
     return Container(
@@ -117,79 +144,30 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
         children: [
           // 중요공지가 있을때만 토글 버튼이 생성됩니다.
           if (notices['headline'].isNotEmpty)
-            GestureDetector(
-              onTap: () => toggleOption('headline'),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  // 옵션 버튼의 경계 색상 지정
-                  border: showHeadlines
-                      ? Border.all(color: Colors.blue, width: 2.0)
-                      : Border.all(color: Colors.grey, width: 2.0),
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: Text(
-                  '중요',
-                  style: TextStyle(
-                    fontFamily: FontSettings.kDefaultFont,
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold,
-                    color: showHeadlines ? Colors.blue : Colors.grey,
-                  ),
-                ),
-              ),
-            ),
+            // 중요공지 버튼
+            RoundedToggleButton(
+                text: '중요',
+                option: 'headline',
+                isSelected: showHeadlines,
+                onTap: toggleOption),
           const SizedBox(width: 10),
-          GestureDetector(
-            onTap: () => toggleOption('general'),
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                // 옵션 버튼의 경계 색상 지정
-                border: showGeneral
-                    ? Border.all(color: Colors.blue, width: 2.0)
-                    : Border.all(color: Colors.grey, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Text(
-                '일반',
-                style: TextStyle(
-                    fontFamily: FontSettings.kDefaultFont,
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold,
-                    color: showGeneral ? Colors.blue : Colors.grey),
-              ),
-            ),
-          ),
+          // 일반공지 버튼
+          RoundedToggleButton(
+              text: '일반',
+              option: 'general',
+              isSelected: showGeneral,
+              onTap: toggleOption),
           const Spacer(),
-          GestureDetector(
-            onTap: () {
-              loadNotices(PageSettings.kInitialAbsolutePage);
-            },
-            child: Container(
-              padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                    color: Theme.of(context).iconTheme.color!, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Icon(
-                Icons.refresh,
-                color: Theme.of(context).iconTheme.color,
-                size: 16.0,
-              ),
-            ),
-          ),
+          // 공지사항 새로고침 버튼
+          RefreshButton(onTap: () {
+            loadNotices(PageSettings.kInitialAbsolutePage);
+          }),
         ],
       ),
     );
   }
 
+  /// buildMain: 공지사항 리스트 영역 정의
   @override
   Widget buildMain() {
     return Expanded(
@@ -199,8 +177,9 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
             ? const Center(child: CircularProgressIndicator())
             : (widget.noticeType == 'MAJOR' && !isMajorKey)
                 ? Center(
+                    // noticeType이 'MAJOR'이고 저장된 나의 학과가 존재하지 않을 때
                     child: Column(
-                      mainAxisSize: MainAxisSize.min, // 내용물이 중앙에 정렬되도록 설정
+                      mainAxisSize: MainAxisSize.min, // 중앙 정렬
                       children: [
                         Text(
                           '학과를 설정해주세요!',
@@ -213,15 +192,14 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
                                     Theme.of(context).defaultColor,
                           ),
                         ),
-                        const SizedBox(height: 12), // 텍스트와 버튼 사이 여백 추가
+                        const SizedBox(height: 12),
                         ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 Theme.of(context).buttonBackgroundColor,
-                            foregroundColor: Colors.white, // 텍스트 색상
+                            foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(8), // 버튼 모서리 둥글게
+                              borderRadius: BorderRadius.circular(8),
                             ),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 12),
@@ -257,8 +235,9 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
                       ],
                     ),
                   )
+                // 모든 noticeType에 대응
                 : ListView.builder(
-                    // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
+                    // 중요 공지와 일반 공지 중 하나만 선택이 가능
                     itemCount: showHeadlines
                         ? notices['headline'].length
                         : notices['general'].length,
@@ -282,9 +261,12 @@ class NoticeBoardState extends BaseNoticeBoardState<NoticeBoard> {
     );
   }
 
+  /// buildFooter: 페이지 버튼 정의
   @override
   Widget buildFooter() {
+    // 페이지 리스트가 초기화 되지 않았을 때
     if (initialPages.isEmpty || showHeadlines) return const SizedBox();
+    // 페이지 리스트가 초기화 되었을 때
     return AbsoluteStylePagination(
       pages: initialPages,
       currentPage: currentPage,

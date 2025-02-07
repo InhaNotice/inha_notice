@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/font_constants.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
 import 'package:inha_notice/widgets/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
+import 'package:inha_notice/widgets/refresh_button.dart';
+import 'package:inha_notice/widgets/rounded_toggle_button.dart';
 
 class LibraryNoticeBoard extends BaseNoticeBoard {
   const LibraryNoticeBoard({super.key});
@@ -48,7 +49,6 @@ class _LibraryNoticeBoardState
     });
   }
 
-  @override
   Future<void> loadNotices(int offset) async {
     setState(() {
       isLoading = true;
@@ -74,6 +74,20 @@ class _LibraryNoticeBoardState
   }
 
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildHeader(),
+          buildMain(),
+          buildFooter(),
+        ],
+      ),
+    );
+  }
+
+  @override
   Widget buildHeader() {
     return Container(
       decoration: BoxDecoration(
@@ -85,77 +99,24 @@ class _LibraryNoticeBoardState
         children: [
           // 중요공지가 있을때만 토글 버튼이 생성됩니다.
           if (notices['headline'].isNotEmpty)
-            // 중요공지 버튼을 정의
-            GestureDetector(
-              onTap: () => toggleOption('headline'),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  // 옵션 버튼의 경계 색상 지정
-                  border: showHeadlines
-                      ? Border.all(color: Colors.blue, width: 2.0)
-                      : Border.all(color: Colors.grey, width: 2.0),
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: Text(
-                  '중요',
-                  style: TextStyle(
-                    fontFamily: FontSettings.kDefaultFont,
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold,
-                    color: showHeadlines ? Colors.blue : Colors.grey,
-                  ),
-                ),
-              ),
-            ),
+            // 중요공지 버튼
+            RoundedToggleButton(
+                text: '중요',
+                option: 'headline',
+                isSelected: showHeadlines,
+                onTap: toggleOption),
           const SizedBox(width: 10),
-          // 일반공지 버튼을 정의
-          GestureDetector(
-            onTap: () => toggleOption('general'),
-            child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                // 옵션 버튼의 경계 색상 지정
-                border: showGeneral
-                    ? Border.all(color: Colors.blue, width: 2.0)
-                    : Border.all(color: Colors.grey, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Text(
-                '일반',
-                style: TextStyle(
-                    fontFamily: FontSettings.kDefaultFont,
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold,
-                    color: showGeneral ? Colors.blue : Colors.grey),
-              ),
-            ),
-          ),
+          // 일반공지 버튼
+          RoundedToggleButton(
+              text: '일반',
+              option: 'general',
+              isSelected: showGeneral,
+              onTap: toggleOption),
           const Spacer(),
-          // 새로고침 버튼을 정의
-          GestureDetector(
-            onTap: () {
-              loadNotices(PageSettings.kInitialRelativePage);
-            },
-            child: Container(
-              padding: const EdgeInsets.all(4.0),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                border: Border.all(
-                    color: Theme.of(context).iconTheme.color!, width: 2.0),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Icon(
-                Icons.refresh,
-                color: Theme.of(context).iconTheme.color,
-                size: 16.0,
-              ),
-            ),
-          ),
+          // 공지사항 새로고침
+          RefreshButton(onTap: () {
+            loadNotices(PageSettings.kInitialRelativePage);
+          }),
         ],
       ),
     );
