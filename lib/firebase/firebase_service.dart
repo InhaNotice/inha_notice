@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
+import 'dart:io';
 
 class FirebaseService {
   // 싱글톤 인스턴스 정의
@@ -30,21 +32,56 @@ class FirebaseService {
     await _subscribeToAllUsersAndNotices();
 
     FirebaseMessaging.onMessage.listen(_onForegroundMessageHandler);
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-    try {
-      String? apnsToken = await _messaging.getAPNSToken();
-      if (apnsToken != null) {
-        logger.d('✅ APNS Token and FCM Token were successfully created.');
-      } else {
-        logger.w(
-            '⚠️ APNS Token not set. Ensure network access & notifications are enabled.');
+    if (!Platform.isIOS) {
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    }
+
+    final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+          ?.createNotificationChannel(const AndroidNotificationChannel(
+          'high_importance_channel', 'high_importance_notification',
+          importance: Importance.max));
+    }
+
+    await flutterLocalNotificationsPlugin.initialize(
+        const InitializationSettings(
+            android: AndroidInitializationSettings("@mipmap/ic_launcher")));
+
+    await messaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (Platform.isIOS) {
+      try {
+        String? apnsToken = await _messaging.getAPNSToken();
+        if (apnsToken != null) {
+          logger.d('✅ APNS Token and FCM Token were successfully created.');
+        } else {
+          logger.w(
+              '⚠️ APNS Token not set. Ensure network access & notifications are enabled.');
+        }
+      } catch (e) {
+        logger.e('🚨 Error fetching APNS token: $e');
       }
-    } catch (e) {
-      logger.e('🚨 Error fetching APNS token: $e');
+    }
+
+    // Android에서 FCM 설정 완료 로그 추가
+    if (Platform.isAndroid) {
+      String? fcmToken = await messaging.getToken();
+      if (fcmToken != null) {
+        logger.d('✅ Android FCM Token created successfully: $fcmToken');
+      } else {
+        logger.w('⚠️ Android FCM Token not available.');
+      }
     }
   }
-
   /// 알림 권한 요청
   Future<void> _requestPermission() async {
     await _messaging.requestPermission(
