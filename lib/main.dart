@@ -67,8 +67,8 @@ Future<void> _initializeStorage() async {
   try {
     await Future.wait([
       SharedPrefsManager().initialize(),
-      BookmarkManager.initDatabase(),
-      ReadNoticeManager.initDatabase(),
+      BookmarkManager.initialize(),
+      ReadNoticeManager.initialize(),
     ]);
   } catch (e, stackTrace) {
     logger.e('Error initializing storage: $e');
