@@ -21,7 +21,7 @@ class SharedPrefsManager {
 
   SharedPrefsManager._internal();
 
-  /// SharedPreferences 초기화
+  /// **SharedPreferences 초기화**
   Future<void> initialize() async {
     _prefs = await SharedPreferences.getInstance();
     _cachedMajorKey = _prefs?.getString('major-key');
@@ -37,7 +37,7 @@ class SharedPrefsManager {
 
   SharedPreferences? get prefs => _prefs;
 
-  /// 학과 키 저장 (캐싱 추가)
+  /// **학과 키 저장 (캐싱 추가)**
   Future<void> setMajorKey(String? currentMajorKey, String newMajorKey) async {
     if (currentMajorKey != null) {
       await _prefs?.setString('previous-major-key', currentMajorKey);
@@ -46,61 +46,61 @@ class SharedPrefsManager {
     _cachedMajorKey = newMajorKey;
     await _prefs?.setString('major-key', newMajorKey);
     logger.d(
-        "🔔 Successfully updated from previous major key: '$currentMajorKey' to new major key: '$newMajorKey'");
+        "${runtimeType.toString()} - setMajorKey() 성공: '$currentMajorKey' to '$newMajorKey'");
   }
 
-  /// 학과 키 가져오기 (캐싱 활용)
+  /// **학과 키 가져오기 (캐싱 활용)**
   String? getMajorKey() {
     return _cachedMajorKey;
   }
 
-  /// 이전 학과 키 가져오기 (캐싱 활용)
+  /// **이전 학과 키 가져오기 (캐싱 활용)**
   String? getPreviousMajorKey() {
     return _cachedPreviousMajorKey;
   }
 
-  /// 학사 알림 설정 키 저장 (캐싱 추가)
+  /// **학사 알림 설정 키 저장 (캐싱 추가)**
   Future<void> setAcademicNotificationOn(bool academicNotificationOn) async {
-    _cachedAcademicNotification = academicNotificationOn; // 캐싱
+    _cachedAcademicNotification = academicNotificationOn;
     await _prefs?.setBool('academic-notification', academicNotificationOn);
   }
 
-  /// 학사 알림 설정 키 가져오기 (캐싱 활용)
+  /// **학사 알림 설정 키 가져오기 (캐싱 활용)**
   bool getAcademicNotificationOn() {
     return _cachedAcademicNotification ?? false;
   }
 
-  /// 학과 알림 설정 키 저장 (캐싱 추가)
+  /// **학과 알림 설정 키 저장 (캐싱 추가)**
   Future<void> setMajorNotificationOn(bool majorNotificationOn) async {
     _cachedMajorNotification = majorNotificationOn; // 캐싱
     await _prefs?.setBool('major-notification', majorNotificationOn);
   }
 
-  /// 학과 알림 설정 키 가져오기 (캐싱 활용)
+  /// **학과 알림 설정 키 가져오기 (캐싱 활용)**
   bool getMajorNotificationOn() {
     return _cachedMajorNotification ?? false;
   }
 
-  /// 구독된 토픽 목록 설정 (캐싱 추가)
+  /// **구독된 토픽 목록 설정 (캐싱 추가)**
   Future<void> setSubscribedTopics(Set<String> subscribedTopics) async {
     _cachedSubscribedTopics = subscribedTopics;
     await _prefs?.setStringList('subscribed_topics', subscribedTopics.toList());
   }
 
-  /// 구독된 토픽 목록 가져오기 (캐싱 활용)
+  /// **구독된 토픽 목록 가져오기 (캐싱 활용)**
   Set<String> getSubscribedTopics() {
     _cachedSubscribedTopics ??=
         _prefs?.getStringList('subscribed_topics')?.toSet() ?? {};
     return _cachedSubscribedTopics!;
   }
 
-  /// 'all-users' 토픽 구독 여부 설정
+  /// **'all-users' 토픽 구독 여부 설정**
   Future<void> setIsSubscribedToAllUsers(bool isSubscribed) async {
     _cachedIsSubscribedToAllUsers = isSubscribed;
     await _prefs?.setBool('isSubscribedToAllUsers', isSubscribed);
   }
 
-  /// 'all-users' 토픽 구독 여부 확인
+  /// **'all-users' 토픽 구독 여부 확인**
   bool getIsSubscribedToAllUsers() {
     return _cachedIsSubscribedToAllUsers ?? false;
   }
