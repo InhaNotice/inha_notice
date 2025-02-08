@@ -29,7 +29,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   bool showRank = false;
   bool showDate = true;
 
-  String sortedType = StringConstants.kEmptyString;
+  String sortedType = StringConstants.kDefaultSortedType;
 
   @override
   void initState() {
