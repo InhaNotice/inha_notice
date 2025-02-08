@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// 화이트 모드 테마
+/// **화이트 모드 테마**
 final ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white,
@@ -24,7 +24,7 @@ final ThemeData lightTheme = ThemeData(
   dividerColor: Colors.grey[300],
 );
 
-// 다크 모드 테마
+/// **다크 모드 테마**
 final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: const Color(0xFF222222),
@@ -47,6 +47,8 @@ final ThemeData darkTheme = ThemeData(
     iconTheme: const IconThemeData(color: Colors.white),
     dividerColor: const Color(0xFF292929));
 
+/// **DefaultColors**
+/// 기본 글자 색상을 정의합니다.
 extension DefaultColors on ThemeData {
   Color get defaultColor =>
       brightness == Brightness.light ? Colors.black : Colors.white;
@@ -56,20 +58,28 @@ extension DefaultColors on ThemeData {
   Color get fixedLightGreyText => const Color(0xFFBAB6B6);
 }
 
+/// **TextColors**
+/// 읽은 공지에 대한 글자 색상을 정의합니다.
 extension TextColors on ThemeData {
   Color get readTextColor =>
       brightness == Brightness.light ? Colors.grey : Colors.grey;
 }
 
+/// **BorderColors**
+/// 공지 타일의 경계 색상을 정의합니다.
 extension BorderColors on ThemeData {
   Color get noticeBorderColor => dividerColor;
 }
 
+/// **BoxBorderColors**
+/// 박스 경계 색상을 정의합니다.
 extension BoxBorderColors on ThemeData {
   Color get boxBorderColor =>
       brightness == Brightness.light ? Colors.black26 : Colors.white24;
 }
 
+/// **SnackBarColors**
+/// 스낵바 색상을 정의합니다.
 extension SnackBarColors on ThemeData {
   Color get snackBarBackgroundColor =>
       brightness == Brightness.light ? Colors.black87 : const Color(0xFF424242);
@@ -78,11 +88,15 @@ extension SnackBarColors on ThemeData {
       brightness == Brightness.light ? Colors.white : Colors.white70;
 }
 
+/// **ButtonColors**
+/// 버튼 색상을 정의합니다.
 extension ButtonColors on ThemeData {
   Color get buttonBackgroundColor =>
       brightness == Brightness.light ? Colors.grey[200]! : Colors.grey[800]!;
 }
 
+/// **ToggleColors**
+/// 토글 색상을 정의합니다.
 extension ToggleColors on ThemeData {
   Color get selectedToggleBorder => Colors.blue;
 
@@ -93,6 +107,8 @@ extension ToggleColors on ThemeData {
   Color get unSelectedToggleText => Colors.grey;
 }
 
+/// **PageButtonColors**
+/// 페이지네이션 색상을 정의합니다.
 extension PageButtonColors on ThemeData {
   Color get selectedPageButtonTextColor =>
       textTheme.bodyMedium?.color ?? defaultColor;
