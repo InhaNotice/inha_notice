@@ -9,5 +9,5 @@ abstract class NoticeTagSelectors {
 }
 
 abstract class PageTagSelectors {
-  static const String kPageBoard = '.btn_num a.num';
+  static const String kPageBoard = 'a.num';
 }

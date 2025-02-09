@@ -5,14 +5,14 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class RecentSearchTopicsManager {
+class RecentSearchManager {
   static const String tableName = 'recent_search_topics';
   static Database? _database;
   static const int _maxHistoryCount = 10;
   static final Logger _logger = Logger();
 
   // 최근 검색어 캐시
-  static List<String> _cachedRecentSearchTopics = [];
+  static List<String> _cachedSearchHistory = [];
 
   /// **SQLite 초기화 + 캐시 로드**
   static Future<void> initialize() async {
@@ -57,7 +57,7 @@ class RecentSearchTopicsManager {
         columns: ['topic'],
         orderBy: 'id DESC', // 최신순 정렬
       );
-      _cachedRecentSearchTopics =
+      _cachedSearchHistory =
           result.map((row) => row['topic'] as String).toList();
     } catch (e) {
       _logger.e(
@@ -67,11 +67,11 @@ class RecentSearchTopicsManager {
 
   /// **모든 최근 검색어 가져오기 (최신순)**
   static List<String> getRecentSearchTopics() {
-    return List.from(_cachedRecentSearchTopics); // 불변 리스트 반환
+    return List.from(_cachedSearchHistory); // 불변 리스트 반환
   }
 
   /// **검색어 추가 (최신순 유지)**
-  static Future<void> addTopic(String query) async {
+  static Future<void> addRecentSearch(String query) async {
     try {
       final db = await _getDatabase();
 
@@ -86,8 +86,8 @@ class RecentSearchTopicsManager {
       await _loadCachedRecentSearchTopics();
 
       // 최대 개수 초과 시 가장 오래된 검색어 삭제
-      if (_cachedRecentSearchTopics.length > _maxHistoryCount) {
-        await _removeOldestTopic();
+      if (_cachedSearchHistory.length > _maxHistoryCount) {
+        await _removeOldestSearch();
       }
     } catch (e) {
       _logger.e('RecentSearchTopicsManager - addTopic() 오류: $e');
@@ -95,7 +95,7 @@ class RecentSearchTopicsManager {
   }
 
   /// **가장 오래된 검색어 삭제**
-  static Future<void> _removeOldestTopic() async {
+  static Future<void> _removeOldestSearch() async {
     try {
       final db = await _getDatabase();
       final result = await db.query(
@@ -116,7 +116,7 @@ class RecentSearchTopicsManager {
   }
 
   /// **최근 검색어 제거**
-  static Future<void> removeTopic(String query) async {
+  static Future<void> removeRecentSearch(String query) async {
     try {
       final db = await _getDatabase();
       await db.delete(
@@ -137,9 +137,14 @@ class RecentSearchTopicsManager {
     try {
       final db = await _getDatabase();
       await db.delete(tableName);
-      _cachedRecentSearchTopics.clear();
+      _cachedSearchHistory.clear();
     } catch (e) {
       _logger.e('RecentSearchTopicsManager - clearSearchHistory() 오류: $e');
     }
+  }
+
+  /// **최근검색어 존재여부**
+  static bool isCachedSearchHistory() {
+    return _cachedSearchHistory.isNotEmpty;
   }
 }
