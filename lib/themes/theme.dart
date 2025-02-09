@@ -115,3 +115,9 @@ extension PageButtonColors on ThemeData {
 
   Color get unSelectedPageButtonTextColor => Colors.grey;
 }
+
+extension TagColors on ThemeData {
+  Color get tagBackgroundColor => brightness == Brightness.light
+      ? Colors.blue[100]! // 밝은 블루
+      : Colors.blueGrey[800]!; // 어두운 블루그레이
+}

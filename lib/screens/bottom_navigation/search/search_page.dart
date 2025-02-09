@@ -3,7 +3,7 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/utils/recent_search_topics_manager.dart';
+import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/widgets/search_result_page.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
 import 'package:inha_notice/widgets/themed_snackbar.dart';
@@ -108,7 +108,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       return;
     }
 
-    await RecentSearchTopicsManager.addTopic(query);
+    await RecentSearchManager.addRecentSearch(query);
     setState(() {
       if (!mounted) return;
       Navigator.push(
@@ -121,14 +121,24 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     });
   }
 
+  /// **최근검색어 모두 삭제**
   void _clearRecentSearchTopics() async {
-    await RecentSearchTopicsManager.clearSearchHistory();
-    setState(() {});
+    if (!RecentSearchManager.isCachedSearchHistory()) {
+      ThemedSnackbar.showSnackbar(context, '최근검색어가 존재하지 않습니다!');
+      return;
+    }
+    await RecentSearchManager.clearSearchHistory();
+    setState(() {
+      ThemedSnackbar.showSnackbar(context, '최근검색어를 모두 삭제하였습니다!');
+    });
   }
 
+  /// **최근검색어 특정 기록 삭제**
   void _removeRecentSearchTopic(String query) async {
-    await RecentSearchTopicsManager.removeTopic(query);
-    setState(() {});
+    await RecentSearchManager.removeRecentSearch(query);
+    setState(() {
+      ThemedSnackbar.showSnackbar(context, '$query를 삭제하였습니다!');
+    });
   }
 
   @override
@@ -252,7 +262,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         const SizedBox(height: 8),
         Wrap(
           spacing: 8.0,
-          children: RecentSearchTopicsManager.getRecentSearchTopics()
+          children: RecentSearchManager.getRecentSearchTopics()
               .map((search) => _buildSearchTag(search))
               .toList(),
         ),
@@ -280,7 +290,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                   Theme.of(context).defaultColor,
             ),
           ),
-          backgroundColor: Theme.of(context).buttonBackgroundColor,
+          backgroundColor: Theme.of(context).tagBackgroundColor,
           deleteIcon: const Icon(Icons.close, size: 14),
           onDeleted: () => _removeRecentSearchTopic(text),
         ),
