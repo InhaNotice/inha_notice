@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
+import 'package:inha_notice/widgets/themed_snackbar.dart';
 
 /// **BaseNoticeBoard**
 ///
@@ -48,8 +49,12 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
   Future<void> toggleBookmark(Map<String, dynamic> notice) async {
     if (isNoticeBookmarked(notice['id'])) {
       await BookmarkManager.removeBookmark(notice['id']);
+      if (!mounted) return;
+      ThemedSnackbar.showSnackbar(context, '삭제 되었습니다!');
     } else {
       await BookmarkManager.addBookmark(notice);
+      if (!mounted) return;
+      ThemedSnackbar.showSnackbar(context, '저장 되었습니다!');
     }
     setState(() {});
   }
