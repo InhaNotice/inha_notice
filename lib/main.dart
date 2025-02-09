@@ -11,6 +11,8 @@ import 'package:logger/logger.dart';
 
 import 'firebase/firebase_options.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -50,6 +52,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: _themeMode,
+      navigatorKey: navigatorKey,
       home: const OnboardingScreen(),
     );
   }
