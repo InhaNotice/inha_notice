@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -15,50 +16,65 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: '인',
-                    style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 16,
-                      color: Theme.of(context).fixedBlueText,
-                      fontWeight: FontWeight.bold,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '인',
+                      style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 16,
+                        color: Theme.of(context).fixedBlueText,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text: '하',
-                    style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 16,
-                      color: Theme.of(context).fixedLightGreyText,
-                      fontWeight: FontWeight.bold,
+                    TextSpan(
+                      text: '하',
+                      style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 16,
+                        color: Theme.of(context).fixedLightGreyText,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text: '공',
-                    style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 16,
-                      color: Theme.of(context).fixedBlueText,
-                      fontWeight: FontWeight.bold,
+                    TextSpan(
+                      text: '공',
+                      style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 16,
+                        color: Theme.of(context).fixedBlueText,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text: '지',
-                    style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 16,
-                      color: Theme.of(context).fixedLightGreyText,
-                      fontWeight: FontWeight.bold,
+                    TextSpan(
+                      text: '지',
+                      style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 16,
+                        color: Theme.of(context).fixedLightGreyText,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              IconButton(
+                icon: Icon(Icons.notifications_outlined,
+                    color: Theme.of(context).iconTheme.color),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NotificationSettingPage()),
+                  );
+                },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+            ],
           ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48), // `TabBar` 높이 조절
