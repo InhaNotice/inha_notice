@@ -158,6 +158,8 @@ class _NoticeListTileState extends State<NoticeListTile> {
                       await widget.toggleBookmark(widget.notice);
                     }
                   },
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
                 ),
               ],
             ),
