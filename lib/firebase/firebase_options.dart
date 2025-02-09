@@ -25,21 +25,13 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android; // ✅ Android 설정 추가
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-              'you can reconfigure this by running the FlutterFire CLI again.',
-        );
       case TargetPlatform.windows:
       case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for this platform.',
-        );
       case TargetPlatform.fuchsia:
-        // TODO: Handle this case.
         throw UnimplementedError();
     }
   }
