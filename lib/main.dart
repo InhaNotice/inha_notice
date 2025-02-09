@@ -6,6 +6,7 @@ import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
+import 'package:inha_notice/utils/recent_search_topics_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
@@ -72,6 +73,7 @@ Future<void> _initializeStorage() async {
       SharedPrefsManager().initialize(),
       BookmarkManager.initialize(),
       ReadNoticeManager.initialize(),
+      RecentSearchTopicsManager.initialize(),
     ]);
   } catch (e, stackTrace) {
     logger.e('Error initializing storage: $e');
