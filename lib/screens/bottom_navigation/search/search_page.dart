@@ -137,7 +137,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _removeRecentSearchTopic(String query) async {
     await RecentSearchManager.removeRecentSearch(query);
     setState(() {
-      ThemedSnackbar.showSnackbar(context, '$query를 삭제하였습니다!');
+      ThemedSnackbar.showSnackbar(context, '$query을(를) 삭제하였습니다!');
     });
   }
 
