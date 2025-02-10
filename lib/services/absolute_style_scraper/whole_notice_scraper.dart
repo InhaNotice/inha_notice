@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-11
  */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
@@ -84,10 +84,9 @@ class WholeNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
       final String id = makeUniqueNoticeId(postUrl);
       final String title = titleTag.nodes
-              .where((node) => node.nodeType == 3)
-              .map((node) => node.text?.trim())
-              .join() ??
-          '';
+          .where((node) => node.nodeType == 3)
+          .map((node) => node.text?.trim())
+          .join();
       final String link = baseUrl + postUrl;
       final String date = dateTag.text.trim();
       final String writer = writerTag.text.trim();
@@ -119,6 +118,7 @@ class WholeNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       final accessTag =
           general.querySelector(GeneralTagSelectors.kNoticeAccess);
 
+      // 필수 태그(학사 공지 태그는 고정적): titleTag, dateTag, writerTag, accessTag
       if (titleTag == null ||
           dateTag == null ||
           writerTag == null ||
@@ -130,12 +130,12 @@ class WholeNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
       final String id = makeUniqueNoticeId(postUrl);
       final String title = titleTag.nodes
-              .where((node) => node.nodeType == 3)
-              .map((node) => node.text?.trim())
-              .join() ??
-          '';
+          .where((node) => node.nodeType == 3)
+          .map((node) => node.text?.trim())
+          .join();
       final String link = baseUrl + postUrl;
-      final String date = dateTag.text.trim();
+      // date의 문자열 마지막이 마침표로 끝난다면 제거하여 값을 저장함('YYYY.MM.DD')
+      final String date = dateTag.text.trim().replaceAll(RegExp(r'\.$'), '');
       final String writer = writerTag.text.trim();
       final String access = accessTag.text.trim();
 

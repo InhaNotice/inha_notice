@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-11
  */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart' as html_parser;
@@ -75,6 +75,7 @@ class SearchScraper {
         final bodyTag = (i < bodyTags.length) ? bodyTags[i] : null;
         final dateTag = (i < dateTags.length) ? dateTags[i] : null;
 
+        // 필수 태그: titleTag(title, link), dateTag
         if (titleTag == null || dateTag == null) {
           continue;
         }
@@ -84,7 +85,10 @@ class SearchScraper {
 
         final id = makeUniqueNoticeId(postUrl);
         final title = titleTag.body.trim();
-        final body = bodyTag.body.trim();
+
+        /// body는 필수가 아님. bodyTag가 null이면 빈 문자열을 저장
+        /// 빈 문자열은 이후 NoticeListTile 출력시 빈 문자열인지 확인하여 body를 출력할지 결정하게 됨
+        final body = (bodyTag != null) ? bodyTag.body.trim() : '';
         final link = postUrl;
         final date = dateTag.body.trim();
 
@@ -116,8 +120,10 @@ class SearchScraper {
       // 최대 50페이지로 제한
       lastPage = (lastPage > 50) ? 50 : lastPage;
     }
+    // lastPage 기준으로 페이지 버튼 생성
     for (int i = 1; i <= lastPage; i++) {
       final int page = i;
+      // SearchPage는 Relative style이라 상댓값 사용
       final int startCount = (i - 1) * 10;
       final bool isCurrent = (i == 1) ? true : false;
       results.add(
