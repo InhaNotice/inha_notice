@@ -1,13 +1,14 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:inha_notice/main.dart';
+import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
+import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
-import 'dart:io';
-import 'package:inha_notice/main.dart';
-import 'package:inha_notice/screens/web_page.dart';
-import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 
 /// **FirebaseService**
 /// 이 클래스는 싱글톤으로 정의된 Firebase Cloud Messaging을 관리하는 클래스입니다.
@@ -22,7 +23,7 @@ class FirebaseService {
 
   // Foreground 알림을 위해 FlutterLocalNotificationsPlugin 추가
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   // 외부에서 객체 생성 방지
   FirebaseService._internal();
@@ -51,16 +52,17 @@ class FirebaseService {
     }
 
     if (!Platform.isIOS) {
-      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
     }
 
     if (Platform.isAndroid) {
       // ✅ 포그라운드 알림 클릭 이벤트 핸들러 추가
       const AndroidInitializationSettings androidSettings =
-      AndroidInitializationSettings("@mipmap/ic_launcher");
+          AndroidInitializationSettings("@mipmap/ic_launcher");
 
       final InitializationSettings initializationSettings =
-      InitializationSettings(android: androidSettings);
+          InitializationSettings(android: androidSettings);
 
       await flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
@@ -77,10 +79,10 @@ class FirebaseService {
 
       await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+              AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(const AndroidNotificationChannel(
-          'high_importance_channel', 'high_importance_notification',
-          importance: Importance.max));
+              'high_importance_channel', 'high_importance_notification',
+              importance: Importance.max));
     }
 
     // iOS Foreground 알림 옵션 설정 (Android에선 불필요)
@@ -117,6 +119,7 @@ class FirebaseService {
       }
     }
   }
+
   /// **푸시 알림 클릭 시 WebPage로 이동**
   void _onMessageOpenedApp(RemoteMessage message) {
     _handleMessage(message, isAppTerminated: false);
@@ -132,7 +135,7 @@ class FirebaseService {
       if (isAppTerminated) {
         navigatorKey.currentState?.pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => OnboardingScreen()),
-              (route) => false,
+          (route) => false,
         );
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -153,7 +156,6 @@ class FirebaseService {
       }
     }
   }
-
 
   /// **알림 권한 요청**
   Future<void> _requestPermission() async {
@@ -248,7 +250,7 @@ class FirebaseService {
 
       if (notification != null && android != null) {
         const AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
+            AndroidNotificationDetails(
           'high_importance_channel', // firebase_service.dart에 설정한 채널 ID와 동일해야 함
           'High Importance Notifications',
           importance: Importance.max,
@@ -257,7 +259,7 @@ class FirebaseService {
         );
 
         const NotificationDetails platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics);
+            NotificationDetails(android: androidPlatformChannelSpecifics);
 
         await flutterLocalNotificationsPlugin.show(
           notification.hashCode,
@@ -269,6 +271,7 @@ class FirebaseService {
       }
     }
   }
+
   /// **이전 학과 토픽 해제 후 새로운 학과 토픽 구독하는 함수**
   Future<void> updateMajorSubscription() async {
     try {
