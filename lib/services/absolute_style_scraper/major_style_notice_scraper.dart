@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-11
  */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
@@ -75,6 +75,7 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       final accessTag =
           headline.querySelector(HeadlineTagSelectors.kNoticeAccess);
 
+      // 필수 태그(학과 공지 스타일의 태그는 고정적): titleLinkTag, titleStrongTag, dataTag, writerTag, accessTag
       if (titleLinkTag == null ||
           titleStrongTag == null ||
           dateTag == null ||
@@ -128,7 +129,9 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
           titleStrongTag == null ||
           dateTag == null ||
           writerTag == null ||
-          accessTag == null) continue;
+          accessTag == null) {
+        continue;
+      }
 
       final postUrl = titleLinkTag.attributes['href'] ?? '';
       final String id = makeUniqueNoticeId(postUrl);

@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-11
  */
 import 'dart:convert';
 
@@ -63,6 +63,8 @@ class LibraryScraper extends BaseRelativeStyleNoticeScraper {
   }
 
   /// **Params에 따른 중요/일반 공지사항을 서버로 요청**
+  /// 정석 홈페이지의 공지사항 응답 객체는 JSON으로 전처리 되어있음
+  /// (다른 공지의 응답 결과와 다름. 다른 공지의 응답 결과는 HTML 형식임)
   @override
   Future<List<Map<String, String>>> fetchNoticesWithParams(
       Map<String, String> params) async {
