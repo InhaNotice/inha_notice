@@ -8,14 +8,23 @@
  * Latest Updated Date: 2025-02-10
  */
 import 'package:flutter/material.dart';
+import 'package:inha_notice/widgets/themed_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class WebPage extends StatelessWidget {
+/// **WebPage**
+/// 이 클래스는 인앱 웹페이지를 구현하는 클래스입니다.
+class WebPage extends StatefulWidget {
   final String url;
 
   const WebPage({super.key, required this.url});
 
-  Future<void> _launchInAppWebView(String url, BuildContext context) async {
+  @override
+  State<WebPage> createState() => _WebPageState();
+}
+
+class _WebPageState extends State<WebPage> {
+  /// **url를 입력받아 웹 페이지를 로딩**
+  Future<void> _launchInAppWebView(String url) async {
     final Uri uri = Uri.parse(url);
     try {
       if (await canLaunchUrl(uri)) {
@@ -27,26 +36,23 @@ class WebPage extends StatelessWidget {
           ),
         );
       } else {
-        throw Exception("Could not launch the URL: $url");
+        throw Exception();
       }
     } catch (e) {
-      // 예외 처리: 에러 발생 시 사용자에게 알림
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to open URL: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (mounted) {
+        ThemedSnackbar.showSnackbar(context, '웹 페이지 로딩에 실패하였습니다.');
+      }
     } finally {
-      // URL이 열리지 않아도 현재 화면 닫기
-      Navigator.pop(context);
+      if (mounted) {
+        Navigator.pop(context);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
-      future: _launchInAppWebView(url, context),
+      future: _launchInAppWebView(widget.url),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
@@ -56,7 +62,7 @@ class WebPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(title: const Text('Error')),
             body: Center(
-              child: Text('Failed to open URL: ${snapshot.error}'),
+              child: Text('URL을 연결할 수 없습니다: ${snapshot.error}'),
             ),
           );
         } else {
