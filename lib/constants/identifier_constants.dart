@@ -7,6 +7,9 @@
  * Author: junho Kim
  * Latest Updated Date: 2025-02-10
  */
+
+/// **IdentifierConstants**
+/// 이 클래스는 식별자와 관련된 상수를 정의하는 추상 클래스입니다.
 abstract class IdentifierConstants {
   static const String kUnknownId = 'unknownId';
 }

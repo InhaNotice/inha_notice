@@ -7,6 +7,9 @@
  * Author: junho Kim
  * Latest Updated Date: 2025-02-10
  */
+
+/// **PageSettings**
+/// 이 클래스는 페이지와 관련된 상수를 정의하는 추상 클래스입니다.
 abstract class PageSettings {
   static const int kInitialAbsolutePage = 1;
   static const int kInitialRelativePage = 0;
