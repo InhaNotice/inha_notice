@@ -240,7 +240,9 @@ class FirebaseService {
             navigatorKey.currentState?.pop();
           }
           // 읽은 공지로 추가 (백그라운드 진행)
-          ReadNoticeManager.addReadNotice(message.data['id']);
+          if (message.data.containsKey('id')) {
+            ReadNoticeManager.addReadNotice(message.data['id']);
+          }
           // 웹페이지 로드
           navigatorKey.currentState?.push(
             MaterialPageRoute(builder: (context) => WebPage(url: link)),
@@ -251,7 +253,9 @@ class FirebaseService {
           navigatorKey.currentState?.pop();
         }
         // 읽은 공지 추가 (백그라운드 진행)
-        ReadNoticeManager.addReadNotice(message.data['id']);
+        if (message.data.containsKey('id')) {
+          ReadNoticeManager.addReadNotice(message.data['id']);
+        }
         // 웹페이지 로드
         navigatorKey.currentState?.push(
           MaterialPageRoute(builder: (context) => WebPage(url: link)),
