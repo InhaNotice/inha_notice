@@ -47,27 +47,42 @@ class FirebaseService {
   Set<String> get _subscribedTopics =>
       SharedPrefsManager().getSubscribedTopics();
 
-  /// **Firebase 초기화 및 기본 구독 설정**
+  /// **Firebase 초기화 및 기본 구독 및 알림 설정**
   Future<void> initialize() async {
+    // 알림 권한 요청
     await _requestPermission();
-    await _subscribeToAllUsersAndNotices();
+    // 'all-users' 토픽 구독
+    await _subscribeToAllUsers();
 
+    // Foreground 알림 설정
     FirebaseMessaging.onMessage.listen(_onForegroundMessageHandler);
+    // 푸시알림 클릭시 WebPage 로드 설정
     FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenedApp);
 
-    // 앱이 종료된 상태에서 알림 클릭 시 데이터 처리
+    // 앱 종료된 상태에서 푸시알림 클릭시 이벤트 처리
     RemoteMessage? initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
       _handleMessage(initialMessage, isAppTerminated: true);
     }
 
+    // iOS Background 알림 설정
     if (!Platform.isIOS) {
       FirebaseMessaging.onBackgroundMessage(
           _firebaseMessagingBackgroundHandler);
     }
 
+    // iOS Foreground 알림 옵션 설정
+    if (Platform.isIOS) {
+      await messaging.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    }
+
+    // Android 포그라운드 및 백그라운드 알림 설정
     if (Platform.isAndroid) {
-      // ✅ 포그라운드 알림 클릭 이벤트 핸들러 추가
+      // 포그라운드 알림 클릭 이벤트 핸들러 추가
       const AndroidInitializationSettings androidSettings =
           AndroidInitializationSettings("@mipmap/ic_launcher");
 
@@ -77,9 +92,6 @@ class FirebaseService {
       await flutterLocalNotificationsPlugin.initialize(
         initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse response) {
-          // 알림 클릭 시 실행할 코드
-          logger.d("🔔 Foreground Notification Clicked: ${response.payload}");
-
           if (response.payload != null) {
             _handleMessage(RemoteMessage(data: {"link": response.payload!}),
                 isAppTerminated: false);
@@ -95,37 +107,32 @@ class FirebaseService {
               importance: Importance.max));
     }
 
-    // iOS Foreground 알림 옵션 설정 (Android에선 불필요)
-    if (Platform.isIOS) {
-      await messaging.setForegroundNotificationPresentationOptions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
-    }
-
     // iOS인 경우 APNs 토큰을 설정
     if (Platform.isIOS) {
       try {
         String? apnsToken = await _messaging.getAPNSToken();
         if (apnsToken != null) {
-          logger.d('✅ APNS Token and FCM Token were successfully created.');
+          logger.d(
+              'FirebaseService - initialize() 성공: ✅ APNS Token and FCM Token were successfully created.');
         } else {
           logger.w(
-              '⚠️ APNS Token not set. Ensure network access & notifications are enabled.');
+              'FirebaseService - initialize() 경고: ⚠️ APNS Token not set. Ensure network access & notifications are enabled.');
         }
       } catch (e) {
-        logger.e('🚨 Error fetching APNS token: $e');
+        logger.e(
+            'FirebaseService - initialize() 오류: 🚨 Error fetching APNS token: $e');
       }
     }
 
-    // Android인 경우 메시지 출력
+    // Android인 경우 Device 토큰 출력
     if (Platform.isAndroid) {
       String? fcmToken = await messaging.getToken();
       if (fcmToken != null) {
-        logger.d('✅ Android FCM Token created successfully: $fcmToken');
+        logger.d(
+            'FirebaseService - initialize() 성공: ✅ Android FCM Token created successfully: $fcmToken');
       } else {
-        logger.w('⚠️ Android FCM Token not available.');
+        logger.w(
+            'FirebaseService - initialize() 경고: ⚠️ Android FCM Token not available.');
       }
     }
   }
@@ -139,18 +146,19 @@ class FirebaseService {
     );
   }
 
-  /// **'all-users' 토픽 구독 (최초 1회)**
-  Future<void> _subscribeToAllUsersAndNotices() async {
+  /// **'all-users' 토픽(앱 공지사항) 구독 (최초 1회)**
+  Future<void> _subscribeToAllUsers() async {
     bool isSubscribedUsers = SharedPrefsManager().getIsSubscribedToAllUsers();
 
-    // 'all-users' 토픽은 앱 공지사항 관련 알림
     if (!isSubscribedUsers) {
       try {
         await _messaging.subscribeToTopic('all-users');
         await SharedPrefsManager().setIsSubscribedToAllUsers(true);
-        logger.d("✅ Successfully subscribed to 'all-users' topic");
+        logger.d(
+            "FirebaseService - _subscribeToAllUsers() 성공: ✅ Successfully subscribed to 'all-users' topic");
       } catch (e) {
-        logger.e("🚨 Error subscribing to 'all-users' topic: $e");
+        logger.e(
+            "FirebaseService - _subscribeToAllUsers() 오류: 🚨 Error subscribing to 'all-users' topic: $e");
       }
     }
   }
@@ -158,30 +166,36 @@ class FirebaseService {
   /// **개별 토픽 구독 (캐싱 활용)**
   Future<void> subscribeToTopic(String topic) async {
     if (_isSubscribedToTopic(topic)) {
-      logger.d("⚡ Already subscribed to '$topic' topic");
+      logger.d(
+          "FirebaseService - subscribeToTopic() 알림: ⚡ Already subscribed to '$topic' topic");
       return;
     }
     try {
       await _messaging.subscribeToTopic(topic);
       _addSubscribedTopic(topic);
-      logger.d("✅ Successfully subscribed to '$topic' topic");
+      logger.d(
+          "FirebaseService - subscribeToTopic() 성공: ✅ Successfully subscribed to '$topic' topic");
     } catch (e) {
-      logger.e("🚨 Error subscribing to '$topic' topic: $e");
+      logger.e(
+          "FirebaseService - subscribeToTopic() 에러: 🚨 Error subscribing to '$topic' topic: $e");
     }
   }
 
   /// **개별 토픽 구독 해제 (캐싱 활용)**
   Future<void> unsubscribeFromTopic(String topic) async {
     if (!_isSubscribedToTopic(topic)) {
-      logger.d("⚡ Not subscribed to '$topic' topic");
+      logger.d(
+          "FirebaseService - unsubscribeFromTopic() 알림: ⚡ Not subscribed to '$topic' topic");
       return;
     }
     try {
       await _messaging.unsubscribeFromTopic(topic);
       _removeSubscribedTopic(topic);
-      logger.d("🔄 Unsubscribed from topic: '$topic'");
+      logger.d(
+          "FirebaseService - unsubscribeFromTopic() 성공: 🔄 Unsubscribed from topic: '$topic'");
     } catch (e) {
-      logger.e("🚨 Error unsubscribing from '$topic' topic: $e");
+      logger.e(
+          "FirebaseService - unsubscribeFromTopic() 오류: 🚨 Error unsubscribing from '$topic' topic: $e");
     }
   }
 
@@ -210,7 +224,8 @@ class FirebaseService {
       final String? newMajorKey = SharedPrefsManager().getMajorKey();
 
       if (newMajorKey == null) {
-        logger.e('🚨 Major key is null, cannot subscribe.');
+        logger.w(
+            'FirebaseService - updateMajorSubscription() 경고: 🚨 Major key is null, cannot subscribe.');
         return;
       }
 
@@ -222,7 +237,8 @@ class FirebaseService {
       // 새로운 토픽 구독
       await subscribeToTopic(newMajorKey);
     } catch (e) {
-      logger.e('🚨 Error handling FCM topic subscription: $e');
+      logger.e(
+          'FirebaseService - updateMajorSubscription() 오류: 🚨 Error handling FCM topic subscription: $e');
     }
   }
 
@@ -233,8 +249,6 @@ class FirebaseService {
 
   /// **알림 메시지 처리 함수**
   void _handleMessage(RemoteMessage message, {required bool isAppTerminated}) {
-    logger.d("📩 Notification Clicked: ${message.data}");
-
     if (message.data.containsKey('link')) {
       String link = message.data['link'];
 
@@ -277,17 +291,11 @@ class FirebaseService {
   static Future<void> _firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
     await Firebase.initializeApp();
-    logger.d("📩 Handling a background message: ${message.messageId}");
   }
 
   /// **포그라운드 메시지 핸들러**
   void _onForegroundMessageHandler(RemoteMessage message) async {
-    logger.d('📩 Foreground message received!');
-    logger.d('Message data: ${message.data}');
-
     if (message.notification != null) {
-      logger.d('🔔 Notification: ${message.notification}');
-
       // Foreground에서도 알림을 표시하도록 flutter_local_notifications 사용
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
