@@ -254,7 +254,7 @@ class _MorePageState extends State<MorePage> {
                               color: Theme.of(context).iconTheme.color),
                           const SizedBox(width: 8),
                           Text(
-                            '앱 소개',
+                            '새로운 내용',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 16,
