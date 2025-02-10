@@ -9,8 +9,16 @@
  */
 import 'package:logger/logger.dart';
 
+/// **MajorUtils**
+/// 이 클래스는 MajorSettingPage의 학과 설정 관련 유틸리티를 정의하는 클래스입니다.
+///
+/// ### 주요 기능:
+/// - 인하대학교 단과대학, 국문학과명, 영문학과명 제공
+/// - 국문학과명 및 영문학과명 간의 맵핑 지원
 class MajorUtils {
   static final Logger logger = Logger();
+
+  /// **모든 단과대학의 학과를 저장하는 컨테이너**
   static const Map<String, Map<String, String>> majorGroups = {
     '공과대학': {
       '기계공학과': 'MECH',
@@ -105,7 +113,7 @@ class MajorUtils {
     }
   };
 
-  // 저장된 영문 학과명을 국문 학과명으로 번역합니다.
+  /// **저장된 영문 학과명을 국문 학과명으로 번역**
   static String translateToKorean(String? majorKey) {
     return majorGroups.entries
         .expand((group) => group.value.entries)
@@ -114,7 +122,7 @@ class MajorUtils {
         .key;
   }
 
-  // 국문 학과명을 영문 학과명으로 저장합니다.
+  /// **국문 학과명을 영문 학과명으로 저장**
   static String translateToEnglish(String major) {
     return majorGroups.entries
         .expand((group) => group.value.entries)

@@ -25,6 +25,7 @@ class ThemedSnackbar {
           ),
         ),
         backgroundColor: Theme.of(context).snackBarBackgroundColor,
+        duration: const Duration(seconds: 1),
       ),
     );
   }

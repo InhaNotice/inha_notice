@@ -9,13 +9,15 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
-import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/in_app_web_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/titles/more_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/titles/more_title_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/titles/more_web_navigation_tile.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
 
+/// **MorePage**
+/// 이 클래스는 더보기 페이지를 구현하는 클래스입니다.
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
 
@@ -38,6 +40,7 @@ class _MorePageState extends State<MorePage> {
     _initializeWebPageUrls();
   }
 
+  /// **웹 페이지 URL을 불러오기**
   void _initializeWebPageUrls() {
     _appVersion = dotenv.get('APP_VERSION');
     _featuresUrl = dotenv.get('FEATURES_URL');
@@ -60,461 +63,63 @@ class _MorePageState extends State<MorePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 50.0,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      '공지사항',
-                      style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context).textTheme.bodyMedium?.color ??
-                            Theme.of(context).defaultColor,
+              MoreTitleTile(title: '공지사항'),
+              MoreNavigationTile(
+                  title: '학과 설정',
+                  icon: Icons.school_outlined,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MajorSettingPage(),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MajorSettingPage(),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.school_outlined,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            '학과 설정',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          )
-                        ],
+                    );
+                  }),
+              MoreNavigationTile(
+                  title: '알림 설정',
+                  icon: Icons.notifications_outlined,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NotificationSettingPage(),
                       ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16,
-                          color:
-                              Theme.of(context).iconTheme.color), // 우측 아이콘 추가
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NotificationSettingPage(),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.notifications_outlined,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            '알림 설정',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16, color: Theme.of(context).iconTheme.color),
-                    ],
-                  ),
-                ),
-              ),
+                    );
+                  }),
+              // 구분선
               SizedBox(
                   width: double.infinity,
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
-              Container(
-                height: 50.0,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      '앱 정보',
-                      style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context).textTheme.bodyMedium?.color ??
-                            Theme.of(context).defaultColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 50.0,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.rocket_launch_outlined,
-                            size: 20, color: Theme.of(context).iconTheme.color),
-                        const SizedBox(width: 8),
-                        Text(
-                          '앱 버전',
-                          style: TextStyle(
-                            fontFamily: Font.kDefaultFont,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color ??
-                                    Theme.of(context).defaultColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      _appVersion,
-                      style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context).textTheme.bodyMedium?.color ??
-                            Theme.of(context).defaultColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => InAppWebPage(url: _featuresUrl),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.star_outline_outlined,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            '새로운 내용',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16, color: Theme.of(context).iconTheme.color),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => InAppWebPage(url: _aboutTeamUrl),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.people_outline_outlined,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            '인공 팀',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16, color: Theme.of(context).iconTheme.color),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          InAppWebPage(url: _personalInformationUrl),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.privacy_tip_outlined,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            '개인정보 처리방침',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16, color: Theme.of(context).iconTheme.color),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          InAppWebPage(url: _termsAndConditionsOfServiceUrl),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.checklist_rtl_outlined,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            '서비스 이용약관',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16,
-                          color:
-                              Theme.of(context).iconTheme.color), // 우측 아이콘 추가
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => InAppWebPage(url: _introduceAppUrl),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.info_outline,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            '앱 소개',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16, color: Theme.of(context).iconTheme.color),
-                    ],
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          InAppWebPage(url: _questionsAndAnswersUrl),
-                    ),
-                  );
-                },
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.question_answer_outlined,
-                              size: 20,
-                              color: Theme.of(context).iconTheme.color),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Q&A',
-                            style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color ??
-                                  Theme.of(context).defaultColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16, color: Theme.of(context).iconTheme.color),
-                    ],
-                  ),
-                ),
-              ),
+              MoreTitleTile(title: '앱 정보'),
+              MoreWebNavigationTile(
+                  title: '앱 버전',
+                  url: _appVersion,
+                  icon: Icons.rocket_launch_outlined),
+              MoreWebNavigationTile(
+                  title: '새로운 내용',
+                  url: _featuresUrl,
+                  icon: Icons.star_outline_outlined),
+              MoreWebNavigationTile(
+                  title: '인공 팀',
+                  url: _aboutTeamUrl,
+                  icon: Icons.people_outline_outlined),
+              MoreWebNavigationTile(
+                  title: '개인정보 처리방침',
+                  url: _personalInformationUrl,
+                  icon: Icons.privacy_tip_outlined),
+              MoreWebNavigationTile(
+                  title: '서비스 이용약관',
+                  url: _termsAndConditionsOfServiceUrl,
+                  icon: Icons.checklist_rtl_outlined),
+              MoreWebNavigationTile(
+                  title: '앱 소개',
+                  url: _introduceAppUrl,
+                  icon: Icons.info_outline),
+              MoreWebNavigationTile(
+                  title: 'Q&A',
+                  url: _questionsAndAnswersUrl,
+                  icon: Icons.question_answer_outlined),
             ],
           ),
         ),

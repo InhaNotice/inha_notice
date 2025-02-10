@@ -34,12 +34,17 @@ class BookmarkPage extends BaseNoticeBoard {
 }
 
 class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
+  final logger = Logger();
+
+  // 정렬 옵션: orderName, orderDate, orderBookmark
   bool orderName = false;
   bool orderDate = false;
-  bool orderBookmark = true;
+  bool orderBookmark = true; // 기본값
+  // 정렬 후 북마크된 공지사항을 저장하고 관리하는 리스트(실제 출력을 담당)
   List<Map<String, dynamic>> bookmarkedNotices = [];
+
+  // 정렬 전 원본 북마크된 공지사항을 저장하고 관리하는 리스트
   List<Map<String, dynamic>> originalBookmarkedNotices = [];
-  final logger = Logger();
 
   @override
   void initState() {
@@ -56,7 +61,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
     }
   }
 
-  /// **📌 북마크된 공지사항 로드 (읽은 공지사항 반영)**
+  /// **북마크된 공지사항 로드 (읽은 공지사항 반영)**
   Future<void> loadNotices() async {
     setState(() {
       isLoading = true;
@@ -67,12 +72,12 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
       bookmarkedNotices = List.from(notices);
       orderName = false;
       orderDate = false;
-      orderBookmark = true;
+      orderBookmark = true; // 기본값
       isLoading = false;
     });
   }
 
-  /// **📌 북마크 정렬 옵션 변경**
+  /// **북마크 정렬 옵션 변경**
   @override
   void toggleOption(String option) {
     setState(() {
@@ -188,6 +193,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
     );
   }
 
+  // 북마크 페이지는 페이지네이션을 정의하지 않음
   @override
   Widget buildFooter() {
     return const SizedBox();
