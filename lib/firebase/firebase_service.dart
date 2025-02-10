@@ -15,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
-import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
+import 'package:inha_notice/widgets/web_page.dart';
 import 'package:logger/logger.dart';
 
 /// **FirebaseService**

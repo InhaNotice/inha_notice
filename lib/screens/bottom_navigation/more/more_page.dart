@@ -12,9 +12,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
-import 'package:inha_notice/screens/web_page.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
+import 'package:inha_notice/widgets/web_page.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
