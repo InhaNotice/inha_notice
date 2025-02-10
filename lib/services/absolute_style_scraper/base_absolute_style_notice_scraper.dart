@@ -10,6 +10,8 @@
 import 'package:html/dom.dart';
 import 'package:inha_notice/constants/identifier_constants.dart';
 
+/// **BaseAbsoluteStyleNoticeScraper**
+/// 이 클래스는 Absolute Style의 공지사항을 크롤링을 정의하는 추상 클래스입니다.
 abstract class BaseAbsoluteStyleNoticeScraper {
   Future<Map<String, dynamic>> fetchNotices(int page, String noticeType);
 

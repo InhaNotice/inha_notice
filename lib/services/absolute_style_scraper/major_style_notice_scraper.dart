@@ -14,6 +14,8 @@ import 'package:inha_notice/constants/status_code_constants.dart';
 import 'package:inha_notice/selectors/major_style_tag_selectors.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
+/// **MajorStyleNoticeScraper**
+/// 이 클래스는 인하대학교 학과 스타일의 공지사항을 크롤링하는 클래스입니다.
 class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;

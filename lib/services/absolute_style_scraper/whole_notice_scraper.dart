@@ -14,6 +14,8 @@ import 'package:inha_notice/constants/status_code_constants.dart';
 import 'package:inha_notice/selectors/whole_tag_selectors.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
+/// **WholeNoticeScraper**
+/// 이 클래스는 인하대학교 학사 공지사항을 크롤링하는 클래스입니다.
 class WholeNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
@@ -74,7 +76,9 @@ class WholeNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       if (titleTag == null ||
           dateTag == null ||
           writerTag == null ||
-          accessTag == null) continue;
+          accessTag == null) {
+        continue;
+      }
 
       final postUrl = titleTag.attributes['href'] ?? '';
 
@@ -118,7 +122,9 @@ class WholeNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       if (titleTag == null ||
           dateTag == null ||
           writerTag == null ||
-          accessTag == null) continue;
+          accessTag == null) {
+        continue;
+      }
 
       final String postUrl = titleTag.attributes['href'] ?? '';
 

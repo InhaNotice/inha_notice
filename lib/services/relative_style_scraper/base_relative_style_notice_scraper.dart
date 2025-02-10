@@ -7,6 +7,9 @@
  * Author: junho Kim
  * Latest Updated Date: 2025-02-10
  */
+
+/// **BaseRelativeStyleNoticeScraper**
+/// 이 클래스는 Relative Style의 공지사항 스크래퍼를 정의하는 추상 클래스입니다.
 abstract class BaseRelativeStyleNoticeScraper {
   Future<Map<String, dynamic>> fetchNotices(int offset);
 

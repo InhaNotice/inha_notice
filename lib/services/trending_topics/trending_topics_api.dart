@@ -13,6 +13,8 @@ import 'package:inha_notice/constants/status_code_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:xml/xml.dart';
 
+/// **TrendingTopicsAPI**
+/// 이 클래스는 인하대학교 실시간 인기 검색어를 크롤링하는 API를 정의하는 클래스입니다.
 class TrendingTopicsAPI {
   late final String baseUrl;
 
@@ -20,12 +22,14 @@ class TrendingTopicsAPI {
     baseUrl = dotenv.get("TRENDING_TOPICS_URL");
   }
 
+  /// **실시간 인기 검색어 크롤링 요청을 보냅니다**
   Future<List<Map<String, dynamic>>> fetchTrendingTopics() async {
     try {
       final url = Uri.parse(baseUrl);
       var response = await http.get(url);
 
       if (response.statusCode == StatusCodeSettings.kStatusOkay) {
+        // Xml 문서 형식의 응답 객체를 파싱
         final document = XmlDocument.parse(response.body);
         String makeTime = document.findAllElements('MakeTime').first.innerText;
         DateTime dateTime = DateTime.parse(makeTime);
