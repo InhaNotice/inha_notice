@@ -84,13 +84,13 @@ class SearchScraper {
             titleTag.attributes[NoticeTagSelectors.kNoticeTitleHref] ?? '';
 
         final id = makeUniqueNoticeId(postUrl);
-        final title = titleTag.body.trim();
+        final title = titleTag.text.trim();
 
         /// body는 필수가 아님. bodyTag가 null이면 빈 문자열을 저장
         /// 빈 문자열은 이후 NoticeListTile 출력시 빈 문자열인지 확인하여 body를 출력할지 결정하게 됨
-        final body = (bodyTag != null) ? bodyTag.body.trim() : '';
+        final body = (bodyTag != null) ? bodyTag.text.trim() : '';
         final link = postUrl;
-        final date = dateTag.body.trim();
+        final date = dateTag.text.trim();
 
         results.add({
           'id': id,
