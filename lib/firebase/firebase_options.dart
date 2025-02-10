@@ -24,6 +24,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
+
+/// **DefaultFirebaseOptions**
+/// 이 클래스는 FCM 구성을 정의하는 클래스입니다.
+///
+/// 지원하는 플랫폼: android, iOS
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
