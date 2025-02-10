@@ -17,7 +17,7 @@ import 'package:inha_notice/main.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/web_page.dart';
+import 'package:inha_notice/widgets/in_app_web_page.dart';
 import 'package:logger/logger.dart';
 
 /// **FirebaseService**
@@ -268,7 +268,7 @@ class FirebaseService {
           }
           // 웹페이지 로드
           navigatorKey.currentState?.push(
-            MaterialPageRoute(builder: (context) => WebPage(url: link)),
+            MaterialPageRoute(builder: (context) => InAppWebPage(url: link)),
           );
         });
       } else {
@@ -281,7 +281,7 @@ class FirebaseService {
         }
         // 웹페이지 로드
         navigatorKey.currentState?.push(
-          MaterialPageRoute(builder: (context) => WebPage(url: link)),
+          MaterialPageRoute(builder: (context) => InAppWebPage(url: link)),
         );
       }
     }

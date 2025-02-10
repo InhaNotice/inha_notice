@@ -13,16 +13,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// **WebPage**
 /// 이 클래스는 인앱 웹페이지를 구현하는 클래스입니다.
-class WebPage extends StatefulWidget {
+class InAppWebPage extends StatefulWidget {
   final String url;
 
-  const WebPage({super.key, required this.url});
+  const InAppWebPage({super.key, required this.url});
 
   @override
-  State<WebPage> createState() => _WebPageState();
+  State<InAppWebPage> createState() => _InAppWebPageState();
 }
 
-class _WebPageState extends State<WebPage> {
+class _InAppWebPageState extends State<InAppWebPage> {
   /// **url를 입력받아 웹 페이지를 로딩**
   Future<void> _launchInAppWebView(String url) async {
     final Uri uri = Uri.parse(url);

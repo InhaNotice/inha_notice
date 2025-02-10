@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/web_page.dart';
+import 'package:inha_notice/widgets/in_app_web_page.dart';
 
 /// **NoticeListTile**
 /// 이 클래스는 공지사항 하나에 대한 정보를 출력하는 클래스입니다.
@@ -45,7 +45,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => WebPage(
+        builder: (context) => InAppWebPage(
           url: widget.notice['link'] ?? Font.kEmptyString,
         ),
       ),
