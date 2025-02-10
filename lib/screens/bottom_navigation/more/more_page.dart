@@ -301,7 +301,7 @@ class _MorePageState extends State<MorePage> {
                               color: Theme.of(context).iconTheme.color),
                           const SizedBox(width: 8),
                           Text(
-                            '인하공지 팀',
+                            '인공 팀',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 16,
