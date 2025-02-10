@@ -7,6 +7,9 @@
  * Author: junho Kim
  * Latest Updated Date: 2025-02-10
  */
+
+/// **StatusCodeSettings**
+/// 이 클래스는 HTTP 상태코드와 관련된 상수를 정의하는 추상 클래스입니다.
 abstract class StatusCodeSettings {
   static const int kStatusOkay = 200;
 }
