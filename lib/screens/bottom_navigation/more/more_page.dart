@@ -13,8 +13,8 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
 import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/widgets/in_app_web_page.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
-import 'package:inha_notice/widgets/web_page.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -245,7 +245,7 @@ class _MorePageState extends State<MorePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WebPage(url: _featuresUrl),
+                      builder: (context) => InAppWebPage(url: _featuresUrl),
                     ),
                   );
                 },
@@ -290,7 +290,7 @@ class _MorePageState extends State<MorePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WebPage(url: _aboutTeamUrl),
+                      builder: (context) => InAppWebPage(url: _aboutTeamUrl),
                     ),
                   );
                 },
@@ -336,7 +336,7 @@ class _MorePageState extends State<MorePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          WebPage(url: _personalInformationUrl),
+                          InAppWebPage(url: _personalInformationUrl),
                     ),
                   );
                 },
@@ -382,7 +382,7 @@ class _MorePageState extends State<MorePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          WebPage(url: _termsAndConditionsOfServiceUrl),
+                          InAppWebPage(url: _termsAndConditionsOfServiceUrl),
                     ),
                   );
                 },
@@ -429,7 +429,7 @@ class _MorePageState extends State<MorePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WebPage(url: _introduceAppUrl),
+                      builder: (context) => InAppWebPage(url: _introduceAppUrl),
                     ),
                   );
                 },
@@ -475,7 +475,7 @@ class _MorePageState extends State<MorePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          WebPage(url: _questionsAndAnswersUrl),
+                          InAppWebPage(url: _questionsAndAnswersUrl),
                     ),
                   );
                 },
