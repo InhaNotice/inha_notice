@@ -83,10 +83,10 @@ class SearchScraper {
             titleTag.attributes[NoticeTagSelectors.kNoticeTitleHref] ?? '';
 
         final id = makeUniqueNoticeId(postUrl);
-        final title = titleTag.text.trim();
-        final body = bodyTag.text.trim();
+        final title = titleTag.body.trim();
+        final body = bodyTag.body.trim();
         final link = postUrl;
-        final date = dateTag.text.trim();
+        final date = dateTag.body.trim();
 
         results.add({
           'id': id,

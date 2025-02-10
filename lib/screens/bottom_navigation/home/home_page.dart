@@ -15,6 +15,11 @@ import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dar
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/search_result_page.dart';
 
+/// **HomePage**
+/// 이 클래스는 홈 페이지를 정의하는 클래스입니다.
+///
+/// ### 주요 기능:
+/// - 상단 공지사항 카테고리 정의
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -86,11 +91,11 @@ class HomePage extends StatelessWidget {
             ],
           ),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(48), // `TabBar` 높이 조절
+            preferredSize: const Size.fromHeight(48),
             child: Theme(
               data: Theme.of(context).copyWith(
-                splashFactory: NoSplash.splashFactory, // 물결 효과 제거
-                highlightColor: Colors.transparent, // 하이라이트 효과 제거
+                splashFactory: NoSplash.splashFactory,
+                highlightColor: Colors.transparent,
               ),
               child: const TabBar(
                 tabAlignment: TabAlignment.start,
@@ -108,6 +113,7 @@ class HomePage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),
+                // 총 7개의 탭 정의
                 tabs: [
                   Tab(text: '학사'),
                   Tab(text: '학과'),
@@ -122,6 +128,10 @@ class HomePage extends StatelessWidget {
           ),
         ),
         body: const TabBarView(
+          /// 각 공지사항 페이지는 다음과 같이 스타일에 따라 분류함
+          /// AbsoluteStyle(4개): 학사, 학과, 국제처, SW중심대학
+          /// RelativeStyle(1개): 정석
+          /// SearchResult(2개): 장학, 채용
           children: [
             AbsoluteStyleNoticeBoard(noticeType: 'WHOLE'),
             AbsoluteStyleNoticeBoard(noticeType: 'MAJOR'),

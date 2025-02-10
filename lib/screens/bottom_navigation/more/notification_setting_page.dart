@@ -12,9 +12,16 @@ import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
+import 'package:inha_notice/widgets/blocking_dialog.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
-import 'package:logger/logger.dart';
+import 'package:inha_notice/widgets/themed_snackbar.dart';
 
+/// **NotificationSettingPage**
+/// 이 클래스는 알림 설정 페이지를 정의하는 클래스입니다.
+///
+/// ### 주요 기능:
+/// - 학사 알림을 설정
+/// - 학과 알림을 설정
 class NotificationSettingPage extends StatefulWidget {
   const NotificationSettingPage({super.key});
 
@@ -25,7 +32,6 @@ class NotificationSettingPage extends StatefulWidget {
 
 class _NotificationSettingPageState extends State<NotificationSettingPage> {
   final String _academicTopic = 'all-notices';
-  final logger = Logger();
   bool _isAcademicNotificationOn = false;
   bool _isMajorNotificationOn = false;
   bool _isProcessing = false;
@@ -36,7 +42,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
     _loadNotificationPreference();
   }
 
-  /// 저장된 알림 설정 불러오기
+  /// **저장된 알림 설정 불러오기**
   Future<void> _loadNotificationPreference() async {
     setState(() {
       _isAcademicNotificationOn =
@@ -45,13 +51,13 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
     });
   }
 
-  /// 학사 알림 설정 변경 및 저장
+  /// **학사 알림 설정 변경 및 저장**
   Future<void> _toggleAcademicNotification(bool value) async {
     if (_isProcessing) return;
 
     setState(() {
       _isProcessing = true;
-      _showLoadingDialog();
+      BlockingDialog.show(context);
     });
 
     try {
@@ -66,13 +72,18 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
       setState(() {
         _isAcademicNotificationOn = value;
       });
-      _showSnackbar(value ? '학사 알림이 활성화되었습니다.' : '학사 알림이 비활성화되었습니다.');
-      await Future.delayed(const Duration(seconds: 1));
+      if (mounted) {
+        ThemedSnackbar.showSnackbar(
+            context, value ? '학사 알림이 활성화되었습니다.' : '학사 알림이 비활성화되었습니다.');
+      }
     } catch (e) {
-      logger.e("❌ Error updating academic notification: $e");
-      _showSnackbar('알림 설정 중 오류가 발생했습니다.');
+      if (mounted) {
+        ThemedSnackbar.showSnackbar(context, '알림 설정 중 오류가 발생했습니다.');
+      }
     } finally {
-      _dismissLoadingDialog();
+      if (mounted) {
+        BlockingDialog.dismiss(context);
+      }
       setState(() {
         _isProcessing = false;
       });
@@ -85,14 +96,18 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
 
     setState(() {
       _isProcessing = true;
-      _showLoadingDialog();
+      BlockingDialog.show(context);
     });
 
     try {
       final majorKey = SharedPrefsManager().getMajorKey();
       if (majorKey == null) {
-        _dismissLoadingDialog();
-        _showSnackbar('학과를 먼저 설정해주세요!');
+        if (mounted) {
+          BlockingDialog.dismiss(context);
+        }
+        if (mounted) {
+          ThemedSnackbar.showSnackbar(context, '학과를 먼저 설정해주세요!');
+        }
         return;
       }
 
@@ -107,58 +122,22 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
       setState(() {
         _isMajorNotificationOn = value;
       });
-      _showSnackbar(value ? '학과 알림이 활성화되었습니다.' : '학과 알림이 비활성화되었습니다.');
-      await Future.delayed(const Duration(seconds: 1));
+      if (mounted) {
+        ThemedSnackbar.showSnackbar(
+            context, value ? '학과 알림이 활성화되었습니다.' : '학과 알림이 비활성화되었습니다.');
+      }
     } catch (e) {
-      logger.e("❌ Error updating major notification: $e");
-      _showSnackbar('학과 알림 설정 중 오류가 발생했습니다.');
+      if (mounted) {
+        ThemedSnackbar.showSnackbar(context, '학과 알림 설정 중 오류가 발생했습니다.');
+      }
     } finally {
-      _dismissLoadingDialog();
+      if (mounted) {
+        BlockingDialog.dismiss(context);
+      }
       setState(() {
         _isProcessing = false;
       });
     }
-  }
-
-  void _showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // 사용자가 닫을 수 없도록 설정
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          child: Center(
-            child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  /// 다이얼로그 닫기
-  void _dismissLoadingDialog() {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-  }
-
-  void _showSnackbar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: TextStyle(
-            fontFamily: Font.kDefaultFont,
-            fontSize: 14,
-            fontWeight: FontWeight.normal,
-            color: Theme.of(context).snackBarTextColor,
-          ),
-        ),
-        backgroundColor: Theme.of(context).snackBarBackgroundColor,
-      ),
-    );
   }
 
   @override
@@ -175,10 +154,10 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(10.0), // 둥근 테두리
+                  borderRadius: BorderRadius.circular(10.0),
                   border: Border.all(
-                    color: Theme.of(context).boxBorderColor, // 검정 테두리
-                    width: 0.7, // 얇은 선
+                    color: Theme.of(context).boxBorderColor,
+                    width: 0.7,
                   ),
                 ),
                 padding:

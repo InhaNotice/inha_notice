@@ -59,11 +59,11 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
     if (isNoticeBookmarked(notice['id'])) {
       await BookmarkManager.removeBookmark(notice['id']);
       if (!mounted) return;
-      ThemedSnackbar.showSnackbar(context, '삭제 되었습니다!');
+      ThemedSnackbar.showSnackbar(context, '삭제되었습니다.');
     } else {
       await BookmarkManager.addBookmark(notice);
       if (!mounted) return;
-      ThemedSnackbar.showSnackbar(context, '저장 되었습니다!');
+      ThemedSnackbar.showSnackbar(context, '저장되었습니다.');
     }
     setState(() {});
   }

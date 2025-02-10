@@ -13,9 +13,16 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
+import 'package:inha_notice/widgets/blocking_dialog.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
+import 'package:inha_notice/widgets/themed_snackbar.dart';
 import 'package:logger/logger.dart';
 
+/// **MajorSettingPage**
+/// 이 클래스는 학과 설정하는 페이지를 구현하는 클래스입니다.
+///
+/// ### 주요 기능:
+/// - 나의 학과를 설정 및 확인
 class MajorSettingPage extends StatefulWidget {
   const MajorSettingPage({super.key});
 
@@ -25,9 +32,15 @@ class MajorSettingPage extends StatefulWidget {
 
 class _MajorSettingPageState extends State<MajorSettingPage> {
   final Logger logger = Logger();
+
+  /// 검색 필드를 정의하는 컨트롤러
   final TextEditingController _searchController = TextEditingController();
+
+  /// 모든 단과 대학을 담는 컨테이너
   Map<String, Map<String, String>> _filteredMajorGroups =
       MajorUtils.majorGroups;
+
+  /// 사용자의 입력에 따른 학과 재분류하는 컨테이너
   List<String> _filteredMajors = [];
   String? _currentMajor; // 한글 학과명
   String? _currentMajorKey; // 영문 학과명
@@ -41,7 +54,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     _loadMajorPreference();
   }
 
-  /// 저장된 나의 학과 설정 불러오기
+  /// **저장된 나의 학과 설정 불러오기**
   Future<void> _loadMajorPreference() async {
     setState(() {
       _currentMajorKey = SharedPrefsManager().getMajorKey();
@@ -51,8 +64,9 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     });
   }
 
-  /// 사용자 입력에 따른 학과를 필터링
+  /// **사용자 입력에 따른 학과를 필터링**
   void _filterMajors(String query) {
+    // 입력이 없다면 초기화면으로 설정
     if (query.isEmpty) {
       if (_filteredMajorGroups != MajorUtils.majorGroups) {
         setState(() {
@@ -63,6 +77,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
       return;
     }
 
+    // 사용자 입력에 따른 학과 재분류
     final List<String> filteredMajors = [
       for (var group in MajorUtils.majorGroups.values)
         for (var major in group.keys)
@@ -70,18 +85,18 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     ];
 
     setState(() {
-      _filteredMajorGroups = {}; // 검색 시 단과대학 제거
+      _filteredMajorGroups = {}; // 사용자 입력이 주어지면 빈 컨테이너로 설정
       _filteredMajors = filteredMajors;
     });
   }
 
-  /// 학과 선택 핸들러
+  /// **학과 선택 핸들러**
   Future<void> _handleMajorSelection(String major) async {
     if (_isProcessing) return;
 
     setState(() {
       _isProcessing = true;
-      _showLoadingDialog();
+      BlockingDialog.show(context);
     });
 
     String newMajorKey = MajorUtils.translateToEnglish(major);
@@ -94,63 +109,27 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
       if (isMajorNotificationOn) {
         await FirebaseService().updateMajorSubscription();
       }
-      _showSnackbar('$major로 설정되었습니다!');
-      await Future.delayed(const Duration(seconds: 1));
+      if (mounted) {
+        ThemedSnackbar.showSnackbar(context, '$major로 설정되었습니다!');
+      }
       if (mounted) {
         Navigator.pop(context);
       }
     } catch (e) {
       logger.e('❌ Error saving major: $e');
-      _showSnackbar('저장 중 오류가 발생했습니다. 다시 시도해주세요!');
+      if (mounted) {
+        ThemedSnackbar.showSnackbar(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
+      }
     } finally {
-      _dismissLoadingDialog();
+      if (mounted) {
+        BlockingDialog.dismiss(context);
+      }
       if (mounted) {
         setState(() {
           _isProcessing = false;
         });
       }
     }
-  }
-
-  void _showLoadingDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false, // 사용자가 닫을 수 없도록 설정
-      builder: (context) {
-        return Dialog(
-          backgroundColor: Colors.transparent,
-          child: Center(
-            child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  /// 다이얼로그 닫기
-  void _dismissLoadingDialog() {
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    }
-  }
-
-  void _showSnackbar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          message,
-          style: TextStyle(
-            fontFamily: Font.kDefaultFont,
-            fontSize: 14,
-            fontWeight: FontWeight.normal,
-            color: Theme.of(context).snackBarTextColor,
-          ),
-        ),
-        backgroundColor: Theme.of(context).snackBarBackgroundColor,
-      ),
-    );
   }
 
   @override
@@ -234,8 +213,9 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                       },
                     )
                   : ListView(
-                      children: _filteredMajorGroups.entries.map((entry) {
-                        return Theme(
+                      children: _filteredMajorGroups.entries.map(
+                        (entry) {
+                          return Theme(
                             data: Theme.of(context).copyWith(
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
@@ -264,8 +244,10 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                                     ),
                                   )
                                   .toList(),
-                            ));
-                      }).toList(),
+                            ),
+                          );
+                        },
+                      ).toList(),
                     ),
             ),
           ],
