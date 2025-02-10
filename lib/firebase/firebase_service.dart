@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/screens/web_page.dart';
+import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
@@ -120,43 +121,6 @@ class FirebaseService {
     }
   }
 
-  /// **푸시 알림 클릭 시 WebPage로 이동**
-  void _onMessageOpenedApp(RemoteMessage message) {
-    _handleMessage(message, isAppTerminated: false);
-  }
-
-  /// **알림 메시지 처리 함수**
-  void _handleMessage(RemoteMessage message, {required bool isAppTerminated}) {
-    logger.d("📩 Notification Clicked: ${message.data}");
-
-    if (message.data.containsKey('link')) {
-      String link = message.data['link'];
-
-      if (isAppTerminated) {
-        navigatorKey.currentState?.pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => OnboardingScreen()),
-          (route) => false,
-        );
-
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (navigatorKey.currentState?.canPop() ?? false) {
-            navigatorKey.currentState?.pop();
-          }
-          navigatorKey.currentState?.push(
-            MaterialPageRoute(builder: (context) => WebPage(url: link)),
-          );
-        });
-      } else {
-        if (navigatorKey.currentState?.canPop() ?? false) {
-          navigatorKey.currentState?.pop();
-        }
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(builder: (context) => WebPage(url: link)),
-        );
-      }
-    }
-  }
-
   /// **알림 권한 요청**
   Future<void> _requestPermission() async {
     await _messaging.requestPermission(
@@ -229,6 +193,73 @@ class FirebaseService {
     SharedPrefsManager().setSubscribedTopics(_subscribedTopics);
   }
 
+  /// **이전 학과 토픽 해제 후 새로운 학과 토픽 구독하는 함수**
+  Future<void> updateMajorSubscription() async {
+    try {
+      final String? previousMajorKey =
+          SharedPrefsManager().getPreviousMajorKey();
+      final String? newMajorKey = SharedPrefsManager().getMajorKey();
+
+      if (newMajorKey == null) {
+        logger.e('🚨 Major key is null, cannot subscribe.');
+        return;
+      }
+
+      // `unsubscribeFromTopic` 메서드 내부에서 구독 여부 체크 후 실행하므로 중복 방지 가능
+      if (previousMajorKey != null && previousMajorKey != newMajorKey) {
+        await unsubscribeFromTopic(previousMajorKey);
+      }
+
+      // 새로운 토픽 구독
+      await subscribeToTopic(newMajorKey);
+    } catch (e) {
+      logger.e('🚨 Error handling FCM topic subscription: $e');
+    }
+  }
+
+  /// **푸시 알림 클릭 시 WebPage로 이동**
+  void _onMessageOpenedApp(RemoteMessage message) {
+    _handleMessage(message, isAppTerminated: false);
+  }
+
+  /// **알림 메시지 처리 함수**
+  void _handleMessage(RemoteMessage message, {required bool isAppTerminated}) {
+    logger.d("📩 Notification Clicked: ${message.data}");
+
+    if (message.data.containsKey('link')) {
+      String link = message.data['link'];
+
+      if (isAppTerminated) {
+        navigatorKey.currentState?.pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => OnboardingScreen()),
+          (route) => false,
+        );
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (navigatorKey.currentState?.canPop() ?? false) {
+            navigatorKey.currentState?.pop();
+          }
+          // 읽은 공지로 추가 (백그라운드 진행)
+          ReadNoticeManager.addReadNotice(message.data['id']);
+          // 웹페이지 로드
+          navigatorKey.currentState?.push(
+            MaterialPageRoute(builder: (context) => WebPage(url: link)),
+          );
+        });
+      } else {
+        if (navigatorKey.currentState?.canPop() ?? false) {
+          navigatorKey.currentState?.pop();
+        }
+        // 읽은 공지 추가 (백그라운드 진행)
+        ReadNoticeManager.addReadNotice(message.data['id']);
+        // 웹페이지 로드
+        navigatorKey.currentState?.push(
+          MaterialPageRoute(builder: (context) => WebPage(url: link)),
+        );
+      }
+    }
+  }
+
   /// **백그라운드 메시지 핸들러**
   static Future<void> _firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
@@ -269,30 +300,6 @@ class FirebaseService {
           payload: message.data['link'],
         );
       }
-    }
-  }
-
-  /// **이전 학과 토픽 해제 후 새로운 학과 토픽 구독하는 함수**
-  Future<void> updateMajorSubscription() async {
-    try {
-      final String? previousMajorKey =
-          SharedPrefsManager().getPreviousMajorKey();
-      final String? newMajorKey = SharedPrefsManager().getMajorKey();
-
-      if (newMajorKey == null) {
-        logger.e('🚨 Major key is null, cannot subscribe.');
-        return;
-      }
-
-      // `unsubscribeFromTopic` 메서드 내부에서 구독 여부 체크 후 실행하므로 중복 방지 가능
-      if (previousMajorKey != null && previousMajorKey != newMajorKey) {
-        await unsubscribeFromTopic(previousMajorKey);
-      }
-
-      // 새로운 토픽 구독
-      await subscribeToTopic(newMajorKey);
-    } catch (e) {
-      logger.e('🚨 Error handling FCM topic subscription: $e');
     }
   }
 }
