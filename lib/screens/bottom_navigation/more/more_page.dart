@@ -15,11 +15,12 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-  late String _introduceAppUrl;
+  late String _featuresUrl;
+  late String _aboutTeamUrl;
   late String _personalInformationUrl;
   late String _termsAndConditionsOfServiceUrl;
-  late String _openSourcesUrl;
-  late String _aboutTeamUrl;
+  late String _introduceAppUrl;
+  late String _questionsAndAnswersUrl;
   late String _appVersion;
 
   @override
@@ -29,13 +30,14 @@ class _MorePageState extends State<MorePage> {
   }
 
   void _initializeWebPageUrls() {
-    _introduceAppUrl = dotenv.get('INTRODUCE_APP_URL');
+    _appVersion = dotenv.get('APP_VERSION');
+    _featuresUrl = dotenv.get('FEATURES_URL');
+    _aboutTeamUrl = dotenv.get('ABOUT_TEAM_URL');
     _personalInformationUrl = dotenv.get('PERSONAL_INFORMATION_URL');
     _termsAndConditionsOfServiceUrl =
         dotenv.get('TERMS_AND_CONDITIONS_OF_SERVICE_URL');
-    _openSourcesUrl = dotenv.get('OPEN_SOURCES_URL');
-    _aboutTeamUrl = dotenv.get('ABOUT_TEAM_URL');
-    _appVersion = dotenv.get('APP_VERSION');
+    _introduceAppUrl = dotenv.get('INTRODUCE_APP_URL');
+    _questionsAndAnswersUrl = dotenv.get('QUESTIONS_AND_ANSWERS_URL');
   }
 
   @override
@@ -234,7 +236,7 @@ class _MorePageState extends State<MorePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WebPage(url: _introduceAppUrl),
+                      builder: (context) => WebPage(url: _featuresUrl),
                     ),
                   );
                 },
@@ -255,6 +257,51 @@ class _MorePageState extends State<MorePage> {
                           const SizedBox(width: 8),
                           Text(
                             '새로운 내용',
+                            style: TextStyle(
+                              fontFamily: Font.kDefaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color ??
+                                  Theme.of(context).defaultColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Icon(Icons.arrow_forward_ios,
+                          size: 16, color: Theme.of(context).iconTheme.color),
+                    ],
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WebPage(url: _aboutTeamUrl),
+                    ),
+                  );
+                },
+                child: Container(
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.people_outline_outlined,
+                              size: 20,
+                              color: Theme.of(context).iconTheme.color),
+                          const SizedBox(width: 8),
+                          Text(
+                            '인하공지 팀',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 16,
@@ -373,7 +420,7 @@ class _MorePageState extends State<MorePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WebPage(url: _openSourcesUrl),
+                      builder: (context) => WebPage(url: _introduceAppUrl),
                     ),
                   );
                 },
@@ -388,12 +435,12 @@ class _MorePageState extends State<MorePage> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.source_outlined,
+                          Icon(Icons.info_outline,
                               size: 20,
                               color: Theme.of(context).iconTheme.color),
                           const SizedBox(width: 8),
                           Text(
-                            '사용된 오픈소스',
+                            '앱 소개',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 16,
@@ -418,7 +465,8 @@ class _MorePageState extends State<MorePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WebPage(url: _aboutTeamUrl),
+                      builder: (context) =>
+                          WebPage(url: _questionsAndAnswersUrl),
                     ),
                   );
                 },
@@ -433,12 +481,12 @@ class _MorePageState extends State<MorePage> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.people_outline_outlined,
+                          Icon(Icons.question_answer_outlined,
                               size: 20,
                               color: Theme.of(context).iconTheme.color),
                           const SizedBox(width: 8),
                           Text(
-                            '인하공지 팀',
+                            'Q&A',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 16,
