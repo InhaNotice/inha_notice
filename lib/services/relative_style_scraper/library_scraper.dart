@@ -14,6 +14,8 @@ import 'package:http/http.dart' as http;
 import 'package:inha_notice/constants/status_code_constants.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 
+/// **LibraryScraper**
+/// 이 클래스는 인하대학교 정석학술정보관 공지사항 크롤링하는 클래스입니다.
 class LibraryScraper extends BaseRelativeStyleNoticeScraper {
   late String baseUrl;
   late String queryUrl;
@@ -60,6 +62,7 @@ class LibraryScraper extends BaseRelativeStyleNoticeScraper {
     }
   }
 
+  /// **Params에 따른 중요/일반 공지사항을 서버로 요청**
   @override
   Future<List<Map<String, String>>> fetchNoticesWithParams(
       Map<String, String> params) async {

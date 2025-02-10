@@ -14,6 +14,8 @@ import 'package:inha_notice/constants/identifier_constants.dart';
 import 'package:inha_notice/constants/status_code_constants.dart';
 import 'package:inha_notice/selectors/search_tag_selectors.dart';
 
+/// **SearchSraper**
+/// 이 클래스는 사용자의 입력에 따른 검색 크롤링을 정의하는 클래스입니다.
 class SearchScraper {
   late String baseUrl;
   late String collectionType;
@@ -23,6 +25,8 @@ class SearchScraper {
     collectionType = dotenv.get('COLLECTION');
   }
 
+  /// **사용자 입력에 따른 공지사항을 크롤링**
+  /// 파라미터: query(사용자 입력), startCount(페이지), sortedType(정렬 옵션)
   Future<Map<String, dynamic>> fetchNotices(
       String query, int startCount, String sortedType) async {
     try {
@@ -53,6 +57,7 @@ class SearchScraper {
     }
   }
 
+  /// **응답 객체를 통해 검색 결과를 전처리**
   List<Map<String, dynamic>> fetchSearchedNotices(document) {
     // dl.resultsty_1 태그를 가져오기(여러 개일 수 있음)
     final notices = document.querySelectorAll(NoticeTagSelectors.kNoticeBoard);
@@ -95,6 +100,7 @@ class SearchScraper {
     return results;
   }
 
+  /// **응답 객체를 통해 마지막 페이지 분석 후 페이지네이션 리턴**
   List<Map<String, dynamic>> fetchPages(document) {
     final List<Map<String, dynamic>> results = [];
     final pages = document.querySelectorAll(PageTagSelectors.kPageBoard);
@@ -120,6 +126,7 @@ class SearchScraper {
     return results;
   }
 
+  /// **공지사항 게시물의 고유 id를 생성**
   String makeUniqueNoticeId(String postUrl) {
     // postUrl이 빈 문자열인지 확인합니다.
     if (postUrl.isEmpty) {
