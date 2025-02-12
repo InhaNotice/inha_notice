@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-12
  */
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +23,8 @@ class SharedPrefsManager {
   static String? _cachedMajorKey;
   static bool? _cachedAcademicNotification;
   static bool? _cachedMajorNotification;
+  static bool? _cachedInternationalNotification;
+  static bool? _cachedSWUnivNotification;
   static Set<String>? _cachedSubscribedTopics;
   static bool? _cachedIsSubscribedToAllUsers;
 
@@ -38,6 +40,9 @@ class SharedPrefsManager {
     _cachedAcademicNotification =
         _prefs?.getBool('academic-notification') ?? false;
     _cachedMajorNotification = _prefs?.getBool('major-notification') ?? false;
+    _cachedInternationalNotification =
+        _prefs?.getBool('INTERNATIONAL') ?? false;
+    _cachedSWUnivNotification = _prefs?.getBool('SWUNIV') ?? false;
     _cachedSubscribedTopics =
         _prefs?.getStringList('subscribed_topics')?.toSet() ?? {};
     _cachedIsSubscribedToAllUsers =
@@ -88,6 +93,29 @@ class SharedPrefsManager {
   /// **학과 알림 설정 키 가져오기 (캐싱 활용)**
   bool getMajorNotificationOn() {
     return _cachedMajorNotification ?? false;
+  }
+
+  /// **국제처 알림 설정 키 저장 (캐싱 추가)**
+  Future<void> setInternationalNotificationOn(
+      bool internationalNotificationOn) async {
+    _cachedInternationalNotification = internationalNotificationOn;
+    await _prefs?.setBool('INTERNATIONAL', internationalNotificationOn);
+  }
+
+  /// **국제처 알림 설정 키 가져오기 (캐싱 활용)**
+  bool getInternationalNotificationOn() {
+    return _cachedInternationalNotification ?? false;
+  }
+
+  /// **SW중심대학 알림 설정 키 저장 (캐싱 활용)**
+  Future<void> setSWUnivNotificationOn(bool swunivNotificationOn) async {
+    _cachedSWUnivNotification = swunivNotificationOn;
+    await _prefs?.setBool('SWUNIV', swunivNotificationOn);
+  }
+
+  /// **SW중심대학 알림 설정 키 가져오기 (캐싱 활용)**
+  bool getSWUnivNotificationOn() {
+    return _cachedSWUnivNotification ?? false;
   }
 
   /// **구독된 토픽 목록 설정 (캐싱 추가)**
