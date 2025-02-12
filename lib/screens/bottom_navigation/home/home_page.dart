@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-12
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -121,7 +121,7 @@ class HomePage extends StatelessWidget {
                   Tab(text: '채용'),
                   Tab(text: '정석'),
                   Tab(text: '국제처'),
-                  Tab(text: 'SW중심대학'),
+                  Tab(text: 'SW중심대학사업단'),
                 ],
               ),
             ),
