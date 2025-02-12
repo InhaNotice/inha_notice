@@ -12,6 +12,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/titles/more_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/titles/more_non_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/titles/more_title_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/titles/more_web_navigation_tile.dart';
 import 'package:inha_notice/widgets/themed_app_bar.dart';
@@ -92,9 +93,9 @@ class _MorePageState extends State<MorePage> {
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
               MoreTitleTile(title: '앱 정보'),
-              MoreWebNavigationTile(
+              MoreNonNavigationTile(
                   title: '앱 버전',
-                  url: _appVersion,
+                  description: _appVersion,
                   icon: Icons.rocket_launch_outlined),
               MoreWebNavigationTile(
                   title: '새로운 내용',
