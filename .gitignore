@@ -30,5 +30,8 @@ README.md
 
 # 환경변수
 .env
+key.properties
+**/*.keystore
+**/*.jks
 
 doc/
