@@ -48,7 +48,7 @@ class _MoreNavigationTileState extends State<MoreNavigationTile> {
                     size: 20, color: Theme.of(context).iconTheme.color),
                 const SizedBox(width: 8),
                 Text(
-                  '알림 설정',
+                  widget.title,
                   style: TextStyle(
                     fontFamily: Font.kDefaultFont,
                     fontSize: 16,
