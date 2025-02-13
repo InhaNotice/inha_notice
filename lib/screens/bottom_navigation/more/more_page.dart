@@ -118,7 +118,7 @@ class _MorePageState extends State<MorePage> {
                   url: _introduceAppUrl,
                   icon: Icons.info_outline),
               MoreWebNavigationTile(
-                  title: 'Q&A',
+                  title: 'FAQ',
                   url: _questionsAndAnswersUrl,
                   icon: Icons.question_answer_outlined),
             ],
