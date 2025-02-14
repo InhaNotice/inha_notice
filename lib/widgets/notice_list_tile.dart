@@ -42,14 +42,13 @@ class _NoticeListTileState extends State<NoticeListTile> {
 
   /// **사파리 웹 페이지를 띄우는 함수**
   Future<void> navigateToWebPage(BuildContext context) async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => InAppWebPage(
-          url: widget.notice['link'] ?? Font.kEmptyString,
-        ),
-      ),
-    );
+    Navigator.of(context).push(PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          InAppWebPage(url: widget.notice['link'] ?? Font.kEmptyString),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child; // 애니메이션 없이 바로 전환
+      },
+    ));
   }
 
   @override
