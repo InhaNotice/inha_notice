@@ -14,6 +14,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/themed_snackbar.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// **WebPage**
@@ -29,6 +30,7 @@ class InAppWebPage extends StatefulWidget {
 
 class _InAppWebPageState extends State<InAppWebPage> {
   InAppWebViewController? _webViewController;
+  final logger = Logger();
 
   /// **url를 입력받아 웹 페이지를 로딩**
   Future<void> _launchInAppWebView(String url) async {
@@ -110,11 +112,6 @@ class _InAppWebPageState extends State<InAppWebPage> {
                   WebUri? currentUrl = await _webViewController?.getUrl();
                   if (currentUrl != null) {
                     await _shareUrl(currentUrl.toString());
-                  } else {
-                    if (mounted) {
-                      ThemedSnackbar.showSnackbar(
-                          context, '현재 페이지 URL을 가져올 수 없습니다.');
-                    }
                   }
                 }
               },
@@ -141,17 +138,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
                 throw Exception();
               }
             } catch (e) {
-              if (mounted) {
-                ThemedSnackbar.showSnackbar(context, '파일 다운로드 실패');
-              }
-            }
-          },
-          onReceivedError: (controller, request, error) {
-            if (mounted) {
-              ThemedSnackbar.showSnackbar(
-                context,
-                '페이지 로딩 실패: ${error.description}',
-              );
+              logger.e('InAppWebPage - 파일 다운로드 실패: $e');
             }
           },
         ),
