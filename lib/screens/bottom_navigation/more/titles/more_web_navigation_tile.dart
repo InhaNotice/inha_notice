@@ -31,10 +31,14 @@ class _MoreWebNavigationTileState extends State<MoreWebNavigationTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => InAppWebPage(url: widget.url),
+        Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                InAppWebPage(url: widget.url),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return child; // 애니메이션 없이 바로 전환
+            },
           ),
         );
       },
