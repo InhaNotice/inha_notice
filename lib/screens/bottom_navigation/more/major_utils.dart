@@ -44,7 +44,6 @@ class MajorUtils {
       '물리학과': 'PHYSICS',
       '화학과': 'CHEMISTRY',
       '생명과학과': 'BIOLOGY',
-      '해양학과': 'WDN',
     },
     '경영대학': {
       '식품영양학과': 'FOODNUTRI',
@@ -86,7 +85,6 @@ class MajorUtils {
     },
     '예술체육대학': {
       '조형예술학과': 'FINEARTS',
-      '디자인학부': 'INHADESIGN',
       '스포츠과학과': 'SPORT',
       '연극영화학과': 'THEATREFILM',
       '의류디자인학과': 'FASHION',
