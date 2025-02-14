@@ -26,7 +26,9 @@ dependencies:
   firebase_core: ^3.10.0
   firebase_messaging: ^15.2.0
   logger: ^2.5.0
- 
+  flutter_inappwebview: ^6.1.5
+  share_plus: ^10.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
