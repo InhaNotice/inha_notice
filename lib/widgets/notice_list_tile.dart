@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/in_app_web_page.dart';
+import 'package:inha_notice/widgets/web_navigator.dart';
 
 /// **NoticeListTile**
 /// 이 클래스는 공지사항 하나에 대한 정보를 출력하는 클래스입니다.
@@ -38,19 +38,6 @@ class _NoticeListTileState extends State<NoticeListTile> {
   @override
   void initState() {
     super.initState();
-  }
-
-  /// **사파리 웹 페이지를 띄우는 함수**
-  Future<void> navigateToWebPage(BuildContext context) async {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            InAppWebPage(url: widget.notice['link'] ?? Font.kEmptyString),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return child; // 애니메이션 없이 바로 전환
-        },
-      ),
-    );
   }
 
   @override
@@ -97,7 +84,8 @@ class _NoticeListTileState extends State<NoticeListTile> {
                 onTap: () async {
                   widget.markNoticeAsRead(widget.notice['id'].toString());
                   if (mounted) {
-                    await navigateToWebPage(context);
+                    await WebNavigator.navigate(
+                        context: context, url: widget.notice['link']);
                   }
                 },
                 child: ListTile(

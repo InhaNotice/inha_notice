@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/in_app_web_page.dart';
+import 'package:inha_notice/widgets/web_navigator.dart';
 
 /// **MoreWebNavigationTile**
 /// 이 클래스는 더보기 페이지의 웹 네이게이션 타일을 정의하는 클래스입니다.
@@ -30,17 +30,10 @@ class _MoreWebNavigationTileState extends State<MoreWebNavigationTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                InAppWebPage(url: widget.url),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return child; // 애니메이션 없이 바로 전환
-            },
-          ),
-        );
+      onTap: () async {
+        if (mounted) {
+          await WebNavigator.navigate(context: context, url: widget.url);
+        }
       },
       child: Container(
         height: 50.0,
