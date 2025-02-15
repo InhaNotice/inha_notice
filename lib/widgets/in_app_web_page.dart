@@ -15,6 +15,7 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/themed_snackbar.dart';
 import 'package:logger/logger.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// **WebPage**
@@ -58,10 +59,15 @@ class _InAppWebPageState extends State<InAppWebPage> {
     }
   }
 
-  /// **현재 페이지 공유하기**
-  Future<void> _shareUrl(String url) async {
+  /// **외부 브라우저 앱으로 현재 페이지 열기**
+  Future<void> _openInExternalBrowser(String url) async {
     final Uri uri = Uri.parse(url);
     await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
+  /// **현재 페이지 공유하기**
+  Future<void> _shareUrl(String url) async {
+    await Share.share(url);
   }
 
   @override
@@ -96,6 +102,8 @@ class _InAppWebPageState extends State<InAppWebPage> {
           centerTitle: true,
           title: Text(
             widget.url,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontFamily: Font.kDefaultFont,
               fontWeight: FontWeight.bold,
@@ -105,6 +113,17 @@ class _InAppWebPageState extends State<InAppWebPage> {
             ),
           ),
           actions: [
+            IconButton(
+              icon: const Icon(Icons.open_in_new_outlined),
+              onPressed: () async {
+                if (_webViewController != null) {
+                  WebUri? currentUrl = await _webViewController?.getUrl();
+                  if (currentUrl != null) {
+                    await _openInExternalBrowser(currentUrl.toString());
+                  }
+                }
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.share_outlined),
               onPressed: () async {
