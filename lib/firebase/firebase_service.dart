@@ -61,7 +61,7 @@ class FirebaseService {
 
     // 앱 종료된 상태에서 푸시알림 클릭시 이벤트 처리
     RemoteMessage? initialMessage = await _messaging.getInitialMessage();
-    if (initialMessage != null) {
+    if (initialMessage != null && Platform.isIOS) {
       _handleMessage(initialMessage, isAppTerminated: true);
     }
 
