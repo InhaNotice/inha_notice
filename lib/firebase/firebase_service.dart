@@ -17,7 +17,7 @@ import 'package:inha_notice/main.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/in_app_web_page.dart';
+import 'package:inha_notice/widgets/web_navigator.dart';
 import 'package:logger/logger.dart';
 
 /// **FirebaseService**
@@ -114,6 +114,10 @@ class FirebaseService {
         if (apnsToken != null) {
           logger.d(
               'FirebaseService - initialize() 성공: ✅ APNS Token and FCM Token were successfully created.');
+          String? fcmToken = await messaging.getToken();
+          if (fcmToken != null) {
+            logger.d('FCM Token:$fcmToken');
+          }
         } else {
           logger.w(
               'FirebaseService - initialize() 경고: ⚠️ APNS Token not set. Ensure network access & notifications are enabled.');
@@ -267,9 +271,8 @@ class FirebaseService {
             ReadNoticeManager.addReadNotice(message.data['id']);
           }
           // 웹페이지 로드
-          navigatorKey.currentState?.push(
-            MaterialPageRoute(builder: (context) => InAppWebPage(url: link)),
-          );
+          WebNavigator.navigate(
+              context: navigatorKey.currentContext!, url: link);
         });
       } else {
         if (navigatorKey.currentState?.canPop() ?? false) {
@@ -280,9 +283,7 @@ class FirebaseService {
           ReadNoticeManager.addReadNotice(message.data['id']);
         }
         // 웹페이지 로드
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(builder: (context) => InAppWebPage(url: link)),
-        );
+        WebNavigator.navigate(context: navigatorKey.currentContext!, url: link);
       }
     }
   }
