@@ -11,7 +11,6 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
@@ -47,8 +46,6 @@ class FirebaseService {
   /// **Firebase 초기화 및 설정**
   /// 순서 보장: 알림 권한 요청 -> 'all-users' 구독 -> 플랫폼별 설정 -> FCM 토큰 출력
   Future<void> initialize() async {
-    // 알림 권한 요청
-    await _requestPermission();
     // 'all-users' 토픽 구독
     await _subscribeToAppAnnouncements();
 
@@ -75,7 +72,7 @@ class FirebaseService {
   }
 
   /// **알림 권한 요청**
-  Future<void> _requestPermission() async {
+  Future<void> requestPermission() async {
     await _messaging.requestPermission(
       alert: true,
       badge: true,
@@ -86,7 +83,6 @@ class FirebaseService {
   /// **iOS 설정 초기화**
   Future<void> _setupIOSSettings() async {
     await _configureForegroundPresentationOptions();
-    await _handleInitialMessageIfNeeded();
   }
 
   /// **iOS Foreground 알림 표시 설정**
@@ -96,14 +92,6 @@ class FirebaseService {
       badge: true,
       sound: true,
     );
-  }
-
-  /// **앱 종료 상태(iOS)에서 클릭한 초기 메시지 처리**
-  Future<void> _handleInitialMessageIfNeeded() async {
-    RemoteMessage? initialMessage = await _messaging.getInitialMessage();
-    if (initialMessage != null) {
-      _navigateOnNotificationTap(initialMessage, isAppTerminated: true);
-    }
   }
 
   /// **Android 설정 초기화**
@@ -117,9 +105,8 @@ class FirebaseService {
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         if (response.payload != null) {
-          _navigateOnNotificationTap(
-              RemoteMessage(data: {"link": response.payload!}),
-              isAppTerminated: false);
+          _navigateToNotification(
+              RemoteMessage(data: {"link": response.payload!}), true);
         }
       },
     );
@@ -232,12 +219,11 @@ class FirebaseService {
 
   /// **푸시 알림 클릭 시 WebPage로 이동(현재는 iOS만 지원)**
   void _handleNotificationOpenedApp(RemoteMessage message) {
-    _navigateOnNotificationTap(message, isAppTerminated: false);
+    _navigateToNotification(message, true);
   }
 
   /// **알림 메시지 처리 함수**
-  void _navigateOnNotificationTap(RemoteMessage message,
-      {required bool isAppTerminated}) {
+  void _navigateToNotification(RemoteMessage message, bool isRunning) {
     if (!message.data.containsKey('link')) return;
 
     String link = message.data['link'];
@@ -247,19 +233,8 @@ class FirebaseService {
       ReadNoticeManager.addReadNotice(message.data['id']);
     }
 
-    // 앱이 종료된 상태에서 실행될 때
-    // 순서: MainApp이 온보딩 실행 -> 웹페이지 로딩
-    if (isAppTerminated) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        WebNavigator.navigate(
-          context: navigatorKey.currentContext!,
-          url: link,
-        );
-      });
-    }
-    // 앱이 실행 중인 상태일 때
-    else {
-      // 현재 화면에서 바로 웹 페이지로 push 진행
+    // 앱이 실행 중일 때 푸시알림으로 웹페이지 이동을 핸들링
+    if (isRunning) {
       WebNavigator.navigate(
         context: navigatorKey.currentContext!,
         url: link,
@@ -301,5 +276,9 @@ class FirebaseService {
         );
       }
     }
+  }
+
+  Future<RemoteMessage?> getInitialNotification() async {
+    return await FirebaseMessaging.instance.getInitialMessage();
   }
 }

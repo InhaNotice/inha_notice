@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
+import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
 import 'package:inha_notice/themes/theme.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -11,11 +11,16 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-
 class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
+
+    // 앱 시작 후 권한 요청 (최초 1회 실행)
+    Future.delayed(Duration.zero, () {
+      FirebaseService().requestPermission();
+    });
+
     Future.delayed(const Duration(seconds: 1), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
@@ -48,11 +53,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextSpan(
                     text: '하',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).textTheme.bodyMedium?.color ?? Theme.of(context).defaultColor
-                    ),
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyMedium?.color ??
+                            Theme.of(context).defaultColor),
                   ),
                 ],
               ),
@@ -72,11 +77,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextSpan(
                     text: '지',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                        color: Theme.of(context).textTheme.bodyMedium?.color ?? Theme.of(context).defaultColor
-                    ),
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.bodyMedium?.color ??
+                            Theme.of(context).defaultColor),
                   ),
                 ],
               ),

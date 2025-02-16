@@ -7,11 +7,14 @@
  * Author: junho Kim
  * Latest Updated Date: 2025-02-10
  */
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/bottom_navigation/bookmark/bookmark_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
+import 'package:inha_notice/widgets/in_app_web_page.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});
@@ -29,6 +32,29 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
     const BookmarkPage(),
     const MorePage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadWebPage();
+  }
+
+  Future<void> _loadWebPage() async {
+    RemoteMessage? initialMessage =
+        await FirebaseService().getInitialNotification();
+    final String? initialLink = initialMessage?.data['link'];
+
+    if (initialLink != null) {
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InAppWebPage(url: initialLink),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
