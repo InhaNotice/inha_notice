@@ -28,7 +28,7 @@ Future<void> main() async {
 
   await _initializeApp();
   // FCM 초기화는 백그라운드에서 진행
-  _initializeFirebase();
+  await _initializeFirebase();
 
   runApp(const MyApp());
 }
