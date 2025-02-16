@@ -118,7 +118,7 @@ class _NotificationTileState extends State<NotificationTile> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${widget.title} 알림 설정',
+              widget.title,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
