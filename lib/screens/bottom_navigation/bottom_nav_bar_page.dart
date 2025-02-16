@@ -14,7 +14,8 @@ import 'package:inha_notice/screens/bottom_navigation/bookmark/bookmark_page.dar
 import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
-import 'package:inha_notice/widgets/in_app_web_page.dart';
+
+import '../../widgets/web_navigator.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});
@@ -46,12 +47,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
     if (initialLink != null) {
       if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => InAppWebPage(url: initialLink),
-          ),
-        );
+        WebNavigator.navigate(context: context, url: initialLink);
       }
     }
   }
