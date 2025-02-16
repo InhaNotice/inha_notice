@@ -14,7 +14,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/main.dart';
-import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/web_navigator.dart';
@@ -249,14 +248,8 @@ class FirebaseService {
     }
 
     // 앱이 종료된 상태에서 실행될 때
+    // 순서: MainApp이 온보딩 실행 -> 웹페이지 로딩
     if (isAppTerminated) {
-      // 온보딩 화면을 스택의 맨 아래로 설정
-      navigatorKey.currentState?.pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-        (route) => false,
-      );
-
-      // 그 이후 웹페이지 로딩함
       WidgetsBinding.instance.addPostFrameCallback((_) {
         WebNavigator.navigate(
           context: navigatorKey.currentContext!,
