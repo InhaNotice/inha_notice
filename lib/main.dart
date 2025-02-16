@@ -96,7 +96,7 @@ Future<FirebaseApp> _initializeFirebase() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Firebase 서비스 초기화 및 토픽 구독
+  // Firebase 서비스 초기화
   await FirebaseService().initialize();
 
   return app;
