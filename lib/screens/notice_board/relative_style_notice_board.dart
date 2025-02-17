@@ -12,10 +12,10 @@ import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
-import 'package:inha_notice/widgets/notice_list_tile.dart';
+import 'package:inha_notice/widgets/buttons/refresh_button.dart';
+import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
+import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
-import 'package:inha_notice/widgets/refresh_button.dart';
-import 'package:inha_notice/widgets/rounded_toggle_button.dart';
 
 class RelativeStyleNoticeBoard extends BaseNoticeBoard {
   final String noticeType;

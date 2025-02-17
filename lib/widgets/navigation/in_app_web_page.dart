@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/themed_snackbar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
 import 'package:logger/logger.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';

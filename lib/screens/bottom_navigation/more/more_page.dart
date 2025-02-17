@@ -15,7 +15,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/titles/more_navigatio
 import 'package:inha_notice/screens/bottom_navigation/more/titles/more_non_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/titles/more_title_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/titles/more_web_navigation_tile.dart';
-import 'package:inha_notice/widgets/themed_app_bar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
 /// **MorePage**
 /// 이 클래스는 더보기 페이지를 구현하는 클래스입니다.

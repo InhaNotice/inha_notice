@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/web_navigator.dart';
+import 'package:inha_notice/widgets/navigation/web_navigator.dart';
 
 /// **MoreWebNavigationTile**
 /// 이 클래스는 더보기 페이지의 웹 네이게이션 타일을 정의하는 클래스입니다.
