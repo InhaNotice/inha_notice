@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-17
  */
 import 'dart:io';
 
@@ -46,6 +46,8 @@ class FirebaseService {
   /// **Firebase 초기화 및 설정**
   /// 순서 보장: 알림 권한 요청 -> 'all-users' 구독 -> 플랫폼별 설정 -> FCM 토큰 출력
   Future<void> initialize() async {
+    /// Android: 반드시 권한 요청이 _setupAndroidSettings보다 선행되어야 함
+    /// iOS: 온보딩 파일에서 백그라운드로 처리(MacOS 호환성 때문)
     if (Platform.isAndroid) {
       await requestPermission();
     }
@@ -252,35 +254,37 @@ class FirebaseService {
 
   /// **포그라운드 메시지 핸들러**
   void _showForegroundNotification(RemoteMessage message) async {
-    if (message.notification != null) {
-      // Foreground에서도 알림을 표시하도록 flutter_local_notifications 사용
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
+    if (message.notification == null) return;
 
-      if (notification != null && android != null) {
-        const AndroidNotificationDetails androidPlatformChannelSpecifics =
-            AndroidNotificationDetails(
-          'high_importance_channel', // firebase_service.dart에 설정한 채널 ID와 동일해야 함
-          'High Importance Notifications',
-          importance: Importance.max,
-          priority: Priority.high,
-          ticker: 'ticker',
-        );
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
 
-        const NotificationDetails platformChannelSpecifics =
-            NotificationDetails(android: androidPlatformChannelSpecifics);
+    // Android 환경에서만 설정
+    if (notification != null && android != null) {
+      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        'high_importance_channel', // firebase_service.dart에 설정한 채널 ID와 동일해야 함
+        'High Importance Notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+      );
 
-        await flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          platformChannelSpecifics,
-          payload: message.data['link'],
-        );
-      }
+      const NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+
+      await flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        platformChannelSpecifics,
+        payload: message.data['link'],
+      );
     }
   }
 
+  /// **BottomNavBarPage에서 웹페이지 로딩을 위해 필요**
+  /// 푸시알림 메시지를 읽어오는 함수
   Future<RemoteMessage?> getInitialNotification() async {
     return await FirebaseMessaging.instance.getInitialMessage();
   }
