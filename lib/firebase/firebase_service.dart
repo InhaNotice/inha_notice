@@ -66,7 +66,7 @@ class FirebaseService {
     FirebaseMessaging.onMessage.listen(_showForegroundNotification);
     FirebaseMessaging.onMessageOpenedApp.listen(_handleNotificationOpenedApp);
 
-    if (!Platform.isIOS) {
+    if (Platform.isAndroid) {
       FirebaseMessaging.onBackgroundMessage(_backgroundMessageHandler);
     }
   }
