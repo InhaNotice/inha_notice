@@ -46,6 +46,9 @@ class FirebaseService {
   /// **Firebase 초기화 및 설정**
   /// 순서 보장: 알림 권한 요청 -> 'all-users' 구독 -> 플랫폼별 설정 -> FCM 토큰 출력
   Future<void> initialize() async {
+    if (Platform.isAndroid) {
+      await requestPermission();
+    }
     // 'all-users' 토픽 구독
     await _subscribeToAppAnnouncements();
 
