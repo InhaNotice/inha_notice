@@ -12,10 +12,10 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
-import 'package:inha_notice/widgets/notice_list_tile.dart';
-import 'package:inha_notice/widgets/refresh_button.dart';
-import 'package:inha_notice/widgets/rounded_toggle_button.dart';
-import 'package:inha_notice/widgets/themed_app_bar.dart';
+import 'package:inha_notice/widgets/buttons/refresh_button.dart';
+import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
+import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 import 'package:logger/logger.dart';
 
 /// **BookmarkPage**

@@ -13,7 +13,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_
 import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/search_result_page.dart';
+import 'package:inha_notice/widgets/search/search_result_page.dart';
 
 /// **HomePage**
 /// 이 클래스는 홈 페이지를 정의하는 클래스입니다.

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/titles/notification_tile.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/themed_app_bar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
 /// **NotificationSettingPage**
 /// 이 클래스는 알림 설정 페이지를 정의하는 클래스입니다.

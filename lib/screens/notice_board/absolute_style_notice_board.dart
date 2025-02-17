@@ -17,10 +17,10 @@ import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_s
 import 'package:inha_notice/services/absolute_style_scraper/whole_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/notice_list_tile.dart';
+import 'package:inha_notice/widgets/buttons/refresh_button.dart';
+import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
+import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
-import 'package:inha_notice/widgets/refresh_button.dart';
-import 'package:inha_notice/widgets/rounded_toggle_button.dart';
 import 'package:logger/logger.dart';
 
 /// **AbsoluteStyleNoticeBoard**
