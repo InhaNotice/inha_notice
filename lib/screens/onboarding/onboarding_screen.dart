@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -18,7 +20,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     // 앱 시작 후 권한 요청 (최초 1회 실행)
     Future.delayed(Duration.zero, () {
-      FirebaseService().requestPermission();
+      if (Platform.isIOS) {
+        // 백그라운드 진행
+        FirebaseService().requestPermission();
+      }
     });
 
     Future.delayed(const Duration(seconds: 1), () {
