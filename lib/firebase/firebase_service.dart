@@ -85,6 +85,12 @@ class FirebaseService {
     );
   }
 
+  /// **BottomNavBarPage에서 웹페이지 로딩을 위해 필요**
+  /// 푸시알림 메시지를 읽어오는 함수
+  Future<RemoteMessage?> getInitialNotification() async {
+    return await FirebaseMessaging.instance.getInitialMessage();
+  }
+
   /// **iOS 설정 초기화**
   Future<void> _setupIOSSettings() async {
     await _configureForegroundPresentationOptions();
@@ -281,11 +287,5 @@ class FirebaseService {
         payload: message.data['link'],
       );
     }
-  }
-
-  /// **BottomNavBarPage에서 웹페이지 로딩을 위해 필요**
-  /// 푸시알림 메시지를 읽어오는 함수
-  Future<RemoteMessage?> getInitialNotification() async {
-    return await FirebaseMessaging.instance.getInitialMessage();
   }
 }
