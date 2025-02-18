@@ -1,12 +1,12 @@
 /*
- * This is file of the project inha_notice
- * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
- * For full license text, see the LICENSE file in the root directory or at
- * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-02-10
- */
+* This is file of the project inha_notice
+* Licensed under the Apache License 2.0.
+* Copyright (c) 2025 INGONG
+* For full license text, see the LICENSE file in the root directory or at
+* http://www.apache.org/licenses/
+* Author: junho Kim
+* Latest Updated Date: 2025-02-10
+*/
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -32,6 +32,7 @@ class InAppWebPage extends StatefulWidget {
 class _InAppWebPageState extends State<InAppWebPage> {
   InAppWebViewController? _webViewController;
   final logger = Logger();
+  bool _isDesktopMode = false;
 
   /// **url를 입력받아 웹 페이지를 로딩**
   Future<void> _launchInAppWebView(String url) async {
@@ -57,12 +58,6 @@ class _InAppWebPageState extends State<InAppWebPage> {
         Navigator.pop(context);
       }
     }
-  }
-
-  /// **외부 브라우저 앱으로 현재 페이지 열기**
-  Future<void> _openInExternalBrowser(String url) async {
-    final Uri uri = Uri.parse(url);
-    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 
   /// **현재 페이지 공유하기**
@@ -114,13 +109,26 @@ class _InAppWebPageState extends State<InAppWebPage> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.open_in_new_outlined),
+              icon: Icon(_isDesktopMode
+                  ? Icons.desktop_windows_outlined
+                  : Icons.phone_iphone_outlined),
               onPressed: () async {
-                if (_webViewController != null) {
-                  WebUri? currentUrl = await _webViewController?.getUrl();
-                  if (currentUrl != null) {
-                    await _openInExternalBrowser(currentUrl.toString());
-                  }
+                setState(() {
+                  _isDesktopMode = !_isDesktopMode;
+                });
+
+                WebUri? currentUrl = await _webViewController?.getUrl();
+                if (currentUrl != null) {
+                  await _webViewController?.loadUrl(
+                    urlRequest: URLRequest(
+                      url: currentUrl,
+                      headers: {
+                        'User-Agent': _isDesktopMode
+                            ? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                            : '',
+                      },
+                    ),
+                  );
                 }
               },
             ),
@@ -147,6 +155,23 @@ class _InAppWebPageState extends State<InAppWebPage> {
           ),
           onWebViewCreated: (controller) {
             _webViewController = controller;
+          },
+          onLoadStop: (controller, url) async {
+            if (_isDesktopMode) {
+              double screenWidth = MediaQuery.of(context).size.width;
+              int desktopWidth =
+                  screenWidth < 1200 ? 1200 : screenWidth.toInt();
+
+              await controller.evaluateJavascript(source: """
+      document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=$desktopWidth');
+    """);
+              if (mounted) {
+                ThemedSnackbar.showSnackbar(
+                  context,
+                  _isDesktopMode ? '데스크탑 모드로 전환되었습니다.' : '모바일 모드로 전환되었습니다.',
+                );
+              }
+            }
           },
           onDownloadStartRequest: (controller, request) async {
             final Uri uri = Uri.parse(request.url.toString());
