@@ -118,6 +118,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
                   _isDesktopMode = !_isDesktopMode;
                 });
 
+                // 데스크탑 모드일 때 User-Agent 변경
                 await _webViewController?.loadUrl(
                   urlRequest: URLRequest(
                     url: WebUri(widget.url),
@@ -128,6 +129,13 @@ class _InAppWebPageState extends State<InAppWebPage> {
                     },
                   ),
                 );
+
+                if (mounted) {
+                  ThemedSnackbar.showSnackbar(
+                    context,
+                    _isDesktopMode ? '데스크탑 모드로 전환되었습니다.' : '모바일 모드로 전환되었습니다.',
+                  );
+                }
               },
             ),
             // 공유 버튼
@@ -153,6 +161,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
             _webViewController = controller;
           },
           onLoadStop: (controller, url) async {
+            // 데스크탑 모드일 때 강제로 PC 뷰포트로 변경
             if (_isDesktopMode) {
               double screenWidth = MediaQuery.of(context).size.width;
               int desktopWidth =
@@ -161,13 +170,14 @@ class _InAppWebPageState extends State<InAppWebPage> {
               await controller.evaluateJavascript(source: """
       document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=$desktopWidth');
     """);
-              if (mounted) {
-                ThemedSnackbar.showSnackbar(
-                  context,
-                  _isDesktopMode ? '데스크탑 모드로 전환되었습니다.' : '모바일 모드로 전환되었습니다.',
-                );
-              }
             }
+
+            // 웹페이지 좌우 여백 추가
+            await controller.evaluateJavascript(source: """
+    document.body.style.paddingLeft = '16px';
+    document.body.style.paddingRight = '16px';
+    document.body.style.boxSizing = 'border-box';
+  """);
           },
           onDownloadStartRequest: (controller, request) async {
             final Uri uri = Uri.parse(widget.url);
