@@ -93,7 +93,10 @@ class _InAppWebPageState extends State<InAppWebPage> {
       /// Android는 flutter_inappwebview 사용
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+          backgroundColor: Theme
+              .of(context)
+              .appBarTheme
+              .backgroundColor,
           centerTitle: true,
           title: Text(
             widget.url,
@@ -103,8 +106,14 @@ class _InAppWebPageState extends State<InAppWebPage> {
               fontFamily: Font.kDefaultFont,
               fontWeight: FontWeight.bold,
               fontSize: 16,
-              color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultColor,
+              color: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.color ??
+                  Theme
+                      .of(context)
+                      .defaultColor,
             ),
           ),
           actions: [
@@ -163,9 +172,12 @@ class _InAppWebPageState extends State<InAppWebPage> {
           onLoadStop: (controller, url) async {
             // 데스크탑 모드일 때 강제로 PC 뷰포트로 변경
             if (_isDesktopMode) {
-              double screenWidth = MediaQuery.of(context).size.width;
+              double screenWidth = MediaQuery
+                  .of(context)
+                  .size
+                  .width;
               int desktopWidth =
-                  screenWidth < 1200 ? 1200 : screenWidth.toInt();
+              screenWidth < 1200 ? 1200 : screenWidth.toInt();
 
               await controller.evaluateJavascript(source: """
       document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=$desktopWidth');
@@ -180,7 +192,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
   """);
           },
           onDownloadStartRequest: (controller, request) async {
-            final Uri uri = Uri.parse(widget.url);
+            final Uri uri = Uri.parse(request.url.toString());
             try {
               if (await canLaunchUrl(uri)) {
                 await launchUrl(uri, mode: LaunchMode.externalApplication);
