@@ -108,6 +108,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
             ),
           ),
           actions: [
+            // 데스크탑 및 모바일 전환 버튼
             IconButton(
               icon: Icon(_isDesktopMode
                   ? Icons.desktop_windows_outlined
@@ -117,29 +118,24 @@ class _InAppWebPageState extends State<InAppWebPage> {
                   _isDesktopMode = !_isDesktopMode;
                 });
 
-                WebUri? currentUrl = await _webViewController?.getUrl();
-                if (currentUrl != null) {
-                  await _webViewController?.loadUrl(
-                    urlRequest: URLRequest(
-                      url: currentUrl,
-                      headers: {
-                        'User-Agent': _isDesktopMode
-                            ? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-                            : '',
-                      },
-                    ),
-                  );
-                }
+                await _webViewController?.loadUrl(
+                  urlRequest: URLRequest(
+                    url: WebUri(widget.url),
+                    headers: {
+                      'User-Agent': _isDesktopMode
+                          ? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                          : '',
+                    },
+                  ),
+                );
               },
             ),
+            // 공유 버튼
             IconButton(
               icon: const Icon(Icons.share_outlined),
               onPressed: () async {
                 if (_webViewController != null) {
-                  WebUri? currentUrl = await _webViewController?.getUrl();
-                  if (currentUrl != null) {
-                    await _shareUrl(currentUrl.toString());
-                  }
+                  await _shareUrl(widget.url);
                 }
               },
             ),
@@ -149,8 +145,8 @@ class _InAppWebPageState extends State<InAppWebPage> {
           initialUrlRequest: URLRequest(url: WebUri(widget.url)),
           initialSettings: InAppWebViewSettings(
             javaScriptEnabled: true,
-            supportZoom: true, // 줌 활성화
-            useOnDownloadStart: true, // 다운로드 이벤트 활성화
+            supportZoom: true,
+            useOnDownloadStart: true,
             allowsInlineMediaPlayback: true,
           ),
           onWebViewCreated: (controller) {
@@ -174,7 +170,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
             }
           },
           onDownloadStartRequest: (controller, request) async {
-            final Uri uri = Uri.parse(request.url.toString());
+            final Uri uri = Uri.parse(widget.url);
             try {
               if (await canLaunchUrl(uri)) {
                 await launchUrl(uri, mode: LaunchMode.externalApplication);
