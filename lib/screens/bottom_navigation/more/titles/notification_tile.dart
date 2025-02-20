@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-12
+ * Latest Updated Date: 2025-02-20
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
@@ -15,6 +15,8 @@ import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
 
+/// **NotificationTile**
+/// 이 클래스는 알림설정 페이지의 알림 온/오프의 동작을 정의합니다.
 class NotificationTile extends StatefulWidget {
   final String title;
   final String description;

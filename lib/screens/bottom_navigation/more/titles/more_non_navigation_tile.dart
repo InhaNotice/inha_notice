@@ -1,7 +1,18 @@
+/*
+ * This is file of the project inha_notice
+ * Licensed under the Apache License 2.0.
+ * Copyright (c) 2025 INGONG
+ * For full license text, see the LICENSE file in the root directory or at
+ * http://www.apache.org/licenses/
+ * Author: junho Kim
+ * Latest Updated Date: 2025-02-20
+ */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 
+/// **MoreNonNavigationTile**
+/// 이 클래스는 더보기 페이지의 다른 페이지로 이동하지 않는 타일을 정의합니다.
 class MoreNonNavigationTile extends StatefulWidget {
   final String title;
   final String description;

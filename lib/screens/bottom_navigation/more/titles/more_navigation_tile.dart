@@ -12,7 +12,7 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 
 /// **MoreNavigationTile**
-/// 이 클래스는 더보기 페이지의 상세 페이지 타일을 정의하는 클래스입니다.
+/// 이 클래스는 더보기 페이지의 다른 페이지로 이동하는 타일을 정의합니다.
 class MoreNavigationTile extends StatefulWidget {
   final String title;
   final IconData icon;
