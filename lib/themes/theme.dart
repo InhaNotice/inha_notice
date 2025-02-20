@@ -129,8 +129,8 @@ extension PageButtonColors on ThemeData {
 /// 태그 색상을 정의합니다.
 extension TagColors on ThemeData {
   Color get tagBackgroundColor => brightness == Brightness.light
-      ? Colors.blue[100]! // 밝은 블루
-      : Colors.blueGrey[800]!; // 어두운 블루그레이
+      ? const Color(0xFF90CAF9)
+      : Colors.blueGrey[800]!;
 }
 
 /// **TextFieldColors**

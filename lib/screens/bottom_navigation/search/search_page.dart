@@ -282,20 +282,34 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           _searchController.text = text;
           _search();
         },
-        child: Chip(
-          label: Text(
-            text,
-            style: TextStyle(
-              fontFamily: Font.kDefaultFont,
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultColor,
+        child: InkWell(
+          splashColor: Colors.transparent, // 리플 제거
+          highlightColor: Colors.transparent, // 하이라이트 제거
+          child: Chip(
+            label: Text(
+              text,
+              style: TextStyle(
+                fontFamily: Font.kDefaultFont,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).textTheme.bodyMedium?.color ??
+                    Theme.of(context).defaultColor,
+              ),
+            ),
+            backgroundColor: Theme.of(context).tagBackgroundColor,
+            deleteIcon: const Icon(Icons.close, size: 14),
+            onDeleted: () => _removeRecentSearchTopic(text),
+            deleteButtonTooltipMessage: '',
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            visualDensity: VisualDensity.compact,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
           ),
-          backgroundColor: Theme.of(context).tagBackgroundColor,
-          deleteIcon: const Icon(Icons.close, size: 14),
-          onDeleted: () => _removeRecentSearchTopic(text),
+          onTap: () {
+            _searchController.text = text;
+            _search();
+          },
         ),
       ),
     );
