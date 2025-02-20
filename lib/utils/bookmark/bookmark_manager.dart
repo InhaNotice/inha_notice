@@ -130,4 +130,16 @@ class BookmarkManager {
       return [];
     }
   }
+
+  /// **모든 북마크 삭제**
+  static Future<void> clearAllBookmarks() async {
+    try {
+      final db = await _getDatabase();
+      await db.delete(tableName);
+      _cachedBookmarks.clear();
+      logger.d('BookmarkManager - clearAllBookmarks() 성공: 모든 북마크 삭제 완료');
+    } catch (e) {
+      logger.e('BookmarkManager - clearAllBookmarks() 오류: $e');
+    }
+  }
 }

@@ -12,10 +12,10 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
-import 'package:inha_notice/widgets/buttons/refresh_button.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
 import 'package:logger/logger.dart';
 
 /// **BookmarkPage**
@@ -36,15 +36,16 @@ class BookmarkPage extends BaseNoticeBoard {
 class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
   final logger = Logger();
 
-  // 정렬 옵션: orderName, orderDate, orderBookmark
+  // 정렬 옵션: orderName, orderNewest, orderOldest
+  bool orderNewest = true; // 최신순 기본값
+  bool orderOldest = false;
   bool orderName = false;
-  bool orderDate = false;
-  bool orderBookmark = true; // 기본값
-  // 정렬 후 북마크된 공지사항을 저장하고 관리하는 리스트(실제 출력을 담당)
-  List<Map<String, dynamic>> bookmarkedNotices = [];
 
-  // 정렬 전 원본 북마크된 공지사항을 저장하고 관리하는 리스트
+  /// 정렬 전 원본 북마크된 공지사항을 저장하고 관리하는 리스트
   List<Map<String, dynamic>> originalBookmarkedNotices = [];
+
+  /// 정렬 후 북마크된 공지사항을 저장하고 관리하는 리스트(실제 출력을 담당)
+  List<Map<String, dynamic>> bookmarkedNotices = [];
 
   @override
   void initState() {
@@ -67,12 +68,10 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
       isLoading = true;
     });
     final notices = await BookmarkManager.getAllBookmarks();
+    originalBookmarkedNotices = List.from(notices);
+    bookmarkedNotices = List.from(notices)
+      ..sort((a, b) => b['date'].compareTo(a['date']));
     setState(() {
-      originalBookmarkedNotices = List.from(notices);
-      bookmarkedNotices = List.from(notices);
-      orderName = false;
-      orderDate = false;
-      orderBookmark = true; // 기본값
       isLoading = false;
     });
   }
@@ -81,21 +80,21 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
   @override
   void toggleOption(String option) {
     setState(() {
-      if (option == 'NAME') {
-        orderName = true;
-        orderDate = false;
-        orderBookmark = false;
-        bookmarkedNotices.sort((a, b) => a['title'].compareTo(b['title']));
-      } else if (option == 'DATE') {
+      if (option == 'NEWEST') {
         orderName = false;
-        orderDate = true;
-        orderBookmark = false;
+        orderNewest = true;
+        orderOldest = false;
         bookmarkedNotices.sort((a, b) => b['date'].compareTo(a['date']));
-      } else {
+      } else if (option == 'OLDEST') {
         orderName = false;
-        orderDate = false;
-        orderBookmark = true;
-        bookmarkedNotices = List.from(originalBookmarkedNotices);
+        orderNewest = false;
+        orderOldest = true;
+        bookmarkedNotices.sort((a, b) => a['date'].compareTo(b['date']));
+      } else {
+        orderName = true;
+        orderNewest = false;
+        orderOldest = false;
+        bookmarkedNotices.sort((a, b) => a['title'].compareTo(b['title']));
       }
     });
   }
@@ -131,26 +130,46 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           RoundedToggleButton(
-              text: '북마크된 순서',
-              option: 'BOOKMARK',
-              isSelected: orderBookmark,
+              text: '최신순',
+              option: 'NEWEST',
+              isSelected: orderNewest,
               onTap: toggleOption),
           const SizedBox(width: 10),
           RoundedToggleButton(
-              text: '이름순',
-              option: 'NAME',
-              isSelected: orderName,
+              text: '과거순',
+              option: 'OLDEST',
+              isSelected: orderOldest,
               onTap: toggleOption),
           const SizedBox(width: 10),
           RoundedToggleButton(
-              text: '날짜순',
-              option: 'DATE',
-              isSelected: orderDate,
-              onTap: toggleOption),
+            text: '이름순',
+            option: 'NAME',
+            isSelected: orderName,
+            onTap: toggleOption,
+          ),
           const Spacer(),
-          RefreshButton(onTap: () {
-            loadNotices();
-          }),
+          IconButton(
+            icon: Icon(
+              Icons.delete_forever_outlined,
+              color: Theme.of(context).iconTheme.color,
+              size: 25,
+            ),
+            onPressed: () async {
+              await BookmarkManager.clearAllBookmarks();
+              setState(() {
+                if (bookmarkedNotices.isEmpty && mounted) {
+                  ThemedSnackbar.showSnackbar(context, '삭제할 북마크가 없습니다!');
+                  return;
+                }
+                bookmarkedNotices.clear();
+                if (mounted) {
+                  ThemedSnackbar.showSnackbar(context, '모두 삭제되었습니다.');
+                }
+              });
+            },
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
         ],
       ),
     );
