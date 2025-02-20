@@ -265,6 +265,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         const SizedBox(height: 8),
         Wrap(
           spacing: 8.0,
+          runSpacing: 4.0,
           children: RecentSearchManager.getRecentSearchTopics()
               .map((search) => _buildSearchTag(search))
               .toList(),
@@ -283,8 +284,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           _search();
         },
         child: InkWell(
-          splashColor: Colors.transparent, // 리플 제거
-          highlightColor: Colors.transparent, // 하이라이트 제거
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           child: Chip(
             label: Text(
               text,
@@ -303,7 +304,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             visualDensity: VisualDensity.compact,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(15),
             ),
           ),
           onTap: () {
