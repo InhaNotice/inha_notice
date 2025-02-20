@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-20
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -18,6 +18,12 @@ import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
 import 'package:logger/logger.dart';
 
+/// **SearchPage**
+/// 이 클래스는 검색 페이지를 구현합니다.
+///
+/// ### 주요 기능:
+/// - 검색 기능 제공
+/// - 인기 검색어 기능
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -183,11 +189,10 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       ),
       child: Row(
         children: [
-          Icon(Icons.search, color: Theme.of(context).iconTheme.color),
-          const SizedBox(width: 10),
           Expanded(
             child: TextField(
               controller: _searchController,
+              textInputAction: TextInputAction.search,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontWeight: FontWeight.normal,
@@ -195,40 +200,29 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
                     Theme.of(context).defaultColor,
               ),
-              decoration: const InputDecoration(
-                hintText: '검색어를 입력해주세요',
+              decoration: InputDecoration(
+                hintText: '검색어를 입력하세요',
                 hintStyle: TextStyle(
                   fontFamily: Font.kDefaultFont,
-                  fontWeight: FontWeight.normal,
                   fontSize: 16,
-                  color: Color(0xFFC4C4C4),
+                  color: Theme.of(context).textFieldTextColor,
                 ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 2.0,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey, // 포커스 상태 경계선 색상
-                    width: 2.0,
-                  ),
-                ),
-                errorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey, // 에러 상태 경계선 색상
-                    width: 2.0,
-                  ),
-                ),
-                disabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey, // 비활성화 상태 경계선 색상
-                    width: 2.0,
-                  ),
-                ),
+                prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          setState(() {
+                            _searchController.clear();
+                          });
+                        },
+                      )
+                    : null,
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(vertical: 14.0),
               ),
               onSubmitted: (_) => _search(),
+              onChanged: (value) => setState(() {}),
             ),
           ),
         ],
