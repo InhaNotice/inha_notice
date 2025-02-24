@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-24
  */
 import 'package:logger/logger.dart';
 
@@ -26,7 +26,6 @@ class MajorUtils {
       '조선해양공학과': 'NAOE',
       '산업경영공학과': 'IE',
       '화학공학과': 'CHEMENG',
-      '생명공학과': 'BIO',
       '고분자공학과': 'INHAPOLY',
       '신소재공학과': 'DMSE',
       '사회인프라공학과': 'CIVIL',
@@ -43,12 +42,11 @@ class MajorUtils {
       '통계학과': 'STATISTICS',
       '물리학과': 'PHYSICS',
       '화학과': 'CHEMISTRY',
-      '생명과학과': 'BIOLOGY',
+      '식품영양학과': 'FOODNUTRI',
     },
     '경영대학': {
-      '식품영양학과': 'FOODNUTRI',
       '경영학과': 'BIZ',
-      '글로벌금융학과': 'GFIBA',
+      '파이낸스경영학과': 'GFIBA',
       '아태물류학과': 'APSL',
       '국제통상학과': 'STAR',
     },
@@ -80,7 +78,9 @@ class MajorUtils {
       '문화콘텐츠문화경영학과': 'CULTURECM',
     },
     '의과대학': {
-      '의예과': 'MEDICINE',
+      '의예과(의학과)': 'MEDICINE',
+    },
+    '간호대학': {
       '간호학과': 'NURSING',
     },
     '예술체육대학': {
@@ -88,6 +88,10 @@ class MajorUtils {
       '스포츠과학과': 'SPORT',
       '연극영화학과': 'THEATREFILM',
       '의류디자인학과': 'FASHION',
+    },
+    '바이오시스템융합학부': {
+      '생명공학과': 'BIO',
+      '생명과학과': 'BIOLOGY',
     },
     '국제학부': {
       'IBT학과': 'SGCSA',
