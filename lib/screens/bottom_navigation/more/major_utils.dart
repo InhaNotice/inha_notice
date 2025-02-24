@@ -94,6 +94,8 @@ class MajorUtils {
     '바이오시스템융합학부': {
       '생명공학과': 'BIO',
       '생명과학과': 'BIOLOGY',
+      '바이오제약공학과': 'BIOPHARM',
+      '첨단바이오의약학과': 'BIOMEDICAL',
     },
     '국제학부': {'IBT학과': 'SGCSA', 'ISE학과': 'SGCSB', 'KLC학과': 'SGCSC'},
     '미래융합대학': {
