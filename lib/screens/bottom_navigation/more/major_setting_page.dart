@@ -57,7 +57,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   /// **저장된 나의 학과 설정 불러오기**
   Future<void> _loadMajorPreference() async {
     setState(() {
-      _currentMajorKey = SharedPrefsManager().getMajorKey();
+      _currentMajorKey = SharedPrefsManager().getPreference('major-key');
       if (_currentMajorKey != null) {
         _currentMajor = MajorUtils.translateToKorean(_currentMajorKey);
       }
@@ -105,7 +105,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
       await SharedPrefsManager().setMajorKey(currentMajorKey, newMajorKey);
 
       final isMajorNotificationOn =
-          SharedPrefsManager().getMajorNotificationOn();
+          SharedPrefsManager().getPreference('major-notification');
       if (isMajorNotificationOn) {
         await FirebaseService().updateMajorSubscription();
       }
