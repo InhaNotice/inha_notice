@@ -41,7 +41,7 @@ class FirebaseService {
 
   /// **캐싱된 구독된 토픽 목록 가져오기**
   Set<String> get _subscribedTopics =>
-      SharedPrefsManager().getSubscribedTopics();
+      SharedPrefsManager().getPreference('subscribed_topics');
 
   /// **Firebase 초기화 및 설정**
   /// 순서 보장: 알림 권한 요청 -> 'all-users' 구독 -> 플랫폼별 설정 -> FCM 토큰 출력
@@ -144,12 +144,14 @@ class FirebaseService {
 
   /// **'all-users' 토픽(앱 공지사항) 구독 (최초 1회)**
   Future<void> _subscribeToAppAnnouncements() async {
-    bool isSubscribedUsers = SharedPrefsManager().getIsSubscribedToAllUsers();
+    bool isSubscribedUsers =
+        SharedPrefsManager().getPreference('isSubscribedToAllUsers');
 
     if (!isSubscribedUsers) {
       try {
         await _messaging.subscribeToTopic('all-users');
-        await SharedPrefsManager().setIsSubscribedToAllUsers(true);
+        await SharedPrefsManager()
+            .setPreference('isSubscribedToAllUsers', true);
         logger.d("✅ Successfully subscribed to 'all-users' topic");
       } catch (e) {
         logger.e("🚨 Error subscribing to 'all-users' topic: $e");
@@ -191,8 +193,9 @@ class FirebaseService {
   Future<void> updateMajorSubscription() async {
     try {
       final String? previousMajorKey =
-          SharedPrefsManager().getPreviousMajorKey();
-      final String? nextMajorKey = SharedPrefsManager().getMajorKey();
+          SharedPrefsManager().getPreference('previous-major-key');
+      final String? nextMajorKey =
+          SharedPrefsManager().getPreference('major-key');
 
       if (nextMajorKey == null) {
         logger.w('🚨 Major key is null, cannot subscribe.');
@@ -219,13 +222,13 @@ class FirebaseService {
   /// **구독 리스트 추가(내부 확인용)**
   void _addSubscribedTopic(String topic) {
     _subscribedTopics.add(topic);
-    SharedPrefsManager().setSubscribedTopics(_subscribedTopics);
+    SharedPrefsManager().setPreference('subscribed_topics', _subscribedTopics);
   }
 
   /// **구독 리스트 제거(내부 확인용)**
   void _removeSubscribedTopic(String topic) {
     _subscribedTopics.remove(topic);
-    SharedPrefsManager().setSubscribedTopics(_subscribedTopics);
+    SharedPrefsManager().setPreference('subscribed_topics', _subscribedTopics);
   }
 
   /// **푸시 알림 클릭 시 WebPage로 이동(현재는 iOS만 지원)**
