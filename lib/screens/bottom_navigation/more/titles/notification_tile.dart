@@ -67,7 +67,7 @@ class _NotificationTileState extends State<NotificationTile> {
       if (widget.topic == 'major-notification' && majorKey == null) {
         if (mounted) {
           BlockingDialog.dismiss(context);
-          ThemedSnackBar.succeedSnackBar(context, '학과를 먼저 설정해주세요!');
+          ThemedSnackBar.warnSnackBar(context, '학과를 먼저 설정해주세요!');
         }
         return;
       }
@@ -99,7 +99,7 @@ class _NotificationTileState extends State<NotificationTile> {
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(context, '알림 설정 중 오류가 발생했습니다.');
+        ThemedSnackBar.failSnackBar(context, '알림 설정 중 오류가 발생했습니다.');
       }
     } finally {
       if (mounted) {

@@ -118,7 +118,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     } catch (e) {
       logger.e('❌ Error saving major: $e');
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
+        ThemedSnackBar.failSnackBar(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
       }
     } finally {
       if (mounted) {

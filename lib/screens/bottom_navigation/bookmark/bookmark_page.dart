@@ -158,7 +158,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
               await BookmarkManager.clearAllBookmarks();
               setState(() {
                 if (bookmarkedNotices.isEmpty && mounted) {
-                  ThemedSnackBar.succeedSnackBar(context, '삭제할 북마크가 없습니다!');
+                  ThemedSnackBar.warnSnackBar(context, '삭제할 북마크가 없습니다!');
                   return;
                 }
                 bookmarkedNotices.clear();

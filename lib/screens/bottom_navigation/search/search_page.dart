@@ -119,7 +119,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _search() async {
     final query = _searchController.text.trim();
     if (query.length < 2) {
-      ThemedSnackBar.succeedSnackBar(context, '검색어는 두 글자 이상 입력해주세요.');
+      ThemedSnackBar.warnSnackBar(context, '검색어는 두 글자 이상 입력해주세요.');
       return;
     }
 
@@ -139,7 +139,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   /// **최근검색어 모두 삭제**
   void _clearRecentSearchTopics() async {
     if (!RecentSearchManager.isCachedSearchHistory()) {
-      ThemedSnackBar.succeedSnackBar(context, '최근검색어가 존재하지 않습니다!');
+      ThemedSnackBar.warnSnackBar(context, '최근검색어가 존재하지 않습니다!');
       return;
     }
     await RecentSearchManager.clearSearchHistory();
