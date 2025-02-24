@@ -13,7 +13,7 @@ import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 
 /// **NotificationTile**
 /// 이 클래스는 알림설정 페이지의 알림 온/오프의 동작을 정의합니다.
@@ -67,7 +67,7 @@ class _NotificationTileState extends State<NotificationTile> {
       if (widget.topic == 'major-notification' && majorKey == null) {
         if (mounted) {
           BlockingDialog.dismiss(context);
-          ThemedSnackbar.showSnackbar(context, '학과를 먼저 설정해주세요!');
+          ThemedSnackBar.succeedSnackBar(context, '학과를 먼저 설정해주세요!');
         }
         return;
       }
@@ -91,7 +91,7 @@ class _NotificationTileState extends State<NotificationTile> {
       });
 
       if (mounted) {
-        ThemedSnackbar.showSnackbar(
+        ThemedSnackBar.succeedSnackBar(
             context,
             value
                 ? '${widget.title}의 알림이 활성화되었습니다.'
@@ -99,7 +99,7 @@ class _NotificationTileState extends State<NotificationTile> {
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackbar.showSnackbar(context, '알림 설정 중 오류가 발생했습니다.');
+        ThemedSnackBar.succeedSnackBar(context, '알림 설정 중 오류가 발생했습니다.');
       }
     } finally {
       if (mounted) {
