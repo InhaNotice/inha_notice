@@ -15,7 +15,7 @@ import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/widgets/search/search_result_page.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 /// **SearchPage**
@@ -119,7 +119,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _search() async {
     final query = _searchController.text.trim();
     if (query.length < 2) {
-      ThemedSnackbar.showSnackbar(context, '검색어는 두 글자 이상 입력해주세요.');
+      ThemedSnackBar.warnSnackBar(context, '검색어는 두 글자 이상 입력해주세요.');
       return;
     }
 
@@ -139,12 +139,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   /// **최근검색어 모두 삭제**
   void _clearRecentSearchTopics() async {
     if (!RecentSearchManager.isCachedSearchHistory()) {
-      ThemedSnackbar.showSnackbar(context, '최근검색어가 존재하지 않습니다!');
+      ThemedSnackBar.warnSnackBar(context, '최근검색어가 존재하지 않습니다!');
       return;
     }
     await RecentSearchManager.clearSearchHistory();
     setState(() {
-      ThemedSnackbar.showSnackbar(context, '최근검색어를 모두 삭제하였습니다!');
+      ThemedSnackBar.succeedSnackBar(context, '최근검색어를 모두 삭제하였습니다!');
     });
   }
 
@@ -152,7 +152,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _removeRecentSearchTopic(String query) async {
     await RecentSearchManager.removeRecentSearch(query);
     setState(() {
-      ThemedSnackbar.showSnackbar(context, '$query을(를) 삭제하였습니다!');
+      ThemedSnackBar.succeedSnackBar(context, '$query을(를) 삭제하였습니다!');
     });
   }
 
