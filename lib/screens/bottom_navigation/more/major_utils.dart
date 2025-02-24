@@ -95,10 +95,7 @@ class MajorUtils {
       '생명공학과': 'BIO',
       '생명과학과': 'BIOLOGY',
     },
-    '국제학부': {
-      'IBT학과': 'SGCSA',
-      'ISE학과': 'SGCSB',
-    },
+    '국제학부': {'IBT학과': 'SGCSA', 'ISE학과': 'SGCSB', 'KLC학과': 'SGCSC'},
     '미래융합대학': {
       '메카트로닉스공학과': 'FCCOLLEGEA',
       '소프트웨어융합공학과': 'FCCOLLEGEB',
