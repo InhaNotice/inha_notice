@@ -36,6 +36,7 @@ class MajorUtils {
       '전기공학과': 'ELECTRICAL',
       '전자공학과': 'EE',
       '정보통신공학과': 'ICE',
+      '전기전자공학부': 'EEE',
     },
     '자연과학대학': {
       '수학과': 'MATH',
