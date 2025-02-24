@@ -10,7 +10,6 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/titles/notification_tile.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
 /// **NotificationSettingPage**
@@ -52,35 +51,29 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
                 NotificationTile(
                   title: '학사',
                   description: '인하대학교 공식 사이트의 알림을 받을 수 있습니다.',
-                  topic: 'all-notices',
-                  getPreference: SharedPrefsManager().getAcademicNotificationOn,
-                  setPreference: SharedPrefsManager().setAcademicNotificationOn,
+                  prefKey: 'academic-notification',
+                  fcmTopic: 'all-notices',
                 ),
                 const SizedBox(height: 8),
                 NotificationTile(
                   title: '학과',
                   description: '현재 설정된 학과로 알림을 받을 수 있습니다.',
-                  topic: 'major-notification',
-                  getPreference: SharedPrefsManager().getMajorNotificationOn,
-                  setPreference: SharedPrefsManager().setMajorNotificationOn,
+                  prefKey: 'major-notification',
+                  fcmTopic: 'major-notification',
                 ),
                 const SizedBox(height: 8),
                 NotificationTile(
                   title: '국제처',
                   description: '국제처의 알림을 받을 수 있습니다.',
-                  topic: 'INTERNATIONAL',
-                  getPreference:
-                      SharedPrefsManager().getInternationalNotificationOn,
-                  setPreference:
-                      SharedPrefsManager().setInternationalNotificationOn,
+                  prefKey: 'INTERNATIONAL',
+                  fcmTopic: 'INTERNATIONAL',
                 ),
                 const SizedBox(height: 8),
                 NotificationTile(
                   title: 'SW중심대학사업단',
                   description: 'SW중심대학사업단의 알림을 받을 수 있습니다.',
-                  topic: 'SWUNIV',
-                  getPreference: SharedPrefsManager().getSWUnivNotificationOn,
-                  setPreference: SharedPrefsManager().setSWUnivNotificationOn,
+                  prefKey: 'SWUNIV',
+                  fcmTopic: 'SWUNIV',
                 ),
               ],
             ),

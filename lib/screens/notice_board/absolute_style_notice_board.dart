@@ -56,7 +56,7 @@ class _AbsoluteStyleNoticeBoardState
   }
 
   Future<void> loadMajorPreference() async {
-    majorKey = SharedPrefsManager().getMajorKey();
+    majorKey = SharedPrefsManager().getPreference('major-key');
     isMajorKey = (majorKey != null) ? true : false;
   }
 
