@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-12
+ * Latest Updated Date: 2025-02-24
  */
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,17 +71,18 @@ class SharedPrefsManager {
     }
   }
 
-  Future<void> setMajorKey(String? currentMajorKey, String newMajorKey) async {
+  /// **설정 값 가져오기**
+  dynamic getPreference(String key) {
+    return _cachedPrefs[key];
+  }
+
+  Future<void> setMajorPreference(
+      String? currentMajorKey, String newMajorKey) async {
     if (currentMajorKey != null) {
       setPreference('previous-major-key', currentMajorKey);
     }
     setPreference('major-key', newMajorKey);
     logger.d(
         "${runtimeType.toString()} - setMajorKey() 성공: '$currentMajorKey' to '$newMajorKey'");
-  }
-
-  /// **설정 값 가져오기**
-  dynamic getPreference(String key) {
-    return _cachedPrefs[key];
   }
 }

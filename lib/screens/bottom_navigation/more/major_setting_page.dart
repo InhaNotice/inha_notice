@@ -102,7 +102,8 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     String newMajorKey = MajorUtils.translateToEnglish(major);
 
     try {
-      await SharedPrefsManager().setMajorKey(currentMajorKey, newMajorKey);
+      await SharedPrefsManager()
+          .setMajorPreference(currentMajorKey, newMajorKey);
 
       final isMajorNotificationOn =
           SharedPrefsManager().getPreference('major-notification');
