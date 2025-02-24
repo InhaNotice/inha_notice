@@ -20,17 +20,16 @@ import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 class NotificationTile extends StatefulWidget {
   final String title;
   final String description;
-  final String topic;
-  final bool Function() getPreference;
-  final Future<void> Function(bool) setPreference;
+  final String prefKey;
+  final String fcmTopic;
 
-  const NotificationTile(
-      {super.key,
-      required this.title,
-      required this.description,
-      required this.topic,
-      required this.getPreference,
-      required this.setPreference});
+  const NotificationTile({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.prefKey,
+    required this.fcmTopic,
+  });
 
   @override
   State<NotificationTile> createState() => _NotificationTileState();
@@ -48,7 +47,7 @@ class _NotificationTileState extends State<NotificationTile> {
 
   Future<void> _loadNotificationPreference() async {
     setState(() {
-      _isNotificationOn = widget.getPreference();
+      _isNotificationOn = SharedPrefsManager().getPreference(widget.prefKey);
     });
   }
 
@@ -62,9 +61,9 @@ class _NotificationTileState extends State<NotificationTile> {
 
     try {
       // title이 학과일 경우에만 실행
-      final majorKey = SharedPrefsManager().getMajorKey();
+      final majorKey = SharedPrefsManager().getPreference('major-key');
 
-      if (widget.topic == 'major-notification' && majorKey == null) {
+      if (widget.fcmTopic == 'major-notification' && majorKey == null) {
         if (mounted) {
           BlockingDialog.dismiss(context);
           ThemedSnackBar.warnSnackBar(context, '학과를 먼저 설정해주세요!');
@@ -75,16 +74,16 @@ class _NotificationTileState extends State<NotificationTile> {
       final firebaseService = FirebaseService();
 
       if (value) {
-        await (widget.topic == 'major-notification'
+        await (widget.fcmTopic == 'major-notification'
             ? firebaseService.updateMajorSubscription()
-            : firebaseService.subscribeToTopic(widget.topic));
+            : firebaseService.subscribeToTopic(widget.fcmTopic));
       } else {
-        await (widget.topic == 'major-notification'
+        await (widget.fcmTopic == 'major-notification'
             ? firebaseService.unsubscribeFromTopic(majorKey!)
-            : firebaseService.unsubscribeFromTopic(widget.topic));
+            : firebaseService.unsubscribeFromTopic(widget.fcmTopic));
       }
 
-      await widget.setPreference(value);
+      await SharedPrefsManager().setPreference(widget.prefKey, value);
 
       setState(() {
         _isNotificationOn = value;
