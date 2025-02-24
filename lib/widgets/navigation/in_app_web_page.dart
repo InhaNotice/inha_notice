@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,7 +51,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackbar.showSnackbar(context, '웹 페이지 로딩에 실패하였습니다.');
+        ThemedSnackBar.succeedSnackBar(context, '웹 페이지 로딩에 실패하였습니다.');
       }
     } finally {
       if (mounted) {
@@ -93,10 +93,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
       /// Android는 flutter_inappwebview 사용
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme
-              .of(context)
-              .appBarTheme
-              .backgroundColor,
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           centerTitle: true,
           title: Text(
             widget.url,
@@ -106,14 +103,8 @@ class _InAppWebPageState extends State<InAppWebPage> {
               fontFamily: Font.kDefaultFont,
               fontWeight: FontWeight.bold,
               fontSize: 16,
-              color: Theme
-                  .of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.color ??
-                  Theme
-                      .of(context)
-                      .defaultColor,
+              color: Theme.of(context).textTheme.bodyMedium?.color ??
+                  Theme.of(context).defaultColor,
             ),
           ),
           actions: [
@@ -140,7 +131,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
                 );
 
                 if (mounted) {
-                  ThemedSnackbar.showSnackbar(
+                  ThemedSnackBar.succeedSnackBar(
                     context,
                     _isDesktopMode ? '데스크탑 모드로 전환되었습니다.' : '모바일 모드로 전환되었습니다.',
                   );
@@ -172,12 +163,9 @@ class _InAppWebPageState extends State<InAppWebPage> {
           onLoadStop: (controller, url) async {
             // 데스크탑 모드일 때 강제로 PC 뷰포트로 변경
             if (_isDesktopMode) {
-              double screenWidth = MediaQuery
-                  .of(context)
-                  .size
-                  .width;
+              double screenWidth = MediaQuery.of(context).size.width;
               int desktopWidth =
-              screenWidth < 1200 ? 1200 : screenWidth.toInt();
+                  screenWidth < 1200 ? 1200 : screenWidth.toInt();
 
               await controller.evaluateJavascript(source: """
       document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=$desktopWidth');

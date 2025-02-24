@@ -15,7 +15,7 @@ import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 /// **MajorSettingPage**
@@ -110,7 +110,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
         await FirebaseService().updateMajorSubscription();
       }
       if (mounted) {
-        ThemedSnackbar.showSnackbar(context, '$major로 설정되었습니다!');
+        ThemedSnackBar.succeedSnackBar(context, '$major로 설정되었습니다!');
       }
       if (mounted) {
         Navigator.pop(context);
@@ -118,7 +118,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
     } catch (e) {
       logger.e('❌ Error saving major: $e');
       if (mounted) {
-        ThemedSnackbar.showSnackbar(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
+        ThemedSnackBar.succeedSnackBar(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
       }
     } finally {
       if (mounted) {

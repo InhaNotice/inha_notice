@@ -15,7 +15,7 @@ import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snackbar.dart';
+import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 /// **BookmarkPage**
@@ -158,12 +158,12 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
               await BookmarkManager.clearAllBookmarks();
               setState(() {
                 if (bookmarkedNotices.isEmpty && mounted) {
-                  ThemedSnackbar.showSnackbar(context, '삭제할 북마크가 없습니다!');
+                  ThemedSnackBar.succeedSnackBar(context, '삭제할 북마크가 없습니다!');
                   return;
                 }
                 bookmarkedNotices.clear();
                 if (mounted) {
-                  ThemedSnackbar.showSnackbar(context, '모두 삭제되었습니다.');
+                  ThemedSnackBar.succeedSnackBar(context, '모두 삭제되었습니다.');
                 }
               });
             },
