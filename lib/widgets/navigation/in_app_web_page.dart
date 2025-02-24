@@ -51,7 +51,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(context, '웹 페이지 로딩에 실패하였습니다.');
+        ThemedSnackBar.failSnackBar(context, '웹 페이지 로딩에 실패하였습니다.');
       }
     } finally {
       if (mounted) {
