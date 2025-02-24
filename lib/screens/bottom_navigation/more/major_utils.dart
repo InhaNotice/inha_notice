@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-24
  */
 import 'package:logger/logger.dart';
 
@@ -26,7 +26,6 @@ class MajorUtils {
       '조선해양공학과': 'NAOE',
       '산업경영공학과': 'IE',
       '화학공학과': 'CHEMENG',
-      '생명공학과': 'BIO',
       '고분자공학과': 'INHAPOLY',
       '신소재공학과': 'DMSE',
       '사회인프라공학과': 'CIVIL',
@@ -37,18 +36,19 @@ class MajorUtils {
       '전기공학과': 'ELECTRICAL',
       '전자공학과': 'EE',
       '정보통신공학과': 'ICE',
+      '전기전자공학부': 'EEE',
+      '반도체시스템공학과': 'SSE',
     },
     '자연과학대학': {
       '수학과': 'MATH',
       '통계학과': 'STATISTICS',
       '물리학과': 'PHYSICS',
       '화학과': 'CHEMISTRY',
-      '생명과학과': 'BIOLOGY',
+      '식품영양학과': 'FOODNUTRI',
     },
     '경영대학': {
-      '식품영양학과': 'FOODNUTRI',
       '경영학과': 'BIZ',
-      '글로벌금융학과': 'GFIBA',
+      '파이낸스경영학과': 'GFIBA',
       '아태물류학과': 'APSL',
       '국제통상학과': 'STAR',
     },
@@ -80,7 +80,9 @@ class MajorUtils {
       '문화콘텐츠문화경영학과': 'CULTURECM',
     },
     '의과대학': {
-      '의예과': 'MEDICINE',
+      '의예과(의학과)': 'MEDICINE',
+    },
+    '간호대학': {
       '간호학과': 'NURSING',
     },
     '예술체육대학': {
@@ -89,10 +91,13 @@ class MajorUtils {
       '연극영화학과': 'THEATREFILM',
       '의류디자인학과': 'FASHION',
     },
-    '국제학부': {
-      'IBT학과': 'SGCSA',
-      'ISE학과': 'SGCSB',
+    '바이오시스템융합학부': {
+      '생명공학과': 'BIO',
+      '생명과학과': 'BIOLOGY',
+      '바이오제약공학과': 'BIOPHARM',
+      '첨단바이오의약학과': 'BIOMEDICAL',
     },
+    '국제학부': {'IBT학과': 'SGCSA', 'ISE학과': 'SGCSB', 'KLC학과': 'SGCSC'},
     '미래융합대학': {
       '메카트로닉스공학과': 'FCCOLLEGEA',
       '소프트웨어융합공학과': 'FCCOLLEGEB',
@@ -106,8 +111,12 @@ class MajorUtils {
       '디자인테크놀리지학과': 'DESIGNTECH',
       '컴퓨터공학과': 'CSE',
     },
-    '프런티어학부대학': {
-      '자유전공학부': 'LAS',
+    '프런티어창의대학': {
+      '자유전공융합학부': 'LAS',
+      '공학융합학부': 'ECS',
+      '자연과학융합학부': 'NCS',
+      '사회과학융합학부': 'CVGSOSCI',
+      '인문융합학부': 'CVGHUMAN',
     }
   };
 
