@@ -7,10 +7,10 @@ class NoticeRefreshHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClassicHeader(
-      idleText: "공지사항 새로 불러오려면 당겨주세요",
-      releaseText: "놓으면 최신 공지사항을 불러옵니다",
-      refreshingText: "공지사항을 불러오는 중...",
-      completeText: "공지사항 업데이트 완료!",
+      idleText: "최신 공지사항을 보려면 부드럽게 당겨주세요.",
+      releaseText: "놓으면 따뜻한 소식이 도착해요.",
+      refreshingText: "잠시만 기다려주세요, 공지사항을 가져오는 중이에요.",
+      completeText: "공지사항이 업데이트 되었어요. 확인해보세요!",
     );
   }
 }
