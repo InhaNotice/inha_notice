@@ -72,15 +72,6 @@ class _NotificationTileState extends State<NotificationTile> {
     });
 
     try {
-      // title이 학과일 경우에만 실행
-      if (widget.prefKey == 'major-notification' && majorKey == null) {
-        if (mounted) {
-          BlockingDialog.dismiss(context);
-          ThemedSnackBar.warnSnackBar(context, '학과를 먼저 설정해주세요!');
-        }
-        return;
-      }
-
       if (value) {
         await FirebaseService().subscribeToTopic(widget.fcmTopic);
       } else {
