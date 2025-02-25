@@ -17,11 +17,11 @@ import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_s
 import 'package:inha_notice/services/absolute_style_scraper/whole_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/buttons/refresh_button.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
 import 'package:logger/logger.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **AbsoluteStyleNoticeBoard**
 ///
@@ -42,17 +42,25 @@ class AbsoluteStyleNoticeBoard extends BaseNoticeBoard {
 
 class _AbsoluteStyleNoticeBoardState
     extends BaseNoticeBoardState<AbsoluteStyleNoticeBoard> {
+  final logger = Logger();
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   late BaseAbsoluteStyleNoticeScraper noticeScraper;
   late String? majorKey;
   bool showHeadlines = false;
   bool showGeneral = true;
   bool isMajorKey = false;
-  final logger = Logger();
 
   @override
   void initState() {
     super.initState();
     initialize();
+  }
+
+  /// **Refresh 컨트롤러(새로운 공지 불러옴)**
+  void _onRefresh() async {
+    await loadNotices(PageSettings.kInitialAbsolutePage);
+    _refreshController.refreshCompleted();
   }
 
   Future<void> loadMajorPreference() async {
@@ -168,11 +176,6 @@ class _AbsoluteStyleNoticeBoardState
               option: 'general',
               isSelected: showGeneral,
               onTap: toggleOption),
-          const Spacer(),
-          // 공지사항 새로고침 버튼
-          RefreshButton(onTap: () {
-            loadNotices(PageSettings.kInitialAbsolutePage);
-          }),
         ],
       ),
     );
@@ -249,26 +252,37 @@ class _AbsoluteStyleNoticeBoardState
                     ),
                   )
                 // 모든 noticeType에 대응
-                : ListView.builder(
-                    // 중요 공지와 일반 공지 중 하나만 선택이 가능
-                    itemCount: showHeadlines
-                        ? notices['headline'].length
-                        : notices['general'].length,
-                    itemBuilder: (context, index) {
-                      final notice = showHeadlines
-                          ? notices['headline'][index]
-                          : notices['general'][index];
-                      final isRead = isNoticeRead(notice['id'].toString());
-                      final isBookmarked =
-                          isNoticeBookmarked(notice['id'].toString());
-                      return NoticeListTile(
-                        notice: notice,
-                        isRead: isRead,
-                        isBookmarked: isBookmarked,
-                        markNoticeAsRead: markNoticeAsRead,
-                        toggleBookmark: toggleBookmark,
-                      );
-                    },
+                : SmartRefresher(
+                    controller: _refreshController,
+                    onRefresh: _onRefresh,
+                    enablePullDown: true,
+                    header: ClassicHeader(
+                      idleText: "공지사항 새로 불러오려면 당겨주세요",
+                      releaseText: "놓으면 최신 공지사항을 불러옵니다",
+                      refreshingText: "공지사항을 불러오는 중...",
+                      completeText: "공지사항 업데이트 완료!",
+                    ),
+                    child: ListView.builder(
+                      // 중요 공지와 일반 공지 중 하나만 선택이 가능
+                      itemCount: showHeadlines
+                          ? notices['headline'].length
+                          : notices['general'].length,
+                      itemBuilder: (context, index) {
+                        final notice = showHeadlines
+                            ? notices['headline'][index]
+                            : notices['general'][index];
+                        final isRead = isNoticeRead(notice['id'].toString());
+                        final isBookmarked =
+                            isNoticeBookmarked(notice['id'].toString());
+                        return NoticeListTile(
+                          notice: notice,
+                          isRead: isRead,
+                          isBookmarked: isBookmarked,
+                          markNoticeAsRead: markNoticeAsRead,
+                          toggleBookmark: toggleBookmark,
+                        );
+                      },
+                    ),
                   ),
       ),
     );
