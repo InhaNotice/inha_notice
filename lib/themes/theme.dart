@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 
@@ -85,6 +85,9 @@ extension BorderColors on ThemeData {
 extension BoxBorderColors on ThemeData {
   Color get boxBorderColor =>
       brightness == Brightness.light ? Colors.black26 : Colors.white24;
+
+  Color? get boxTextFieldBackgroundColor =>
+      brightness == Brightness.light ? Colors.grey[200] : Colors.grey[700];
 }
 
 /// **SnackBarColors**
@@ -128,9 +131,8 @@ extension PageButtonColors on ThemeData {
 /// **TagColors**
 /// 태그 색상을 정의합니다.
 extension TagColors on ThemeData {
-  Color get tagBackgroundColor => brightness == Brightness.light
-      ? const Color(0xFF90CAF9)
-      : Colors.blueGrey[800]!;
+  Color get tagBackgroundColor =>
+      brightness == Brightness.light ? Colors.white : const Color(0xFF222222);
 }
 
 /// **TextFieldColors**

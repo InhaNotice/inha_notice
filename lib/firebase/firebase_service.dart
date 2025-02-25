@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-17
+ * Latest Updated Date: 2025-02-25
  */
 import 'dart:io';
 
@@ -189,31 +189,6 @@ class FirebaseService {
     }
   }
 
-  /// **이전 학과 토픽 해제 후 새로운 학과 토픽 구독하는 함수**
-  Future<void> updateMajorSubscription() async {
-    try {
-      final String? previousMajorKey =
-          SharedPrefsManager().getPreference('previous-major-key');
-      final String? nextMajorKey =
-          SharedPrefsManager().getPreference('major-key');
-
-      if (nextMajorKey == null) {
-        logger.w('🚨 Major key is null, cannot subscribe.');
-        return;
-      }
-
-      // `unsubscribeFromTopic` 메서드 내부에서 구독 여부 체크 후 실행하므로 중복 방지 가능
-      if (previousMajorKey != null && previousMajorKey != nextMajorKey) {
-        await unsubscribeFromTopic(previousMajorKey);
-      }
-
-      // 새로운 토픽 구독
-      await subscribeToTopic(nextMajorKey);
-    } catch (e) {
-      logger.e('🚨 Error handling FCM topic subscription: $e');
-    }
-  }
-
   /// **현재 토픽 구독 여부 확인(로컬에 저장된 리스트를 통해 확인)**
   bool _isSubscribedToTopic(String topic) {
     return _subscribedTopics.contains(topic);
@@ -231,7 +206,7 @@ class FirebaseService {
     SharedPrefsManager().setPreference('subscribed_topics', _subscribedTopics);
   }
 
-  /// **푸시 알림 클릭 시 WebPage로 이동(현재는 iOS만 지원)**
+  /// **푸시 알림 클릭 시 WebPage로 이동**
   void _handleNotificationOpenedApp(RemoteMessage message) {
     _navigateToNotification(message, true);
   }

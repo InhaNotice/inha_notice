@@ -5,8 +5,9 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-20
+ * Latest Updated Date: 2025-02-25
  */
+
 import 'package:flutter/material.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -26,7 +27,7 @@ class NotificationTile extends StatefulWidget {
   const NotificationTile({
     super.key,
     required this.title,
-    required this.description,
+    this.description = Font.kEmptyString,
     required this.prefKey,
     required this.fcmTopic,
   });
@@ -38,6 +39,8 @@ class NotificationTile extends StatefulWidget {
 class _NotificationTileState extends State<NotificationTile> {
   bool _isProcessing = false;
   bool _isNotificationOn = false;
+  bool _isSynchronizedWithMajor = false;
+  String? majorKey;
 
   @override
   void initState() {
@@ -45,9 +48,18 @@ class _NotificationTileState extends State<NotificationTile> {
     _loadNotificationPreference();
   }
 
+  /// **알림 토글의 설정값을 불러옴**
   Future<void> _loadNotificationPreference() async {
     setState(() {
-      _isNotificationOn = SharedPrefsManager().getPreference(widget.prefKey);
+      majorKey = SharedPrefsManager().getPreference('major-key');
+      // 현재 설정된 나의 학과인 경우, 나의 학과의 설정된 불 값으로 반영
+      if (majorKey != null && widget.prefKey == majorKey) {
+        _isSynchronizedWithMajor = true;
+        _isNotificationOn =
+            SharedPrefsManager().getPreference('major-notification');
+      } else {
+        _isNotificationOn = SharedPrefsManager().getPreference(widget.prefKey);
+      }
     });
   }
 
@@ -61,9 +73,7 @@ class _NotificationTileState extends State<NotificationTile> {
 
     try {
       // title이 학과일 경우에만 실행
-      final majorKey = SharedPrefsManager().getPreference('major-key');
-
-      if (widget.fcmTopic == 'major-notification' && majorKey == null) {
+      if (widget.prefKey == 'major-notification' && majorKey == null) {
         if (mounted) {
           BlockingDialog.dismiss(context);
           ThemedSnackBar.warnSnackBar(context, '학과를 먼저 설정해주세요!');
@@ -71,18 +81,15 @@ class _NotificationTileState extends State<NotificationTile> {
         return;
       }
 
-      final firebaseService = FirebaseService();
-
       if (value) {
-        await (widget.fcmTopic == 'major-notification'
-            ? firebaseService.updateMajorSubscription()
-            : firebaseService.subscribeToTopic(widget.fcmTopic));
+        await FirebaseService().subscribeToTopic(widget.fcmTopic);
       } else {
-        await (widget.fcmTopic == 'major-notification'
-            ? firebaseService.unsubscribeFromTopic(majorKey!)
-            : firebaseService.unsubscribeFromTopic(widget.fcmTopic));
+        await FirebaseService().unsubscribeFromTopic(widget.fcmTopic);
       }
 
+      if (_isSynchronizedWithMajor) {
+        await SharedPrefsManager().setPreference('major-notification', value);
+      }
       await SharedPrefsManager().setPreference(widget.prefKey, value);
 
       setState(() {
@@ -128,23 +135,28 @@ class _NotificationTileState extends State<NotificationTile> {
                     Theme.of(context).defaultColor,
               ),
             ),
-            Switch(
-              value: _isNotificationOn,
-              onChanged: _toggleNotification,
-              activeColor: Theme.of(context).primaryColorLight,
+            Transform.scale(
+              scale: 0.9,
+              child: Switch.adaptive(
+                value: _isNotificationOn,
+                onChanged: _toggleNotification,
+                activeColor: Theme.of(context).primaryColorLight,
+              ),
             ),
           ],
         ),
-        Text(
-          widget.description,
-          style: TextStyle(
-            fontFamily: Font.kDefaultFont,
-            fontSize: 13,
-            fontWeight: FontWeight.normal,
-            color: Theme.of(context).textTheme.bodyMedium?.color ??
-                Theme.of(context).defaultColor,
+        // description은 선택
+        if (widget.description.isNotEmpty)
+          Text(
+            widget.description,
+            style: TextStyle(
+              fontFamily: Font.kDefaultFont,
+              fontSize: 13,
+              fontWeight: FontWeight.normal,
+              color: Theme.of(context).textTheme.bodyMedium?.color ??
+                  Theme.of(context).defaultColor,
+            ),
           ),
-        ),
       ],
     );
   }

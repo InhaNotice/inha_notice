@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-20
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -152,7 +152,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _removeRecentSearchTopic(String query) async {
     await RecentSearchManager.removeRecentSearch(query);
     setState(() {
-      ThemedSnackBar.succeedSnackBar(context, '$query을(를) 삭제하였습니다!');
+      ThemedSnackBar.succeedSnackBar(context, '$query이 삭제하였습니다!');
     });
   }
 
@@ -184,8 +184,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       height: 50.0,
       decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(8.0),
+        color: Theme.of(context).boxTextFieldBackgroundColor,
+        borderRadius: BorderRadius.circular(12.0),
       ),
       child: Row(
         children: [

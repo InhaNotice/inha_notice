@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/major_setting/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';

@@ -5,16 +5,16 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/major_setting_page.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/notification_setting_page.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/titles/more_navigation_tile.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/titles/more_non_navigation_tile.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/titles/more_title_tile.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/titles/more_web_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/major_setting/major_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_non_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_title_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_web_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
 /// **MorePage**
@@ -64,7 +64,7 @@ class _MorePageState extends State<MorePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              MoreTitleTile(title: '공지사항'),
+              MoreTitleTile(text: '공지사항', fontSize: 20),
               MoreNavigationTile(
                   title: '학과 설정',
                   icon: Icons.school_outlined,
@@ -92,7 +92,7 @@ class _MorePageState extends State<MorePage> {
                   width: double.infinity,
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
-              MoreTitleTile(title: '앱 정보'),
+              MoreTitleTile(text: '앱 정보', fontSize: 20),
               MoreNonNavigationTile(
                   title: '앱 버전',
                   description: _appVersion,

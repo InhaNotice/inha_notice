@@ -5,34 +5,36 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/widgets/navigation/web_navigator.dart';
 
-/// **MoreNavigationTile**
-/// 이 클래스는 더보기 페이지의 다른 페이지로 이동하는 타일을 정의합니다.
-class MoreNavigationTile extends StatefulWidget {
+/// **MoreWebNavigationTile**
+/// 이 클래스는 더보기 페이지의 웹 네이게이션 타일을 정의하는 클래스입니다.
+class MoreWebNavigationTile extends StatefulWidget {
   final String title;
+  final String url;
   final IconData icon;
-  final VoidCallback onTap;
 
-  const MoreNavigationTile(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.onTap});
+  const MoreWebNavigationTile(
+      {super.key, required this.title, required this.url, required this.icon});
 
   @override
-  State<MoreNavigationTile> createState() => _MoreNavigationTileState();
+  State<MoreWebNavigationTile> createState() => _MoreWebNavigationTileState();
 }
 
-class _MoreNavigationTileState extends State<MoreNavigationTile> {
+class _MoreWebNavigationTileState extends State<MoreWebNavigationTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: () async {
+        if (mounted) {
+          await WebNavigator.navigate(context: context, url: widget.url);
+        }
+      },
       child: Container(
         height: 50.0,
         decoration: BoxDecoration(
