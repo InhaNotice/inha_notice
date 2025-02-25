@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +14,8 @@ import 'package:inha_notice/screens/bottom_navigation/bookmark/bookmark_page.dar
 import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
-
-import '../../widgets/navigation/web_navigator.dart';
+import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
+import 'package:inha_notice/widgets/navigation/web_navigator.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});
@@ -44,6 +44,11 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
     RemoteMessage? initialMessage =
         await FirebaseService().getInitialNotification();
     final String? initialLink = initialMessage?.data['link'];
+
+    // 읽은 공지로 추가 (백그라운드 진행)
+    if (initialMessage != null && initialMessage.data.containsKey('id')) {
+      ReadNoticeManager.addReadNotice(initialMessage.data['id']);
+    }
 
     if (initialLink != null) {
       if (mounted) {
