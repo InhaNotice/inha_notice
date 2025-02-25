@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -14,9 +14,10 @@ import 'package:inha_notice/themes/theme.dart';
 /// **MoreTitleTile**
 /// 이 클래스는 더보기 페이지의 제목 타일을 정의하는 클래스입니다.
 class MoreTitleTile extends StatefulWidget {
-  final String title;
+  final String text;
+  final double fontSize;
 
-  const MoreTitleTile({super.key, required this.title});
+  const MoreTitleTile({super.key, required this.text, required this.fontSize});
 
   @override
   State<MoreTitleTile> createState() => _MoreTitleTileState();
@@ -35,10 +36,10 @@ class _MoreTitleTileState extends State<MoreTitleTile> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            widget.title,
+            widget.text,
             style: TextStyle(
               fontFamily: Font.kDefaultFont,
-              fontSize: 20,
+              fontSize: widget.fontSize,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.bodyMedium?.color ??
                   Theme.of(context).defaultColor,
