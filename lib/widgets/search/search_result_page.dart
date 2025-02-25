@@ -5,19 +5,20 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/constants/string_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/search/search_scraper.dart';
-import 'package:inha_notice/widgets/buttons/refresh_button.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
+import 'package:inha_notice/widgets/notice/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 import 'package:logger/logger.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **SearchResultPage**
 /// 이 클래스는 사용자 입력에 따른 검색 결과를 불러오는 클래스입니다.
@@ -34,6 +35,8 @@ class SearchResultPage extends BaseNoticeBoard {
 
 class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   final logger = Logger();
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   SearchScraper searchScraper = SearchScraper();
   bool showRank = false;
   bool showDate = true;
@@ -44,6 +47,12 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   void initState() {
     super.initState();
     initialize();
+  }
+
+  /// **Refresh 컨트롤러(새로운 공지 불러옴)**
+  void _onRefresh() async {
+    await loadNotices(PageSettings.kInitialAbsolutePage);
+    _refreshController.refreshCompleted();
   }
 
   @override
@@ -146,10 +155,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
               option: 'DATE',
               isSelected: showDate,
               onTap: toggleOption),
-          const Spacer(),
-          RefreshButton(onTap: () {
-            loadNotices(PageSettings.kInitialRelativePage);
-          }),
         ],
       ),
     );
@@ -162,21 +167,27 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                itemCount: notices['general'].length,
-                itemBuilder: (context, index) {
-                  final notice = notices['general'][index];
-                  final isRead = isNoticeRead(notice['id'].toString());
-                  final isBookmarked =
-                      isNoticeBookmarked(notice['id'].toString());
-                  return NoticeListTile(
-                    notice: notice,
-                    isRead: isRead,
-                    isBookmarked: isBookmarked,
-                    markNoticeAsRead: markNoticeAsRead,
-                    toggleBookmark: toggleBookmark,
-                  );
-                },
+            : SmartRefresher(
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                enablePullDown: true,
+                header: const NoticeRefreshHeader(),
+                child: ListView.builder(
+                  itemCount: notices['general'].length,
+                  itemBuilder: (context, index) {
+                    final notice = notices['general'][index];
+                    final isRead = isNoticeRead(notice['id'].toString());
+                    final isBookmarked =
+                        isNoticeBookmarked(notice['id'].toString());
+                    return NoticeListTile(
+                      notice: notice,
+                      isRead: isRead,
+                      isBookmarked: isBookmarked,
+                      markNoticeAsRead: markNoticeAsRead,
+                      toggleBookmark: toggleBookmark,
+                    );
+                  },
+                ),
               ),
       ),
     );
