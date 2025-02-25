@@ -5,18 +5,23 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
-import 'package:inha_notice/widgets/buttons/refresh_button.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+/// **RelativeStyleNoticeBoard**
+/// 이 클래스는 RelativeStyle의 공지사항을 제공하는 클래스입니다.
+///
+/// ### 주요 기능:
+/// - 지원 공지: 정석
 class RelativeStyleNoticeBoard extends BaseNoticeBoard {
   final String noticeType;
 
@@ -29,6 +34,8 @@ class RelativeStyleNoticeBoard extends BaseNoticeBoard {
 
 class _RelativeStyleNoticeBoardState
     extends BaseNoticeBoardState<RelativeStyleNoticeBoard> {
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   late BaseRelativeStyleNoticeScraper libraryScraper;
   bool showHeadlines = false;
   bool showGeneral = true;
@@ -37,6 +44,12 @@ class _RelativeStyleNoticeBoardState
   void initState() {
     super.initState();
     initialize();
+  }
+
+  /// **Refresh 컨트롤러(새로운 공지 불러옴)**
+  void _onRefresh() async {
+    await loadNotices(PageSettings.kInitialRelativePage);
+    _refreshController.refreshCompleted();
   }
 
   Future<void> initializeScraper() async {
@@ -69,6 +82,7 @@ class _RelativeStyleNoticeBoardState
     });
   }
 
+  /// **RelativeStyle의 공지를 불러옴**
   Future<void> loadNotices(int offset) async {
     setState(() {
       isLoading = true;
@@ -132,11 +146,6 @@ class _RelativeStyleNoticeBoardState
               option: 'general',
               isSelected: showGeneral,
               onTap: toggleOption),
-          const Spacer(),
-          // 공지사항 새로고침
-          RefreshButton(onTap: () {
-            loadNotices(PageSettings.kInitialRelativePage);
-          }),
         ],
       ),
     );
@@ -149,28 +158,33 @@ class _RelativeStyleNoticeBoardState
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
-                itemCount: showHeadlines
-                    ? notices['headline'].length
-                    : notices['general'].length,
-                itemBuilder: (context, index) {
-                  final notice = showHeadlines
-                      ? notices['headline'][index]
-                      : notices['general'][index];
-                  // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
-                  final isRead = isNoticeRead(notice['id'].toString());
-                  final isBookmarked =
-                      isNoticeBookmarked(notice['id'].toString());
-                  return NoticeListTile(
-                    notice: notice,
-                    isRead: isRead,
-                    isBookmarked: isBookmarked,
-                    markNoticeAsRead: markNoticeAsRead,
-                    // 읽음 처리 함수 전달
-                    toggleBookmark: toggleBookmark,
-                  );
-                },
+            : SmartRefresher(
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                enablePullDown: true,
+                child: ListView.builder(
+                  // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
+                  itemCount: showHeadlines
+                      ? notices['headline'].length
+                      : notices['general'].length,
+                  itemBuilder: (context, index) {
+                    final notice = showHeadlines
+                        ? notices['headline'][index]
+                        : notices['general'][index];
+                    // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
+                    final isRead = isNoticeRead(notice['id'].toString());
+                    final isBookmarked =
+                        isNoticeBookmarked(notice['id'].toString());
+                    return NoticeListTile(
+                      notice: notice,
+                      isRead: isRead,
+                      isBookmarked: isBookmarked,
+                      markNoticeAsRead: markNoticeAsRead,
+                      // 읽음 처리 함수 전달
+                      toggleBookmark: toggleBookmark,
+                    );
+                  },
+                ),
               ),
       ),
     );
