@@ -9,7 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/college_keys.dart';
+import 'package:inha_notice/constants/keys/college_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/texts/bold_title_text.dart';

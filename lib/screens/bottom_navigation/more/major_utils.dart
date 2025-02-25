@@ -7,7 +7,7 @@
  * Author: junho Kim
  * Latest Updated Date: 2025-02-25
 */
-import 'package:inha_notice/constants/major_keys.dart';
+import 'package:inha_notice/constants/keys/major_keys.dart';
 import 'package:logger/logger.dart';
 
 /// **MajorUtils**

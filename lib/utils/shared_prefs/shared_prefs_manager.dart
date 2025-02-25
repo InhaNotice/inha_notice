@@ -8,9 +8,9 @@
  * Latest Updated Date: 2025-02-25
  */
 
-import 'package:inha_notice/constants/college_keys.dart';
-import 'package:inha_notice/constants/graduate_school_keys.dart';
-import 'package:inha_notice/constants/major_keys.dart';
+import 'package:inha_notice/constants/keys/college_keys.dart';
+import 'package:inha_notice/constants/keys/graduate_school_keys.dart';
+import 'package:inha_notice/constants/keys/major_keys.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
