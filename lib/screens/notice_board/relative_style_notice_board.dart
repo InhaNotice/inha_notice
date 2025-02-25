@@ -162,6 +162,12 @@ class _RelativeStyleNoticeBoardState
                 controller: _refreshController,
                 onRefresh: _onRefresh,
                 enablePullDown: true,
+                header: ClassicHeader(
+                  idleText: "공지사항 새로 불러오려면 당겨주세요",
+                  releaseText: "놓으면 최신 공지사항을 불러옵니다",
+                  refreshingText: "공지사항을 불러오는 중...",
+                  completeText: "공지사항 업데이트 완료!",
+                ),
                 child: ListView.builder(
                   // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
                   itemCount: showHeadlines
