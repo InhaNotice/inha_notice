@@ -5,10 +5,9 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-25
  */
 import 'package:flutter/material.dart';
-import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -94,22 +93,25 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
   Future<void> _handleMajorSelection(String major) async {
     if (_isProcessing) return;
 
+    String newMajorKey = MajorUtils.translateToEnglish(major);
+
+    // 처음 학과 설정이 아니면서 변경사항이 없는 경우
+    if (currentMajorKey != null && currentMajorKey == newMajorKey) {
+      if (mounted) {
+        ThemedSnackBar.warnSnackBar(context, '이미 설정되어있습니다.');
+      }
+      return;
+    }
+
     setState(() {
       _isProcessing = true;
       BlockingDialog.show(context);
     });
 
-    String newMajorKey = MajorUtils.translateToEnglish(major);
-
     try {
       await SharedPrefsManager()
           .setMajorPreference(currentMajorKey, newMajorKey);
 
-      final isMajorNotificationOn =
-          SharedPrefsManager().getPreference('major-notification');
-      if (isMajorNotificationOn) {
-        await FirebaseService().updateMajorSubscription();
-      }
       if (mounted) {
         ThemedSnackBar.succeedSnackBar(context, '$major로 설정되었습니다!');
       }

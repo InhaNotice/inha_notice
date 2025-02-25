@@ -5,8 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-24
+ * Latest Updated Date: 2025-02-25
  */
+
+import 'package:inha_notice/constants/keys/college_keys.dart';
+import 'package:inha_notice/constants/keys/graduate_school_keys.dart';
+import 'package:inha_notice/constants/keys/major_keys.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,14 +24,146 @@ class SharedPrefsManager {
 
   // 캐싱 전략
   static final Map<String, dynamic> _cachedPrefs = {
+    // 구독 리스트
     'subscribed_topics': <String>{},
+    // 앱 전체 공지
     'isSubscribedToAllUsers': false,
+    // 이전학과, 현재학과
     'previous-major-key': null,
     'major-key': null,
+    // 학사알림
     'academic-notification': false,
+    // 학과알림
     'major-notification': false,
+
+    // 학과 스타일(국제처, SW)
     'INTERNATIONAL': false,
     'SWUNIV': false,
+
+    // 공과대학 (16)
+    MajorKeys.MECH: false,
+    MajorKeys.AEROSPACE: false,
+    MajorKeys.NAOE: false,
+    MajorKeys.IE: false,
+    MajorKeys.CHEMENG: false,
+    MajorKeys.INHAPOLY: false,
+    MajorKeys.DMSE: false,
+    MajorKeys.CIVIL: false,
+    MajorKeys.ENVIRONMENT: false,
+    MajorKeys.GEOINFO: false,
+    MajorKeys.ARCH: false,
+    MajorKeys.ENERES: false,
+    MajorKeys.ELECTRICAL: false,
+    MajorKeys.EE: false,
+    MajorKeys.ICE: false,
+    MajorKeys.EEE: false,
+    MajorKeys.SSE: false,
+
+    // 자연과학대학 (5)
+    MajorKeys.MATH: false,
+    MajorKeys.STATISTICS: false,
+    MajorKeys.PHYSICS: false,
+    MajorKeys.CHEMISTRY: false,
+    MajorKeys.FOODNUTRI: false,
+
+    // 경영대학 (4)
+    MajorKeys.BIZ: false,
+    MajorKeys.GFIBA: false,
+    MajorKeys.APSL: false,
+    MajorKeys.STAR: false,
+
+    // 사범대학 (6)
+    MajorKeys.KOREANEDU: false,
+    MajorKeys.DELE: false,
+    MajorKeys.SOCIALEDU: false,
+    MajorKeys.PHYSICALEDU: false,
+    MajorKeys.EDUCATION: false,
+    MajorKeys.MATHED: false,
+
+    // 사회과학대학 (7)
+    MajorKeys.PUBLICAD: false,
+    MajorKeys.POLITICAL: false,
+    MajorKeys.COMM: false,
+    MajorKeys.ECON: false,
+    MajorKeys.CONSUMER: false,
+    MajorKeys.CHILD: false,
+    MajorKeys.WELFARE: false,
+
+    // 문과대학 (8)
+    MajorKeys.KOREAN: false,
+    MajorKeys.HISTORY: false,
+    MajorKeys.PHILOSOPHY: false,
+    MajorKeys.CHINESE: false,
+    MajorKeys.JAPAN: false,
+    MajorKeys.ENGLISH: false,
+    MajorKeys.FRANCE: false,
+    MajorKeys.CULTURECM: false,
+
+    // 의과대학 (1)
+    MajorKeys.MEDICINE: false,
+
+    // 간호대학 (1)
+    MajorKeys.NURSING: false,
+
+    // 예술체육대학 (4)
+    MajorKeys.FINEARTS: false,
+    MajorKeys.SPORT: false,
+    MajorKeys.THEATREFILM: false,
+    MajorKeys.FASHION: false,
+
+    // 바이오시스템융합학부 (4)
+    MajorKeys.BIO: false,
+    MajorKeys.BIOLOGY: false,
+    MajorKeys.BIOPHARM: false,
+    MajorKeys.BIOMEDICAL: false,
+
+    // 국제학부 (3)
+    MajorKeys.SGCSA: false,
+    MajorKeys.SGCSB: false,
+    MajorKeys.SGCSC: false,
+
+    // 미래융합대학 (4)
+    MajorKeys.FCCOLLEGEA: false,
+    MajorKeys.FCCOLLEGEB: false,
+    MajorKeys.FCCOLLEGEC: false,
+    MajorKeys.FCCOLLEGED: false,
+
+    // 소프트웨어융합대학 (5)
+    MajorKeys.DOAI: false,
+    MajorKeys.SME: false,
+    MajorKeys.DATASCIENCE: false,
+    MajorKeys.DESIGNTECH: false,
+    MajorKeys.CSE: false,
+
+    // 프런티어창의대학 (5)
+    MajorKeys.LAS: false,
+    MajorKeys.ECS: false,
+    MajorKeys.NCS: false,
+    MajorKeys.CVGSOSCI: false,
+    MajorKeys.CVGHUMAN: false,
+
+    // 단과대 (9)
+    CollegeKeys.GENERALEDU: false,
+    CollegeKeys.ENGCOLLEAGE: false,
+    CollegeKeys.NSCOLLEAGE: false,
+    CollegeKeys.CBA: false,
+    CollegeKeys.EDCOLLEGE: false,
+    CollegeKeys.SSCOLLEGE: false,
+    CollegeKeys.HACOLLEGE: false,
+    CollegeKeys.ARTSPORTS: false,
+    CollegeKeys.SWCC: false,
+
+    // 대학원 (10)
+    GraduateSchoolKeys.GRAD: false,
+    GraduateSchoolKeys.ENGRAD: false,
+    GraduateSchoolKeys.MBA: false,
+    GraduateSchoolKeys.EDUGRAD: false,
+    GraduateSchoolKeys.ADMGRAD: false,
+    GraduateSchoolKeys.COUNSELGRAD: false,
+    GraduateSchoolKeys.GSPH: false,
+    GraduateSchoolKeys.ILS: false,
+    GraduateSchoolKeys.GSL: false,
+    GraduateSchoolKeys.IMIS: false,
   };
 
   factory SharedPrefsManager() => _instance;
