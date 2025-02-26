@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
@@ -14,7 +14,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/major_setting/major_s
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
-import 'package:inha_notice/services/absolute_style_scraper/whole_notice_scraper.dart';
+import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
@@ -30,7 +30,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///
 /// ### 주요 기능:
 /// - noticeType에 따른 공지사항 제공
-/// - 지원하는 noticeType: 학사공지, 학과공지, 국제처 공지, SW중심대학 공지
+/// - 지원하는 공지: 학사, 장학, 모집/채용, 학과, 국제처, SW중심대학사업단
 class AbsoluteStyleNoticeBoard extends BaseNoticeBoard {
   final String noticeType;
 
@@ -78,13 +78,22 @@ class _AbsoluteStyleNoticeBoardState
     }
 
     // 스크래퍼 초기화 진행
-    if (widget.noticeType == 'WHOLE') {
-      noticeScraper = WholeNoticeScraper();
-    } else if (widget.noticeType == 'MAJOR') {
-      noticeScraper = MajorStyleNoticeScraper(majorKey!);
-    } else {
-      noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
+    // 학사, 장학, 모집/채용
+    if (widget.noticeType == 'WHOLE' ||
+        widget.noticeType == 'SCHOLARSHIP' ||
+        widget.noticeType == 'RECRUITMENT') {
+      noticeScraper = WholeStyleNoticeScraper(widget.noticeType);
+      return;
     }
+
+    // 학과
+    if (widget.noticeType == 'MAJOR') {
+      noticeScraper = MajorStyleNoticeScraper(majorKey!);
+      return;
+    }
+
+    // 학과 스타일(국제처, SW중심대학사업단)
+    noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
   }
 
   /// 초기화 순서(순서를 보장해야함): 스크래퍼 초기화 -> 공지사항 불러오기
