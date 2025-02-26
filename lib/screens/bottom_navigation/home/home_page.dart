@@ -96,12 +96,12 @@ class HomePage extends StatelessWidget {
                 splashFactory: NoSplash.splashFactory,
                 highlightColor: Colors.transparent,
               ),
-              child: const TabBar(
+              child: TabBar(
                 tabAlignment: TabAlignment.start,
                 isScrollable: true,
-                indicatorColor: Color(0xFF12B8FF),
-                labelColor: Color(0xFF12B8FF),
-                unselectedLabelColor: Color(0xFFBAB6B6),
+                indicatorColor: Theme.of(context).tabIndicatorColor,
+                labelColor: Theme.of(context).tabLabelColor,
+                unselectedLabelColor: Theme.of(context).tabUnSelectedLabelColor,
                 labelStyle: TextStyle(
                   fontFamily: Font.kDefaultFont,
                   fontWeight: FontWeight.bold,
