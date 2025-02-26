@@ -15,7 +15,7 @@ final ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.white,
-    iconTheme: IconThemeData(color: Colors.black),
+    iconTheme: IconThemeData(color: Colors.black54),
     titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -64,7 +64,8 @@ extension DefaultColors on ThemeData {
 
   Color get fixedBlueText => Colors.blue;
 
-  Color get fixedLightGreyText => const Color(0xFFBAB6B6);
+  Color get fixedLightGreyText =>
+      brightness == Brightness.light ? Colors.black54 : Colors.white;
 }
 
 /// **TextColors**
@@ -149,4 +150,12 @@ extension TabColors on ThemeData {
 /// 텍스트 필드 색상을 정의합니다.
 extension TextFieldColors on ThemeData {
   Color? get textFieldTextColor => Colors.grey[500];
+}
+
+/// **DialogColors**
+/// 다이얼로그 관련 색상을 정의합니다.
+extension DialogColors on ThemeData {
+  Color? get dialogTextColor => Colors.blue;
+
+  Color? get dialogGreyTextColor => Colors.grey;
 }
