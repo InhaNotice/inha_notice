@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -13,7 +13,6 @@ import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/
 import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/search/search_result_page.dart';
 
 /// **HomePage**
 /// 이 클래스는 홈 페이지를 정의하는 클래스입니다.
@@ -118,7 +117,7 @@ class HomePage extends StatelessWidget {
                   Tab(text: '학사'),
                   Tab(text: '학과'),
                   Tab(text: '장학'),
-                  Tab(text: '채용'),
+                  Tab(text: '모집/채용'),
                   Tab(text: '정석'),
                   Tab(text: '국제처'),
                   Tab(text: 'SW중심대학사업단'),
@@ -135,8 +134,8 @@ class HomePage extends StatelessWidget {
           children: [
             AbsoluteStyleNoticeBoard(noticeType: 'WHOLE'),
             AbsoluteStyleNoticeBoard(noticeType: 'MAJOR'),
-            SearchResultPage(query: '장학', isSearchResultPage: false),
-            SearchResultPage(query: '채용', isSearchResultPage: false),
+            AbsoluteStyleNoticeBoard(noticeType: 'SCHOLARSHIP'),
+            AbsoluteStyleNoticeBoard(noticeType: 'RECRUITMENT'),
             RelativeStyleNoticeBoard(noticeType: 'LIBRARY'),
             AbsoluteStyleNoticeBoard(noticeType: 'INTERNATIONAL'),
             AbsoluteStyleNoticeBoard(noticeType: 'SWUNIV'),
