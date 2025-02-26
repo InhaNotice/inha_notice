@@ -9,12 +9,14 @@
  */
 
 abstract class SharedPrefKeys {
-  static const String subscribedTopics = 'subscribed_topics';
-  static const String isSubscribedToAllUsers = 'isSubscribedToAllUsers';
-  static const String previousMajorKey = 'previous-major-key';
-  static const String majorKey = 'major-key';
-  static const String academicNotification = 'academic-notification';
-  static const String majorNotification = 'major-notification';
+  static const String kSubscribedTopics = 'subscribed_topics';
+  static const String kIsSubscribedToAllUsers = 'isSubscribedToAllUsers';
+  static const String kAllUsers = 'all-users';
+  static const String kAllNotices = 'all-notices';
+  static const String kPreviousMajorKey = 'previous-major-key';
+  static const String kMajorKey = 'major-key';
+  static const String kAcademicNotification = 'academic-notification';
+  static const String kMajorNotification = 'major-notification';
   static const String INTERNATIONAL = 'INTERNATIONAL';
   static const String SWUNIV = 'SWUNIV';
 }

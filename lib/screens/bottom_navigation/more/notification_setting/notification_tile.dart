@@ -5,10 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -51,12 +52,12 @@ class _NotificationTileState extends State<NotificationTile> {
   /// **알림 토글의 설정값을 불러옴**
   Future<void> _loadNotificationPreference() async {
     setState(() {
-      majorKey = SharedPrefsManager().getPreference('major-key');
+      majorKey = SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
       // 현재 설정된 나의 학과인 경우, 나의 학과의 설정된 불 값으로 반영
       if (majorKey != null && widget.prefKey == majorKey) {
         _isSynchronizedWithMajor = true;
-        _isNotificationOn =
-            SharedPrefsManager().getPreference('major-notification');
+        _isNotificationOn = SharedPrefsManager()
+            .getPreference(SharedPrefKeys.kMajorNotification);
       } else {
         _isNotificationOn = SharedPrefsManager().getPreference(widget.prefKey);
       }
@@ -79,7 +80,8 @@ class _NotificationTileState extends State<NotificationTile> {
       }
 
       if (_isSynchronizedWithMajor) {
-        await SharedPrefsManager().setPreference('major-notification', value);
+        await SharedPrefsManager()
+            .setPreference(SharedPrefKeys.kMajorNotification, value);
       }
       await SharedPrefsManager().setPreference(widget.prefKey, value);
 
