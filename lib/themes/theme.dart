@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:flutter/material.dart';
 
@@ -133,6 +133,16 @@ extension PageButtonColors on ThemeData {
 extension TagColors on ThemeData {
   Color get tagBackgroundColor =>
       brightness == Brightness.light ? Colors.white : const Color(0xFF222222);
+}
+
+/// **TabColors**
+/// 탭 바의 색상을 정의합니다.
+extension TabColors on ThemeData {
+  Color? get tabIndicatorColor => Color(0xFF12B8FF);
+
+  Color? get tabLabelColor => Color(0xFF12B8FF);
+
+  Color? get tabUnSelectedLabelColor => Color(0xFFBAB6B6);
 }
 
 /// **TextFieldColors**
