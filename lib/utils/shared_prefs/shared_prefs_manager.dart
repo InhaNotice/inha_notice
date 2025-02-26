@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 
-import 'package:inha_notice/constants/keys/college_keys.dart';
-import 'package:inha_notice/constants/keys/graduate_school_keys.dart';
-import 'package:inha_notice/constants/keys/major_keys.dart';
+import 'package:inha_notice/constants/domain_keys/college_keys.dart';
+import 'package:inha_notice/constants/domain_keys/graduate_school_keys.dart';
+import 'package:inha_notice/constants/domain_keys/major_keys.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
