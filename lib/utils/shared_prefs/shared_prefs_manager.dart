@@ -11,6 +11,7 @@
 import 'package:inha_notice/constants/domain_keys/college_keys.dart';
 import 'package:inha_notice/constants/domain_keys/graduate_school_keys.dart';
 import 'package:inha_notice/constants/domain_keys/major_keys.dart';
+import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,20 +26,20 @@ class SharedPrefsManager {
   // 캐싱 전략
   static final Map<String, dynamic> _cachedPrefs = {
     // 구독 리스트
-    'subscribed_topics': <String>{},
+    SharedPrefKeys.kSubscribedTopics: <String>{},
     // 앱 전체 공지
-    'isSubscribedToAllUsers': false,
+    SharedPrefKeys.kIsSubscribedToAllUsers: false,
     // 이전학과, 현재학과
-    'previous-major-key': null,
-    'major-key': null,
+    SharedPrefKeys.kPreviousMajorKey: null,
+    SharedPrefKeys.kMajorKey: null,
     // 학사알림
-    'academic-notification': false,
+    SharedPrefKeys.kAcademicNotification: false,
     // 학과알림
-    'major-notification': false,
+    SharedPrefKeys.kMajorNotification: false,
 
     // 학과 스타일(국제처, SW)
-    'INTERNATIONAL': false,
-    'SWUNIV': false,
+    SharedPrefKeys.INTERNATIONAL: false,
+    SharedPrefKeys.SWUNIV: false,
 
     // 공과대학 (16)
     MajorKeys.MECH: false,
@@ -212,12 +213,13 @@ class SharedPrefsManager {
     return _cachedPrefs[key];
   }
 
+  /// **새로운 학과 설정**
   Future<void> setMajorPreference(
       String? currentMajorKey, String newMajorKey) async {
     if (currentMajorKey != null) {
-      setPreference('previous-major-key', currentMajorKey);
+      setPreference(SharedPrefKeys.kPreviousMajorKey, currentMajorKey);
     }
-    setPreference('major-key', newMajorKey);
+    setPreference(SharedPrefKeys.kMajorKey, newMajorKey);
     logger.d(
         "${runtimeType.toString()} - setMajorKey() 성공: '$currentMajorKey' to '$newMajorKey'");
   }

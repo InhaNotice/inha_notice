@@ -9,6 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/texts/bold_title_text.dart';
@@ -44,15 +45,15 @@ class _EducationNotificationCategoryState
             NotificationTile(
               title: '학사',
               description: '인하대학교 공식 사이트의 공지사항',
-              prefKey: 'academic-notification',
-              fcmTopic: 'all-notices',
+              prefKey: SharedPrefKeys.kAcademicNotification,
+              fcmTopic: SharedPrefKeys.kAllNotices,
             ),
             const SizedBox(height: 8),
             NotificationTile(
               title: '국제처',
               description: '(교환학생, 해외지역연구, 서포터즈, 취업) 정보',
-              prefKey: 'INTERNATIONAL',
-              fcmTopic: 'INTERNATIONAL',
+              prefKey: SharedPrefKeys.INTERNATIONAL,
+              fcmTopic: SharedPrefKeys.INTERNATIONAL,
             ),
           ],
         ),
