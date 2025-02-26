@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -22,6 +23,8 @@ import 'package:logger/logger.dart';
 import 'firebase/firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final ValueNotifier<ThemeMode> themeModeNotifier =
+    ValueNotifier(ThemeMode.system);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +32,8 @@ Future<void> main() async {
   await _initializeApp();
   // FCM 초기화는 백그라운드에서 진행
   await _initializeFirebase();
+  // 테마 설정 불러오기
+  await _initializeThemeSetting();
 
   runApp(const MyApp());
 }
@@ -43,8 +48,6 @@ class MyApp extends StatefulWidget {
 
 /// MyAppState 클래스 정의
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  final ThemeMode _themeMode = ThemeMode.system;
-
   @override
   void initState() {
     super.initState();
@@ -57,13 +60,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '인하공지',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: _themeMode,
-      navigatorKey: navigatorKey,
-      home: const OnboardingScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeModeNotifier,
+      builder: (context, themeMode, child) {
+        return MaterialApp(
+          title: '인하공지',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
+          navigatorKey: navigatorKey,
+          home: const OnboardingScreen(),
+        );
+      },
     );
   }
 }
@@ -100,4 +108,28 @@ Future<FirebaseApp> _initializeFirebase() async {
   await FirebaseService().initialize();
 
   return app;
+}
+
+/// **테마 설정 불러오기**
+Future<void> _initializeThemeSetting() async {
+  final logger = Logger();
+  try {
+    final String userThemeSetting = await SharedPrefsManager()
+        .getPreference(SharedPrefKeys.kUserThemeSetting);
+    ThemeMode themeMode;
+    switch (userThemeSetting) {
+      case '화이트':
+        themeMode = ThemeMode.light;
+        break;
+      case '다크':
+        themeMode = ThemeMode.dark;
+        break;
+      default:
+        themeMode = ThemeMode.system;
+    }
+
+    themeModeNotifier.value = themeMode;
+  } catch (e) {
+    logger.e('❌ 테마 설정 불러오기 실패: $e');
+  }
 }
