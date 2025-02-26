@@ -9,6 +9,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
+import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
@@ -65,7 +66,7 @@ class _AbsoluteStyleNoticeBoardState
   }
 
   Future<void> loadMajorPreference() async {
-    majorKey = SharedPrefsManager().getPreference('major-key');
+    majorKey = SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
     isMajorKey = (majorKey != null) ? true : false;
   }
 

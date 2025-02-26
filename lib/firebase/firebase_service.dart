@@ -5,13 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -41,7 +42,7 @@ class FirebaseService {
 
   /// **캐싱된 구독된 토픽 목록 가져오기**
   Set<String> get _subscribedTopics =>
-      SharedPrefsManager().getPreference('subscribed_topics');
+      SharedPrefsManager().getPreference(SharedPrefKeys.kSubscribedTopics);
 
   /// **Firebase 초기화 및 설정**
   /// 순서 보장: 알림 권한 요청 -> 'all-users' 구독 -> 플랫폼별 설정 -> FCM 토큰 출력
@@ -144,17 +145,19 @@ class FirebaseService {
 
   /// **'all-users' 토픽(앱 공지사항) 구독 (최초 1회)**
   Future<void> _subscribeToAppAnnouncements() async {
-    bool isSubscribedUsers =
-        SharedPrefsManager().getPreference('isSubscribedToAllUsers');
+    bool isSubscribedUsers = SharedPrefsManager()
+        .getPreference(SharedPrefKeys.kIsSubscribedToAllUsers);
 
     if (!isSubscribedUsers) {
       try {
-        await _messaging.subscribeToTopic('all-users');
+        await _messaging.subscribeToTopic(SharedPrefKeys.kAllUsers);
         await SharedPrefsManager()
-            .setPreference('isSubscribedToAllUsers', true);
-        logger.d("✅ Successfully subscribed to 'all-users' topic");
+            .setPreference(SharedPrefKeys.kIsSubscribedToAllUsers, true);
+        logger.d(
+            "✅ Successfully subscribed to '${SharedPrefKeys.kAllUsers}' topic");
       } catch (e) {
-        logger.e("🚨 Error subscribing to 'all-users' topic: $e");
+        logger.e(
+            "🚨 Error subscribing to '${SharedPrefKeys.kAllUsers}' topic: $e");
       }
     }
   }
@@ -197,13 +200,15 @@ class FirebaseService {
   /// **구독 리스트 추가(내부 확인용)**
   void _addSubscribedTopic(String topic) {
     _subscribedTopics.add(topic);
-    SharedPrefsManager().setPreference('subscribed_topics', _subscribedTopics);
+    SharedPrefsManager()
+        .setPreference(SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
   }
 
   /// **구독 리스트 제거(내부 확인용)**
   void _removeSubscribedTopic(String topic) {
     _subscribedTopics.remove(topic);
-    SharedPrefsManager().setPreference('subscribed_topics', _subscribedTopics);
+    SharedPrefsManager()
+        .setPreference(SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
   }
 
   /// **푸시 알림 클릭 시 WebPage로 이동**
