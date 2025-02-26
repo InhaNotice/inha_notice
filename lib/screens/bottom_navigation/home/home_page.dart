@@ -128,7 +128,7 @@ class HomePage extends StatelessWidget {
         ),
         body: const TabBarView(
           /// 각 공지사항 페이지는 다음과 같이 스타일에 따라 분류함
-          /// AbsoluteStyle(6개): 학사, 학과, 장학, 모집/채용, 국제처, SW중심대학
+          /// AbsoluteStyle(6개): 학사, 학과, 장학, 모집/채용, 국제처, SW중심대학사업단
           /// RelativeStyle(1개): 정석
           children: [
             AbsoluteStyleNoticeBoard(noticeType: 'WHOLE'),
