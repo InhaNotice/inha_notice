@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-11
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
@@ -16,13 +16,14 @@ import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_
 
 /// **WholeNoticeScraper**
 /// 이 클래스는 인하대학교 학사 공지사항을 크롤링하는 클래스입니다.
-class WholeNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
+class WholeStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
+  late final String noticeType;
 
-  WholeNoticeScraper() {
-    baseUrl = dotenv.get('WHOLE_URL');
-    queryUrl = dotenv.get('WHOLE_QUERY_URL');
+  WholeStyleNoticeScraper(this.noticeType) {
+    baseUrl = dotenv.get('${noticeType}_URL');
+    queryUrl = dotenv.get('${noticeType}_QUERY_URL');
   }
 
   @override
