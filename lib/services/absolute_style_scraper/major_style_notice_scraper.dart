@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-11
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
@@ -19,7 +19,7 @@ import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_
 class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   late final String baseUrl;
   late final String queryUrl;
-  late String noticeType;
+  late final String noticeType;
 
   MajorStyleNoticeScraper(this.noticeType) {
     baseUrl = dotenv.get('${noticeType}_URL');
