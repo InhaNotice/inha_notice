@@ -25,6 +25,8 @@ class SharedPrefsManager {
 
   // 캐싱 전략
   static final Map<String, dynamic> _cachedPrefs = {
+    // 테마 모드 (기본값: system)
+    SharedPrefKeys.kUserThemeSetting: '시스템',
     // 구독 리스트
     SharedPrefKeys.kSubscribedTopics: <String>{},
     // 앱 전체 공지
