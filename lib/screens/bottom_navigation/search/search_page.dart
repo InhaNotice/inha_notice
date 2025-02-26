@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -238,11 +238,11 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '최근 검색 기록',
+              '최근 검색어',
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
                     Theme.of(context).defaultColor,
               ),
@@ -250,11 +250,11 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             GestureDetector(
               onTap: _clearRecentSearchTopics,
               child: Text(
-                '전체 삭제',
+                '전체삭제',
                 style: TextStyle(
                   fontFamily: Font.kDefaultFont,
                   fontSize: 14,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.w500,
                   color: Theme.of(context).textTheme.bodyMedium?.color ??
                       Theme.of(context).defaultColor,
                 ),
@@ -328,7 +328,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
                     Theme.of(context).defaultColor,
               ),

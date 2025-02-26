@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.notifications_outlined,
-                    color: Theme.of(context).iconTheme.color),
+                    color: Theme.of(context).appBarTheme.iconTheme?.color),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -96,12 +96,12 @@ class HomePage extends StatelessWidget {
                 splashFactory: NoSplash.splashFactory,
                 highlightColor: Colors.transparent,
               ),
-              child: const TabBar(
+              child: TabBar(
                 tabAlignment: TabAlignment.start,
                 isScrollable: true,
-                indicatorColor: Color(0xFF12B8FF),
-                labelColor: Color(0xFF12B8FF),
-                unselectedLabelColor: Color(0xFFBAB6B6),
+                indicatorColor: Theme.of(context).tabIndicatorColor,
+                labelColor: Theme.of(context).tabLabelColor,
+                unselectedLabelColor: Theme.of(context).tabUnSelectedLabelColor,
                 labelStyle: TextStyle(
                   fontFamily: Font.kDefaultFont,
                   fontWeight: FontWeight.bold,
@@ -128,9 +128,8 @@ class HomePage extends StatelessWidget {
         ),
         body: const TabBarView(
           /// 각 공지사항 페이지는 다음과 같이 스타일에 따라 분류함
-          /// AbsoluteStyle(4개): 학사, 학과, 국제처, SW중심대학
+          /// AbsoluteStyle(6개): 학사, 학과, 장학, 모집/채용, 국제처, SW중심대학사업단
           /// RelativeStyle(1개): 정석
-          /// SearchResult(2개): 장학, 채용
           children: [
             AbsoluteStyleNoticeBoard(noticeType: 'WHOLE'),
             AbsoluteStyleNoticeBoard(noticeType: 'MAJOR'),

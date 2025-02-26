@@ -9,6 +9,7 @@
  */
 
 abstract class SharedPrefKeys {
+  static const String kUserThemeSetting = 'user-theme-setting';
   static const String kSubscribedTopics = 'subscribed_topics';
   static const String kIsSubscribedToAllUsers = 'isSubscribedToAllUsers';
   static const String kAllUsers = 'all-users';

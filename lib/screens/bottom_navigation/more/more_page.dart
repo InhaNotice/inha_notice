@@ -5,16 +5,17 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-26
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/major_setting/major_setting_page.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_navigation_tile.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_non_navigation_tile.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_title_tile.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/more_titles/more_web_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_title_tile.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_web_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/theme_preference/theme_preference_tile.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
 /// **MorePage**
@@ -92,19 +93,15 @@ class _MorePageState extends State<MorePage> {
                   width: double.infinity,
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
-              MoreTitleTile(text: '앱 정보', fontSize: 20),
-              MoreNonNavigationTile(
-                  title: '앱 버전',
-                  description: _appVersion,
-                  icon: Icons.rocket_launch_outlined),
+              MoreTitleTile(text: '이용 안내', fontSize: 20),
+              MoreWebNavigationTile(
+                  title: '앱 소개',
+                  url: _introduceAppUrl,
+                  icon: Icons.info_outline),
               MoreWebNavigationTile(
                   title: '새로운 내용',
                   url: _featuresUrl,
                   icon: Icons.star_outline_outlined),
-              MoreWebNavigationTile(
-                  title: '인공 팀',
-                  url: _aboutTeamUrl,
-                  icon: Icons.people_outline_outlined),
               MoreWebNavigationTile(
                   title: '개인정보 처리방침',
                   url: _personalInformationUrl,
@@ -114,13 +111,53 @@ class _MorePageState extends State<MorePage> {
                   url: _termsAndConditionsOfServiceUrl,
                   icon: Icons.checklist_rtl_outlined),
               MoreWebNavigationTile(
-                  title: '앱 소개',
-                  url: _introduceAppUrl,
-                  icon: Icons.info_outline),
-              MoreWebNavigationTile(
                   title: 'FAQ',
                   url: _questionsAndAnswersUrl,
                   icon: Icons.question_answer_outlined),
+              // 구분선
+              SizedBox(
+                  width: double.infinity,
+                  child: Divider(
+                      color: Theme.of(context).dividerColor, thickness: 2.0)),
+              MoreTitleTile(text: '앱 설정', fontSize: 20),
+              MoreNonNavigationTile(
+                  title: '앱 버전',
+                  description: _appVersion,
+                  icon: Icons.rocket_launch_outlined),
+              MoreNavigationTile(
+                title: '커스텀 탭바 설정',
+                icon: Icons.rocket_launch_outlined,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationSettingPage(),
+                    ),
+                  );
+                },
+              ),
+              ThemePreferenceTile(
+                title: '테마',
+                icon: Icons.palette_outlined,
+              ),
+              MoreNonNavigationTile(
+                  title: '캐시 삭제',
+                  description: _appVersion,
+                  icon: Icons.rocket_launch_outlined),
+              // 구분선
+              SizedBox(
+                  width: double.infinity,
+                  child: Divider(
+                      color: Theme.of(context).dividerColor, thickness: 2.0)),
+              MoreTitleTile(text: '기타', fontSize: 20),
+              MoreWebNavigationTile(
+                  title: '인스타그램',
+                  url: _aboutTeamUrl,
+                  icon: Icons.social_distance_outlined),
+              MoreWebNavigationTile(
+                  title: '인공 팀',
+                  url: _aboutTeamUrl,
+                  icon: Icons.people_outline_outlined),
             ],
           ),
         ),
