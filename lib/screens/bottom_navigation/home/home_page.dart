@@ -76,7 +76,7 @@ class HomePage extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.notifications_outlined,
-                    color: Theme.of(context).iconTheme.color),
+                    color: Theme.of(context).appBarTheme.iconTheme?.color),
                 onPressed: () {
                   Navigator.push(
                     context,
