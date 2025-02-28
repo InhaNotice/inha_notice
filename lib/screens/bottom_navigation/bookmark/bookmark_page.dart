@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-20
+ * Latest Updated Date: 2025-02-28
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -155,15 +155,15 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
               size: 25,
             ),
             onPressed: () async {
+              if (mounted && bookmarkedNotices.isEmpty) {
+                ThemedSnackBar.warnSnackBar(context, '삭제할 북마크가 없어요.');
+                return;
+              }
               await BookmarkManager.clearAllBookmarks();
               setState(() {
-                if (bookmarkedNotices.isEmpty && mounted) {
-                  ThemedSnackBar.warnSnackBar(context, '삭제할 북마크가 없습니다!');
-                  return;
-                }
                 bookmarkedNotices.clear();
                 if (mounted) {
-                  ThemedSnackBar.succeedSnackBar(context, '모두 삭제되었습니다.');
+                  ThemedSnackBar.succeedSnackBar(context, '모두 삭제하였어요.');
                 }
               });
             },
@@ -183,13 +183,13 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
           : bookmarkedNotices.isEmpty
               ? Center(
                   child: Text(
-                    "저장된 북마크가 없습니다.",
+                    "저장된 북마크가 없어요.",
                     style: TextStyle(
                       fontFamily: Font.kDefaultFont,
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??
-                          Theme.of(context).defaultColor,
+                          Theme.of(context).defaultThemedTextColor,
                     ),
                   ),
                 )
