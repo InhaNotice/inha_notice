@@ -5,13 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-02-28
  */
 
-import 'package:inha_notice/constants/domain_keys/college_keys.dart';
-import 'package:inha_notice/constants/domain_keys/graduate_school_keys.dart';
-import 'package:inha_notice/constants/domain_keys/major_keys.dart';
+import 'package:inha_notice/constants/app_theme_mode.dart';
 import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
+import 'package:inha_notice/constants/university_keys/college_keys.dart';
+import 'package:inha_notice/constants/university_keys/graduate_school_keys.dart';
+import 'package:inha_notice/constants/university_keys/major_keys.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,14 +27,20 @@ class SharedPrefsManager {
   // 캐싱 전략
   static final Map<String, dynamic> _cachedPrefs = {
     // 테마 모드 (기본값: system)
-    SharedPrefKeys.kUserThemeSetting: '시스템 설정',
+    SharedPrefKeys.kUserThemeSetting: AppThemeMode.kSystem,
     // 구독 리스트
     SharedPrefKeys.kSubscribedTopics: <String>{},
+    // 커스텀 탭바 리스트
+    SharedPrefKeys.kCustomTabList: <String>[],
     // 앱 전체 공지
     SharedPrefKeys.kIsSubscribedToAllUsers: false,
     // 이전학과, 현재학과
     SharedPrefKeys.kPreviousMajorKey: null,
     SharedPrefKeys.kMajorKey: null,
+    // 단과대
+    SharedPrefKeys.kCollegeKey: null,
+    // 대학원
+    SharedPrefKeys.kGraduateSchoolKey: null,
     // 학사알림
     SharedPrefKeys.kAcademicNotification: false,
     // 학과알림
@@ -185,7 +192,9 @@ class SharedPrefsManager {
       if (value is bool) {
         _cachedPrefs[key] = _prefs?.getBool(key) ?? value;
       } else if (value is String?) {
-        _cachedPrefs[key] = _prefs?.getString(key);
+        _cachedPrefs[key] = _prefs?.getString(key) ?? value;
+      } else if (value is List<String>) {
+        _cachedPrefs[key] = _prefs?.getStringList(key) ?? value;
       } else if (value is Set<String>) {
         _cachedPrefs[key] = _prefs?.getStringList(key)?.toSet() ?? value;
       }
@@ -201,12 +210,19 @@ class SharedPrefsManager {
 
     _cachedPrefs[key] = value;
 
-    if (value is bool) {
-      await _prefs?.setBool(key, value);
-    } else if (value is String) {
-      await _prefs?.setString(key, value);
-    } else if (value is Set<String>) {
-      await _prefs?.setStringList(key, value.toList());
+    try {
+      if (value is bool) {
+        await _prefs?.setBool(key, value);
+      } else if (value is String) {
+        await _prefs?.setString(key, value);
+      } else if (value is Set<String>) {
+        await _prefs?.setStringList(key, value.toList());
+      } else if (value is List<String>) {
+        await _prefs?.setStringList(key, value.toList());
+      }
+      logger.d('✅ Preference 성공적으로 저장 - $key: $value');
+    } catch (e) {
+      logger.e('❌ Preference 저장 중 에러가 발생: $e');
     }
   }
 

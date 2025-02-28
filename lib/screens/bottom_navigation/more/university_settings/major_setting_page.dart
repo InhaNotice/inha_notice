@@ -5,257 +5,173 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-28
  */
+
 import 'package:flutter/material.dart';
+import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
+import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
-/// **MajorSettingPage**
-/// 이 클래스는 학과 설정하는 페이지를 구현하는 클래스입니다.
-///
-/// ### 주요 기능:
-/// - 나의 학과를 설정 및 확인
-class MajorSettingPage extends StatefulWidget {
+class MajorSettingPage extends BaseSettingPage {
   const MajorSettingPage({super.key});
 
   @override
   State<MajorSettingPage> createState() => _MajorSettingPageState();
 }
 
-class _MajorSettingPageState extends State<MajorSettingPage> {
+class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
   final Logger logger = Logger();
 
-  /// 검색 필드를 정의하는 컨트롤러
-  final TextEditingController _searchController = TextEditingController();
-
-  /// 모든 단과 대학을 담는 컨테이너
+  // 학과 데이터: 그룹별 매핑 (국문:영문)
+  final Map<String, Map<String, String>> _allMajorGroups =
+      MajorUtils.majorGroups;
   Map<String, Map<String, String>> _filteredMajorGroups =
       MajorUtils.majorGroups;
-
-  /// 사용자의 입력에 따른 학과 재분류하는 컨테이너
   List<String> _filteredMajors = [];
-  String? _currentMajor; // 한글 학과명
-  String? _currentMajorKey; // 영문 학과명
-  bool _isProcessing = false;
+  String? _currentMajor;
+  String? _currentMajorKey;
 
-  String? get currentMajorKey => _currentMajorKey;
+  @override
+  String get appBarTitle => '학과 설정';
+
+  @override
+  String get searchLabel => '학과 검색';
+
+  @override
+  String get settingType => '학과';
+
+  @override
+  String? get currentSetting => _currentMajor;
 
   @override
   void initState() {
     super.initState();
-    _loadMajorPreference();
+    loadPreference();
   }
 
-  /// **저장된 나의 학과 설정 불러오기**
-  Future<void> _loadMajorPreference() async {
+  @override
+  Future<void> loadPreference() async {
     setState(() {
-      _currentMajorKey = SharedPrefsManager().getPreference('major-key');
+      _currentMajorKey =
+          SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
       if (_currentMajorKey != null) {
-        _currentMajor = MajorUtils.translateToKorean(_currentMajorKey);
+        _currentMajor = MajorUtils.kMajorMappingOnValue[_currentMajorKey];
       }
+      _filteredMajorGroups = _allMajorGroups;
+      _filteredMajors = [];
     });
   }
 
-  /// **사용자 입력에 따른 학과를 필터링**
-  void _filterMajors(String query) {
-    // 입력이 없다면 초기화면으로 설정
+  @override
+  void filterItems(String query) {
     if (query.isEmpty) {
-      if (_filteredMajorGroups != MajorUtils.majorGroups) {
-        setState(() {
-          _filteredMajorGroups = MajorUtils.majorGroups;
-          _filteredMajors = [];
-        });
-      }
+      setState(() {
+        _filteredMajorGroups = _allMajorGroups;
+        _filteredMajors = [];
+      });
       return;
     }
-
-    // 사용자 입력에 따른 학과 재분류
-    final List<String> filteredMajors = [
-      for (var group in MajorUtils.majorGroups.values)
+    final List<String> filtered = [
+      for (var group in _allMajorGroups.values)
         for (var major in group.keys)
           if (major.contains(query)) major,
     ];
-
     setState(() {
-      _filteredMajorGroups = {}; // 사용자 입력이 주어지면 빈 컨테이너로 설정
-      _filteredMajors = filteredMajors;
+      _filteredMajorGroups = {}; // 검색 시 그룹 목록은 비움
+      _filteredMajors = filtered;
     });
   }
 
-  /// **학과 선택 핸들러**
-  Future<void> _handleMajorSelection(String major) async {
-    if (_isProcessing) return;
+  @override
+  Widget buildListView() {
+    if (_filteredMajors.isNotEmpty) {
+      return ListView.builder(
+        itemCount: _filteredMajors.length,
+        itemBuilder: (context, index) {
+          final major = _filteredMajors[index];
+          return ListTile(
+            title: Text(major,
+                style: TextStyle(fontFamily: Font.kDefaultFont, fontSize: 18)),
+            onTap: () async {
+              await handleSelection(major);
+            },
+          );
+        },
+      );
+    } else {
+      return ListView(
+        children: _filteredMajorGroups.entries.map((entry) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
+            child: ExpansionTile(
+              title: Text(
+                entry.key,
+                style: TextStyle(
+                  fontFamily: Font.kDefaultFont,
+                  fontSize: 19,
+                  fontWeight: FontWeight.normal,
+                  color: Theme.of(context).textTheme.bodyMedium?.color ??
+                      Theme.of(context).defaultThemedTextColor,
+                ),
+              ),
+              children: entry.value.keys.map((major) {
+                return ListTile(
+                  title: Text(major,
+                      style: TextStyle(
+                          fontFamily: Font.kDefaultFont, fontSize: 18)),
+                  onTap: () async {
+                    await handleSelection(major);
+                  },
+                );
+              }).toList(),
+            ),
+          );
+        }).toList(),
+      );
+    }
+  }
 
-    String newMajorKey = MajorUtils.translateToEnglish(major);
-
-    // 처음 학과 설정이 아니면서 변경사항이 없는 경우
-    if (currentMajorKey != null && currentMajorKey == newMajorKey) {
+  @override
+  Future<void> handleSelection(String item) async {
+    if (isProcessing) return;
+    String? newMajorKey = MajorUtils.kMajorMappingOnKey[item];
+    if (_currentMajorKey != null && _currentMajorKey == newMajorKey) {
       if (mounted) {
         ThemedSnackBar.warnSnackBar(context, '이미 설정되어있습니다.');
       }
       return;
     }
-
     setState(() {
-      _isProcessing = true;
+      isProcessing = true;
       BlockingDialog.show(context);
     });
-
     try {
       await SharedPrefsManager()
-          .setMajorPreference(currentMajorKey, newMajorKey);
-
+          .setMajorPreference(_currentMajorKey, newMajorKey!);
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(context, '$major로 설정되었습니다!');
+        ThemedSnackBar.succeedSnackBar(context, '$item로 설정되었습니다!');
       }
-      if (mounted) {
-        Navigator.pop(context);
-      }
+      if (mounted) Navigator.pop(context);
     } catch (e) {
       logger.e('❌ Error saving major: $e');
       if (mounted) {
         ThemedSnackBar.failSnackBar(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
       }
     } finally {
-      if (mounted) {
-        BlockingDialog.dismiss(context);
-      }
-      if (mounted) {
-        setState(() {
-          _isProcessing = false;
-        });
-      }
+      if (mounted) BlockingDialog.dismiss(context);
+      setState(() {
+        isProcessing = false;
+      });
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const ThemedAppBar(title: '학과 설정', titleSize: 20, isCenter: true),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            if (_currentMajor != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  '현재 학과: $_currentMajor',
-                  style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).textTheme.bodyMedium?.color ??
-                          Theme.of(context).defaultThemedTextColor),
-                ),
-              )
-            else
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  '학과를 설정해주세요!',
-                  style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).textTheme.bodyMedium?.color ??
-                          Theme.of(context).defaultThemedTextColor),
-                ),
-              ),
-            TextField(
-              controller: _searchController,
-              onChanged: _filterMajors,
-              decoration: InputDecoration(
-                labelText: '학과 검색',
-                labelStyle: TextStyle(
-                  fontFamily: Font.kDefaultFont,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).hintColor,
-                ),
-                filled: false,
-                prefixIcon: Icon(Icons.search,
-                    color: Theme.of(context).iconTheme.color),
-                // 검색 아이콘 추가
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).boxBorderColor,
-                    width: 2.0,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: const BorderSide(
-                    color: Colors.blue,
-                    width: 2.5,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Expanded(
-              child: _filteredMajors.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: _filteredMajors.length,
-                      itemBuilder: (context, index) {
-                        final major = _filteredMajors[index];
-                        return ListTile(
-                          title: Text(major),
-                          onTap: () async {
-                            await _handleMajorSelection(major);
-                          },
-                        );
-                      },
-                    )
-                  : ListView(
-                      children: _filteredMajorGroups.entries.map(
-                        (entry) {
-                          return Theme(
-                            data: Theme.of(context).copyWith(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                            ),
-                            child: ExpansionTile(
-                              title: Text(
-                                entry.key,
-                                style: TextStyle(
-                                  fontFamily: Font.kDefaultFont,
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.normal,
-                                  color: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.color ??
-                                      Theme.of(context).defaultThemedTextColor,
-                                ),
-                              ),
-                              children: entry.value.keys
-                                  .map(
-                                    (major) => ListTile(
-                                      title: Text(major),
-                                      onTap: () async {
-                                        await _handleMajorSelection(major);
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          );
-                        },
-                      ).toList(),
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -1,0 +1,31 @@
+/*
+ * This is file of the project inha_notice
+ * Licensed under the Apache License 2.0.
+ * Copyright (c) 2025 INGONG
+ * For full license text, see the LICENSE file in the root directory or at
+ * http://www.apache.org/licenses/
+ * Author: junho Kim
+ * Latest Updated Date: 2025-02-28
+ */
+
+abstract class CustomTabListKeys {
+  static const String kWhole = '전체공지';
+  static const String kMajor = '학과';
+  static const String kScholarship = '장학';
+  static const String kRecruitment = '모집/채용';
+  static const String kLibrary = '정석';
+  static const String kInternational = '국제처';
+  static const String kSWUniv = 'SW중심대학사업단';
+  static const String kCollege = '단과대';
+  static const String kGraduateSchool = '대학원';
+
+  static const String WHOLE = 'WHOLE';
+  static const String MAJOR = 'MAJOR';
+  static const String SCHOLARSHIP = 'SCHOLARSHIP';
+  static const String RECRUITMENT = 'RECRUITMENT';
+  static const String LIBRARY = 'LIBRARY';
+  static const String INTERNATIONAL = 'INTERNATIONAL';
+  static const String SWUNIV = 'SWUNIV';
+  static const String COLLEGE = 'COLLEGE';
+  static const String GRADUATESCHOOL = 'GRADUATESCHOOL';
+}

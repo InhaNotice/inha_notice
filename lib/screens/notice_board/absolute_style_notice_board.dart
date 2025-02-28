@@ -5,18 +5,22 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-02-28
  */
 import 'package:flutter/material.dart';
+import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/major_setting/major_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
@@ -31,7 +35,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 ///
 /// ### 주요 기능:
 /// - noticeType에 따른 공지사항 제공
-/// - 지원하는 공지: 학사, 장학, 모집/채용, 학과, 국제처, SW중심대학사업단
+/// - 지원하는 공지: 학사, 장학, 모집/채용, 학과, 국제처, SW중심대학사업단, 단과대, 대학원
 class AbsoluteStyleNoticeBoard extends BaseNoticeBoard {
   final String noticeType;
 
@@ -48,10 +52,11 @@ class _AbsoluteStyleNoticeBoardState
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   late BaseAbsoluteStyleNoticeScraper noticeScraper;
-  late String? majorKey;
+  late String? userSettingKey;
+  late String? noticeTypeDisplayName;
   bool showHeadlines = false;
   bool showGeneral = true;
-  bool isMajorKey = false;
+  bool isUserSettingKey = false;
 
   @override
   void initState() {
@@ -65,36 +70,62 @@ class _AbsoluteStyleNoticeBoardState
     _refreshController.refreshCompleted();
   }
 
-  Future<void> loadMajorPreference() async {
-    majorKey = SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
-    isMajorKey = (majorKey != null) ? true : false;
+  /// **Preference 로드를 담당하는 함수**//
+  void _loadPreference(String noticeType) {
+    switch (noticeType) {
+      // 학과
+      case CustomTabListKeys.MAJOR:
+        userSettingKey =
+            SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
+        break;
+      // 단과대
+      case CustomTabListKeys.COLLEGE:
+        userSettingKey =
+            SharedPrefsManager().getPreference(SharedPrefKeys.kCollegeKey);
+        break;
+      // 대학원
+      case CustomTabListKeys.GRADUATESCHOOL:
+        userSettingKey = SharedPrefsManager()
+            .getPreference(SharedPrefKeys.kGraduateSchoolKey);
+        break;
+      default:
+        break;
+    }
+    isUserSettingKey = (userSettingKey != null);
+    noticeTypeDisplayName =
+        CustomTabListUtils.convertNoticeTypeToKorean(noticeType);
   }
 
+  /// **저장된 Preference를 불러오고 스크래퍼를 초기화**
   Future<void> initializeScraper() async {
-    if (widget.noticeType == 'MAJOR') {
-      // 저장된 나의 학과 불러오기
-      await loadMajorPreference();
-      // 저장된 나의 학과가 없다면 스크래퍼 초기화를 하지 않음
-      if (!isMajorKey) return;
+    // Preference 로드가 필요한지 여부 판단
+    // 필요하면 Preference 로드를 진행
+    // 만약, 저장된 Preference 값이 존재하지 않다면, 스크래퍼를 초기화하지 않음
+    if (CustomTabListUtils.requiresUserSetting(widget.noticeType)) {
+      _loadPreference(widget.noticeType);
+      if (!isUserSettingKey) {
+        return;
+      }
     }
 
     // 스크래퍼 초기화 진행
     // 학사, 장학, 모집/채용
-    if (widget.noticeType == 'WHOLE' ||
-        widget.noticeType == 'SCHOLARSHIP' ||
-        widget.noticeType == 'RECRUITMENT') {
+    if (widget.noticeType == CustomTabListKeys.WHOLE ||
+        widget.noticeType == CustomTabListKeys.SCHOLARSHIP ||
+        widget.noticeType == CustomTabListKeys.RECRUITMENT) {
       noticeScraper = WholeStyleNoticeScraper(widget.noticeType);
       return;
     }
 
-    // 학과
-    if (widget.noticeType == 'MAJOR') {
-      noticeScraper = MajorStyleNoticeScraper(majorKey!);
+    // 학과 스타일(국제처, SW중심대학사업단)
+    if (widget.noticeType == CustomTabListKeys.INTERNATIONAL ||
+        widget.noticeType == CustomTabListKeys.SWUNIV) {
+      noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
       return;
     }
 
-    // 학과 스타일(국제처, SW중심대학사업단)
-    noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
+    // 학과, 단과대, 대학원
+    noticeScraper = MajorStyleNoticeScraper(userSettingKey!);
   }
 
   /// 초기화 순서(순서를 보장해야함): 스크래퍼 초기화 -> 공지사항 불러오기
@@ -144,6 +175,28 @@ class _AbsoluteStyleNoticeBoardState
         isLoading = false;
       });
     }
+  }
+
+  /// **Preference 설정이 안 된 경우, 설정한 뒤에 초기화 진행함**
+  void handleToNavigate(String tab) {
+    late Widget settingPage;
+
+    /// tab의 케이스는 반드시 존재함
+    switch (tab) {
+      case CustomTabListKeys.MAJOR:
+        settingPage = const MajorSettingPage();
+        break;
+      case CustomTabListKeys.COLLEGE:
+        settingPage = const CollegeSettingPage();
+        break;
+      case CustomTabListKeys.GRADUATESCHOOL:
+        settingPage = const GraduateSchoolSettingPage();
+        break;
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => settingPage),
+    ).then((_) => initialize());
   }
 
   /// NoticeBoard 구조: Header(토글 버튼), Main(공지사항 리스트), Footer(페이지 버튼)
@@ -200,23 +253,26 @@ class _AbsoluteStyleNoticeBoardState
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : (widget.noticeType == 'MAJOR' && !isMajorKey)
+            : (CustomTabListUtils.requiresUserSetting(widget.noticeType) &&
+                    !isUserSettingKey)
                 ? Center(
-                    // noticeType이 'MAJOR'이고 저장된 나의 학과가 존재하지 않을 때
                     child: Column(
                       mainAxisSize: MainAxisSize.min, // 중앙 정렬
                       children: [
-                        Text(
-                          '학과를 설정해주세요!',
-                          style: TextStyle(
-                            fontFamily: Font.kDefaultFont,
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium?.color ??
-                                    Theme.of(context).defaultColor,
+                        if (noticeTypeDisplayName != null)
+                          Text(
+                            '$noticeTypeDisplayName를 설정해주세요!',
+                            style: TextStyle(
+                              fontFamily: Font.kDefaultFont,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color ??
+                                  Theme.of(context).defaultThemedTextColor,
+                            ),
                           ),
-                        ),
                         const SizedBox(height: 12),
                         ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
@@ -229,16 +285,7 @@ class _AbsoluteStyleNoticeBoardState
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 12),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MajorSettingPage()),
-                            ).then((_) {
-                              initialize();
-                            });
-                          },
+                          onPressed: () => handleToNavigate(widget.noticeType),
                           icon: Icon(Icons.school_outlined,
                               size: 20,
                               color: Theme.of(context)
@@ -246,7 +293,7 @@ class _AbsoluteStyleNoticeBoardState
                                   .iconTheme
                                   ?.color),
                           label: Text(
-                            '학과 설정하기',
+                            '$noticeTypeDisplayName 설정하기',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 14,
@@ -255,7 +302,7 @@ class _AbsoluteStyleNoticeBoardState
                                       .textTheme
                                       .bodyMedium
                                       ?.color ??
-                                  Theme.of(context).defaultColor,
+                                  Theme.of(context).defaultThemedTextColor,
                             ),
                           ),
                         ),
