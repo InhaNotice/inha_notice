@@ -9,28 +9,30 @@
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/widgets/base_custom_tab_list.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list.dart';
 import 'package:inha_notice/themes/theme.dart';
 
-/// **CustomTabAvailableList**
-/// 커스텀 된 추가 가능한 탭 리스트를 출력합니다.
-/// 일반 ListView를 사용하며, 탭 추가 버튼을 포함.
-class CustomTabAvailableList extends BaseCustomTabList {
-  final void Function(String tab) onAdd;
+/// **CustomTabSelectedList**
+/// 현재 선택된 탭 리스트를 출력합니다.
+/// ReorderableListView를 사용하여 순서를 변경할 수 있음.
+class CustomTabSelectedList extends BaseCustomTabList {
+  final void Function(int oldIndex, int newIndex) onReorder;
+  final void Function(int index) onRemove;
 
-  const CustomTabAvailableList({
+  const CustomTabSelectedList({
     super.key,
-    required List<String> availableTabs,
-    required this.onAdd,
+    required List<String> selectedTabs,
+    required this.onReorder,
+    required this.onRemove,
     required super.scrollController,
-  }) : super(tabs: availableTabs);
+  }) : super(tabs: selectedTabs);
 
   @override
-  BaseCustomTabListState createState() => _CustomTabAvailableListState();
+  BaseCustomTabListState createState() => _CustomTabSelectedListState();
 }
 
-class _CustomTabAvailableListState
-    extends BaseCustomTabListState<CustomTabAvailableList> {
+class _CustomTabSelectedListState
+    extends BaseCustomTabListState<CustomTabSelectedList> {
   @override
   Widget buildTrailing(BuildContext context, String tab, int index) {
     final bool arrowVisible = showArrow(tab);
@@ -47,8 +49,8 @@ class _CustomTabAvailableListState
             onPressed: () => handleToNavigate(tab),
           ),
         IconButton(
-          icon: const Icon(Icons.add_circle_outline),
-          onPressed: () => widget.onAdd(tab),
+          icon: const Icon(Icons.remove_circle_outline),
+          onPressed: () => widget.onRemove(index),
         ),
       ],
     );
@@ -56,13 +58,24 @@ class _CustomTabAvailableListState
 
   @override
   Widget buildListWidget(BuildContext context) {
-    return ListView.builder(
-      controller: widget.scrollController,
-      primary: false,
+    return ReorderableListView.builder(
       itemCount: widget.tabs.length,
+      onReorder: widget.onReorder,
+      proxyDecorator: (child, index, animation) {
+        return Material(
+          elevation: 2.0,
+          color: Theme.of(context).dragFeedbackBackground,
+          child: child,
+        );
+      },
       itemBuilder: (context, index) {
         final tab = widget.tabs[index];
         return ListTile(
+          key: ValueKey(tab),
+          leading: ReorderableDragStartListener(
+            index: index,
+            child: const Icon(Icons.drag_handle),
+          ),
           title: Text(
             tab,
             style: TextStyle(
