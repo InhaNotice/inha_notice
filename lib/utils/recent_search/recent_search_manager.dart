@@ -18,7 +18,7 @@ class RecentSearchManager {
   static const String tableName = 'recent_search_topics';
   static Database? _database;
   static const int _maxHistoryCount = 10;
-  static final Logger _logger = Logger();
+  static final Logger logger = Logger();
 
   // 최근 검색어 캐시
   static List<String> _cachedSearchHistory = [];
@@ -45,7 +45,7 @@ class RecentSearchManager {
       // DB 초기화 후 캐시 업데이트
       await _loadCachedRecentSearchTopics();
     } catch (e) {
-      _logger.e('RecentSearchTopicsManager - initialize() 오류: $e');
+      logger.e('RecentSearchTopicsManager - initialize() 오류: $e');
     }
   }
 
@@ -69,7 +69,7 @@ class RecentSearchManager {
       _cachedSearchHistory =
           result.map((row) => row['topic'] as String).toList();
     } catch (e) {
-      _logger.e(
+      logger.e(
           'RecentSearchTopicsManager - _loadCachedRecentSearchTopics() 오류: $e');
     }
   }
@@ -99,7 +99,7 @@ class RecentSearchManager {
         await _removeOldestSearch();
       }
     } catch (e) {
-      _logger.e('RecentSearchTopicsManager - addTopic() 오류: $e');
+      logger.e('RecentSearchTopicsManager - addTopic() 오류: $e');
     }
   }
 
@@ -120,7 +120,7 @@ class RecentSearchManager {
         await _loadCachedRecentSearchTopics(); // 캐시 갱신
       }
     } catch (e) {
-      _logger.e('RecentSearchTopicsManager - _removeOldestTopic() 오류: $e');
+      logger.e('RecentSearchTopicsManager - _removeOldestTopic() 오류: $e');
     }
   }
 
@@ -137,7 +137,7 @@ class RecentSearchManager {
       // 캐시 갱신
       await _loadCachedRecentSearchTopics();
     } catch (e) {
-      _logger.e('RecentSearchTopicsManager - removeTopic() 오류: $e');
+      logger.e('RecentSearchTopicsManager - removeTopic() 오류: $e');
     }
   }
 
@@ -147,8 +147,9 @@ class RecentSearchManager {
       final db = await _getDatabase();
       await db.delete(tableName);
       _cachedSearchHistory.clear();
+      logger.d('✅ clearSearchHistory() 성공');
     } catch (e) {
-      _logger.e('RecentSearchTopicsManager - clearSearchHistory() 오류: $e');
+      logger.e('RecentSearchTopicsManager - clearSearchHistory() 오류: $e');
     }
   }
 

@@ -9,6 +9,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/cache_deletetion/cache_deletion_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile.dart';
@@ -129,24 +130,16 @@ class _MorePageState extends State<MorePage> {
                 title: '테마',
                 icon: Icons.palette_outlined,
               ),
-              MoreNonNavigationTile(
-                  title: '캐시 삭제',
-                  description: _appVersion,
-                  icon: Icons.rocket_launch_outlined),
+              CacheDeletionTile(
+                title: '캐시 삭제',
+                icon: Icons.cleaning_services_outlined,
+              ),
               // 구분선
               SizedBox(
                   width: double.infinity,
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
               MoreTitleTile(text: '기타', fontSize: 20),
-              MoreWebNavigationTile(
-                  title: '인스타그램',
-                  url: _aboutTeamUrl,
-                  icon: Icons.social_distance_outlined),
-              MoreWebNavigationTile(
-                  title: '만든 사람',
-                  url: _aboutTeamUrl,
-                  icon: Icons.people_outline_outlined),
               MoreWebNavigationTile(
                   title: '사용된 오픈소스',
                   url: _aboutTeamUrl,
