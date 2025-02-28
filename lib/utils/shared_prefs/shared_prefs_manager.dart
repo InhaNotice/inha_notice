@@ -28,6 +28,8 @@ class SharedPrefsManager {
   static final Map<String, dynamic> _cachedPrefs = {
     // 테마 모드 (기본값: system)
     SharedPrefKeys.kUserThemeSetting: AppThemeMode.kSystem,
+    // 캐시 용량
+    SharedPrefKeys.kCacheCapacity: null,
     // 구독 리스트
     SharedPrefKeys.kSubscribedTopics: <String>{},
     // 커스텀 탭바 리스트

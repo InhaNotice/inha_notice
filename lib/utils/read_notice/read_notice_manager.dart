@@ -86,7 +86,7 @@ class ReadNoticeManager {
       // ✅ 캐싱 업데이트
       _cachedReadNoticeIds.add(noticeId);
     } catch (e) {
-      print("🚨 Error adding read notice: $e");
+      logger.e("🚨 Error adding read notice: $e");
     }
   }
 
@@ -105,11 +105,26 @@ class ReadNoticeManager {
       // ✅ 캐싱 업데이트
       _cachedReadNoticeIds.remove(noticeId);
     } catch (e) {
-      print("🚨 Error removing read notice: $e");
+      logger.e("🚨 Error removing read notice: $e");
     }
   }
 
+  /// **읽은 공지인지 확인**
   static bool isReadNotice(String noticeId) {
     return _cachedReadNoticeIds.contains(noticeId);
+  }
+
+  /// **모든 읽은 공지 삭제**
+  static Future<void> clearAllReadNotices() async {
+    try {
+      final db = await _getDatabase();
+      // 데이터베이스 삭제
+      await db.delete(tableName);
+      // 캐시 비우기
+      _cachedReadNoticeIds.clear();
+      logger.d('✅ clearAllReadNotices() 성공: 모든 읽은 공지삭제 완료');
+    } catch (e) {
+      logger.e('❌ clearAllReadNotices() 오류: $e');
+    }
   }
 }
