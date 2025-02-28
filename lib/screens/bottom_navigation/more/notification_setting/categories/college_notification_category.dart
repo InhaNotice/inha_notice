@@ -9,9 +9,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/domain_keys/college_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/utils/university_utils/college_utils.dart';
 import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 /// **NotificationMajorCategory**
@@ -44,7 +44,7 @@ class _CollegeNotificationCategoryState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BoldTitleText(text: '단과대', size: 20),
-            ...CollegeKeys.collegeGroups.entries.map((entry) {
+            ...CollegeUtils.kCollegeMappingOnKey.entries.map((entry) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: NotificationTile(

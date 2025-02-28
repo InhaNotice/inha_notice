@@ -62,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyMedium?.color ??
-                            Theme.of(context).defaultColor),
+                            Theme.of(context).defaultThemedTextColor),
                   ),
                 ],
               ),
@@ -86,7 +86,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyMedium?.color ??
-                            Theme.of(context).defaultColor),
+                            Theme.of(context).defaultThemedTextColor),
                   ),
                 ],
               ),

@@ -78,7 +78,7 @@ class _ThemePreferenceTileState extends State<ThemePreferenceTile> {
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??
-                        Theme.of(context).defaultColor,
+                        Theme.of(context).defaultThemedTextColor,
                   ),
                 ),
               ],

@@ -104,7 +104,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
               fontWeight: FontWeight.bold,
               fontSize: 16,
               color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultColor,
+                  Theme.of(context).defaultThemedTextColor,
             ),
           ),
           actions: [
