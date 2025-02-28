@@ -41,7 +41,7 @@ class _BoldTitleTextState extends State<BoldTitleText> {
               fontSize: widget.size,
               fontWeight: FontWeight.w600,
               color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultColor,
+                  Theme.of(context).defaultThemedTextColor,
             ),
           ),
         ],

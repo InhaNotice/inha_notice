@@ -42,7 +42,7 @@ class _MoreTitleTileState extends State<MoreTitleTile> {
               fontSize: widget.fontSize,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultColor,
+                  Theme.of(context).defaultThemedTextColor,
             ),
           ),
         ],

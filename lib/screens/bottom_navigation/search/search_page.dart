@@ -103,7 +103,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
           _makeTimes = response.first['makeTimes'] ?? '';
           _warning = '';
         } else {
-          _warning = '인기 검색어가 없습니다.';
+          _warning = '인기 검색어가 없어요.';
         }
       });
       _initializeAnimations();
@@ -111,7 +111,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
     } catch (error) {
       setState(() {
         _topicsList = [];
-        _warning = '인기검색어를 불러오지 못하였습니다.';
+        _warning = '인기 검색어를 불러오지 못하였어요.';
       });
     }
   }
@@ -139,12 +139,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   /// **최근검색어 모두 삭제**
   void _clearRecentSearchTopics() async {
     if (!RecentSearchManager.isCachedSearchHistory()) {
-      ThemedSnackBar.warnSnackBar(context, '최근검색어가 존재하지 않습니다!');
+      ThemedSnackBar.warnSnackBar(context, '최근 검색어가 존재하지 않아요.');
       return;
     }
     await RecentSearchManager.clearSearchHistory();
     setState(() {
-      ThemedSnackBar.succeedSnackBar(context, '최근검색어를 모두 삭제하였습니다!');
+      ThemedSnackBar.succeedSnackBar(context, '최근 검색어를 모두 삭제하였어요!');
     });
   }
 
@@ -152,7 +152,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _removeRecentSearchTopic(String query) async {
     await RecentSearchManager.removeRecentSearch(query);
     setState(() {
-      ThemedSnackBar.succeedSnackBar(context, '$query이 삭제하였습니다!');
+      ThemedSnackBar.succeedSnackBar(context, '$query이 삭제하였어요!');
     });
   }
 
@@ -198,7 +198,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 fontWeight: FontWeight.normal,
                 fontSize: 16,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultColor,
+                    Theme.of(context).defaultThemedTextColor,
               ),
               decoration: InputDecoration(
                 hintText: '검색어를 입력하세요',
@@ -244,7 +244,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultColor,
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
             GestureDetector(
@@ -256,7 +256,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Theme.of(context).textTheme.bodyMedium?.color ??
-                      Theme.of(context).defaultColor,
+                      Theme.of(context).defaultThemedTextColor,
                 ),
               ),
             ),
@@ -294,7 +294,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultColor,
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
             backgroundColor: Theme.of(context).tagBackgroundColor,
@@ -330,7 +330,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultColor,
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
             Text(
@@ -340,7 +340,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultColor,
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
           ],
@@ -349,13 +349,13 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         _topicsList.isEmpty
             ? Center(
                 child: Text(
-                  _warning.isNotEmpty ? _warning : '실시간 인기 검색어를 불러오고 있습니다...',
+                  _warning.isNotEmpty ? _warning : '실시간 인기 검색어를 불러오고 있어요...',
                   style: TextStyle(
                     fontFamily: Font.kDefaultFont,
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??
-                        Theme.of(context).defaultColor,
+                        Theme.of(context).defaultThemedTextColor,
                   ),
                 ),
               )

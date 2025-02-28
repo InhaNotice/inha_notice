@@ -46,7 +46,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
     final textColor = widget.isRead
         ? Theme.of(context).readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
-            Theme.of(context).defaultColor;
+            Theme.of(context).defaultThemedTextColor;
     final String title = widget.notice.containsKey('title')
         ? widget.notice['title'] ?? '제목이 없는 게시글입니다'
         : '제목이 없는 게시글입니다';

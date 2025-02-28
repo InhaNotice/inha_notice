@@ -125,7 +125,7 @@ class _NotificationTileState extends State<NotificationTile> {
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultColor,
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
             Transform.scale(
@@ -147,7 +147,7 @@ class _NotificationTileState extends State<NotificationTile> {
               fontSize: 13,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultColor,
+                  Theme.of(context).defaultThemedTextColor,
             ),
           ),
       ],

@@ -20,6 +20,7 @@ import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
+import 'constants/app_theme_mode.dart';
 import 'firebase/firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -118,10 +119,10 @@ Future<void> _initializeThemeSetting() async {
         .getPreference(SharedPrefKeys.kUserThemeSetting);
     ThemeMode themeMode;
     switch (userThemeSetting) {
-      case '화이트':
+      case AppThemeMode.kLight:
         themeMode = ThemeMode.light;
         break;
-      case '다크':
+      case AppThemeMode.kDark:
         themeMode = ThemeMode.dark;
         break;
       default:

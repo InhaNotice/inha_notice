@@ -5,16 +5,16 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-02-28
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/major_utils.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/college_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/education_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/major_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/research_notification_category.dart';
+import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
 import 'notification_major_item.dart';

@@ -53,3 +53,6 @@ flutter:
         - asset: assets/fonts/Pretendard-SemiBold.otf
         - asset: assets/fonts/Pretendard-Thin.otf
           weight: 700
+    - family: TossFaceFontMac
+      fonts:
+        - asset: assets/fonts/TossFaceFontMac.ttf

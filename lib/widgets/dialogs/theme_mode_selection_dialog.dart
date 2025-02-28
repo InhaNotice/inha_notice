@@ -5,29 +5,19 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-02-28
  */
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inha_notice/constants/app_theme_mode.dart';
 import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
-
-/// **앱 테마 설정 값**
-enum AppThemeMode {
-  kSystem('시스템 설정'),
-  kLight('화이트'),
-  kDark('다크');
-
-  const AppThemeMode(this.value);
-
-  final String value;
-}
 
 /// **ThemeModeSelectionDialog**
 /// 테마 모드를 선택할 수 있는 다이얼로그입니다.
@@ -45,19 +35,17 @@ class ThemeModeSelectionDialog extends StatefulWidget {
 }
 
 class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
-  Future<void> _setThemeMode(AppThemeMode key) async {
-    final String selectedValue = key.value;
-
+  Future<void> _setThemeMode(String selectedValue) async {
     try {
       await SharedPrefsManager()
           .setPreference(SharedPrefKeys.kUserThemeSetting, selectedValue);
 
       // 글로벌 themeModeNotifier 업데이트
       switch (selectedValue) {
-        case '화이트':
+        case AppThemeMode.kLight:
           themeModeNotifier.value = ThemeMode.light;
           break;
-        case '다크':
+        case AppThemeMode.kDark:
           themeModeNotifier.value = ThemeMode.dark;
           break;
         default:
@@ -91,7 +79,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
-                Theme.of(context).defaultColor,
+                Theme.of(context).defaultThemedTextColor,
           ),
         ),
         content: Text(
@@ -101,7 +89,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             fontSize: 13,
             fontWeight: FontWeight.normal,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
-                Theme.of(context).defaultColor,
+                Theme.of(context).defaultThemedTextColor,
           ),
         ),
         actions: [
@@ -120,7 +108,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           CupertinoDialogAction(
             onPressed: () => _setThemeMode(AppThemeMode.kLight),
             child: Text(
-              '화이트 모드',
+              AppThemeMode.kLight,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -132,7 +120,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           CupertinoDialogAction(
             onPressed: () => _setThemeMode(AppThemeMode.kDark),
             child: Text(
-              '다크 모드',
+              AppThemeMode.kDark,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -152,7 +140,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           TextButton(
             onPressed: () => _setThemeMode(AppThemeMode.kSystem),
             child: Text(
-              '시스템 설정',
+              AppThemeMode.kSystem,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -164,7 +152,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           TextButton(
             onPressed: () => _setThemeMode(AppThemeMode.kLight),
             child: Text(
-              '화이트 모드',
+              AppThemeMode.kLight,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -176,7 +164,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           TextButton(
             onPressed: () => _setThemeMode(AppThemeMode.kDark),
             child: Text(
-              '다크 모드',
+              AppThemeMode.kDark,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
