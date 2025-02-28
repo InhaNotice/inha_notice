@@ -5,11 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-02-28
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/major_setting/major_setting_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_title_tile.dart';
@@ -67,16 +67,17 @@ class _MorePageState extends State<MorePage> {
             children: [
               MoreTitleTile(text: '공지사항', fontSize: 20),
               MoreNavigationTile(
-                  title: '학과 설정',
-                  icon: Icons.school_outlined,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MajorSettingPage(),
-                      ),
-                    );
-                  }),
+                title: '나만의 탭 설정',
+                icon: Icons.tab_outlined,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CustomTabBarPage(),
+                    ),
+                  );
+                },
+              ),
               MoreNavigationTile(
                   title: '알림 설정',
                   icon: Icons.notifications_outlined,
@@ -95,10 +96,6 @@ class _MorePageState extends State<MorePage> {
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
               MoreTitleTile(text: '이용 안내', fontSize: 20),
               MoreWebNavigationTile(
-                  title: '앱 소개',
-                  url: _introduceAppUrl,
-                  icon: Icons.info_outline),
-              MoreWebNavigationTile(
                   title: '새로운 내용',
                   url: _featuresUrl,
                   icon: Icons.star_outline_outlined),
@@ -110,6 +107,10 @@ class _MorePageState extends State<MorePage> {
                   title: '서비스 이용약관',
                   url: _termsAndConditionsOfServiceUrl,
                   icon: Icons.checklist_rtl_outlined),
+              MoreWebNavigationTile(
+                  title: '앱 소개',
+                  url: _introduceAppUrl,
+                  icon: Icons.info_outline),
               MoreWebNavigationTile(
                   title: 'FAQ',
                   url: _questionsAndAnswersUrl,
@@ -124,18 +125,6 @@ class _MorePageState extends State<MorePage> {
                   title: '앱 버전',
                   description: _appVersion,
                   icon: Icons.rocket_launch_outlined),
-              MoreNavigationTile(
-                title: '커스텀 탭바 설정',
-                icon: Icons.rocket_launch_outlined,
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NotificationSettingPage(),
-                    ),
-                  );
-                },
-              ),
               ThemePreferenceTile(
                 title: '테마',
                 icon: Icons.palette_outlined,
@@ -155,9 +144,13 @@ class _MorePageState extends State<MorePage> {
                   url: _aboutTeamUrl,
                   icon: Icons.social_distance_outlined),
               MoreWebNavigationTile(
-                  title: '인공 팀',
+                  title: '만든 사람',
                   url: _aboutTeamUrl,
                   icon: Icons.people_outline_outlined),
+              MoreWebNavigationTile(
+                  title: '사용된 오픈소스',
+                  url: _aboutTeamUrl,
+                  icon: Icons.source_outlined),
             ],
           ),
         ),
