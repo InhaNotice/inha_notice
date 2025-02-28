@@ -10,6 +10,7 @@
 
 abstract class SharedPrefKeys {
   static const String kUserThemeSetting = 'user-theme-setting';
+  static const String kCacheCapacity = 'cache-capacity';
   static const String kSubscribedTopics = 'subscribed_topics';
   static const String kCustomTabList = 'custom-tab-list';
   static const String kIsSubscribedToAllUsers = 'isSubscribedToAllUsers';

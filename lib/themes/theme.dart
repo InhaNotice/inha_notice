@@ -160,6 +160,8 @@ extension DialogColors on ThemeData {
   Color? get dialogTextColor => Colors.blue;
 
   Color? get dialogGreyTextColor => Colors.grey;
+
+  Color? get dialogDeleteTextColor => Colors.redAccent;
 }
 
 /// **TabPreviewColors**
