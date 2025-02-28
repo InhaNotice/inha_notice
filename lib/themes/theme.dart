@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-02-27
  */
 import 'package:flutter/material.dart';
 
@@ -59,13 +59,15 @@ final ThemeData darkTheme = ThemeData(
 /// **DefaultColors**
 /// 기본 글자 색상을 정의합니다.
 extension DefaultColors on ThemeData {
-  Color get defaultColor =>
+  Color get defaultThemedTextColor =>
       brightness == Brightness.light ? Colors.black : Colors.white;
 
   Color get fixedBlueText => Colors.blue;
 
   Color get fixedLightGreyText =>
       brightness == Brightness.light ? Colors.black54 : Colors.white;
+
+  Color get fixedGreyText => Colors.grey;
 }
 
 /// **TextColors**
@@ -124,7 +126,7 @@ extension ToggleColors on ThemeData {
 /// 페이지네이션 색상을 정의합니다.
 extension PageButtonColors on ThemeData {
   Color get selectedPageButtonTextColor =>
-      textTheme.bodyMedium?.color ?? defaultColor;
+      textTheme.bodyMedium?.color ?? defaultThemedTextColor;
 
   Color get unSelectedPageButtonTextColor => Colors.grey;
 }
@@ -158,4 +160,32 @@ extension DialogColors on ThemeData {
   Color? get dialogTextColor => Colors.blue;
 
   Color? get dialogGreyTextColor => Colors.grey;
+}
+
+/// **TabPreviewColors**
+/// '나만의 탭'의 탭 미리보기 뷰의 색상을 정의합니다.
+extension TabPreviewColors on ThemeData {
+  Color get tabPreviewBoxBorder =>
+      brightness == Brightness.light ? Colors.black38 : Colors.grey.shade800;
+}
+
+/// **ChipColors**
+/// '나만의 탭'의 Chip의 색상을 정의합니다.
+extension ChipColors on ThemeData {
+  Color get chipBackground =>
+      brightness == Brightness.light ? Colors.white : Colors.grey.shade800;
+
+  Color get chipText =>
+      brightness == Brightness.light ? Colors.black87 : Colors.white;
+
+  Color? get chipBorder => brightness == Brightness.light
+      ? Colors.grey[300]
+      : const Color(0xFF292929);
+}
+
+/// **CustomTabListColors**
+/// '나만의 탭'의 탭 리스트 색상을 정의합니다.
+extension CustomTabListColors on ThemeData {
+  Color get dragFeedbackBackground =>
+      brightness == Brightness.light ? Colors.white : Colors.black12;
 }
