@@ -153,7 +153,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??
-                          Theme.of(context).defaultColor),
+                          Theme.of(context).defaultThemedTextColor),
                 ),
               )
             else
@@ -166,7 +166,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??
-                          Theme.of(context).defaultColor),
+                          Theme.of(context).defaultThemedTextColor),
                 ),
               ),
             TextField(
@@ -234,7 +234,7 @@ class _MajorSettingPageState extends State<MajorSettingPage> {
                                           .textTheme
                                           .bodyMedium
                                           ?.color ??
-                                      Theme.of(context).defaultColor,
+                                      Theme.of(context).defaultThemedTextColor,
                                 ),
                               ),
                               children: entry.value.keys
