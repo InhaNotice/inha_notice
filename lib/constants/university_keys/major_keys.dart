@@ -50,6 +50,7 @@ abstract class MajorKeys {
   static const String physics = '물리학과';
   static const String chemistry = '화학과';
   static const String foodNutrition = '식품영양학과';
+  static const String oceanography = '해양과학과';
 
   // [경영대학]
   static const String businessAdministration = '경영학과';
@@ -152,6 +153,7 @@ abstract class MajorKeys {
   static const String PHYSICS = 'PHYSICS';
   static const String CHEMISTRY = 'CHEMISTRY';
   static const String FOODNUTRI = 'FOODNUTRI';
+  static const String OCEANOGRAPHY = 'OCEANOGRAPHY';
 
   // 경영대학 (4)
   static const String BIZ = 'BIZ';

@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-03-01
  */
 
 /// **StringConstants**
@@ -13,4 +13,5 @@
 abstract class StringConstants {
   static const String kEmptyString = '';
   static const String kDefaultSortedType = 'DATE';
+  static const String kEUCKR = 'euc-kr';
 }
