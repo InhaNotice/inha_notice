@@ -1,7 +1,7 @@
 import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
 
 abstract class CustomTabListUtils {
-  static const List<String> kAllTabs = [
+  static const List<String> kDefaultTabs = [
     CustomTabListKeys.kWhole,
     CustomTabListKeys.kMajor,
     CustomTabListKeys.kScholarship,
@@ -9,6 +9,9 @@ abstract class CustomTabListUtils {
     CustomTabListKeys.kLibrary,
     CustomTabListKeys.kInternational,
     CustomTabListKeys.kSWUniv,
+  ];
+
+  static const List<String> kAdditionalTabs = [
     CustomTabListKeys.kCollege,
     CustomTabListKeys.kGraduateSchool,
   ];
