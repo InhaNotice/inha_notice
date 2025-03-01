@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
@@ -13,6 +13,8 @@ import 'package:inha_notice/screens/bottom_navigation/more/university_settings/c
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
+
+import '../../../../../constants/shared_pref_keys/shared_pref_keys.dart';
 
 /// **BaseTabList**
 /// 공통 기능을 모듈화한 추상 클래스입니다.
@@ -43,7 +45,26 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MajorSettingPage(),
+            builder: (context) =>
+                const MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey),
+          ),
+        );
+        break;
+      case CustomTabListKeys.kMajor2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                const MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey2),
+          ),
+        );
+        break;
+      case CustomTabListKeys.kMajor3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                const MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey3),
           ),
         );
         break;

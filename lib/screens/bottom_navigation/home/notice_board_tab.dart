@@ -11,24 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
 import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
-import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 
 class NoticeBoardTab extends StatelessWidget {
-  final String tabName;
+  final String noticeType;
 
   const NoticeBoardTab({
     super.key,
-    required this.tabName,
+    required this.noticeType,
   });
 
   @override
   Widget build(BuildContext context) {
-    // tabName을 통한 매칭되는 키 가져오기
-    final String? noticeType = CustomTabListUtils.kTabGroups[tabName];
-    // 매핑에 없는 탭인 경우 빈 컨테이너 반환
-    if (noticeType == null) return Container();
-
-    // '정석'(LIBRARY) 탭인 경우 RelativeStyleNoticeBoard
     if (noticeType == CustomTabListKeys.LIBRARY) {
       return RelativeStyleNoticeBoard(noticeType: noticeType);
     }
