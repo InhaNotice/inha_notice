@@ -5,19 +5,22 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
 import 'package:inha_notice/constants/page_constants.dart';
 import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
+import 'package:inha_notice/constants/university_keys/major_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
+import 'package:inha_notice/services/absolute_style_scraper/inha_design_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
+import 'package:inha_notice/services/absolute_style_scraper/oceanography_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
@@ -81,14 +84,13 @@ class _AbsoluteStyleNoticeBoardState
     userSettingKey = CustomTabListUtils.loadUserSettingKey(noticeType);
 
     isUserSettingKey = (userSettingKey != null);
-    noticeTypeDisplayName = CustomTabListUtils.kTabMappingOnValue[noticeType];
+    noticeTypeDisplayName =
+        CustomTabListUtils.kTabMappingOnValue[noticeType] ?? noticeType;
   }
 
-  /// **저장된 Preference를 불러오고 스크래퍼를 초기화**
+  /// **(선택) Preference 로드 -> (필수) 스크래퍼 초기화**
   Future<void> initializeScraper() async {
-    // Preference 로드가 필요한지 여부 판단
-    // 필요하면 Preference 로드를 진행
-    // 만약, 저장된 Preference 값이 존재하지 않다면, 스크래퍼를 초기화하지 않음
+    /// Preference 로드가 필요한지 여부 판단
     if (CustomTabListUtils.isUserSettingType(widget.noticeType)) {
       _loadPreference(widget.noticeType);
       if (!isUserSettingKey) {
@@ -96,7 +98,6 @@ class _AbsoluteStyleNoticeBoardState
       }
     }
 
-    // 스크래퍼 초기화 진행
     // 학사, 장학, 모집/채용
     if (widget.noticeType == CustomTabListKeys.WHOLE ||
         widget.noticeType == CustomTabListKeys.SCHOLARSHIP ||
@@ -112,7 +113,19 @@ class _AbsoluteStyleNoticeBoardState
       return;
     }
 
-    // 학과, 단과대, 대학원
+    // (예외) 해양과학과인 경우
+    if (userSettingKey == MajorKeys.OCEANOGRAPHY) {
+      noticeScraper = OceanographyStyleNoticeScraper(userSettingKey!);
+      return;
+    }
+
+    // (예외) 디자인융합학과인 경우
+    if (userSettingKey == MajorKeys.INHADESIGN) {
+      noticeScraper = InhaDesignStyleNoticeScraper(userSettingKey!);
+      return;
+    }
+
+    // (나머지) 학과, 단과대, 대학원
     noticeScraper = MajorStyleNoticeScraper(userSettingKey!);
   }
 
