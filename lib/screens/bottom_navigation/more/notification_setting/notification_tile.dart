@@ -141,6 +141,7 @@ class _NotificationTileState extends State<NotificationTile> {
         // description은 선택
         if (widget.description.isNotEmpty)
           Text(
+            softWrap: true,
             widget.description,
             style: TextStyle(
               fontFamily: Font.kDefaultFont,

@@ -9,7 +9,7 @@
  */
 
 abstract class CustomTabListKeys {
-  static const String kWhole = '전체공지';
+  static const String kWhole = '학사';
   static const String kMajor = '학과';
   static const String kScholarship = '장학';
   static const String kRecruitment = '모집/채용';
