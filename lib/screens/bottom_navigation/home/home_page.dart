@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     // savedTabs는 null일 수도 있음
     if (savedTabs == null || savedTabs.isEmpty) {
       // 저장된 나의 탭이 없다면, 기본 탭 구성 사용
-      selectedTabs = CustomTabListUtils.kAllTabs;
+      selectedTabs = CustomTabListUtils.kDefaultTabs;
     } else {
       selectedTabs = List.from(savedTabs);
     }

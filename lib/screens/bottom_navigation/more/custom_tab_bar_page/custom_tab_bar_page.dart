@@ -52,7 +52,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
     final List<String>? savedTabs =
         SharedPrefsManager().getPreference(SharedPrefKeys.kCustomTabList);
     if (savedTabs == null || savedTabs.isEmpty) {
-      selectedTabs = List.from(CustomTabListUtils.kAllTabs);
+      selectedTabs = List.from(CustomTabListUtils.kDefaultTabs);
     } else {
       selectedTabs = List.from(savedTabs);
     }
@@ -63,9 +63,12 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
 
   /// 선택되지 않은 탭 옵션
   List<String> get availableTabs {
-    return CustomTabListUtils.kAllTabs
-        .where((tab) => !selectedTabs.contains(tab))
-        .toList();
+    final allTabs = {
+      ...CustomTabListUtils.kDefaultTabs,
+      ...CustomTabListUtils.kAdditionalTabs
+    }.toList();
+    // 선택되지 않은 탭 반환
+    return allTabs.where((tab) => !selectedTabs.contains(tab)).toList();
   }
 
   Future<void> saveTabs() async {
