@@ -98,18 +98,6 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
         ),
         actions: [
           CupertinoDialogAction(
-            onPressed: () => _deleteAllCaches(),
-            child: Text(
-              '삭제',
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).dialogDeleteTextColor,
-              ),
-            ),
-          ),
-          CupertinoDialogAction(
             onPressed: () {
               if (mounted) {
                 Navigator.pop(context);
@@ -122,6 +110,18 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogTextColor,
+              ),
+            ),
+          ),
+          CupertinoDialogAction(
+            onPressed: () => _deleteAllCaches(),
+            child: Text(
+              '삭제',
+              style: TextStyle(
+                fontFamily: Font.kDefaultFont,
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).dialogDeleteTextColor,
               ),
             ),
           ),
@@ -163,18 +163,6 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
         ),
         actions: [
           TextButton(
-            onPressed: () => _deleteAllCaches(),
-            child: Text(
-              '삭제',
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).dialogDeleteTextColor,
-              ),
-            ),
-          ),
-          TextButton(
             onPressed: () {
               if (mounted) {
                 Navigator.pop(context);
@@ -187,6 +175,18 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogTextColor,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => _deleteAllCaches(),
+            child: Text(
+              '삭제',
+              style: TextStyle(
+                fontFamily: Font.kDefaultFont,
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).dialogDeleteTextColor,
               ),
             ),
           ),
