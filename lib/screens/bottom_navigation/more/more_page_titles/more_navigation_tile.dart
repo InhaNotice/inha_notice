@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-03-01
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -15,14 +15,11 @@ import 'package:inha_notice/themes/theme.dart';
 /// 이 클래스는 더보기 페이지의 다른 페이지로 이동하는 타일을 정의합니다.
 class MoreNavigationTile extends StatefulWidget {
   final String title;
-  final IconData icon;
+  final IconData? icon;
   final VoidCallback onTap;
 
   const MoreNavigationTile(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.onTap});
+      {super.key, required this.title, this.icon, required this.onTap});
 
   @override
   State<MoreNavigationTile> createState() => _MoreNavigationTileState();
@@ -44,8 +41,9 @@ class _MoreNavigationTileState extends State<MoreNavigationTile> {
           children: [
             Row(
               children: [
-                Icon(widget.icon,
-                    size: 20, color: Theme.of(context).iconTheme.color),
+                if (widget.icon != null)
+                  Icon(widget.icon,
+                      size: 20, color: Theme.of(context).iconTheme.color),
                 const SizedBox(width: 8),
                 Text(
                   widget.title,

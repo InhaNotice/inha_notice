@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -19,6 +19,8 @@ import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/
 import 'package:inha_notice/screens/bottom_navigation/more/theme_preference/theme_preference_tile.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
+import 'custom_license/custom_licenses_page.dart';
+
 /// **MorePage**
 /// 이 클래스는 더보기 페이지를 구현하는 클래스입니다.
 class MorePage extends StatefulWidget {
@@ -30,7 +32,6 @@ class MorePage extends StatefulWidget {
 
 class _MorePageState extends State<MorePage> {
   late String _featuresUrl;
-  late String _aboutTeamUrl;
   late String _personalInformationUrl;
   late String _termsAndConditionsOfServiceUrl;
   late String _introduceAppUrl;
@@ -47,7 +48,6 @@ class _MorePageState extends State<MorePage> {
   void _initializeWebPageUrls() {
     _appVersion = dotenv.get('APP_VERSION');
     _featuresUrl = dotenv.get('FEATURES_URL');
-    _aboutTeamUrl = dotenv.get('ABOUT_TEAM_URL');
     _personalInformationUrl = dotenv.get('PERSONAL_INFORMATION_URL');
     _termsAndConditionsOfServiceUrl =
         dotenv.get('TERMS_AND_CONDITIONS_OF_SERVICE_URL');
@@ -66,7 +66,7 @@ class _MorePageState extends State<MorePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              MoreTitleTile(text: '공지사항', fontSize: 20),
+              MoreTitleTile(text: '공지사항', fontSize: 16),
               MoreNavigationTile(
                 title: '나만의 탭 설정',
                 icon: Icons.tab_outlined,
@@ -95,7 +95,7 @@ class _MorePageState extends State<MorePage> {
                   width: double.infinity,
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
-              MoreTitleTile(text: '이용 안내', fontSize: 20),
+              MoreTitleTile(text: '이용 안내', fontSize: 16),
               MoreWebNavigationTile(
                   title: '새로운 내용',
                   url: _featuresUrl,
@@ -121,7 +121,7 @@ class _MorePageState extends State<MorePage> {
                   width: double.infinity,
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
-              MoreTitleTile(text: '앱 설정', fontSize: 20),
+              MoreTitleTile(text: '앱 설정', fontSize: 16),
               MoreNonNavigationTile(
                   title: '앱 버전',
                   description: _appVersion,
@@ -139,11 +139,17 @@ class _MorePageState extends State<MorePage> {
                   width: double.infinity,
                   child: Divider(
                       color: Theme.of(context).dividerColor, thickness: 2.0)),
-              MoreTitleTile(text: '기타', fontSize: 20),
-              MoreWebNavigationTile(
-                  title: '사용된 오픈소스',
-                  url: _aboutTeamUrl,
-                  icon: Icons.source_outlined),
+              MoreTitleTile(text: '기타', fontSize: 16),
+              MoreNavigationTile(
+                title: '사용된 오픈소스',
+                icon: Icons.source_outlined,
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => CustomLicensePage()),
+                  );
+                },
+              ),
             ],
           ),
         ),
