@@ -18,6 +18,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/university_settings/g
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
+import 'package:inha_notice/services/absolute_style_scraper/inha_design_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/oceanography_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
@@ -117,6 +118,13 @@ class _AbsoluteStyleNoticeBoardState
       noticeScraper = OceanographyStyleNoticeScraper(userSettingKey!);
       return;
     }
+
+    // (예외) 디자인융합학과인 경우
+    if (userSettingKey == MajorKeys.INHADESIGN) {
+      noticeScraper = InhaDesignStyleNoticeScraper(userSettingKey!);
+      return;
+    }
+
     // (나머지) 학과, 단과대, 대학원
     noticeScraper = MajorStyleNoticeScraper(userSettingKey!);
   }
