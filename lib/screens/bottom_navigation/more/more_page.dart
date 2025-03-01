@@ -150,6 +150,11 @@ class _MorePageState extends State<MorePage> {
                   );
                 },
               ),
+              SizedBox(
+                  width: double.infinity,
+                  child: Divider(
+                      color: Theme.of(context).dividerColor, thickness: 2.0)),
+              MoreTitleTile(text: 'Copyright (c) 2025 INGONG', fontSize: 12),
             ],
           ),
         ),
