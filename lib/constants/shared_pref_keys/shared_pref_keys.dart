@@ -5,9 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 
+/// **SharedPrefsKeys**
+/// SharedPrefsManager에서 사용되는 키를 저장하는 클래스입니다.
 abstract class SharedPrefKeys {
   static const String kUserThemeSetting = 'user-theme-setting';
   static const String kCacheCapacity = 'cache-capacity';
@@ -18,6 +20,8 @@ abstract class SharedPrefKeys {
   static const String kAllNotices = 'all-notices';
   static const String kPreviousMajorKey = 'previous-major-key';
   static const String kMajorKey = 'major-key';
+  static const String kMajorKey2 = 'major-key-2';
+  static const String kMajorKey3 = 'major-key-3';
   static const String kCollegeKey = 'college-key';
   static const String kGraduateSchoolKey = 'graduate-school-key';
   static const String kAcademicNotification = 'academic-notification';
