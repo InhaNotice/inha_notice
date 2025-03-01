@@ -38,6 +38,7 @@ abstract class MajorUtils {
       MajorKeys.physics: MajorKeys.PHYSICS,
       MajorKeys.chemistry: MajorKeys.CHEMISTRY,
       MajorKeys.foodNutrition: MajorKeys.FOODNUTRI,
+      MajorKeys.oceanography: MajorKeys.OCEANOGRAPHY,
     },
     MajorKeys.kBusiness: {
       MajorKeys.businessAdministration: MajorKeys.BIZ,
