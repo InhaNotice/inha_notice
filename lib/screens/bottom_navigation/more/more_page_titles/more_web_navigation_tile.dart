@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-03-01
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -17,10 +17,10 @@ import 'package:inha_notice/widgets/navigation/web_navigator.dart';
 class MoreWebNavigationTile extends StatefulWidget {
   final String title;
   final String url;
-  final IconData icon;
+  final IconData? icon;
 
   const MoreWebNavigationTile(
-      {super.key, required this.title, required this.url, required this.icon});
+      {super.key, required this.title, required this.url, this.icon});
 
   @override
   State<MoreWebNavigationTile> createState() => _MoreWebNavigationTileState();
@@ -46,8 +46,9 @@ class _MoreWebNavigationTileState extends State<MoreWebNavigationTile> {
           children: [
             Row(
               children: [
-                Icon(widget.icon,
-                    size: 20, color: Theme.of(context).iconTheme.color),
+                if (widget.icon != null)
+                  Icon(widget.icon,
+                      size: 20, color: Theme.of(context).iconTheme.color),
                 const SizedBox(width: 8),
                 Text(
                   widget.title,

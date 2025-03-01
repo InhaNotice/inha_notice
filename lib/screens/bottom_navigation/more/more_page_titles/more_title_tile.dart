@@ -27,7 +27,7 @@ class _MoreTitleTileState extends State<MoreTitleTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.0,
+      height: 30.0,
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(8.0),
@@ -40,9 +40,8 @@ class _MoreTitleTileState extends State<MoreTitleTile> {
             style: TextStyle(
               fontFamily: Font.kDefaultFont,
               fontSize: widget.fontSize,
-              fontWeight: FontWeight.normal,
-              color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultThemedTextColor,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).fixedGreyText,
             ),
           ),
         ],
