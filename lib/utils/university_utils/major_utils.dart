@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 
 import 'package:inha_notice/constants/university_keys/major_keys.dart';
@@ -81,6 +81,7 @@ abstract class MajorUtils {
     },
     MajorKeys.kArtsSports: {
       MajorKeys.fineArts: MajorKeys.FINEARTS,
+      MajorKeys.inhaDesign: MajorKeys.INHADESIGN,
       MajorKeys.sportsScience: MajorKeys.SPORT,
       MajorKeys.theaterFilm: MajorKeys.THEATREFILM,
       MajorKeys.fashionDesign: MajorKeys.FASHION,
