@@ -9,7 +9,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -20,7 +19,9 @@ import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 class MajorSettingPage extends BaseSettingPage {
-  const MajorSettingPage({super.key});
+  final String majorKeyType;
+
+  const MajorSettingPage({super.key, required this.majorKeyType});
 
   @override
   State<MajorSettingPage> createState() => _MajorSettingPageState();
@@ -60,7 +61,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
   Future<void> loadPreference() async {
     setState(() {
       _currentMajorKey =
-          SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
+          SharedPrefsManager().getPreference(widget.majorKeyType);
       if (_currentMajorKey != null) {
         _currentMajor = MajorUtils.kMajorMappingOnValue[_currentMajorKey];
       }
@@ -156,8 +157,8 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
       BlockingDialog.show(context);
     });
     try {
-      await SharedPrefsManager()
-          .setMajorPreference(_currentMajorKey, newMajorKey!);
+      await SharedPrefsManager().setMajorPreference(
+          _currentMajorKey, newMajorKey!, widget.majorKeyType);
       if (mounted) {
         ThemedSnackBar.succeedSnackBar(context, '$item로 설정되었습니다!');
       }
