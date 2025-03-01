@@ -5,12 +5,17 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 
+/// **CustomTabListKeys**
+/// 커스텀 탭 키를 저장하는 클래스입니다.
 abstract class CustomTabListKeys {
   static const String kWhole = '학사';
   static const String kMajor = '학과';
+  static const String kMajor2 = '학과2';
+  static const String kMajor3 = '학과3';
+
   static const String kScholarship = '장학';
   static const String kRecruitment = '모집/채용';
   static const String kLibrary = '정석';
@@ -21,6 +26,8 @@ abstract class CustomTabListKeys {
 
   static const String WHOLE = 'WHOLE';
   static const String MAJOR = 'MAJOR';
+  static const String MAJOR2 = 'MAJOR2';
+  static const String MAJOR3 = 'MAJOR3';
   static const String SCHOLARSHIP = 'SCHOLARSHIP';
   static const String RECRUITMENT = 'RECRUITMENT';
   static const String LIBRARY = 'LIBRARY';

@@ -64,8 +64,8 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
   /// 선택되지 않은 탭 옵션
   List<String> get availableTabs {
     final allTabs = {
+      ...CustomTabListUtils.kAdditionalTabs,
       ...CustomTabListUtils.kDefaultTabs,
-      ...CustomTabListUtils.kAdditionalTabs
     }.toList();
     // 선택되지 않은 탭 반환
     return allTabs.where((tab) => !selectedTabs.contains(tab)).toList();

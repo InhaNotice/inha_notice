@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
@@ -15,7 +15,10 @@ import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
+import 'package:inha_notice/utils/university_utils/major_utils.dart';
 
+/// **HomePage**
+/// 홈 화면을 정의합니다.
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -24,7 +27,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> selectedTabs = [];
+  List<String> noticeTypeTabs = [];
 
   @override
   void initState() {
@@ -34,23 +37,46 @@ class _HomePageState extends State<HomePage> {
 
   /// **저장된 나의 탭 설정 불러오기**
   Future<void> _loadSavedTabs() async {
-    // 저장된 나의 탭 불러오기 (상수시간, 캐싱 전략 사용)
-    final List<String>? savedTabs =
-        SharedPrefsManager().getPreference(SharedPrefKeys.kCustomTabList);
+    // 저장된 나의 탭 불러오기
+    final savedTabs = SharedPrefsManager()
+        .getPreference(SharedPrefKeys.kCustomTabList) as List<String>?;
 
-    // savedTabs는 null일 수도 있음
+    // 저장된 탭이 존재하지 않으면, 기본 탭을 사용하고
+    // 존재하면, 저장된 탭을 복사해서 사용함
+    late List<String> selectedTabs = [];
     if (savedTabs == null || savedTabs.isEmpty) {
-      // 저장된 나의 탭이 없다면, 기본 탭 구성 사용
       selectedTabs = CustomTabListUtils.kDefaultTabs;
     } else {
       selectedTabs = List.from(savedTabs);
+    }
+
+    // 불러온 탭을 바탕으로 noticeType으로 변환하여 탭을 저장함
+    noticeTypeTabs = selectedTabs
+        .map((tabName) => CustomTabListUtils.kTabMappingOnKey[tabName]!)
+        .toList();
+  }
+
+  String _loadTabName(String noticeType) {
+    // 학과 타입이 아니면, noticeType을 번역해서 탭 이름을 반환
+    // 학과 타입이 아닌 경우: MAJOR, MAJOR2, MAJOR3을 제외한 나머지
+    if (!CustomTabListUtils.isMajorType(noticeType)) {
+      return CustomTabListUtils.kTabMappingOnValue[noticeType]!;
+    }
+    // 학과 타입일 때, 유저 설정 값을 불러온다.
+    final userSettingKey = CustomTabListUtils.loadUserSettingKey(noticeType);
+    // 설정 값이 존재하지 않으면, 기본 탭 이름을 사용
+    if (userSettingKey == null) {
+      return CustomTabListUtils.kTabMappingOnValue[noticeType]!;
+    } else {
+      // 존재하면, 유저 설정 값을 번역해서 사용
+      return MajorUtils.kMajorMappingOnValue[userSettingKey]!;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: selectedTabs.length,
+      length: noticeTypeTabs.length,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -140,15 +166,16 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),
-                tabs:
-                    selectedTabs.map((tabName) => Tab(text: tabName)).toList(),
+                tabs: noticeTypeTabs
+                    .map((noticeType) => Tab(text: _loadTabName(noticeType)))
+                    .toList(),
               ),
             ),
           ),
         ),
         body: TabBarView(
-          children: selectedTabs
-              .map((tabName) => NoticeBoardTab(tabName: tabName))
+          children: noticeTypeTabs
+              .map((noticeType) => NoticeBoardTab(noticeType: noticeType))
               .toList(),
         ),
       ),

@@ -21,7 +21,6 @@ import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_s
 import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
-import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/notice/notice_refresh_header.dart';
@@ -64,6 +63,12 @@ class _AbsoluteStyleNoticeBoardState
     initialize();
   }
 
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
   /// **Refresh 컨트롤러(새로운 공지 불러옴)**
   void _onRefresh() async {
     await loadNotices(PageSettings.kInitialAbsolutePage);
@@ -72,28 +77,11 @@ class _AbsoluteStyleNoticeBoardState
 
   /// **Preference 로드를 담당하는 함수**//
   void _loadPreference(String noticeType) {
-    switch (noticeType) {
-      // 학과
-      case CustomTabListKeys.MAJOR:
-        userSettingKey =
-            SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
-        break;
-      // 단과대
-      case CustomTabListKeys.COLLEGE:
-        userSettingKey =
-            SharedPrefsManager().getPreference(SharedPrefKeys.kCollegeKey);
-        break;
-      // 대학원
-      case CustomTabListKeys.GRADUATESCHOOL:
-        userSettingKey = SharedPrefsManager()
-            .getPreference(SharedPrefKeys.kGraduateSchoolKey);
-        break;
-      default:
-        break;
-    }
+    // 유저 설정값 불러오기
+    userSettingKey = CustomTabListUtils.loadUserSettingKey(noticeType);
+
     isUserSettingKey = (userSettingKey != null);
-    noticeTypeDisplayName =
-        CustomTabListUtils.convertNoticeTypeToKorean(noticeType);
+    noticeTypeDisplayName = CustomTabListUtils.kTabMappingOnValue[noticeType];
   }
 
   /// **저장된 Preference를 불러오고 스크래퍼를 초기화**
@@ -101,7 +89,7 @@ class _AbsoluteStyleNoticeBoardState
     // Preference 로드가 필요한지 여부 판단
     // 필요하면 Preference 로드를 진행
     // 만약, 저장된 Preference 값이 존재하지 않다면, 스크래퍼를 초기화하지 않음
-    if (CustomTabListUtils.requiresUserSetting(widget.noticeType)) {
+    if (CustomTabListUtils.isUserSettingType(widget.noticeType)) {
       _loadPreference(widget.noticeType);
       if (!isUserSettingKey) {
         return;
@@ -184,7 +172,13 @@ class _AbsoluteStyleNoticeBoardState
     /// tab의 케이스는 반드시 존재함
     switch (tab) {
       case CustomTabListKeys.MAJOR:
-        settingPage = const MajorSettingPage();
+        settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey);
+        break;
+      case CustomTabListKeys.MAJOR2:
+        settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey2);
+        break;
+      case CustomTabListKeys.MAJOR3:
+        settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey3);
         break;
       case CustomTabListKeys.COLLEGE:
         settingPage = const CollegeSettingPage();
@@ -253,7 +247,7 @@ class _AbsoluteStyleNoticeBoardState
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : (CustomTabListUtils.requiresUserSetting(widget.noticeType) &&
+            : (CustomTabListUtils.isUserSettingType(widget.noticeType) &&
                     !isUserSettingKey)
                 ? Center(
                     child: Column(

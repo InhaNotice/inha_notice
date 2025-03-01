@@ -39,6 +39,8 @@ class SharedPrefsManager {
     // 이전학과, 현재학과
     SharedPrefKeys.kPreviousMajorKey: null,
     SharedPrefKeys.kMajorKey: null,
+    SharedPrefKeys.kMajorKey2: null,
+    SharedPrefKeys.kMajorKey3: null,
     // 단과대
     SharedPrefKeys.kCollegeKey: null,
     // 대학원
@@ -235,11 +237,8 @@ class SharedPrefsManager {
 
   /// **새로운 학과 설정**
   Future<void> setMajorPreference(
-      String? currentMajorKey, String newMajorKey) async {
-    if (currentMajorKey != null) {
-      setPreference(SharedPrefKeys.kPreviousMajorKey, currentMajorKey);
-    }
-    setPreference(SharedPrefKeys.kMajorKey, newMajorKey);
+      String? currentMajorKey, String newMajorKey, String majorKeyType) async {
+    setPreference(majorKeyType, newMajorKey);
     logger.d(
         "${runtimeType.toString()} - setMajorKey() 성공: '$currentMajorKey' to '$newMajorKey'");
   }
