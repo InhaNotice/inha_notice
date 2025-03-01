@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-01
  */
 
 abstract class MajorKeys {
@@ -50,6 +50,7 @@ abstract class MajorKeys {
   static const String physics = '물리학과';
   static const String chemistry = '화학과';
   static const String foodNutrition = '식품영양학과';
+  static const String oceanography = '해양과학과';
 
   // [경영대학]
   static const String businessAdministration = '경영학과';
@@ -92,6 +93,7 @@ abstract class MajorKeys {
 
   // [예술체육대학]
   static const String fineArts = '조형예술학과';
+  static const String inhaDesign = '디자인융합학과';
   static const String sportsScience = '스포츠과학과';
   static const String theaterFilm = '연극영화학과';
   static const String fashionDesign = '의류디자인학과';
@@ -152,6 +154,7 @@ abstract class MajorKeys {
   static const String PHYSICS = 'PHYSICS';
   static const String CHEMISTRY = 'CHEMISTRY';
   static const String FOODNUTRI = 'FOODNUTRI';
+  static const String OCEANOGRAPHY = 'OCEANOGRAPHY';
 
   // 경영대학 (4)
   static const String BIZ = 'BIZ';
@@ -194,6 +197,7 @@ abstract class MajorKeys {
 
   // 예술체육대학 (4)
   static const String FINEARTS = 'FINEARTS';
+  static const String INHADESIGN = 'INHADESIGN';
   static const String SPORT = 'SPORT';
   static const String THEATREFILM = 'THEATREFILM';
   static const String FASHION = 'FASHION';

@@ -137,10 +137,9 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       final String id = makeUniqueNoticeId(postUrl);
 
       final String title = titleStrongTag.nodes
-              .where((node) => node.nodeType == 3)
-              .map((node) => node.text?.trim())
-              .join() ??
-          '';
+          .where((node) => node.nodeType == 3)
+          .map((node) => node.text?.trim())
+          .join();
       final String link = baseUrl + postUrl;
       final String date = dateTag.text.trim();
       final String writer = writerTag.text.trim();
@@ -171,7 +170,7 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
     final match = RegExp(r"page_link\('(\d+)'\)").firstMatch(lastPageHref);
     final lastPage = int.parse(match?.group(1) ?? '1');
     for (int i = 1; i <= lastPage; i++) {
-      final page = i;
+      final int page = i;
       final bool isCurrent = (i == 1) ? true : false;
       results.add({'page': page, 'isCurrent': isCurrent});
     }
