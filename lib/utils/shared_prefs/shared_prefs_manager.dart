@@ -10,9 +10,9 @@
 
 import 'package:inha_notice/constants/app_theme_mode.dart';
 import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
-import 'package:inha_notice/constants/university_keys/college_keys.dart';
-import 'package:inha_notice/constants/university_keys/graduate_school_keys.dart';
-import 'package:inha_notice/constants/university_keys/major_keys.dart';
+import 'package:inha_notice/utils/university_utils/college_utils.dart';
+import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
+import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,133 +54,42 @@ class SharedPrefsManager {
     SharedPrefKeys.INTERNATIONAL: false,
     SharedPrefKeys.SWUNIV: false,
 
-    // 공과대학 (16)
-    MajorKeys.MECH: false,
-    MajorKeys.AEROSPACE: false,
-    MajorKeys.NAOE: false,
-    MajorKeys.IE: false,
-    MajorKeys.CHEMENG: false,
-    MajorKeys.INHAPOLY: false,
-    MajorKeys.DMSE: false,
-    MajorKeys.CIVIL: false,
-    MajorKeys.ENVIRONMENT: false,
-    MajorKeys.GEOINFO: false,
-    MajorKeys.ARCH: false,
-    MajorKeys.ENERES: false,
-    MajorKeys.ELECTRICAL: false,
-    MajorKeys.EE: false,
-    MajorKeys.ICE: false,
-    MajorKeys.EEE: false,
-    MajorKeys.SSE: false,
-
-    // 자연과학대학 (5)
-    MajorKeys.MATH: false,
-    MajorKeys.STATISTICS: false,
-    MajorKeys.PHYSICS: false,
-    MajorKeys.CHEMISTRY: false,
-    MajorKeys.FOODNUTRI: false,
-    MajorKeys.OCEANOGRAPHY: false,
-
-    // 경영대학 (4)
-    MajorKeys.BIZ: false,
-    MajorKeys.GFIBA: false,
-    MajorKeys.APSL: false,
-    MajorKeys.STAR: false,
-
-    // 사범대학 (6)
-    MajorKeys.KOREANEDU: false,
-    MajorKeys.DELE: false,
-    MajorKeys.SOCIALEDU: false,
-    MajorKeys.PHYSICALEDU: false,
-    MajorKeys.EDUCATION: false,
-    MajorKeys.MATHED: false,
-
-    // 사회과학대학 (7)
-    MajorKeys.PUBLICAD: false,
-    MajorKeys.POLITICAL: false,
-    MajorKeys.COMM: false,
-    MajorKeys.ECON: false,
-    MajorKeys.CONSUMER: false,
-    MajorKeys.CHILD: false,
-    MajorKeys.WELFARE: false,
-
-    // 문과대학 (8)
-    MajorKeys.KOREAN: false,
-    MajorKeys.HISTORY: false,
-    MajorKeys.PHILOSOPHY: false,
-    MajorKeys.CHINESE: false,
-    MajorKeys.JAPAN: false,
-    MajorKeys.ENGLISH: false,
-    MajorKeys.FRANCE: false,
-    MajorKeys.CULTURECM: false,
-
-    // 의과대학 (1)
-    MajorKeys.MEDICINE: false,
-
-    // 간호대학 (1)
-    MajorKeys.NURSING: false,
-
-    // 예술체육대학 (4)
-    MajorKeys.FINEARTS: false,
-    MajorKeys.INHADESIGN: false,
-    MajorKeys.SPORT: false,
-    MajorKeys.THEATREFILM: false,
-    MajorKeys.FASHION: false,
-
-    // 바이오시스템융합학부 (4)
-    MajorKeys.BIO: false,
-    MajorKeys.BIOLOGY: false,
-    MajorKeys.BIOPHARM: false,
-    MajorKeys.BIOMEDICAL: false,
-
-    // 국제학부 (3)
-    MajorKeys.SGCSA: false,
-    MajorKeys.SGCSB: false,
-    MajorKeys.SGCSC: false,
-
-    // 미래융합대학 (4)
-    MajorKeys.FCCOLLEGEA: false,
-    MajorKeys.FCCOLLEGEB: false,
-    MajorKeys.FCCOLLEGEC: false,
-    MajorKeys.FCCOLLEGED: false,
-
-    // 소프트웨어융합대학 (5)
-    MajorKeys.DOAI: false,
-    MajorKeys.SME: false,
-    MajorKeys.DATASCIENCE: false,
-    MajorKeys.DESIGNTECH: false,
-    MajorKeys.CSE: false,
-
-    // 프런티어창의대학 (5)
-    MajorKeys.LAS: false,
-    MajorKeys.ECS: false,
-    MajorKeys.NCS: false,
-    MajorKeys.CVGSOSCI: false,
-    MajorKeys.CVGHUMAN: false,
+    // 학과
+    ..._buildMajorPrefs(),
 
     // 단과대 (9)
-    CollegeKeys.GENERALEDU: false,
-    CollegeKeys.ENGCOLLEAGE: false,
-    CollegeKeys.NSCOLLEAGE: false,
-    CollegeKeys.CBA: false,
-    CollegeKeys.EDCOLLEGE: false,
-    CollegeKeys.SSCOLLEGE: false,
-    CollegeKeys.HACOLLEGE: false,
-    CollegeKeys.ARTSPORTS: false,
-    CollegeKeys.SWCC: false,
+    ..._buildCollegePrefs(),
 
     // 대학원 (10)
-    GraduateSchoolKeys.GRAD: false,
-    GraduateSchoolKeys.ENGRAD: false,
-    GraduateSchoolKeys.MBA: false,
-    GraduateSchoolKeys.EDUGRAD: false,
-    GraduateSchoolKeys.ADMGRAD: false,
-    GraduateSchoolKeys.COUNSELGRAD: false,
-    GraduateSchoolKeys.GSPH: false,
-    GraduateSchoolKeys.ILS: false,
-    GraduateSchoolKeys.GSL: false,
-    GraduateSchoolKeys.IMIS: false,
+    ..._buildGraduateSchoolPrefs(),
   };
+
+  /// **학과 설정값 로딩**
+  static Map<String, bool> _buildMajorPrefs() {
+    final Map<String, bool> majorPrefs = {};
+    for (final value in MajorUtils.kMajorValueList) {
+      majorPrefs[value] = false;
+    }
+    return majorPrefs;
+  }
+
+  /// **단과대 설정값 로딩**
+  static Map<String, bool> _buildCollegePrefs() {
+    final Map<String, bool> collegePrefs = {};
+    for (final value in CollegeUtils.kCollegeValueList) {
+      collegePrefs[value] = false;
+    }
+    return collegePrefs;
+  }
+
+  /// **대학원 설정값 로딩**
+  static Map<String, bool> _buildGraduateSchoolPrefs() {
+    final Map<String, bool> graduatePrefs = {};
+    for (final value in GraduateSchoolUtils.kGraduateSchoolValueList) {
+      graduatePrefs[value] = false;
+    }
+    return graduatePrefs;
+  }
 
   factory SharedPrefsManager() => _instance;
 
@@ -205,6 +114,7 @@ class SharedPrefsManager {
         _cachedPrefs[key] = _prefs?.getStringList(key)?.toSet() ?? value;
       }
     });
+    print(_cachedPrefs);
   }
 
   /// **알림 설정 통합 함수**
