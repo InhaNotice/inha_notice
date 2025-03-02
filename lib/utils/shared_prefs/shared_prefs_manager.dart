@@ -79,6 +79,7 @@ class SharedPrefsManager {
     MajorKeys.PHYSICS: false,
     MajorKeys.CHEMISTRY: false,
     MajorKeys.FOODNUTRI: false,
+    MajorKeys.OCEANOGRAPHY: false,
 
     // 경영대학 (4)
     MajorKeys.BIZ: false,
@@ -121,6 +122,7 @@ class SharedPrefsManager {
 
     // 예술체육대학 (4)
     MajorKeys.FINEARTS: false,
+    MajorKeys.INHADESIGN: false,
     MajorKeys.SPORT: false,
     MajorKeys.THEATREFILM: false,
     MajorKeys.FASHION: false,
