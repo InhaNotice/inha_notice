@@ -134,8 +134,29 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
     } else {
       // Android 환경
       return AlertDialog(
-        title: const Text('테마 설정'),
-        content: const Text('원하는 모드를 선택해주세요.'),
+        alignment: Alignment.center,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text(
+          '테마 설정',
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontFamily: Font.kDefaultFont,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).textTheme.bodyMedium?.color ??
+                Theme.of(context).defaultThemedTextColor,
+          ),
+        ),
+        content: Text(
+          '원하는 모드를 선택해주세요.',
+          style: TextStyle(
+            fontFamily: Font.kDefaultFont,
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).textTheme.bodyMedium?.color ??
+                Theme.of(context).defaultThemedTextColor,
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => _setThemeMode(AppThemeMode.kSystem),
@@ -145,7 +166,8 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Theme.of(context).dialogTextColor,
+                color: Theme.of(context).textTheme.bodyMedium?.color ??
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
           ),
@@ -157,7 +179,8 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Theme.of(context).dialogTextColor,
+                color: Theme.of(context).textTheme.bodyMedium?.color ??
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
           ),
@@ -169,7 +192,8 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Theme.of(context).dialogTextColor,
+                color: Theme.of(context).textTheme.bodyMedium?.color ??
+                    Theme.of(context).defaultThemedTextColor,
               ),
             ),
           ),

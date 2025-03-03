@@ -118,7 +118,17 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
     } else {
       // Android 환경
       return AlertDialog(
-        title: const Text('캐시 삭제'),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: Text(
+          '캐시 삭제',
+          style: TextStyle(
+            fontFamily: Font.kDefaultFont,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Theme.of(context).textTheme.bodyMedium?.color ??
+                Theme.of(context).defaultThemedTextColor,
+          ),
+        ),
         content: Text(
           '캐시를 삭제하면\n읽은 공지, 북마크, 검색 기록이모두 깔끔하게 정리돼요!',
           softWrap: true,
