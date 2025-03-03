@@ -72,7 +72,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
           children: [
             const SizedBox(height: 8),
             Text(
-              '캐시를 삭제하면\n읽은 공지, 북마크, 검색 기록이모두 깔끔하게 정리돼요!',
+              '읽은 공지, 북마크, 검색 기록이\n모두 깔끔하게 정리돼요!',
               softWrap: true,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
@@ -130,7 +130,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
           ),
         ),
         content: Text(
-          '캐시를 삭제하면\n읽은 공지, 북마크, 검색 기록이모두 깔끔하게 정리돼요!',
+          '읽은 공지, 북마크, 검색 기록이\n모두 깔끔하게 정리돼요!',
           softWrap: true,
           style: TextStyle(
             fontFamily: Font.kDefaultFont,
