@@ -157,6 +157,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
                 Theme.of(context).defaultThemedTextColor,
           ),
         ),
+        actionsAlignment: MainAxisAlignment.center,
         actions: [
           TextButton(
             onPressed: () => _setThemeMode(AppThemeMode.kSystem),
