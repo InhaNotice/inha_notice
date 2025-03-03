@@ -7,60 +7,116 @@
  * Author: junho Kim
  * Latest Updated Date: 2025-02-27
  */
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 
 class ThemedSnackBar {
   static void succeedSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '✅ $message',
-          style: TextStyle(
-              fontFamily: Font.kTossFaceFontMac,
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Theme.of(context).snackBarTextColor),
+    if (Platform.isIOS) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '✅ $message',
+            style: TextStyle(
+                fontFamily: Font.kTossFaceFontMac,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).snackBarTextColor),
+          ),
+          backgroundColor: Theme.of(context).snackBarBackgroundColor,
+          duration: const Duration(seconds: 1),
         ),
-        backgroundColor: Theme.of(context).snackBarBackgroundColor,
-        duration: const Duration(seconds: 1),
-      ),
-    );
+      );
+    } else {
+      // Android
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: TextStyle(
+                fontFamily: Font.kDefaultFont,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).snackBarTextColor),
+          ),
+          backgroundColor: Theme.of(context).snackBarBackgroundColor,
+          duration: const Duration(seconds: 1),
+        ),
+      );
+    }
   }
 
   static void failSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '❌ $message',
-          style: TextStyle(
-              fontFamily: Font.kTossFaceFontMac,
-              fontSize: 14,
-              fontWeight: FontWeight.normal,
-              color: Theme.of(context).snackBarTextColor),
+    if (Platform.isIOS) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '❌ $message',
+            style: TextStyle(
+                fontFamily: Font.kTossFaceFontMac,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).snackBarTextColor),
+          ),
+          backgroundColor: Theme.of(context).snackBarBackgroundColor,
+          duration: const Duration(seconds: 1),
         ),
-        backgroundColor: Theme.of(context).snackBarBackgroundColor,
-        duration: const Duration(seconds: 1),
-      ),
-    );
+      );
+    } else {
+      // Android
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: TextStyle(
+                fontFamily: Font.kDefaultFont,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).snackBarTextColor),
+          ),
+          backgroundColor: Theme.of(context).snackBarBackgroundColor,
+          duration: const Duration(seconds: 1),
+        ),
+      );
+    }
   }
 
   static void warnSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '⚠️ $message',
-          style: TextStyle(
-            fontFamily: Font.kTossFaceFontMac,
-            fontSize: 14,
-            fontWeight: FontWeight.normal,
-            color: Theme.of(context).snackBarTextColor,
+    if (Platform.isIOS) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '⚠️ $message',
+            style: TextStyle(
+              fontFamily: Font.kTossFaceFontMac,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Theme.of(context).snackBarTextColor,
+            ),
           ),
+          backgroundColor: Theme.of(context).snackBarBackgroundColor,
+          duration: const Duration(seconds: 1),
         ),
-        backgroundColor: Theme.of(context).snackBarBackgroundColor,
-        duration: const Duration(seconds: 1),
-      ),
-    );
+      );
+    } else {
+      // Android
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: TextStyle(
+                fontFamily: Font.kDefaultFont,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).snackBarTextColor),
+          ),
+          backgroundColor: Theme.of(context).snackBarBackgroundColor,
+          duration: const Duration(seconds: 1),
+        ),
+      );
+    }
   }
 }
