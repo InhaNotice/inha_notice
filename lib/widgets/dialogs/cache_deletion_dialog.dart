@@ -72,19 +72,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
           children: [
             const SizedBox(height: 8),
             Text(
-              '캐시를 삭제하면, 읽은 공지, 북마크, 검색 기록이 모두 깔끔하게 정리돼요!',
-              softWrap: true,
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 13,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultThemedTextColor,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '하지만 알림 설정은 그대로 유지되니 안심하세요.',
+              '캐시를 삭제하면\n읽은 공지, 북마크, 검색 기록이모두 깔끔하게 정리돼요!',
               softWrap: true,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
@@ -131,35 +119,16 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
       // Android 환경
       return AlertDialog(
         title: const Text('캐시 삭제'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 8),
-            Text(
-              '캐시를 삭제하면, 읽은 공지, 북마크, 검색 기록이 모두 깔끔하게 정리돼요!',
-              softWrap: true,
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 13,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultThemedTextColor,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '하지만 알림 설정은 그대로 유지되니 안심하세요.',
-              softWrap: true,
-              style: TextStyle(
-                fontFamily: Font.kDefaultFont,
-                fontSize: 13,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).textTheme.bodyMedium?.color ??
-                    Theme.of(context).defaultThemedTextColor,
-              ),
-            ),
-          ],
+        content: Text(
+          '캐시를 삭제하면\n읽은 공지, 북마크, 검색 기록이모두 깔끔하게 정리돼요!',
+          softWrap: true,
+          style: TextStyle(
+            fontFamily: Font.kDefaultFont,
+            fontSize: 13,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).textTheme.bodyMedium?.color ??
+                Theme.of(context).defaultThemedTextColor,
+          ),
         ),
         actions: [
           TextButton(
