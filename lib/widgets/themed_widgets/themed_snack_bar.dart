@@ -15,32 +15,13 @@ class ThemedSnackBar {
   static void succeedSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: '✅',
-                style: TextStyle(
-                  fontFamily: Font.kTossFaceFontMac,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).snackBarTextColor,
-                ),
-              ),
-              const WidgetSpan(
-                child: SizedBox(width: 5),
-              ),
-              TextSpan(
-                text: message,
-                style: TextStyle(
-                  fontFamily: Font.kDefaultFont,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).snackBarTextColor,
-                ),
-              ),
-            ],
-          ),
+        content: Text(
+          '✅ $message',
+          style: TextStyle(
+              fontFamily: Font.kTossFaceFontMac,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Theme.of(context).snackBarTextColor),
         ),
         backgroundColor: Theme.of(context).snackBarBackgroundColor,
         duration: const Duration(seconds: 1),
@@ -51,32 +32,13 @@ class ThemedSnackBar {
   static void failSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: '❌',
-                style: TextStyle(
-                  fontFamily: Font.kTossFaceFontMac,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).snackBarTextColor,
-                ),
-              ),
-              const WidgetSpan(
-                child: SizedBox(width: 5),
-              ),
-              TextSpan(
-                text: message,
-                style: TextStyle(
-                  fontFamily: Font.kDefaultFont,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).snackBarTextColor,
-                ),
-              ),
-            ],
-          ),
+        content: Text(
+          '❌ $message',
+          style: TextStyle(
+              fontFamily: Font.kTossFaceFontMac,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+              color: Theme.of(context).snackBarTextColor),
         ),
         backgroundColor: Theme.of(context).snackBarBackgroundColor,
         duration: const Duration(seconds: 1),
@@ -87,31 +49,13 @@ class ThemedSnackBar {
   static void warnSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: '⚠️',
-                style: TextStyle(
-                  fontFamily: Font.kTossFaceFontMac,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).snackBarTextColor,
-                ),
-              ),
-              const WidgetSpan(
-                child: SizedBox(width: 5),
-              ),
-              TextSpan(
-                text: message,
-                style: TextStyle(
-                  fontFamily: Font.kDefaultFont,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).snackBarTextColor,
-                ),
-              ),
-            ],
+        content: Text(
+          '⚠️ $message',
+          style: TextStyle(
+            fontFamily: Font.kTossFaceFontMac,
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).snackBarTextColor,
           ),
         ),
         backgroundColor: Theme.of(context).snackBarBackgroundColor,
