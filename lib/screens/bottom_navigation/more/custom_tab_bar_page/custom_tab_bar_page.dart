@@ -113,13 +113,35 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
           children: [
             CustomTabPreview(selectedTabs: selectedTabs),
             const SizedBox(height: 16),
-            Text(
-              '나만의 탭 설정으로 원하는 공지사항만 골라보세요!',
-              style: TextStyle(
-                  fontFamily: Font.kDefaultFont,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).defaultThemedTextColor),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: '나만의 탭 설정으로 ',
+                    style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context).defaultThemedTextColor),
+                  ),
+                  TextSpan(
+                    text: '원하는 공지사항만',
+                    style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).defaultThemedTextColor),
+                  ),
+                  TextSpan(
+                    text: ' 골라보세요!',
+                    style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context).defaultThemedTextColor),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 4),
             Text(
@@ -129,6 +151,37 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
                   color: Theme.of(context).defaultThemedTextColor),
+            ),
+            const SizedBox(height: 4),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: '설정 후, ',
+                    style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context).defaultThemedTextColor),
+                  ),
+                  TextSpan(
+                    text: '저장버튼',
+                    style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).defaultThemedTextColor),
+                  ),
+                  TextSpan(
+                    text: '을 꼭 누르세요!',
+                    style: TextStyle(
+                        fontFamily: Font.kDefaultFont,
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context).defaultThemedTextColor),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             Text(
