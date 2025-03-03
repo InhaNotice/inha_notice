@@ -17,6 +17,7 @@ final ThemeData lightTheme = ThemeData(
     backgroundColor: Colors.white,
     iconTheme: IconThemeData(color: Colors.black54),
     titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+    surfaceTintColor: Colors.transparent,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Colors.white,
@@ -41,6 +42,7 @@ final ThemeData darkTheme = ThemeData(
       backgroundColor: Color(0xFF222222),
       iconTheme: IconThemeData(color: Colors.white),
       titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+      surfaceTintColor: Colors.transparent,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xFF292929),
