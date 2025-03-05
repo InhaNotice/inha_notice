@@ -44,7 +44,7 @@ class _EducationNotificationCategoryState
             BoldTitleText(text: '교육 및 행정 지원', size: 20),
             NotificationTile(
               title: '학사',
-              description: '인하대학교 공식 사이트의 전체 공지사항 알림을 받을 수 있습니다.',
+              description: '인하대학교 공식 사이트의 전체 공지사항',
               prefKey: SharedPrefKeys.kAcademicNotification,
               fcmTopic: SharedPrefKeys.kAllNotices,
             ),
