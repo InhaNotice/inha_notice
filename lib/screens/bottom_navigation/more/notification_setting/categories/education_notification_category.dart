@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-03-10
  */
 
 import 'package:flutter/material.dart';
@@ -44,14 +44,28 @@ class _EducationNotificationCategoryState
             BoldTitleText(text: '교육 및 행정 지원', size: 20),
             NotificationTile(
               title: '학사',
-              description: '인하대학교 공식 사이트의 전체 공지사항',
+              description: '인하대학교 전체 공지사항',
               prefKey: SharedPrefKeys.kAcademicNotification,
               fcmTopic: SharedPrefKeys.kAllNotices,
             ),
             const SizedBox(height: 8),
             NotificationTile(
+              title: '장학',
+              description: '인하대학교 장학 공지사항',
+              prefKey: SharedPrefKeys.kScholarship,
+              fcmTopic: SharedPrefKeys.kScholarship,
+            ),
+            const SizedBox(height: 8),
+            NotificationTile(
+              title: '모집/채용',
+              description: '인하대학교 모집 및 채용 공지사항',
+              prefKey: SharedPrefKeys.kRecruitment,
+              fcmTopic: SharedPrefKeys.kRecruitment,
+            ),
+            const SizedBox(height: 8),
+            NotificationTile(
               title: '국제처',
-              description: '(교환학생, 해외지역연구, 서포터즈, 취업) 정보',
+              description: '교환학생, 해외연수 및 글로벌 프로그램 안내',
               prefKey: SharedPrefKeys.INTERNATIONAL,
               fcmTopic: SharedPrefKeys.INTERNATIONAL,
             ),

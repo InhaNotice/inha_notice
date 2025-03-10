@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-01
+ * Latest Updated Date: 2025-03-10
  */
 
 /// **SharedPrefsKeys**
@@ -25,6 +25,8 @@ abstract class SharedPrefKeys {
   static const String kCollegeKey = 'college-key';
   static const String kGraduateSchoolKey = 'graduate-school-key';
   static const String kAcademicNotification = 'academic-notification';
+  static const String kScholarship = 'SCHOLARSHIP';
+  static const String kRecruitment = 'RECRUITMENT';
   static const String kMajorNotification = 'major-notification';
   static const String INTERNATIONAL = 'INTERNATIONAL';
   static const String SWUNIV = 'SWUNIV';

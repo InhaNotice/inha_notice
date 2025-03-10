@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-03-10
  */
 
 import 'package:flutter/material.dart';
@@ -44,7 +44,7 @@ class _ResearchNotificationCategoryState
             BoldTitleText(text: '연구 및 학술 지원', size: 20),
             NotificationTile(
               title: 'SW중심대학사업단',
-              description: '(해커톤, 부트캠프, 기업특강 및 세미나) 등의 최신 SW 및 AI 소식',
+              description: '해커톤, 부트캠프, 기업 특강 등 최신 SW·AI 프로그램 안내',
               prefKey: SharedPrefKeys.SWUNIV,
               fcmTopic: SharedPrefKeys.SWUNIV,
             )
