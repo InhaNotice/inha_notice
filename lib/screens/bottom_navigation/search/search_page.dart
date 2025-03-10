@@ -47,15 +47,15 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    // _initialize();
   }
 
   @override
   void dispose() {
-    for (final controller in _controllers) {
-      controller.dispose();
-    }
-    _controllers.clear();
+    // for (final controller in _controllers) {
+    //   controller.dispose();
+    // }
+    // _controllers.clear();
     super.dispose();
   }
 
@@ -170,8 +170,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               _buildSearchField(),
               const SizedBox(height: 16),
               _buildRecentSearches(),
-              const SizedBox(height: 16),
-              _buildTrendingTopics(context),
+              // const SizedBox(height: 16),
+              // _buildTrendingTopics(context),
             ],
           ),
         ),
