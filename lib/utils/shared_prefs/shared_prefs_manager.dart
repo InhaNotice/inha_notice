@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-03-10
  */
 
 import 'package:inha_notice/constants/app_theme_mode.dart';
@@ -45,8 +45,10 @@ class SharedPrefsManager {
     SharedPrefKeys.kCollegeKey: null,
     // 대학원
     SharedPrefKeys.kGraduateSchoolKey: null,
-    // 학사알림
+    // 전체공지, 장학, 모집/채용
     SharedPrefKeys.kAcademicNotification: false,
+    SharedPrefKeys.kScholarship: false,
+    SharedPrefKeys.kRecruitment: false,
     // 학과알림
     SharedPrefKeys.kMajorNotification: false,
 
@@ -114,7 +116,6 @@ class SharedPrefsManager {
         _cachedPrefs[key] = _prefs?.getStringList(key)?.toSet() ?? value;
       }
     });
-    print(_cachedPrefs);
   }
 
   /// **알림 설정 통합 함수**
