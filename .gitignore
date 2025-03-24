@@ -5,6 +5,7 @@ build/
 
 # iOS 관련 파일
 ios/Pods/
+ios/Runner/GoogleService-Info.plist
 ios/Flutter/App.framework
 ios/Flutter/Flutter.framework
 
