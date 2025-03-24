@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-01
+ * Latest Updated Date: 2025-03-24
  */
 
 import 'package:inha_notice/constants/university_keys/major_keys.dart';
@@ -72,6 +72,7 @@ abstract class MajorUtils {
       MajorKeys.englishLiterature: MajorKeys.ENGLISH,
       MajorKeys.frenchCulture: MajorKeys.FRANCE,
       MajorKeys.cultureContentManagement: MajorKeys.CULTURECM,
+      MajorKeys.angloEuropeanHumanities: MajorKeys.EES,
     },
     MajorKeys.kMedicine: {
       MajorKeys.preMedicine: MajorKeys.MEDICINE,
