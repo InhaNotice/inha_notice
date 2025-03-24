@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-01
+ * Latest Updated Date: 2025-03-24
  */
 
 abstract class MajorKeys {
@@ -84,6 +84,7 @@ abstract class MajorKeys {
   static const String englishLiterature = '영어영문학과';
   static const String frenchCulture = '프랑스어문화학과';
   static const String cultureContentManagement = '문화콘텐츠문화경영학과';
+  static const String angloEuropeanHumanities = '영미유럽인문융합학부';
 
   // [의과대학]
   static const String preMedicine = '의예과(의학과)';
@@ -188,6 +189,7 @@ abstract class MajorKeys {
   static const String ENGLISH = 'ENGLISH';
   static const String FRANCE = 'FRANCE';
   static const String CULTURECM = 'CULTURECM';
+  static const String EES = 'EES';
 
   // 의과대학 (1)
   static const String MEDICINE = 'MEDICINE';
