@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-04-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -36,9 +36,6 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   final TrendingTopicsAPI _trendingTopicsApi = TrendingTopicsAPI();
   final logger = Logger();
 
-  late final List<AnimationController> _controllers = [];
-  late final List<Animation<double>> _animations = [];
-
   List<Map<String, dynamic>> _topicsList = [];
 
   String _warning = Font.kEmptyString;
@@ -47,51 +44,11 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    // _initialize();
-  }
-
-  @override
-  void dispose() {
-    // for (final controller in _controllers) {
-    //   controller.dispose();
-    // }
-    // _controllers.clear();
-    super.dispose();
+    _initialize();
   }
 
   Future<void> _initialize() async {
     await _fetchTrendingTopics();
-  }
-
-  void _initializeAnimations() {
-    if (_topicsList.isEmpty) return;
-    try {
-      for (int i = 0; i < _topicsList.length; i++) {
-        final controller = AnimationController(
-          duration: const Duration(seconds: 1),
-          vsync: this,
-        );
-        _controllers.add(controller);
-        final animation = Tween(begin: 0.0, end: 1.0).animate(controller);
-        _animations.add(animation);
-      }
-    } catch (e) {
-      logger.e('${runtimeType.toString()} - _initializeAnimations() 오류: $e');
-    }
-  }
-
-  Future<void> _triggerAnimations() async {
-    for (int i = 0; i < _controllers.length; i++) {
-      await Future.delayed(Duration(milliseconds: 300 * i));
-
-      if (!mounted) return;
-
-      try {
-        await _controllers[i].forward();
-      } catch (e) {
-        logger.e('SearchPage - _triggerAnimation() 오류: $e');
-      }
-    }
   }
 
   Future<void> _fetchTrendingTopics() async {
@@ -100,14 +57,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       setState(() {
         _topicsList = response;
         if (response.isNotEmpty) {
-          _makeTimes = response.first['makeTimes'] ?? '';
-          _warning = '';
+          _makeTimes = response.first['makeTimes'] ?? Font.kEmptyString;
+          _warning = Font.kEmptyString;
         } else {
           _warning = '인기 검색어가 없어요.';
         }
       });
-      _initializeAnimations();
-      _triggerAnimations();
     } catch (error) {
       setState(() {
         _topicsList = [];
@@ -170,8 +125,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               _buildSearchField(),
               const SizedBox(height: 16),
               _buildRecentSearches(),
-              // const SizedBox(height: 16),
-              // _buildTrendingTopics(context),
+              const SizedBox(height: 16),
+              if (_topicsList.isNotEmpty) _buildTrendingTopics(context)
             ],
           ),
         ),
@@ -300,7 +255,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             backgroundColor: Theme.of(context).tagBackgroundColor,
             deleteIcon: const Icon(Icons.close, size: 14),
             onDeleted: () => _removeRecentSearchTopic(text),
-            deleteButtonTooltipMessage: '',
+            deleteButtonTooltipMessage: Font.kEmptyString,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             visualDensity: VisualDensity.compact,
             shape: RoundedRectangleBorder(
@@ -360,16 +315,17 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 ),
               )
             : ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: _topicsList.length,
                 itemBuilder: (context, index) {
                   final topics = _topicsList[index];
                   return TopicsItem(
                     topic: topics,
                     rank: index + 1,
-                    animation: _animations[index],
                   );
                 },
-              ),
+              )
       ],
     );
   }
