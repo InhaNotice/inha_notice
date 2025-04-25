@@ -1,6 +1,6 @@
 name: "🐞 Bug Report"
 description: "애플리케이션에서 발생한 버그를 보고합니다."
-labels: ["bug"]
+labels: [ "bug" ]
 assignees:
   - ""
 
@@ -22,7 +22,7 @@ body:
         2. 예상했던 동작과 실제 동작을 비교해주세요.
         3. 버그를 쉽게 재현할 수 있도록 설명해주세요.
     validations:
-      required: true
+      required: false
 
   - type: textarea
     attributes:

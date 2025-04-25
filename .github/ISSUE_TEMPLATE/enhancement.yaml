@@ -1,6 +1,6 @@
 name: "🔧 Enhancement Request"
 description: "기존 기능을 개선하는 제안"
-labels: ["enhancement"]
+labels: [ "enhancement" ]
 assignees:
   - ""
 
@@ -11,14 +11,6 @@ body:
       description: |
         - 개선이 필요한 기존 기능을 설명해주세요.
         - 현재의 문제점과 개선 후 기대되는 변화는 무엇인가요?
-    validations:
-      required: true
-
-  - type: textarea
-    attributes:
-      label: 🚀 기대 효과
-      description: |
-        - 이 개선이 사용자 경험(UX) 또는 성능에 어떤 영향을 줄까요?
     validations:
       required: true
 
