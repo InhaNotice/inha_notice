@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-04-25
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -14,13 +14,11 @@ import 'package:inha_notice/widgets/search/search_result_page.dart';
 class TopicsItem extends StatelessWidget {
   final int rank;
   final Map<String, dynamic> topic;
-  final Animation<double> animation;
 
   const TopicsItem({
     super.key,
     required this.topic,
     required this.rank,
-    required this.animation,
   });
 
   @override
