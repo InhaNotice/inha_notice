@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-05-05
  */
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/major_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/research_notification_category.dart';
+import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/undergraduate_schedule_notification_category.dart';
 import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 
@@ -45,6 +46,7 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            UndergraduateScheduleNotificationCategory(),
             EducationNotificationCategory(),
             ResearchNotificationCategory(),
             CollegeNotificationCategory(),
