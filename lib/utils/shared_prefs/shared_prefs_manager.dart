@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-10
+ * Latest Updated Date: 2025-05-05
  */
 
 import 'package:inha_notice/constants/app_theme_mode.dart';
@@ -51,10 +51,12 @@ class SharedPrefsManager {
     SharedPrefKeys.kRecruitment: false,
     // 학과알림
     SharedPrefKeys.kMajorNotification: false,
-
     // 학과 스타일(국제처, SW)
     SharedPrefKeys.INTERNATIONAL: false,
     SharedPrefKeys.SWUNIV: false,
+    // 학사일정 알림
+    SharedPrefKeys.kUndergraduateScheduleD1Notification: false,
+    SharedPrefKeys.kUndergraduateScheduleDDNotification: false,
 
     // 학과
     ..._buildMajorPrefs(),
@@ -137,7 +139,7 @@ class SharedPrefsManager {
       } else if (value is List<String>) {
         await _prefs?.setStringList(key, value.toList());
       }
-      logger.d('✅ Preference 성공적으로 저장 - $key: $value');
+      // logger.d('✅ Preference 성공적으로 저장 - $key: $value');
     } catch (e) {
       logger.e('❌ Preference 저장 중 에러가 발생: $e');
     }
