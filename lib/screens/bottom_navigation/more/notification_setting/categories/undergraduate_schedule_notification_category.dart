@@ -34,13 +34,13 @@ class _UndergraduateScheduleNotificationCategoryState
               BoldTitleText(text: '학사일정', size: 20),
               NotificationTile(
                 title: '하루 전 알림',
-                description: '중요 학사일정을 하루 전에 미리 알려드려요',
+                description: '18시에 다음 날 일정을 미리 알려드려요.',
                 prefKey: SharedPrefKeys.kUndergraduateScheduleD1Notification,
                 fcmTopic: SharedPrefKeys.kUndergraduateScheduleD1Notification,
               ),
               NotificationTile(
                 title: '당일 알림',
-                description: '중요 학사일정을 당일 아침에 알려드려요',
+                description: '오늘 일정을 8시에 알려드려요.',
                 prefKey: SharedPrefKeys.kUndergraduateScheduleDDNotification,
                 fcmTopic: SharedPrefKeys.kUndergraduateScheduleDDNotification,
               ),
