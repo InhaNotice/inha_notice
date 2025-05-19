@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-05-05
+ * Latest Updated Date: 2025-05-19
  */
 
 /// **SharedPrefsKeys**
@@ -38,4 +38,7 @@ abstract class SharedPrefKeys {
   // 학사일정 당일(D-Day) 알림
   static const String kUndergraduateScheduleDDNotification =
       'undergraduate-schedule-dd-notification';
+
+  // 정석학술정보관
+  static const String kLibrary = 'LIBRARY';
 }

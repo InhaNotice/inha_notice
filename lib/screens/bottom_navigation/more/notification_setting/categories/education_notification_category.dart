@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-10
+ * Latest Updated Date: 2025-05-19
  */
 
 import 'package:flutter/material.dart';
@@ -68,6 +68,13 @@ class _EducationNotificationCategoryState
               description: '교환학생, 해외연수 및 글로벌 프로그램 안내',
               prefKey: SharedPrefKeys.INTERNATIONAL,
               fcmTopic: SharedPrefKeys.INTERNATIONAL,
+            ),
+            const SizedBox(height: 8),
+            NotificationTile(
+              title: '정석학술정보관',
+              description: '인하대학교 정석학술정보관 공지사항',
+              prefKey: SharedPrefKeys.kLibrary,
+              fcmTopic: SharedPrefKeys.kLibrary,
             ),
           ],
         ),
