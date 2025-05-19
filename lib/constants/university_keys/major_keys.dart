@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-24
+ * Latest Updated Date: 2025-05-19
  */
 
 abstract class MajorKeys {
@@ -43,6 +43,7 @@ abstract class MajorKeys {
   static const String informationTelecomEngineering = '정보통신공학과';
   static const String electricalElectronicEngineering = '전기전자공학부';
   static const String semiconductorSystemsEngineering = '반도체시스템공학과';
+  static const String iBattery = '이차전지융합학과';
 
   // [자연과학대학]
   static const String mathematics = '수학과';
@@ -148,6 +149,7 @@ abstract class MajorKeys {
   static const String ICE = 'ICE';
   static const String EEE = 'EEE';
   static const String SSE = 'SSE';
+  static const String IBATTERY = 'IBATTERY';
 
   // 자연과학대학 (5)
   static const String MATH = 'MATH';
