@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-24
+ * Latest Updated Date: 2025-05-19
  */
 
 import 'package:inha_notice/constants/university_keys/major_keys.dart';
@@ -31,6 +31,7 @@ abstract class MajorUtils {
       MajorKeys.informationTelecomEngineering: MajorKeys.ICE,
       MajorKeys.electricalElectronicEngineering: MajorKeys.EEE,
       MajorKeys.semiconductorSystemsEngineering: MajorKeys.SSE,
+      MajorKeys.iBattery: MajorKeys.IBATTERY,
     },
     MajorKeys.kNaturalScience: {
       MajorKeys.mathematics: MajorKeys.MATH,
