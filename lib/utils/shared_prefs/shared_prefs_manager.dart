@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-05-05
+ * Latest Updated Date: 2025-05-19
  */
 
 import 'package:inha_notice/constants/app_theme_mode.dart';
@@ -57,6 +57,8 @@ class SharedPrefsManager {
     // 학사일정 알림
     SharedPrefKeys.kUndergraduateScheduleD1Notification: false,
     SharedPrefKeys.kUndergraduateScheduleDDNotification: false,
+    // 정석학술정보관
+    SharedPrefKeys.kLibrary: false,
 
     // 학과
     ..._buildMajorPrefs(),
