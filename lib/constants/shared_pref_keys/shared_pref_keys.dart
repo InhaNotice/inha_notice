@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-05-19
+ * Latest Updated Date: 2025-05-23
  */
 
 /// **SharedPrefsKeys**
@@ -30,6 +30,7 @@ abstract class SharedPrefKeys {
   static const String kMajorNotification = 'major-notification';
   static const String INTERNATIONAL = 'INTERNATIONAL';
   static const String SWUNIV = 'SWUNIV';
+  static const String INHAHUSS = 'INHAHUSS';
 
   // 학사일정 하루 전(D-1) 알림
   static const String kUndergraduateScheduleD1Notification =

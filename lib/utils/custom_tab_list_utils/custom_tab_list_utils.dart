@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-01
+ * Latest Updated Date: 2025-05-26
  */
 import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
 import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
@@ -27,6 +27,7 @@ abstract class CustomTabListUtils {
     CustomTabListKeys.kMajor3,
     CustomTabListKeys.kCollege,
     CustomTabListKeys.kGraduateSchool,
+    CustomTabListKeys.kINHAHUSSUniv,
   ];
 
   /// **영문 탭 이름: 국문 탭 이름**
@@ -40,6 +41,7 @@ abstract class CustomTabListUtils {
     CustomTabListKeys.kLibrary: CustomTabListKeys.LIBRARY,
     CustomTabListKeys.kInternational: CustomTabListKeys.INTERNATIONAL,
     CustomTabListKeys.kSWUniv: CustomTabListKeys.SWUNIV,
+    CustomTabListKeys.kINHAHUSSUniv: CustomTabListKeys.INHAHUSS,
     CustomTabListKeys.kCollege: CustomTabListKeys.COLLEGE,
     CustomTabListKeys.kGraduateSchool: CustomTabListKeys.GRADUATESCHOOL,
   };
