@@ -1,0 +1,2 @@
+C:/inha_notice/android/app/.cxx/RelWithDebInfo/4o2c5s56/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/inha_notice/android/app/.cxx/RelWithDebInfo/4o2c5s56/armeabi-v7a/CMakeFiles/rebuild_cache.dir
