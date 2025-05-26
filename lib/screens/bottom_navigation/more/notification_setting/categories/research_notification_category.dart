@@ -47,7 +47,13 @@ class _ResearchNotificationCategoryState
               description: '해커톤, 부트캠프, 기업 특강 등 최신 SW·AI 프로그램 안내',
               prefKey: SharedPrefKeys.SWUNIV,
               fcmTopic: SharedPrefKeys.SWUNIV,
-            )
+            ),
+            NotificationTile(
+              title: '기후위기대응사업단',
+              description: '융합전공, 표준현장실습, 공모전, 진로 특강 등 기후위기 대응 프로그램 안내',
+              prefKey: SharedPrefKeys.INHAHUSS,
+              fcmTopic: SharedPrefKeys.INHAHUSS,
+            ),
           ],
         ),
       ),
