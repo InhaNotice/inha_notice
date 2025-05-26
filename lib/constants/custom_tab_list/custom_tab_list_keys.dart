@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-03-01
+ * Latest Updated Date: 2025-05-26
  */
 
 /// **CustomTabListKeys**
@@ -21,6 +21,7 @@ abstract class CustomTabListKeys {
   static const String kLibrary = '정석';
   static const String kInternational = '국제처';
   static const String kSWUniv = 'SW중심대학사업단';
+  static const String kINHAHUSSUniv = '기후위기대응사업단';
   static const String kCollege = '단과대';
   static const String kGraduateSchool = '대학원';
 
@@ -33,6 +34,7 @@ abstract class CustomTabListKeys {
   static const String LIBRARY = 'LIBRARY';
   static const String INTERNATIONAL = 'INTERNATIONAL';
   static const String SWUNIV = 'SWUNIV';
+  static const String INHAHUSS = 'INHAHUSS';
   static const String COLLEGE = 'COLLEGE';
   static const String GRADUATESCHOOL = 'GRADUATESCHOOL';
 }
