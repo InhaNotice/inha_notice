@@ -16,7 +16,7 @@ import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/navigation/web_navigator.dart';
+import 'package:inha_notice/widgets/webview//web_navigator.dart';
 import 'package:logger/logger.dart';
 
 /// **FirebaseService**
