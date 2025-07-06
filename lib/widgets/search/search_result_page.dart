@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-25
+ * Latest Updated Date: 2025-07-06
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/page_constants.dart';
@@ -14,8 +14,8 @@ import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/search/search_scraper.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
-import 'package:inha_notice/widgets/notice/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
+import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
