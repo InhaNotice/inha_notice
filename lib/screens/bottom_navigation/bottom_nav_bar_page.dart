@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Latest Updated Date: 2025-07-06
  */
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
-import 'package:inha_notice/widgets/navigation/web_navigator.dart';
+import 'package:inha_notice/widgets/webview/web_navigator.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});
