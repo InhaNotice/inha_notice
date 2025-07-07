@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-07-06
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
@@ -13,10 +13,13 @@ import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
+import 'package:inha_notice/widgets/loading/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
+import 'package:inha_notice/widgets/refresh_headers/bookmark_refresh_header.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **BookmarkPage**
 ///
@@ -35,6 +38,8 @@ class BookmarkPage extends BaseNoticeBoard {
 
 class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
   final logger = Logger();
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   // 정렬 옵션: orderName, orderNewest, orderOldest
   bool orderNewest = true; // 최신순 기본값
@@ -62,6 +67,17 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
     }
   }
 
+  /// **Refresh 컨트롤러(북마크를 다시 불러옴)**
+  void _onRefresh() async {
+    setState(() {
+      orderNewest = true;
+      orderOldest = false;
+      orderName = false;
+    });
+    await loadNotices();
+    _refreshController.refreshCompleted();
+  }
+
   /// **북마크된 공지사항 로드 (읽은 공지사항 반영)**
   Future<void> loadNotices() async {
     setState(() {
@@ -69,11 +85,22 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
     });
     final notices = await BookmarkManager.getAllBookmarks();
     originalBookmarkedNotices = List.from(notices);
-    bookmarkedNotices = List.from(notices)
-      ..sort((a, b) => b['date'].compareTo(a['date']));
+    bookmarkedNotices = List.from(notices);
+    _sortNoticesByCurrentOption();
     setState(() {
       isLoading = false;
     });
+  }
+
+  /// **현재 정렬 옵션에 따른 분류**
+  void _sortNoticesByCurrentOption() {
+    if (orderNewest) {
+      bookmarkedNotices.sort((a, b) => b['date'].compareTo(a['date']));
+    } else if (orderOldest) {
+      bookmarkedNotices.sort((a, b) => a['date'].compareTo(b['date']));
+    } else if (orderName) {
+      bookmarkedNotices.sort((a, b) => a['title'].compareTo(b['title']));
+    }
   }
 
   /// **북마크 정렬 옵션 변경**
@@ -179,7 +206,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
   Widget buildMain() {
     return Expanded(
       child: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: BlueLoadingIndicator())
           : bookmarkedNotices.isEmpty
               ? Center(
                   child: Text(
@@ -193,21 +220,27 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
                     ),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: bookmarkedNotices.length,
-                  itemBuilder: (context, index) {
-                    final notice = bookmarkedNotices[index];
-                    final isRead = isNoticeRead(notice['id'].toString());
-                    final isBookmarked =
-                        isNoticeBookmarked(notice['id'].toString());
-                    return NoticeListTile(
-                      notice: notice,
-                      isRead: isRead,
-                      isBookmarked: isBookmarked,
-                      markNoticeAsRead: markNoticeAsRead,
-                      toggleBookmark: toggleBookmark,
-                    );
-                  },
+              : SmartRefresher(
+                  controller: _refreshController,
+                  onRefresh: _onRefresh,
+                  enablePullDown: true,
+                  header: const BookmarkRefreshHeader(),
+                  child: ListView.builder(
+                    itemCount: bookmarkedNotices.length,
+                    itemBuilder: (context, index) {
+                      final notice = bookmarkedNotices[index];
+                      final isRead = isNoticeRead(notice['id'].toString());
+                      final isBookmarked =
+                          isNoticeBookmarked(notice['id'].toString());
+                      return NoticeListTile(
+                        notice: notice,
+                        isRead: isRead,
+                        isBookmarked: isBookmarked,
+                        markNoticeAsRead: markNoticeAsRead,
+                        toggleBookmark: toggleBookmark,
+                      );
+                    },
+                  ),
                 ),
     );
   }

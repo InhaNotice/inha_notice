@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Latest Updated Date: 2025-07-06
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
-import 'package:inha_notice/widgets/texts/bold_title_text.dart';
+import 'package:inha_notice/widgets/typography/bold_title_text.dart';
 
 class GraduateSchoolNotificationCategory extends StatefulWidget {
   const GraduateSchoolNotificationCategory({super.key});

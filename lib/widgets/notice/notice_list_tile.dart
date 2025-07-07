@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-07-06
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/navigation/web_navigator.dart';
+import 'package:inha_notice/widgets/webview/web_navigator.dart';
 
 /// **NoticeListTile**
 /// 이 클래스는 공지사항 하나에 대한 정보를 출력하는 클래스입니다.

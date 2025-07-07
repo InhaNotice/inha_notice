@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-05-28
+ * Latest Updated Date: 2025-07-06
  */
 import 'package:flutter/material.dart';
 import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
@@ -25,9 +25,10 @@ import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_s
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
+import 'package:inha_notice/widgets/loading/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
-import 'package:inha_notice/widgets/notice/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
+import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -260,7 +261,7 @@ class _AbsoluteStyleNoticeBoardState
       child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(child: BlueLoadingIndicator())
             : (CustomTabListUtils.isUserSettingType(widget.noticeType) &&
                     !isUserSettingKey)
                 ? Center(
