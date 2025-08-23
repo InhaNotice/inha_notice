@@ -4,12 +4,13 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/constants/status_code_constants.dart';
+import 'package:inha_notice/core/constants/status_code_constant.dart';
 import 'package:intl/intl.dart';
 import 'package:xml/xml.dart';
 
@@ -28,7 +29,7 @@ class TrendingTopicsAPI {
       final url = Uri.parse(baseUrl);
       var response = await http.get(url);
 
-      if (response.statusCode == StatusCodeSettings.kStatusOkay) {
+      if (response.statusCode == StatusCodeConstant.kStatusOkay) {
         // Xml 문서 형식의 응답 객체를 파싱
         final document = XmlDocument.parse(response.body);
         String makeTime = document.findAllElements('MakeTime').first.innerText;

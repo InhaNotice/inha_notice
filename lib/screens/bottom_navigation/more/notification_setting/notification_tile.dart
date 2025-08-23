@@ -4,12 +4,12 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';

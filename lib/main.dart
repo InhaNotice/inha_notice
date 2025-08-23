@@ -4,13 +4,16 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-02-26
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/constants/app_theme_constant.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/firebase/firebase_options.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -19,9 +22,6 @@ import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
-
-import 'constants/app_theme_mode.dart';
-import 'firebase/firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final ValueNotifier<ThemeMode> themeModeNotifier =
@@ -119,10 +119,10 @@ Future<void> _initializeThemeSetting() async {
         .getPreference(SharedPrefKeys.kUserThemeSetting);
     ThemeMode themeMode;
     switch (userThemeSetting) {
-      case AppThemeMode.kLight:
+      case AppThemeConstant.kLight:
         themeMode = ThemeMode.light;
         break;
-      case AppThemeMode.kDark:
+      case AppThemeConstant.kDark:
         themeMode = ThemeMode.dark;
         break;
       default:

@@ -4,15 +4,16 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-03-02
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/constants/identifier_constants.dart';
-import 'package:inha_notice/constants/status_code_constants.dart';
-import 'package:inha_notice/constants/string_constants.dart';
+import 'package:inha_notice/core/constants//status_code_constant.dart';
+import 'package:inha_notice/core/constants/identifier_constant.dart';
+import 'package:inha_notice/core/constants/string_constant.dart';
 import 'package:inha_notice/selectors/inha_design_style_tag_selectors.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
@@ -35,7 +36,7 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       final String connectUrl = '$queryUrl$page';
       final response = await http.get(Uri.parse(connectUrl));
 
-      if (response.statusCode == StatusCodeSettings.kStatusOkay) {
+      if (response.statusCode == StatusCodeConstant.kStatusOkay) {
         final document = parse(response.body);
 
         // 디자인융합학과는 중요 공지가 존재하지 않음
@@ -90,7 +91,7 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
       // .blog-post 태그의 id 속성값
       final String id =
-          general.attributes['id'] ?? IdentifierConstants.kUnknownId;
+          general.attributes['id'] ?? IdentifierConstant.kUnknownId;
 
       final String title = titleTag.text.trim() ?? '';
 
@@ -127,7 +128,7 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   /// 공통 날짜 파싱 메서드 (M/D/YYYY → YYYY.MM.DD)
   String _parseDate(String originalDate) {
     final parts = originalDate.split('/');
-    if (parts.length != 3) return StringConstants.kEmptyString;
+    if (parts.length != 3) return StringConstant.kEmptyString;
 
     final month = parts[0].padLeft(2, '0');
     final day = parts[1].padLeft(2, '0');

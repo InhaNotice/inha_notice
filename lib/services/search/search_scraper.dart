@@ -4,14 +4,15 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-02-11
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/constants/identifier_constants.dart';
-import 'package:inha_notice/constants/status_code_constants.dart';
+import 'package:inha_notice/core/constants/identifier_constant.dart';
+import 'package:inha_notice/core/constants/status_code_constant.dart';
 import 'package:inha_notice/selectors/search_tag_selectors.dart';
 
 /// **SearchSraper**
@@ -35,7 +36,7 @@ class SearchScraper {
           '$baseUrl?query=$query&collection=$collectionType&startCount=$startCount&sort=$sortedType';
       final response = await http.get(Uri.parse(connectUrl));
 
-      if (response.statusCode == StatusCodeSettings.kStatusOkay) {
+      if (response.statusCode == StatusCodeConstant.kStatusOkay) {
         final document = html_parser.parse(response.body);
 
         // 검색된 공지사항 가져오기
@@ -136,13 +137,13 @@ class SearchScraper {
   String makeUniqueNoticeId(String postUrl) {
     // postUrl이 빈 문자열인지 확인합니다.
     if (postUrl.isEmpty) {
-      return IdentifierConstants.kUnknownId;
+      return IdentifierConstant.kUnknownId;
     }
 
     final List<String> postUrlList = postUrl.split('/');
     // postUrlList가 정해진 규격을 따르는지 확인합니다.
     if (postUrlList.length <= 6) {
-      return IdentifierConstants.kUnknownId;
+      return IdentifierConstant.kUnknownId;
     }
 
     final String provider = postUrlList[4];

@@ -4,11 +4,12 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-02-28
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
+import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
 
@@ -22,7 +23,7 @@ class NoticeBoardTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (noticeType == CustomTabListKeys.LIBRARY) {
+    if (noticeType == CustomTabKeys.LIBRARY) {
       return RelativeStyleNoticeBoard(noticeType: noticeType);
     }
     // 나머지 탭은 AbsoluteStyleNoticeBoard 사용

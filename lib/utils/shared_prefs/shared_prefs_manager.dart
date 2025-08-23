@@ -4,12 +4,12 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-05-26
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
 
-import 'package:inha_notice/constants/app_theme_mode.dart';
-import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/constants/app_theme_constant.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/utils/university_utils/college_utils.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
 import 'package:inha_notice/utils/university_utils/major_utils.dart';
@@ -27,7 +27,7 @@ class SharedPrefsManager {
   // 캐싱 전략
   static final Map<String, dynamic> _cachedPrefs = {
     // 테마 모드 (기본값: system)
-    SharedPrefKeys.kUserThemeSetting: AppThemeMode.kSystem,
+    SharedPrefKeys.kUserThemeSetting: AppThemeConstant.kSystem,
     // 캐시 용량
     SharedPrefKeys.kCacheCapacity: null,
     // 구독 리스트

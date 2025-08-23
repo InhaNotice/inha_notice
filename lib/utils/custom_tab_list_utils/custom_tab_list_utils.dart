@@ -4,46 +4,47 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-05-26
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
-import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
-import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
+
+import 'package:inha_notice/core/keys/custom_tab_keys.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 
 abstract class CustomTabListUtils {
   static const List<String> kDefaultTabs = [
-    CustomTabListKeys.kWhole,
-    CustomTabListKeys.kMajor,
-    CustomTabListKeys.kScholarship,
-    CustomTabListKeys.kRecruitment,
-    CustomTabListKeys.kLibrary,
-    CustomTabListKeys.kInternational,
-    CustomTabListKeys.kSWUniv,
+    CustomTabKeys.kWhole,
+    CustomTabKeys.kMajor,
+    CustomTabKeys.kScholarship,
+    CustomTabKeys.kRecruitment,
+    CustomTabKeys.kLibrary,
+    CustomTabKeys.kInternational,
+    CustomTabKeys.kSWUniv,
   ];
 
   static const List<String> kAdditionalTabs = [
-    CustomTabListKeys.kMajor2,
-    CustomTabListKeys.kMajor3,
-    CustomTabListKeys.kCollege,
-    CustomTabListKeys.kGraduateSchool,
-    CustomTabListKeys.kINHAHUSSUniv,
+    CustomTabKeys.kMajor2,
+    CustomTabKeys.kMajor3,
+    CustomTabKeys.kCollege,
+    CustomTabKeys.kGraduateSchool,
+    CustomTabKeys.kINHAHUSSUniv,
   ];
 
   /// **영문 탭 이름: 국문 탭 이름**
   static const Map<String, String> kTabMappingOnKey = {
-    CustomTabListKeys.kWhole: CustomTabListKeys.WHOLE,
-    CustomTabListKeys.kMajor: CustomTabListKeys.MAJOR,
-    CustomTabListKeys.kMajor2: CustomTabListKeys.MAJOR2,
-    CustomTabListKeys.kMajor3: CustomTabListKeys.MAJOR3,
-    CustomTabListKeys.kScholarship: CustomTabListKeys.SCHOLARSHIP,
-    CustomTabListKeys.kRecruitment: CustomTabListKeys.RECRUITMENT,
-    CustomTabListKeys.kLibrary: CustomTabListKeys.LIBRARY,
-    CustomTabListKeys.kInternational: CustomTabListKeys.INTERNATIONAL,
-    CustomTabListKeys.kSWUniv: CustomTabListKeys.SWUNIV,
-    CustomTabListKeys.kINHAHUSSUniv: CustomTabListKeys.INHAHUSS,
-    CustomTabListKeys.kCollege: CustomTabListKeys.COLLEGE,
-    CustomTabListKeys.kGraduateSchool: CustomTabListKeys.GRADUATESCHOOL,
+    CustomTabKeys.kWhole: CustomTabKeys.WHOLE,
+    CustomTabKeys.kMajor: CustomTabKeys.MAJOR,
+    CustomTabKeys.kMajor2: CustomTabKeys.MAJOR2,
+    CustomTabKeys.kMajor3: CustomTabKeys.MAJOR3,
+    CustomTabKeys.kScholarship: CustomTabKeys.SCHOLARSHIP,
+    CustomTabKeys.kRecruitment: CustomTabKeys.RECRUITMENT,
+    CustomTabKeys.kLibrary: CustomTabKeys.LIBRARY,
+    CustomTabKeys.kInternational: CustomTabKeys.INTERNATIONAL,
+    CustomTabKeys.kSWUniv: CustomTabKeys.SWUNIV,
+    CustomTabKeys.kINHAHUSSUniv: CustomTabKeys.INHAHUSS,
+    CustomTabKeys.kCollege: CustomTabKeys.COLLEGE,
+    CustomTabKeys.kGraduateSchool: CustomTabKeys.GRADUATESCHOOL,
   };
 
   static final Map<String, String> kTabMappingOnValue = Map.fromEntries(
@@ -51,28 +52,28 @@ abstract class CustomTabListUtils {
           .map((entry) => MapEntry(entry.value, entry.key)));
 
   static bool doesTabHaveSettingsPage(String tabName) {
-    return tabName == CustomTabListKeys.kMajor ||
-        tabName == CustomTabListKeys.kMajor2 ||
-        tabName == CustomTabListKeys.kMajor3 ||
-        tabName == CustomTabListKeys.kCollege ||
-        tabName == CustomTabListKeys.kGraduateSchool;
+    return tabName == CustomTabKeys.kMajor ||
+        tabName == CustomTabKeys.kMajor2 ||
+        tabName == CustomTabKeys.kMajor3 ||
+        tabName == CustomTabKeys.kCollege ||
+        tabName == CustomTabKeys.kGraduateSchool;
   }
 
   /// **Preference 로드가 필요한지 판단**
   /// 필요한 경우: MAJOR, MAJOR2, MAJOR3,COLLEGE, GRADUATESCHOOL
   static bool isUserSettingType(String noticeType) {
-    return noticeType == CustomTabListKeys.MAJOR ||
-        noticeType == CustomTabListKeys.MAJOR2 ||
-        noticeType == CustomTabListKeys.MAJOR3 ||
-        noticeType == CustomTabListKeys.COLLEGE ||
-        noticeType == CustomTabListKeys.GRADUATESCHOOL;
+    return noticeType == CustomTabKeys.MAJOR ||
+        noticeType == CustomTabKeys.MAJOR2 ||
+        noticeType == CustomTabKeys.MAJOR3 ||
+        noticeType == CustomTabKeys.COLLEGE ||
+        noticeType == CustomTabKeys.GRADUATESCHOOL;
   }
 
   /// **학과 타입인지 판단**
   static bool isMajorType(String noticeType) {
-    return noticeType == CustomTabListKeys.MAJOR ||
-        noticeType == CustomTabListKeys.MAJOR2 ||
-        noticeType == CustomTabListKeys.MAJOR3;
+    return noticeType == CustomTabKeys.MAJOR ||
+        noticeType == CustomTabKeys.MAJOR2 ||
+        noticeType == CustomTabKeys.MAJOR3;
   }
 
   /// **유저 설정 값이 있는 경우, 유저 설정 값을 불러옴.**
@@ -81,25 +82,25 @@ abstract class CustomTabListUtils {
     String? userSettingKey;
     switch (noticeType) {
       // 학과
-      case CustomTabListKeys.MAJOR:
+      case CustomTabKeys.MAJOR:
         userSettingKey =
             SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
         break;
-      case CustomTabListKeys.MAJOR2:
+      case CustomTabKeys.MAJOR2:
         userSettingKey =
             SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey2);
         break;
-      case CustomTabListKeys.MAJOR3:
+      case CustomTabKeys.MAJOR3:
         userSettingKey =
             SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey3);
         break;
       // 단과대
-      case CustomTabListKeys.COLLEGE:
+      case CustomTabKeys.COLLEGE:
         userSettingKey =
             SharedPrefsManager().getPreference(SharedPrefKeys.kCollegeKey);
         break;
       // 대학원
-      case CustomTabListKeys.GRADUATESCHOOL:
+      case CustomTabKeys.GRADUATESCHOOL:
         userSettingKey = SharedPrefsManager()
             .getPreference(SharedPrefKeys.kGraduateSchoolKey);
         break;

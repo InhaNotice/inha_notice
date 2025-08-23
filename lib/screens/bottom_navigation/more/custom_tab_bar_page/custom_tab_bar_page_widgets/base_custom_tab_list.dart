@@ -4,17 +4,17 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-03-01
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
+import 'package:inha_notice/core/keys/custom_tab_keys.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
-
-import '../../../../../constants/shared_pref_keys/shared_pref_keys.dart';
 
 /// **BaseTabList**
 /// 공통 기능을 모듈화한 추상 클래스입니다.
@@ -41,7 +41,7 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
   /// 설정 페이지로 이동하는 로직만 공통으로 제공
   void handleToNavigate(String tab) {
     switch (tab) {
-      case CustomTabListKeys.kMajor:
+      case CustomTabKeys.kMajor:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -50,7 +50,7 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
           ),
         );
         break;
-      case CustomTabListKeys.kMajor2:
+      case CustomTabKeys.kMajor2:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -59,7 +59,7 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
           ),
         );
         break;
-      case CustomTabListKeys.kMajor3:
+      case CustomTabKeys.kMajor3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -68,7 +68,7 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
           ),
         );
         break;
-      case CustomTabListKeys.kCollege:
+      case CustomTabKeys.kCollege:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -76,7 +76,7 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
           ),
         );
         break;
-      case CustomTabListKeys.kGraduateSchool:
+      case CustomTabKeys.kGraduateSchool:
         Navigator.push(
           context,
           MaterialPageRoute(

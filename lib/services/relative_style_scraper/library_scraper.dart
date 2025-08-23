@@ -4,14 +4,15 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-02-11
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/constants/status_code_constants.dart';
+import 'package:inha_notice/core/constants/status_code_constant.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 
 /// **LibraryScraper**
@@ -72,7 +73,7 @@ class LibraryScraper extends BaseRelativeStyleNoticeScraper {
     var response = await http.get(connectUrl);
     List<Map<String, String>> results = [];
 
-    if (response.statusCode == StatusCodeSettings.kStatusOkay) {
+    if (response.statusCode == StatusCodeConstant.kStatusOkay) {
       final data = json.decode(response.body);
       final List<dynamic> notices = data["data"]?["list"];
       for (var notice in notices) {

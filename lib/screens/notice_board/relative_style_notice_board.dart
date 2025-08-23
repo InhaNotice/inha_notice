@@ -4,11 +4,12 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-07-06
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/page_constants.dart';
+import 'package:inha_notice/core/constants/page_constant.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
@@ -50,7 +51,7 @@ class _RelativeStyleNoticeBoardState
 
   /// **Refresh 컨트롤러(새로운 공지 불러옴)**
   void _onRefresh() async {
-    await loadNotices(PageSettings.kInitialRelativePage);
+    await loadNotices(PageConstant.kInitialRelativePage);
     _refreshController.refreshCompleted();
   }
 
@@ -64,7 +65,7 @@ class _RelativeStyleNoticeBoardState
   Future<void> initialize() async {
     try {
       await initializeScraper();
-      await loadNotices(PageSettings.kInitialRelativePage); // 공지사항 로드
+      await loadNotices(PageConstant.kInitialRelativePage); // 공지사항 로드
     } catch (e) {
       // 에러 처리
       debugPrint('Initialization error: $e');
@@ -94,7 +95,7 @@ class _RelativeStyleNoticeBoardState
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (offset == PageSettings.kInitialRelativePage &&
+        if (offset == PageConstant.kInitialRelativePage &&
             initialPages.isEmpty) {
           initialPages = List<Map<String, dynamic>>.from(notices['pages']);
         }

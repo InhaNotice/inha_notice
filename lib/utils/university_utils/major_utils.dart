@@ -4,11 +4,11 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-05-19
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
 
-import 'package:inha_notice/constants/university_keys/major_keys.dart';
+import 'package:inha_notice/core/keys/major_keys.dart';
 
 abstract class MajorUtils {
   /// 그룹별 학과 매핑: 각 그룹별로 (한국어 학과명 → 영문 키) 를 정의합니다.

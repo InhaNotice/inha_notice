@@ -4,14 +4,15 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
- * Author: junho Kim
- * Latest Updated Date: 2025-07-06
+ * Author: Junho Kim
+ * Latest Updated Date: 2025-08-23
  */
+
 import 'package:flutter/material.dart';
-import 'package:inha_notice/constants/custom_tab_list/custom_tab_list_keys.dart';
-import 'package:inha_notice/constants/page_constants.dart';
-import 'package:inha_notice/constants/shared_pref_keys/shared_pref_keys.dart';
-import 'package:inha_notice/constants/university_keys/major_keys.dart';
+import 'package:inha_notice/core/constants/page_constant.dart';
+import 'package:inha_notice/core/keys/custom_tab_keys.dart';
+import 'package:inha_notice/core/keys/major_keys.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
@@ -75,7 +76,7 @@ class _AbsoluteStyleNoticeBoardState
 
   /// **Refresh 컨트롤러(새로운 공지 불러옴)**
   void _onRefresh() async {
-    await loadNotices(PageSettings.kInitialAbsolutePage);
+    await loadNotices(PageConstant.kInitialAbsolutePage);
     _refreshController.refreshCompleted();
   }
 
@@ -100,17 +101,17 @@ class _AbsoluteStyleNoticeBoardState
     }
 
     // 학사, 장학, 모집/채용
-    if (widget.noticeType == CustomTabListKeys.WHOLE ||
-        widget.noticeType == CustomTabListKeys.SCHOLARSHIP ||
-        widget.noticeType == CustomTabListKeys.RECRUITMENT) {
+    if (widget.noticeType == CustomTabKeys.WHOLE ||
+        widget.noticeType == CustomTabKeys.SCHOLARSHIP ||
+        widget.noticeType == CustomTabKeys.RECRUITMENT) {
       noticeScraper = WholeStyleNoticeScraper(widget.noticeType);
       return;
     }
 
     // 학과 스타일(국제처, SW중심대학사업단)
-    if (widget.noticeType == CustomTabListKeys.INTERNATIONAL ||
-        widget.noticeType == CustomTabListKeys.SWUNIV ||
-        widget.noticeType == CustomTabListKeys.INHAHUSS) {
+    if (widget.noticeType == CustomTabKeys.INTERNATIONAL ||
+        widget.noticeType == CustomTabKeys.SWUNIV ||
+        widget.noticeType == CustomTabKeys.INHAHUSS) {
       noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
       return;
     }
@@ -136,7 +137,7 @@ class _AbsoluteStyleNoticeBoardState
   Future<void> initialize() async {
     try {
       await initializeScraper();
-      await loadNotices(PageSettings.kInitialAbsolutePage);
+      await loadNotices(PageConstant.kInitialAbsolutePage);
     } catch (e) {
       logger.e('NoticeBoard 초기화 오류: $e');
     }
@@ -167,7 +168,7 @@ class _AbsoluteStyleNoticeBoardState
       setState(() {
         notices = fetchedNotices;
         // 페이지 리스트는 최초 로딩시 할당됨
-        if (page == PageSettings.kInitialAbsolutePage && initialPages.isEmpty) {
+        if (page == PageConstant.kInitialAbsolutePage && initialPages.isEmpty) {
           initialPages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         currentPage = page;
@@ -186,19 +187,19 @@ class _AbsoluteStyleNoticeBoardState
 
     /// tab의 케이스는 반드시 존재함
     switch (tab) {
-      case CustomTabListKeys.MAJOR:
+      case CustomTabKeys.MAJOR:
         settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey);
         break;
-      case CustomTabListKeys.MAJOR2:
+      case CustomTabKeys.MAJOR2:
         settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey2);
         break;
-      case CustomTabListKeys.MAJOR3:
+      case CustomTabKeys.MAJOR3:
         settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey3);
         break;
-      case CustomTabListKeys.COLLEGE:
+      case CustomTabKeys.COLLEGE:
         settingPage = const CollegeSettingPage();
         break;
-      case CustomTabListKeys.GRADUATESCHOOL:
+      case CustomTabKeys.GRADUATESCHOOL:
         settingPage = const GraduateSchoolSettingPage();
         break;
     }
