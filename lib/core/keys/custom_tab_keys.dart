@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-05-26
+ * Latest Updated Date: 2025-08-04
  */
 
-/// **CustomTabListKeys**
+/// **CustomTabKeys**
 /// 커스텀 탭 키를 저장하는 클래스입니다.
-abstract class CustomTabListKeys {
+abstract class CustomTabKeys {
   static const String kWhole = '학사';
   static const String kMajor = '학과';
   static const String kMajor2 = '학과2';

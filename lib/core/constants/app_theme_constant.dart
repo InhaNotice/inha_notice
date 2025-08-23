@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: junho Kim
- * Latest Updated Date: 2025-02-10
+ * Latest Updated Date: 2025-08-04
  */
 
-/// **FontSettings**
-/// 이 클래스는 폰트와 관련된 상수를 정의하는 추상 클래스입니다.
-abstract class FontSettings {
-  static const String kDefaultFont = 'Pretendard';
+/// **앱 테마 설정 값**
+abstract class AppThemeMode {
+  static const String kSystem = '시스템 설정';
+  static const String kLight = '화이트';
+  static const String kDark = '다크';
 }
