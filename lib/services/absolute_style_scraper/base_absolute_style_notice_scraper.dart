@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-24
  */
 
 import 'package:html/dom.dart';
@@ -14,13 +14,15 @@ import 'package:inha_notice/core/constants/identifier_constant.dart';
 /// **BaseAbsoluteStyleNoticeScraper**
 /// 이 클래스는 Absolute Style의 공지사항을 크롤링을 정의하는 추상 클래스입니다.
 abstract class BaseAbsoluteStyleNoticeScraper {
-  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType);
+  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType,
+      [String? searchColumn, String? searchWord]);
 
   List<Map<String, String>> fetchHeadlineNotices(Document document);
 
   List<Map<String, String>> fetchGeneralNotices(Document document);
 
-  List<Map<String, dynamic>> fetchPages(Document document);
+  List<Map<String, dynamic>> fetchPages(Document document,
+      [String? searchColumn, String? searchWord]);
 
   String makeUniqueNoticeId(String postUrl) {
     // postUrl이 빈 문자열인지 확인

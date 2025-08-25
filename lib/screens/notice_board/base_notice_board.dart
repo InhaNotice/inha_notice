@@ -34,7 +34,7 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
   void toggleOption(String option);
 
   Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
-  List<Map<String, dynamic>> initialPages = [];
+  List<Map<String, dynamic>> pages = [];
 
   bool isLoading = true;
   int currentPage = PageConstant.kInitialAbsolutePage;

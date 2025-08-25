@@ -17,7 +17,7 @@ import 'package:inha_notice/themes/theme.dart';
 abstract class BasePagination extends StatelessWidget {
   final List<Map<String, dynamic>> pages;
   final int currentPage;
-  final Function(int) loadNotices;
+  final Function(int, [String?, String?]) loadNotices;
 
   const BasePagination({
     super.key,
@@ -47,6 +47,8 @@ abstract class BasePagination extends StatelessWidget {
           children: pages.map<Widget>((pageData) {
             final int pageNumber = pageData['page'];
             final bool isCurrentPage = (pageNumber == currentPage);
+            final String? searchColumn = pageData['searchColumn'];
+            final String? searchWord = pageData['searchWord'];
             final int relativePage = getRelativePage(pageData);
 
             return TextButton(
@@ -55,7 +57,9 @@ abstract class BasePagination extends StatelessWidget {
                 foregroundColor: Colors.transparent,
                 shape: const RoundedRectangleBorder(),
               ),
-              onPressed: isCurrentPage ? null : () => loadNotices(relativePage),
+              onPressed: isCurrentPage
+                  ? null
+                  : () => loadNotices(relativePage, searchColumn, searchWord),
               child: Text(
                 pageNumber.toString(),
                 style: TextStyle(
