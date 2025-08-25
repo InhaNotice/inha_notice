@@ -46,7 +46,7 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
             child: DropdownButton<String>(
               value: widget.value,
               isDense: true,
-              dropdownColor: Colors.white,
+              dropdownColor: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
