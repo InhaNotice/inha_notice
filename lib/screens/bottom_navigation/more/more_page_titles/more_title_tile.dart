@@ -5,11 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/themes/theme.dart';
 
 /// **MoreTitleTile**
@@ -39,7 +39,7 @@ class _MoreTitleTileState extends State<MoreTitleTile> {
           Text(
             widget.text,
             style: TextStyle(
-              fontFamily: Font.kDefaultFont,
+              fontFamily: Fonts.kDefaultFont,
               fontSize: widget.fontSize,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).fixedGreyText,

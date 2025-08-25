@@ -11,10 +11,10 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
@@ -371,7 +371,7 @@ class _AbsoluteStyleNoticeBoardState
                           Text(
                             '$_noticeTypeDisplayName를 설정해주세요!',
                             style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
+                              fontFamily: Fonts.kDefaultFont,
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color: Theme.of(context)
@@ -403,7 +403,7 @@ class _AbsoluteStyleNoticeBoardState
                           label: Text(
                             '$_noticeTypeDisplayName 설정하기',
                             style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
+                              fontFamily: Fonts.kDefaultFont,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context)

@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/themes/theme.dart';
 
 class KeywordSearchDropdown extends StatefulWidget {
@@ -55,7 +55,7 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
                 size: 18,
               ),
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 14,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
                     Theme.of(context).defaultThemedTextColor,
@@ -66,7 +66,7 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
                   child: Text(
                     '제목',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
+                      fontFamily: Fonts.kDefaultFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 12,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -79,7 +79,7 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
                   child: Text(
                     '작성자',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
+                      fontFamily: Fonts.kDefaultFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 12,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??

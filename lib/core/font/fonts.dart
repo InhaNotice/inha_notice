@@ -10,7 +10,7 @@
 
 /// **Font**
 /// 이 클래스는 폰트와 관련된 상수를 정의하는 추상 클래스입니다.
-abstract class Font {
+abstract class Fonts {
   static const String kDefaultFont = 'Pretendard';
   static const String kTossFaceFontMac = 'TossFaceFontMac';
   static const String kEmptyString = '';

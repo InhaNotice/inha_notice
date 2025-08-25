@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
@@ -101,7 +101,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontFamily: Font.kDefaultFont,
+              fontFamily: Fonts.kDefaultFont,
               fontWeight: FontWeight.bold,
               fontSize: 16,
               color: Theme.of(context).textTheme.bodyMedium?.color ??

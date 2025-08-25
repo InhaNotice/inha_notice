@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/home/notice_board_tab.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
 import 'package:inha_notice/themes/theme.dart';
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                     TextSpan(
                       text: '인',
                       style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
+                        fontFamily: Fonts.kDefaultFont,
                         fontSize: 16,
                         color: Theme.of(context).fixedBlueText,
                         fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                     TextSpan(
                       text: '하',
                       style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
+                        fontFamily: Fonts.kDefaultFont,
                         fontSize: 16,
                         color: Theme.of(context).fixedLightGreyText,
                         fontWeight: FontWeight.bold,
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                     TextSpan(
                       text: '공',
                       style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
+                        fontFamily: Fonts.kDefaultFont,
                         fontSize: 16,
                         color: Theme.of(context).fixedBlueText,
                         fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     TextSpan(
                       text: '지',
                       style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
+                        fontFamily: Fonts.kDefaultFont,
                         fontSize: 16,
                         color: Theme.of(context).fixedLightGreyText,
                         fontWeight: FontWeight.bold,
@@ -158,12 +158,12 @@ class _HomePageState extends State<HomePage> {
                 labelColor: Theme.of(context).tabLabelColor,
                 unselectedLabelColor: Theme.of(context).tabUnSelectedLabelColor,
                 labelStyle: TextStyle(
-                  fontFamily: Font.kDefaultFont,
+                  fontFamily: Fonts.kDefaultFont,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),
                 unselectedLabelStyle: TextStyle(
-                  fontFamily: Font.kDefaultFont,
+                  fontFamily: Fonts.kDefaultFont,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),

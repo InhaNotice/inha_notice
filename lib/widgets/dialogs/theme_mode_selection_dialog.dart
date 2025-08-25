@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'dart:io';
@@ -13,8 +13,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/app_theme_constants.dart';
+import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -76,7 +76,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
         title: Text(
           '테마 설정',
           style: TextStyle(
-            fontFamily: Font.kDefaultFont,
+            fontFamily: Fonts.kDefaultFont,
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -86,7 +86,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
         content: Text(
           '원하는 모드를 선택해주세요.',
           style: TextStyle(
-            fontFamily: Font.kDefaultFont,
+            fontFamily: Fonts.kDefaultFont,
             fontSize: 13,
             fontWeight: FontWeight.normal,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -99,7 +99,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             child: Text(
               '시스템 설정',
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogTextColor,
@@ -111,7 +111,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             child: Text(
               AppThemeConstants.kLight,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogTextColor,
@@ -123,7 +123,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             child: Text(
               AppThemeConstants.kDark,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogTextColor,
@@ -141,7 +141,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           '테마 설정',
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontFamily: Font.kDefaultFont,
+            fontFamily: Fonts.kDefaultFont,
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -151,7 +151,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
         content: Text(
           '원하는 모드를 선택해주세요.',
           style: TextStyle(
-            fontFamily: Font.kDefaultFont,
+            fontFamily: Fonts.kDefaultFont,
             fontSize: 16,
             fontWeight: FontWeight.normal,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -165,7 +165,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             child: Text(
               AppThemeConstants.kSystem,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -178,7 +178,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             child: Text(
               AppThemeConstants.kLight,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -191,7 +191,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             child: Text(
               AppThemeConstants.kDark,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
