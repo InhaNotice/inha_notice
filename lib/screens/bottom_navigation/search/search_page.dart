@@ -147,6 +147,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
         children: [
           Expanded(
             child: TextField(
+              cursorColor: Colors.blue,
               controller: _searchController,
               textInputAction: TextInputAction.search,
               style: TextStyle(

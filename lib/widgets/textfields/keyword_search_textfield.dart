@@ -31,6 +31,7 @@ class _KeywordSearchTextFieldState extends State<KeywordSearchTextField> {
         duration: Duration(milliseconds: 250),
         curve: Curves.easeInOut,
         child: TextField(
+          cursorColor: Colors.blue,
           controller: widget.controller,
           textInputAction: TextInputAction.search,
           style: TextStyle(
