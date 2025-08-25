@@ -80,7 +80,8 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
     });
   }
 
-  Future<void> loadNotices(int startCount) async {
+  Future<void> loadNotices(int startCount,
+      [String? searchColumn, String? searchWord]) async {
     setState(() {
       isLoading = true;
     });
@@ -91,9 +92,8 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       setState(() {
         notices = fetchedNotices;
         // 최초 공지사항 로드시 페이지 리스트 초기화
-        if (startCount == PageConstant.kInitialRelativePage &&
-            initialPages.isEmpty) {
-          initialPages = List<Map<String, dynamic>>.from(notices['pages']);
+        if (startCount == PageConstant.kInitialRelativePage && pages.isEmpty) {
+          pages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         // offset을 통한 현재 페이지로 변환
         currentPage = (startCount ~/ 10) + 1;
@@ -197,13 +197,13 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   @override
   Widget buildFooter() {
     // 중요공지 옵션일 경우 페이지 버튼을 숨기기
-    if (initialPages.isEmpty) return const SizedBox();
+    if (pages.isEmpty) return const SizedBox();
 
     // SearchResultPage가 아닌 경우 padding을 추가하지 않음
     if (!widget.isSearchResultPage) {
       return RelativeStylePagination(
         pageType: 'SEARCH',
-        pages: initialPages,
+        pages: pages,
         currentPage: currentPage,
         loadNotices: loadNotices,
       );
@@ -214,7 +214,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: RelativeStylePagination(
         pageType: 'SEARCH',
-        pages: initialPages,
+        pages: pages,
         currentPage: currentPage,
         loadNotices: loadNotices,
       ),

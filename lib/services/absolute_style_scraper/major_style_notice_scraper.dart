@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-24
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -28,10 +28,14 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType) async {
+  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType,
+      [String? searchColumn, String? searchWord]) async {
     try {
-      // 크롤링 진행
-      final String connectUrl = '$queryUrl$page';
+      // keyword 검색 여부에 따른 connectUrl 정의
+      final String connectUrl =
+          (searchColumn != null && searchWord != null && searchWord.isNotEmpty)
+              ? '$queryUrl$page&srchColumn=$searchColumn&srchWrd=$searchWord'
+              : '$queryUrl$page';
       final response = await http.get(Uri.parse(connectUrl));
 
       if (response.statusCode == StatusCodeConstant.kStatusOkay) {
@@ -44,7 +48,7 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
         final generalNotices = fetchGeneralNotices(document);
 
         // 페이지 번호 가져오기
-        final pages = fetchPages(document);
+        final pages = fetchPages(document, searchColumn, searchWord);
 
         return {
           'headline': headlineNotices,
@@ -159,7 +163,8 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  List<Map<String, dynamic>> fetchPages(document) {
+  List<Map<String, dynamic>> fetchPages(document,
+      [String? searchColumn, String? searchWord]) {
     final List<Map<String, dynamic>> results = [];
     final pages = document.querySelector(PageTagSelectors.kPageBoard);
     if (pages == null) return results;
@@ -173,7 +178,12 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
     for (int i = 1; i <= lastPage; i++) {
       final int page = i;
       final bool isCurrent = (i == 1) ? true : false;
-      results.add({'page': page, 'isCurrent': isCurrent});
+      results.add({
+        'page': page,
+        'isCurrent': isCurrent,
+        'searchColumn': searchColumn,
+        'searchWord': searchWord
+      });
     }
     return results;
   }

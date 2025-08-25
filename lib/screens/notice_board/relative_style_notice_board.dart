@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
@@ -39,9 +39,9 @@ class _RelativeStyleNoticeBoardState
     extends BaseNoticeBoardState<RelativeStyleNoticeBoard> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  late BaseRelativeStyleNoticeScraper libraryScraper;
-  bool showHeadlines = false;
-  bool showGeneral = true;
+  late BaseRelativeStyleNoticeScraper _relativeStyleNoticeScraper;
+  bool _isHeadlineSelected = false;
+  bool _isGeneralSelected = true;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _RelativeStyleNoticeBoardState
 
   Future<void> initializeScraper() async {
     if (widget.noticeType == 'LIBRARY') {
-      libraryScraper = LibraryScraper();
+      _relativeStyleNoticeScraper = LibraryScraper();
     }
   }
 
@@ -76,28 +76,29 @@ class _RelativeStyleNoticeBoardState
   void toggleOption(String option) {
     setState(() {
       if (option == 'headline') {
-        showHeadlines = true;
-        showGeneral = false;
+        _isHeadlineSelected = true;
+        _isGeneralSelected = false;
       } else if (option == 'general') {
-        showHeadlines = false;
-        showGeneral = true;
+        _isHeadlineSelected = false;
+        _isGeneralSelected = true;
       }
     });
   }
 
   /// **RelativeStyle의 공지를 불러옴**
-  Future<void> loadNotices(int offset) async {
+  Future<void> loadNotices(int offset,
+      [String? searchColumn, String? searchWord]) async {
     setState(() {
       isLoading = true;
     });
     try {
-      final fetchedNotices = await libraryScraper.fetchNotices(offset);
+      final fetchedNotices =
+          await _relativeStyleNoticeScraper.fetchNotices(offset);
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (offset == PageConstant.kInitialRelativePage &&
-            initialPages.isEmpty) {
-          initialPages = List<Map<String, dynamic>>.from(notices['pages']);
+        if (offset == PageConstant.kInitialRelativePage && pages.isEmpty) {
+          pages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         // offset을 통한 현재 페이지로 변환
         currentPage = (offset ~/ 10) + 1;
@@ -140,14 +141,14 @@ class _RelativeStyleNoticeBoardState
             RoundedToggleButton(
                 text: '중요',
                 option: 'headline',
-                isSelected: showHeadlines,
+                isSelected: _isHeadlineSelected,
                 onTap: toggleOption),
           const SizedBox(width: 10),
           // 일반공지 버튼
           RoundedToggleButton(
               text: '일반',
               option: 'general',
-              isSelected: showGeneral,
+              isSelected: _isGeneralSelected,
               onTap: toggleOption),
         ],
       ),
@@ -168,11 +169,11 @@ class _RelativeStyleNoticeBoardState
                 header: const NoticeRefreshHeader(),
                 child: ListView.builder(
                   // 중요 공지와 일반 공지 중 하나만 선택이 가능합니다.
-                  itemCount: showHeadlines
+                  itemCount: _isHeadlineSelected
                       ? notices['headline'].length
                       : notices['general'].length,
                   itemBuilder: (context, index) {
-                    final notice = showHeadlines
+                    final notice = _isHeadlineSelected
                         ? notices['headline'][index]
                         : notices['general'][index];
                     // 공지 리스트에서 공지가 읽음 상태인지 확인하고, NoticeListTile에 그 상태를 전달합니다.
@@ -196,10 +197,10 @@ class _RelativeStyleNoticeBoardState
 
   @override
   Widget buildFooter() {
-    if (initialPages.isEmpty || showHeadlines) return const SizedBox();
+    if (pages.isEmpty || _isHeadlineSelected) return const SizedBox();
     return RelativeStylePagination(
       pageType: 'LIBRARY',
-      pages: initialPages,
+      pages: pages,
       currentPage: currentPage,
       loadNotices: loadNotices,
     );

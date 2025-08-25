@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -30,7 +30,8 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType) async {
+  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType,
+      [String? searchColumn, String? searchWord]) async {
     try {
       // 크롤링 진행
       final String connectUrl = '$queryUrl$page';
@@ -46,7 +47,7 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
         final generalNotices = fetchGeneralNotices(document);
 
         // 페이지 번호 가져오기
-        final pages = fetchPages(document);
+        final pages = fetchPages(document, searchColumn, searchWord);
 
         return {
           'headline': headlineNotices,
@@ -113,7 +114,8 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  List<Map<String, dynamic>> fetchPages(document) {
+  List<Map<String, dynamic>> fetchPages(document,
+      [String? searchColumn, String? searchWord]) {
     final List<Map<String, dynamic>> results = [];
 
     final int lastPage = 16;

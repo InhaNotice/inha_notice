@@ -5,10 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/constants/keyword_search_option_constant.dart';
 import 'package:inha_notice/core/constants/page_constant.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
@@ -26,10 +27,12 @@ import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_s
 import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
+import 'package:inha_notice/widgets/dropdowns/keyword_search_dropdown.dart';
 import 'package:inha_notice/widgets/loading/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
+import 'package:inha_notice/widgets/textfields/keyword_search_textfield.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -40,6 +43,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 /// ### 주요 기능:
 /// - noticeType에 따른 공지사항 제공
 /// - 지원하는 공지: 학사, 장학, 모집/채용, 학과, 국제처, SW중심대학사업단, 단과대, 대학원
+
 class AbsoluteStyleNoticeBoard extends BaseNoticeBoard {
   final String noticeType;
 
@@ -52,15 +56,24 @@ class AbsoluteStyleNoticeBoard extends BaseNoticeBoard {
 
 class _AbsoluteStyleNoticeBoardState
     extends BaseNoticeBoardState<AbsoluteStyleNoticeBoard> {
-  final logger = Logger();
+  final Logger _logger = Logger();
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  late BaseAbsoluteStyleNoticeScraper noticeScraper;
-  late String? userSettingKey;
-  late String? noticeTypeDisplayName;
-  bool showHeadlines = false;
-  bool showGeneral = true;
-  bool isUserSettingKey = false;
+  final TextEditingController _keywordSearchController =
+      TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+
+  late BaseAbsoluteStyleNoticeScraper _absoluteStyleNoticeScraper;
+  late String? _userSettingKey;
+  late String? _noticeTypeDisplayName;
+
+  bool _isHeadlineSelected = false;
+  bool _isGeneralSelected = true;
+  bool _isUserSettingKey = false;
+  bool _isPullRefreshing = false;
+  bool _isKeywordSearchSelected = false;
+  bool _isKeywordSearchableNoticeType = false;
+  String _selectedKeywordSearchOption = KeywordSearchOptionConstant.kTitle;
 
   @override
   void initState() {
@@ -70,76 +83,18 @@ class _AbsoluteStyleNoticeBoardState
 
   @override
   void dispose() {
-    _refreshController.dispose();
+    _disposeResources();
     super.dispose();
-  }
-
-  /// **Refresh 컨트롤러(새로운 공지 불러옴)**
-  void _onRefresh() async {
-    await loadNotices(PageConstant.kInitialAbsolutePage);
-    _refreshController.refreshCompleted();
-  }
-
-  /// **Preference 로드를 담당하는 함수**//
-  void _loadPreference(String noticeType) {
-    // 유저 설정값 불러오기
-    userSettingKey = CustomTabListUtils.loadUserSettingKey(noticeType);
-
-    isUserSettingKey = (userSettingKey != null);
-    noticeTypeDisplayName =
-        CustomTabListUtils.kTabMappingOnValue[noticeType] ?? noticeType;
-  }
-
-  /// **(선택) Preference 로드 -> (필수) 스크래퍼 초기화**
-  Future<void> initializeScraper() async {
-    /// Preference 로드가 필요한지 여부 판단
-    if (CustomTabListUtils.isUserSettingType(widget.noticeType)) {
-      _loadPreference(widget.noticeType);
-      if (!isUserSettingKey) {
-        return;
-      }
-    }
-
-    // 학사, 장학, 모집/채용
-    if (widget.noticeType == CustomTabKeys.WHOLE ||
-        widget.noticeType == CustomTabKeys.SCHOLARSHIP ||
-        widget.noticeType == CustomTabKeys.RECRUITMENT) {
-      noticeScraper = WholeStyleNoticeScraper(widget.noticeType);
-      return;
-    }
-
-    // 학과 스타일(국제처, SW중심대학사업단)
-    if (widget.noticeType == CustomTabKeys.INTERNATIONAL ||
-        widget.noticeType == CustomTabKeys.SWUNIV ||
-        widget.noticeType == CustomTabKeys.INHAHUSS) {
-      noticeScraper = MajorStyleNoticeScraper(widget.noticeType);
-      return;
-    }
-
-    // (예외) 해양과학과인 경우
-    if (userSettingKey == MajorKeys.OCEANOGRAPHY) {
-      noticeScraper = OceanographyStyleNoticeScraper(userSettingKey!);
-      return;
-    }
-
-    // (예외) 디자인융합학과인 경우
-    if (userSettingKey == MajorKeys.INHADESIGN) {
-      noticeScraper = InhaDesignStyleNoticeScraper(userSettingKey!);
-      return;
-    }
-
-    // (나머지) 학과, 단과대, 대학원
-    noticeScraper = MajorStyleNoticeScraper(userSettingKey!);
   }
 
   /// 초기화 순서(순서를 보장해야함): 스크래퍼 초기화 -> 공지사항 불러오기
   @override
   Future<void> initialize() async {
     try {
-      await initializeScraper();
-      await loadNotices(PageConstant.kInitialAbsolutePage);
+      await _initializeScraper();
+      await _loadNotices(PageConstant.kInitialAbsolutePage);
     } catch (e) {
-      logger.e('NoticeBoard 초기화 오류: $e');
+      _logger.e('NoticeBoard 초기화 오류: $e');
     }
   }
 
@@ -147,29 +102,41 @@ class _AbsoluteStyleNoticeBoardState
   void toggleOption(String option) {
     setState(() {
       if (option == 'headline') {
-        showHeadlines = true;
-        showGeneral = false;
+        _isHeadlineSelected = true;
+        _isGeneralSelected = false;
       } else if (option == 'general') {
-        showHeadlines = false;
-        showGeneral = true;
+        _isHeadlineSelected = false;
+        _isGeneralSelected = true;
       }
     });
   }
 
+  void _disposeResources() {
+    _refreshController.dispose();
+    _searchFocusNode.dispose();
+    _keywordSearchController.dispose();
+  }
+
   /// 공지사항 새로고침 진행하는 함수
-  Future<void> loadNotices(int page) async {
+  Future<void> _loadNotices(int page,
+      [String? searchColumn, String? searchWord]) async {
     setState(() {
       isLoading = true;
     });
     try {
-      final fetchedNotices =
-          await noticeScraper.fetchNotices(page, widget.noticeType);
+      final fetchedNotices = await _absoluteStyleNoticeScraper.fetchNotices(
+          page, widget.noticeType, searchColumn, searchWord);
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        // 페이지 리스트는 최초 로딩시 할당됨
-        if (page == PageConstant.kInitialAbsolutePage && initialPages.isEmpty) {
-          initialPages = List<Map<String, dynamic>>.from(notices['pages']);
+        if (page == PageConstant.kInitialAbsolutePage) {
+          final bool isKeywordSearch =
+              (searchColumn != null && searchColumn.isNotEmpty) ||
+                  (searchWord != null && searchWord.isNotEmpty);
+
+          if (pages.isEmpty || isKeywordSearch || _isPullRefreshing) {
+            pages = List<Map<String, dynamic>>.from(notices['pages']);
+          }
         }
         currentPage = page;
         isLoading = false;
@@ -181,8 +148,99 @@ class _AbsoluteStyleNoticeBoardState
     }
   }
 
+  void _loadNoticesByKeyword() async {
+    await _loadNotices(
+      PageConstant.kInitialAbsolutePage,
+      _selectedKeywordSearchOption,
+      _keywordSearchController.text,
+    );
+  }
+
+  void _activateKeywordSearch() {
+    setState(() {
+      _isKeywordSearchSelected = true;
+    });
+    Future.microtask(() => _searchFocusNode.requestFocus());
+  }
+
+  void _deactivateKeywordSearch() {
+    setState(() {
+      _isKeywordSearchSelected = false;
+      _keywordSearchController.clear();
+    });
+    FocusScope.of(context).unfocus();
+  }
+
+  /// **Refresh 컨트롤러(새로운 공지 불러옴)**
+  void _refreshNotices() async {
+    _isPullRefreshing = true;
+    try {
+      await _loadNotices(PageConstant.kInitialAbsolutePage);
+      _refreshController.refreshCompleted();
+      _deactivateKeywordSearch();
+    } finally {
+      _isPullRefreshing = false;
+    }
+  }
+
+  /// **Preference 로드를 담당하는 함수**//
+  void _loadPreference(String noticeType) {
+    // 유저 설정값 불러오기
+    _userSettingKey = CustomTabListUtils.loadUserSettingKey(noticeType);
+    _isUserSettingKey = (_userSettingKey != null);
+    _noticeTypeDisplayName =
+        CustomTabListUtils.kTabMappingOnValue[noticeType] ?? noticeType;
+  }
+
+  /// **(선택) Preference 로드 -> (필수) 스크래퍼 초기화**
+  Future<void> _initializeScraper() async {
+    /// Preference 로드가 필요한지 여부 판단
+    if (CustomTabListUtils.isUserSettingType(widget.noticeType)) {
+      _loadPreference(widget.noticeType);
+      if (!_isUserSettingKey) {
+        return;
+      }
+    }
+
+    // 학사, 장학, 모집/채용
+    if (widget.noticeType == CustomTabKeys.WHOLE ||
+        widget.noticeType == CustomTabKeys.SCHOLARSHIP ||
+        widget.noticeType == CustomTabKeys.RECRUITMENT) {
+      _absoluteStyleNoticeScraper = WholeStyleNoticeScraper(widget.noticeType);
+      _isKeywordSearchableNoticeType = true;
+      return;
+    }
+
+    // 학과 스타일(국제처, SW중심대학사업단)
+    if (widget.noticeType == CustomTabKeys.INTERNATIONAL ||
+        widget.noticeType == CustomTabKeys.SWUNIV ||
+        widget.noticeType == CustomTabKeys.INHAHUSS) {
+      _absoluteStyleNoticeScraper = MajorStyleNoticeScraper(widget.noticeType);
+      _isKeywordSearchableNoticeType = true;
+      return;
+    }
+
+    // (예외) 해양과학과인 경우
+    if (_userSettingKey == MajorKeys.OCEANOGRAPHY) {
+      _absoluteStyleNoticeScraper =
+          OceanographyStyleNoticeScraper(_userSettingKey!);
+      return;
+    }
+
+    // (예외) 디자인융합학과인 경우
+    if (_userSettingKey == MajorKeys.INHADESIGN) {
+      _absoluteStyleNoticeScraper =
+          InhaDesignStyleNoticeScraper(_userSettingKey!);
+      return;
+    }
+
+    // (나머지) 학과, 단과대, 대학원
+    _absoluteStyleNoticeScraper = MajorStyleNoticeScraper(_userSettingKey!);
+    _isKeywordSearchableNoticeType = true;
+  }
+
   /// **Preference 설정이 안 된 경우, 설정한 뒤에 초기화 진행함**
-  void handleToNavigate(String tab) {
+  void _handleToNavigate(String tab) {
     late Widget settingPage;
 
     /// tab의 케이스는 반드시 존재함
@@ -232,25 +290,65 @@ class _AbsoluteStyleNoticeBoardState
         color: Theme.of(context).scaffoldBackgroundColor,
       ),
       padding: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // 중요공지가 있을때만 토글 버튼이 생성됩니다.
-          if (notices['headline'].isNotEmpty)
-            // 중요공지 버튼
-            RoundedToggleButton(
+      child: AnimatedCrossFade(
+        duration: Duration(milliseconds: 250),
+        crossFadeState: _isKeywordSearchSelected
+            ? CrossFadeState.showSecond
+            : CrossFadeState.showFirst,
+        firstCurve: Curves.easeOutCubic,
+        secondCurve: Curves.easeInCubic,
+        sizeCurve: Curves.easeInOut,
+        firstChild: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // 중요공지가 있을때만 토글 버튼이 생성됩니다.
+            if (notices['headline'].isNotEmpty)
+              // 중요공지 버튼
+              RoundedToggleButton(
                 text: '중요',
                 option: 'headline',
-                isSelected: showHeadlines,
-                onTap: toggleOption),
-          const SizedBox(width: 10),
-          // 일반공지 버튼
-          RoundedToggleButton(
+                isSelected: _isHeadlineSelected,
+                onTap: toggleOption,
+              ),
+            const SizedBox(width: 10),
+            // 일반공지 버튼
+            RoundedToggleButton(
               text: '일반',
               option: 'general',
-              isSelected: showGeneral,
-              onTap: toggleOption),
-        ],
+              isSelected: _isGeneralSelected,
+              onTap: toggleOption,
+            ),
+            const Spacer(),
+            if (_isKeywordSearchableNoticeType)
+              IconButton(
+                icon: const Icon(Icons.search),
+                color: Colors.grey,
+                onPressed: _activateKeywordSearch,
+              ),
+          ],
+        ),
+        secondChild: Row(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.grey,
+              ),
+              onPressed: _deactivateKeywordSearch,
+            ),
+            KeywordSearchDropdown(
+              value: _selectedKeywordSearchOption,
+              onChanged: (value) {
+                setState(() => _selectedKeywordSearchOption = value);
+              },
+            ),
+            const SizedBox(width: 6),
+            KeywordSearchTextField(
+              controller: _keywordSearchController,
+              onSubmitted: _loadNoticesByKeyword,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -264,14 +362,14 @@ class _AbsoluteStyleNoticeBoardState
         child: isLoading
             ? const Center(child: BlueLoadingIndicator())
             : (CustomTabListUtils.isUserSettingType(widget.noticeType) &&
-                    !isUserSettingKey)
+                    !_isUserSettingKey)
                 ? Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min, // 중앙 정렬
                       children: [
-                        if (noticeTypeDisplayName != null)
+                        if (_noticeTypeDisplayName != null)
                           Text(
-                            '$noticeTypeDisplayName를 설정해주세요!',
+                            '$_noticeTypeDisplayName를 설정해주세요!',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 16,
@@ -295,7 +393,7 @@ class _AbsoluteStyleNoticeBoardState
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 12),
                           ),
-                          onPressed: () => handleToNavigate(widget.noticeType),
+                          onPressed: () => _handleToNavigate(widget.noticeType),
                           icon: Icon(Icons.school_outlined,
                               size: 20,
                               color: Theme.of(context)
@@ -303,7 +401,7 @@ class _AbsoluteStyleNoticeBoardState
                                   .iconTheme
                                   ?.color),
                           label: Text(
-                            '$noticeTypeDisplayName 설정하기',
+                            '$_noticeTypeDisplayName 설정하기',
                             style: TextStyle(
                               fontFamily: Font.kDefaultFont,
                               fontSize: 14,
@@ -322,16 +420,16 @@ class _AbsoluteStyleNoticeBoardState
                 // 모든 noticeType에 대응
                 : SmartRefresher(
                     controller: _refreshController,
-                    onRefresh: _onRefresh,
+                    onRefresh: _refreshNotices,
                     enablePullDown: true,
                     header: const NoticeRefreshHeader(),
                     child: ListView.builder(
                       // 중요 공지와 일반 공지 중 하나만 선택이 가능
-                      itemCount: showHeadlines
+                      itemCount: _isHeadlineSelected
                           ? notices['headline'].length
                           : notices['general'].length,
                       itemBuilder: (context, index) {
-                        final notice = showHeadlines
+                        final notice = _isHeadlineSelected
                             ? notices['headline'][index]
                             : notices['general'][index];
                         final isRead = isNoticeRead(notice['id'].toString());
@@ -355,12 +453,12 @@ class _AbsoluteStyleNoticeBoardState
   @override
   Widget buildFooter() {
     // 페이지 리스트가 초기화 되지 않았을 때
-    if (initialPages.isEmpty || showHeadlines) return const SizedBox();
+    if (pages.isEmpty || _isHeadlineSelected) return const SizedBox();
     // 페이지 리스트가 초기화 되었을 때
     return AbsoluteStylePagination(
-      pages: initialPages,
+      pages: pages,
       currentPage: currentPage,
-      loadNotices: loadNotices,
+      loadNotices: _loadNotices,
     );
   }
 }

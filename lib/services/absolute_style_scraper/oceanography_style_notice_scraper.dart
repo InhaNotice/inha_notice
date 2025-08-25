@@ -32,7 +32,8 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType) async {
+  Future<Map<String, dynamic>> fetchNotices(int page, String noticeType,
+      [String? searchColumn, String? searchWord]) async {
     try {
       // 크롤링 진행
       final String requestUrl = '$queryUrl$page';
@@ -186,7 +187,8 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  List<Map<String, dynamic>> fetchPages(Document document) {
+  List<Map<String, dynamic>> fetchPages(Document document,
+      [String? searchColumn, String? searchWord]) {
     final List<Map<String, dynamic>> results = [];
 
     final tableElements =
