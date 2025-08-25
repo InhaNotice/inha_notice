@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/utils/university_utils/college_utils.dart';
-import 'package:inha_notice/widgets/typography/bold_title_text.dart';
+import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 /// **NotificationMajorCategory**
 /// 모든 학과에 대한 알림 카테고리를 정의한다.

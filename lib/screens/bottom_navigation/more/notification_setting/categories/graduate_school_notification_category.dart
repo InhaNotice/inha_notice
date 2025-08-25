@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
-import 'package:inha_notice/widgets/typography/bold_title_text.dart';
+import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 class GraduateSchoolNotificationCategory extends StatefulWidget {
   const GraduateSchoolNotificationCategory({super.key});
