@@ -9,28 +9,28 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/keyword_search_option_constant.dart';
-import 'package:inha_notice/core/constants/page_constant.dart';
+import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
+import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
+import 'package:inha_notice/screens/pagination/absolute_style_pagination.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/inha_design_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/oceanography_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
-import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/dropdowns/keyword_search_dropdown.dart';
-import 'package:inha_notice/widgets/loading/blue_loading_indicator.dart';
-import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
-import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
+import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/textfields/keyword_search_textfield.dart';
 import 'package:logger/logger.dart';
@@ -73,7 +73,7 @@ class _AbsoluteStyleNoticeBoardState
   bool _isPullRefreshing = false;
   bool _isKeywordSearchSelected = false;
   bool _isKeywordSearchableNoticeType = false;
-  String _selectedKeywordSearchOption = KeywordSearchOptionConstant.kTitle;
+  String _selectedKeywordSearchOption = KeywordSearchOptionConstants.kTitle;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _AbsoluteStyleNoticeBoardState
   Future<void> initialize() async {
     try {
       await _initializeScraper();
-      await _loadNotices(PageConstant.kInitialAbsolutePage);
+      await _loadNotices(PageConstants.kInitialAbsolutePage);
     } catch (e) {
       _logger.e('NoticeBoard 초기화 오류: $e');
     }
@@ -129,7 +129,7 @@ class _AbsoluteStyleNoticeBoardState
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (page == PageConstant.kInitialAbsolutePage) {
+        if (page == PageConstants.kInitialAbsolutePage) {
           final bool isKeywordSearch =
               (searchColumn != null && searchColumn.isNotEmpty) ||
                   (searchWord != null && searchWord.isNotEmpty);
@@ -150,7 +150,7 @@ class _AbsoluteStyleNoticeBoardState
 
   void _loadNoticesByKeyword() async {
     await _loadNotices(
-      PageConstant.kInitialAbsolutePage,
+      PageConstants.kInitialAbsolutePage,
       _selectedKeywordSearchOption,
       _keywordSearchController.text,
     );
@@ -175,7 +175,7 @@ class _AbsoluteStyleNoticeBoardState
   void _refreshNotices() async {
     _isPullRefreshing = true;
     try {
-      await _loadNotices(PageConstant.kInitialAbsolutePage);
+      await _loadNotices(PageConstants.kInitialAbsolutePage);
       _refreshController.refreshCompleted();
       _deactivateKeywordSearch();
     } finally {
@@ -371,7 +371,7 @@ class _AbsoluteStyleNoticeBoardState
                           Text(
                             '$_noticeTypeDisplayName를 설정해주세요!',
                             style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
+                              fontFamily: Fonts.kDefaultFont,
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color: Theme.of(context)
@@ -403,7 +403,7 @@ class _AbsoluteStyleNoticeBoardState
                           label: Text(
                             '$_noticeTypeDisplayName 설정하기',
                             style: TextStyle(
-                              fontFamily: Font.kDefaultFont,
+                              fontFamily: Fonts.kDefaultFont,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context)

@@ -5,18 +5,18 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
+import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
-import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
-import 'package:inha_notice/widgets/search/search_result_page.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 /// **SearchPage**
@@ -39,8 +39,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
 
   List<Map<String, dynamic>> _topicsList = [];
 
-  String _warning = Font.kEmptyString;
-  String _makeTimes = Font.kEmptyString;
+  String _warning = Fonts.kEmptyString;
+  String _makeTimes = Fonts.kEmptyString;
 
   @override
   void initState() {
@@ -58,8 +58,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       setState(() {
         _topicsList = response;
         if (response.isNotEmpty) {
-          _makeTimes = response.first['makeTimes'] ?? Font.kEmptyString;
-          _warning = Font.kEmptyString;
+          _makeTimes = response.first['makeTimes'] ?? Fonts.kEmptyString;
+          _warning = Fonts.kEmptyString;
         } else {
           _warning = '인기 검색어가 없어요.';
         }
@@ -150,7 +150,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               controller: _searchController,
               textInputAction: TextInputAction.search,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontWeight: FontWeight.normal,
                 fontSize: 16,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -159,7 +159,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               decoration: InputDecoration(
                 hintText: '검색어를 입력하세요',
                 hintStyle: TextStyle(
-                  fontFamily: Font.kDefaultFont,
+                  fontFamily: Fonts.kDefaultFont,
                   fontSize: 16,
                   color: Theme.of(context).textFieldTextColor,
                 ),
@@ -196,7 +196,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             Text(
               '최근 검색어',
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -208,7 +208,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               child: Text(
                 '전체삭제',
                 style: TextStyle(
-                  fontFamily: Font.kDefaultFont,
+                  fontFamily: Fonts.kDefaultFont,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -246,7 +246,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             label: Text(
               text,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -256,7 +256,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             backgroundColor: Theme.of(context).tagBackgroundColor,
             deleteIcon: const Icon(Icons.close, size: 14),
             onDeleted: () => _removeRecentSearchTopic(text),
-            deleteButtonTooltipMessage: Font.kEmptyString,
+            deleteButtonTooltipMessage: Fonts.kEmptyString,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             visualDensity: VisualDensity.compact,
             shape: RoundedRectangleBorder(
@@ -282,7 +282,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             Text(
               '실시간 인기 검색어',
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -292,7 +292,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             Text(
               _makeTimes,
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -307,7 +307,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 child: Text(
                   _warning.isNotEmpty ? _warning : '실시간 인기 검색어를 불러오고 있어요...',
                   style: TextStyle(
-                    fontFamily: Font.kDefaultFont,
+                    fontFamily: Fonts.kDefaultFont,
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??

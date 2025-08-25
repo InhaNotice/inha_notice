@@ -5,20 +5,20 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
+import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
-import 'package:inha_notice/widgets/loading/blue_loading_indicator.dart';
-import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
+import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/refresh_headers/bookmark_refresh_header.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -213,7 +213,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
                   child: Text(
                     "저장된 북마크가 없어요.",
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
+                      fontFamily: Fonts.kDefaultFont,
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??

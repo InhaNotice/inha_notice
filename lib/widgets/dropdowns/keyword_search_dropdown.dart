@@ -9,9 +9,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/keyword_search_option_constant.dart';
-import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 class KeywordSearchDropdown extends StatefulWidget {
   final String value;
@@ -55,18 +55,18 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
                 size: 18,
               ),
               style: TextStyle(
-                fontFamily: Font.kDefaultFont,
+                fontFamily: Fonts.kDefaultFont,
                 fontSize: 14,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
                     Theme.of(context).defaultThemedTextColor,
               ),
               items: [
                 DropdownMenuItem<String>(
-                  value: KeywordSearchOptionConstant.kTitle,
+                  value: KeywordSearchOptionConstants.kTitle,
                   child: Text(
                     '제목',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
+                      fontFamily: Fonts.kDefaultFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 12,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -75,11 +75,11 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
                   ),
                 ),
                 DropdownMenuItem<String>(
-                  value: KeywordSearchOptionConstant.kWriter,
+                  value: KeywordSearchOptionConstants.kWriter,
                   child: Text(
                     '작성자',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
+                      fontFamily: Fonts.kDefaultFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 12,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??

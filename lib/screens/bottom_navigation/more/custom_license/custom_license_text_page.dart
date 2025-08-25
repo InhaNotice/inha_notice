@@ -5,13 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/themes/theme.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
+import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 
 /// **CustomLicenseTextPage**
 /// 라이선스 본문을 출력하는 페이지입니다.
@@ -46,7 +46,7 @@ class _CustomLicenseTextPageState extends State<CustomLicenseTextPage> {
                   softWrap: true,
                   widget.description,
                   style: TextStyle(
-                    fontFamily: Font.kDefaultFont,
+                    fontFamily: Fonts.kDefaultFont,
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??

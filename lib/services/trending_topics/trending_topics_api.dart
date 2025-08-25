@@ -10,7 +10,7 @@
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/core/constants/status_code_constant.dart';
+import 'package:inha_notice/core/constants/status_code_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:xml/xml.dart';
 
@@ -29,7 +29,7 @@ class TrendingTopicsAPI {
       final url = Uri.parse(baseUrl);
       var response = await http.get(url);
 
-      if (response.statusCode == StatusCodeConstant.kStatusOkay) {
+      if (response.statusCode == StatusCodeConstants.kStatusOkay) {
         // Xml 문서 형식의 응답 객체를 파싱
         final document = XmlDocument.parse(response.body);
         String makeTime = document.findAllElements('MakeTime').first.innerText;

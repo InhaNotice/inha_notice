@@ -5,17 +5,17 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
-import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 class MajorSettingPage extends BaseSettingPage {
@@ -99,7 +99,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
           final major = _filteredMajors[index];
           return ListTile(
             title: Text(major,
-                style: TextStyle(fontFamily: Font.kDefaultFont, fontSize: 18)),
+                style: TextStyle(fontFamily: Fonts.kDefaultFont, fontSize: 18)),
             onTap: () async {
               await handleSelection(major);
             },
@@ -118,7 +118,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
               title: Text(
                 entry.key,
                 style: TextStyle(
-                  fontFamily: Font.kDefaultFont,
+                  fontFamily: Fonts.kDefaultFont,
                   fontSize: 19,
                   fontWeight: FontWeight.normal,
                   color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -129,7 +129,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
                 return ListTile(
                   title: Text(major,
                       style: TextStyle(
-                          fontFamily: Font.kDefaultFont, fontSize: 18)),
+                          fontFamily: Fonts.kDefaultFont, fontSize: 18)),
                   onTap: () async {
                     await handleSelection(major);
                   },

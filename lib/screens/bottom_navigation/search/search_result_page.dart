@@ -5,19 +5,19 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/page_constant.dart';
-import 'package:inha_notice/core/constants/string_constant.dart';
+import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
+import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/services/search/search_scraper.dart';
+import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
-import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
-import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -42,7 +42,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   bool showRank = false;
   bool showDate = true;
 
-  String sortedType = StringConstant.kDefaultSortedType;
+  String sortedType = StringConstants.kDefaultSortedType;
 
   @override
   void initState() {
@@ -52,14 +52,14 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
 
   /// **Refresh 컨트롤러(새로운 공지 불러옴)**
   void _onRefresh() async {
-    await loadNotices(PageConstant.kInitialAbsolutePage);
+    await loadNotices(PageConstants.kInitialAbsolutePage);
     _refreshController.refreshCompleted();
   }
 
   @override
   Future<void> initialize() async {
     try {
-      await loadNotices(PageConstant.kInitialRelativePage);
+      await loadNotices(PageConstants.kInitialRelativePage);
     } catch (e) {
       logger.e('${runtimeType.toString()} - initialize() 오류: $e');
     }
@@ -76,7 +76,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
         showDate = true;
       }
       sortedType = option;
-      loadNotices(PageConstant.kInitialRelativePage);
+      loadNotices(PageConstants.kInitialRelativePage);
     });
   }
 
@@ -92,7 +92,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       setState(() {
         notices = fetchedNotices;
         // 최초 공지사항 로드시 페이지 리스트 초기화
-        if (startCount == PageConstant.kInitialRelativePage && pages.isEmpty) {
+        if (startCount == PageConstants.kInitialRelativePage && pages.isEmpty) {
           pages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         // offset을 통한 현재 페이지로 변환

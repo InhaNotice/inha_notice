@@ -5,18 +5,18 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:inha_notice/core/constants/app_theme_constant.dart';
+import 'package:inha_notice/core/constants/app_theme_constants.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/firebase/firebase_options.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
-import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
@@ -119,10 +119,10 @@ Future<void> _initializeThemeSetting() async {
         .getPreference(SharedPrefKeys.kUserThemeSetting);
     ThemeMode themeMode;
     switch (userThemeSetting) {
-      case AppThemeConstant.kLight:
+      case AppThemeConstants.kLight:
         themeMode = ThemeMode.light;
         break;
-      case AppThemeConstant.kDark:
+      case AppThemeConstants.kDark:
         themeMode = ThemeMode.dark;
         break;
       default:

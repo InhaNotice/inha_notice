@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:charset_converter/charset_converter.dart';
@@ -13,10 +13,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/core/constants/identifier_constant.dart';
-import 'package:inha_notice/core/constants/status_code_constant.dart';
-import 'package:inha_notice/core/constants/string_constant.dart';
-import 'package:inha_notice/selectors/oceanography_style_tag_selectors.dart';
+import 'package:inha_notice/core/constants/identifier_constants.dart';
+import 'package:inha_notice/core/constants/status_code_constants.dart';
+import 'package:inha_notice/core/constants/string_constants.dart';
+import 'package:inha_notice/core/selectors/oceanography_style_tag_selectors.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
 /// **OceanographyStyleNoticeScraper**
@@ -39,10 +39,10 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       final String requestUrl = '$queryUrl$page';
       final response = await http.get(Uri.parse(requestUrl));
 
-      if (response.statusCode == StatusCodeConstant.kStatusOkay) {
+      if (response.statusCode == StatusCodeConstants.kStatusOkay) {
         // 응답 바이트를 euc-kr로 디코딩
         final decodedHtml = await CharsetConverter.decode(
-            StringConstant.kEUCKR, response.bodyBytes);
+            StringConstants.kEUCKR, response.bodyBytes);
         final document = parse(decodedHtml);
 
         // 중요 공지사항 가져오기
@@ -224,13 +224,13 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   String makeUniqueNoticeId(String postUrl) {
     // postUrl이 빈 문자열인지 확인
     if (postUrl.isEmpty) {
-      return IdentifierConstant.kUnknownId;
+      return IdentifierConstants.kUnknownId;
     }
 
     final List<String> segments = postUrl.split('/');
     // postUrlList가 정해진 규격을 따르는지 확인
     if (segments.length < 3) {
-      return IdentifierConstant.kUnknownId;
+      return IdentifierConstants.kUnknownId;
     }
 
     final uri = Uri.parse(segments[2]);
@@ -240,7 +240,7 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
     // postId가 존재하는지 확인
     if (postId == null) {
-      return IdentifierConstant.kUnknownId;
+      return IdentifierConstants.kUnknownId;
     }
 
     final String uniqueNoticeId = '$provider-$postId';

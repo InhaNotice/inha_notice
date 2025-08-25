@@ -5,16 +5,16 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
-import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
-import 'package:inha_notice/themes/theme.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -59,7 +59,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const TextSpan(
                     text: '인',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
+                      fontFamily: Fonts.kDefaultFont,
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
@@ -68,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextSpan(
                     text: '하',
                     style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
+                        fontFamily: Fonts.kDefaultFont,
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -83,7 +83,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const TextSpan(
                     text: '공',
                     style: TextStyle(
-                      fontFamily: Font.kDefaultFont,
+                      fontFamily: Fonts.kDefaultFont,
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
@@ -92,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextSpan(
                     text: '지',
                     style: TextStyle(
-                        fontFamily: Font.kDefaultFont,
+                        fontFamily: Fonts.kDefaultFont,
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyMedium?.color ??

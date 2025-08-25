@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/fonts/font.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 /// **MoreNavigationTile**
 /// 이 클래스는 더보기 페이지의 다른 페이지로 이동하는 타일을 정의합니다.
@@ -49,7 +49,7 @@ class _MoreNavigationTileState extends State<MoreNavigationTile> {
                 Text(
                   widget.title,
                   style: TextStyle(
-                    fontFamily: Font.kDefaultFont,
+                    fontFamily: Fonts.kDefaultFont,
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??

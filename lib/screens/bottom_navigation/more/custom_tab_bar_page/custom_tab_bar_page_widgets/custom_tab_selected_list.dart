@@ -5,13 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/fonts/font.dart';
+import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list.dart';
-import 'package:inha_notice/themes/theme.dart';
 
 /// **CustomTabSelectedList**
 /// 현재 선택된 탭 리스트를 출력합니다.
@@ -80,7 +80,7 @@ class _CustomTabSelectedListState
           title: Text(
             tab,
             style: TextStyle(
-              fontFamily: Font.kDefaultFont,
+              fontFamily: Fonts.kDefaultFont,
               fontSize: 16,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.bodyMedium?.color ??

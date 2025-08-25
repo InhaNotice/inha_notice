@@ -5,11 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
-/// **FontConstant**
-/// 이 클래스는 폰트와 관련된 상수를 정의하는 추상 클래스입니다.
-abstract class FontConstant {
-  static const String kDefaultFont = 'Pretendard';
+/// **IdentifierConstants**
+/// 이 클래스는 식별자와 관련된 상수를 정의하는 추상 클래스입니다.
+abstract class IdentifierConstants {
+  static const String kUnknownId = 'unknownId';
 }
