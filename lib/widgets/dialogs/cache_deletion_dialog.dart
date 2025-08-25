@@ -17,7 +17,7 @@ import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 class CacheDeletionDialog extends StatefulWidget {
   const CacheDeletionDialog({

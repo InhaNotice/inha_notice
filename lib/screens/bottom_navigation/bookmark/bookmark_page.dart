@@ -14,11 +14,11 @@ import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
+import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/refresh_headers/bookmark_refresh_header.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

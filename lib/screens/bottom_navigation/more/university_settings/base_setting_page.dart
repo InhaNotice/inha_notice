@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/theme/theme.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_app_bar.dart';
+import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 
 abstract class BaseSettingPage extends StatefulWidget {
   const BaseSettingPage({super.key});

@@ -18,7 +18,7 @@ import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 /// **ThemeModeSelectionDialog**
 /// 테마 모드를 선택할 수 있는 다이얼로그입니다.

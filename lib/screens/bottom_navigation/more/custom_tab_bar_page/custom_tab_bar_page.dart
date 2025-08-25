@@ -19,8 +19,8 @@ import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/c
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_selected_list.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_action_app_bar.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/app_bars/themed_action_app_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 /// **CustomTabBarPage**
 /// 사용자는 나만의 탭 구성으로 원하는 공지사항을 볼 수 있습니다.

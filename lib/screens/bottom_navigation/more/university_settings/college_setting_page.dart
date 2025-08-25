@@ -9,13 +9,13 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/utils/university_utils/college_utils.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
-import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
+import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 class CollegeSettingPage extends BaseSettingPage {
