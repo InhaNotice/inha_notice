@@ -8,8 +8,8 @@
  * Latest Updated Date: 2025-08-23
  */
 
-/// **StatusCodeConstant**
+/// **StatusCodeConstants**
 /// 이 클래스는 HTTP 상태코드와 관련된 상수를 정의하는 추상 클래스입니다.
-abstract class StatusCodeConstant {
+abstract class StatusCodeConstants {
   static const int kStatusOkay = 200;
 }

@@ -11,8 +11,8 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/core/constants/identifier_constant.dart';
-import 'package:inha_notice/core/constants/status_code_constant.dart';
+import 'package:inha_notice/core/constants/identifier_constants.dart';
+import 'package:inha_notice/core/constants/status_code_constants.dart';
 import 'package:inha_notice/selectors/search_tag_selectors.dart';
 
 /// **SearchSraper**
@@ -36,7 +36,7 @@ class SearchScraper {
           '$baseUrl?query=$query&collection=$collectionType&startCount=$startCount&sort=$sortedType';
       final response = await http.get(Uri.parse(connectUrl));
 
-      if (response.statusCode == StatusCodeConstant.kStatusOkay) {
+      if (response.statusCode == StatusCodeConstants.kStatusOkay) {
         final document = html_parser.parse(response.body);
 
         // 검색된 공지사항 가져오기
@@ -137,13 +137,13 @@ class SearchScraper {
   String makeUniqueNoticeId(String postUrl) {
     // postUrl이 빈 문자열인지 확인합니다.
     if (postUrl.isEmpty) {
-      return IdentifierConstant.kUnknownId;
+      return IdentifierConstants.kUnknownId;
     }
 
     final List<String> postUrlList = postUrl.split('/');
     // postUrlList가 정해진 규격을 따르는지 확인합니다.
     if (postUrlList.length <= 6) {
-      return IdentifierConstant.kUnknownId;
+      return IdentifierConstants.kUnknownId;
     }
 
     final String provider = postUrlList[4];

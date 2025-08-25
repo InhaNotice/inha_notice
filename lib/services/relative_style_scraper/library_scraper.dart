@@ -12,7 +12,7 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/core/constants/status_code_constant.dart';
+import 'package:inha_notice/core/constants/status_code_constants.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 
 /// **LibraryScraper**
@@ -73,7 +73,7 @@ class LibraryScraper extends BaseRelativeStyleNoticeScraper {
     var response = await http.get(connectUrl);
     List<Map<String, String>> results = [];
 
-    if (response.statusCode == StatusCodeConstant.kStatusOkay) {
+    if (response.statusCode == StatusCodeConstants.kStatusOkay) {
       final data = json.decode(response.body);
       final List<dynamic> notices = data["data"]?["list"];
       for (var notice in notices) {

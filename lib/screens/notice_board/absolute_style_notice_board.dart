@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/keyword_search_option_constant.dart';
-import 'package:inha_notice/core/constants/page_constant.dart';
+import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
+import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
@@ -73,7 +73,7 @@ class _AbsoluteStyleNoticeBoardState
   bool _isPullRefreshing = false;
   bool _isKeywordSearchSelected = false;
   bool _isKeywordSearchableNoticeType = false;
-  String _selectedKeywordSearchOption = KeywordSearchOptionConstant.kTitle;
+  String _selectedKeywordSearchOption = KeywordSearchOptionConstants.kTitle;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _AbsoluteStyleNoticeBoardState
   Future<void> initialize() async {
     try {
       await _initializeScraper();
-      await _loadNotices(PageConstant.kInitialAbsolutePage);
+      await _loadNotices(PageConstants.kInitialAbsolutePage);
     } catch (e) {
       _logger.e('NoticeBoard 초기화 오류: $e');
     }
@@ -129,7 +129,7 @@ class _AbsoluteStyleNoticeBoardState
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (page == PageConstant.kInitialAbsolutePage) {
+        if (page == PageConstants.kInitialAbsolutePage) {
           final bool isKeywordSearch =
               (searchColumn != null && searchColumn.isNotEmpty) ||
                   (searchWord != null && searchWord.isNotEmpty);
@@ -150,7 +150,7 @@ class _AbsoluteStyleNoticeBoardState
 
   void _loadNoticesByKeyword() async {
     await _loadNotices(
-      PageConstant.kInitialAbsolutePage,
+      PageConstants.kInitialAbsolutePage,
       _selectedKeywordSearchOption,
       _keywordSearchController.text,
     );
@@ -175,7 +175,7 @@ class _AbsoluteStyleNoticeBoardState
   void _refreshNotices() async {
     _isPullRefreshing = true;
     try {
-      await _loadNotices(PageConstant.kInitialAbsolutePage);
+      await _loadNotices(PageConstants.kInitialAbsolutePage);
       _refreshController.refreshCompleted();
       _deactivateKeywordSearch();
     } finally {

@@ -11,7 +11,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:inha_notice/core/constants/app_theme_constant.dart';
+import 'package:inha_notice/core/constants/app_theme_constants.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/firebase/firebase_options.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
@@ -119,10 +119,10 @@ Future<void> _initializeThemeSetting() async {
         .getPreference(SharedPrefKeys.kUserThemeSetting);
     ThemeMode themeMode;
     switch (userThemeSetting) {
-      case AppThemeConstant.kLight:
+      case AppThemeConstants.kLight:
         themeMode = ThemeMode.light;
         break;
-      case AppThemeConstant.kDark:
+      case AppThemeConstants.kDark:
         themeMode = ThemeMode.dark;
         break;
       default:

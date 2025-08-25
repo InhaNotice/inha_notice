@@ -9,7 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/page_constant.dart';
+import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
@@ -51,7 +51,7 @@ class _RelativeStyleNoticeBoardState
 
   /// **Refresh 컨트롤러(새로운 공지 불러옴)**
   void _onRefresh() async {
-    await loadNotices(PageConstant.kInitialRelativePage);
+    await loadNotices(PageConstants.kInitialRelativePage);
     _refreshController.refreshCompleted();
   }
 
@@ -65,7 +65,7 @@ class _RelativeStyleNoticeBoardState
   Future<void> initialize() async {
     try {
       await initializeScraper();
-      await loadNotices(PageConstant.kInitialRelativePage); // 공지사항 로드
+      await loadNotices(PageConstants.kInitialRelativePage); // 공지사항 로드
     } catch (e) {
       // 에러 처리
       debugPrint('Initialization error: $e');
@@ -97,7 +97,7 @@ class _RelativeStyleNoticeBoardState
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (offset == PageConstant.kInitialRelativePage && pages.isEmpty) {
+        if (offset == PageConstants.kInitialRelativePage && pages.isEmpty) {
           pages = List<Map<String, dynamic>>.from(notices['pages']);
         }
         // offset을 통한 현재 페이지로 변환

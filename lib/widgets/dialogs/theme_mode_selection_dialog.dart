@@ -12,7 +12,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/app_theme_constant.dart';
+import 'package:inha_notice/core/constants/app_theme_constants.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/main.dart';
@@ -43,10 +43,10 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
 
       // 글로벌 themeModeNotifier 업데이트
       switch (selectedValue) {
-        case AppThemeConstant.kLight:
+        case AppThemeConstants.kLight:
           themeModeNotifier.value = ThemeMode.light;
           break;
-        case AppThemeConstant.kDark:
+        case AppThemeConstants.kDark:
           themeModeNotifier.value = ThemeMode.dark;
           break;
         default:
@@ -95,7 +95,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
         ),
         actions: [
           CupertinoDialogAction(
-            onPressed: () => _setThemeMode(AppThemeConstant.kSystem),
+            onPressed: () => _setThemeMode(AppThemeConstants.kSystem),
             child: Text(
               '시스템 설정',
               style: TextStyle(
@@ -107,9 +107,9 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             ),
           ),
           CupertinoDialogAction(
-            onPressed: () => _setThemeMode(AppThemeConstant.kLight),
+            onPressed: () => _setThemeMode(AppThemeConstants.kLight),
             child: Text(
-              AppThemeConstant.kLight,
+              AppThemeConstants.kLight,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -119,9 +119,9 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             ),
           ),
           CupertinoDialogAction(
-            onPressed: () => _setThemeMode(AppThemeConstant.kDark),
+            onPressed: () => _setThemeMode(AppThemeConstants.kDark),
             child: Text(
-              AppThemeConstant.kDark,
+              AppThemeConstants.kDark,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -161,9 +161,9 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
         actionsAlignment: MainAxisAlignment.center,
         actions: [
           TextButton(
-            onPressed: () => _setThemeMode(AppThemeConstant.kSystem),
+            onPressed: () => _setThemeMode(AppThemeConstants.kSystem),
             child: Text(
-              AppThemeConstant.kSystem,
+              AppThemeConstants.kSystem,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -174,9 +174,9 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             ),
           ),
           TextButton(
-            onPressed: () => _setThemeMode(AppThemeConstant.kLight),
+            onPressed: () => _setThemeMode(AppThemeConstants.kLight),
             child: Text(
-              AppThemeConstant.kLight,
+              AppThemeConstants.kLight,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,
@@ -187,9 +187,9 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
             ),
           ),
           TextButton(
-            onPressed: () => _setThemeMode(AppThemeConstant.kDark),
+            onPressed: () => _setThemeMode(AppThemeConstants.kDark),
             child: Text(
-              AppThemeConstant.kDark,
+              AppThemeConstants.kDark,
               style: TextStyle(
                 fontFamily: Font.kDefaultFont,
                 fontSize: 16,

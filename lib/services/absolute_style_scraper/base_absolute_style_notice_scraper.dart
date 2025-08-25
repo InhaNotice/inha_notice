@@ -9,7 +9,7 @@
  */
 
 import 'package:html/dom.dart';
-import 'package:inha_notice/core/constants/identifier_constant.dart';
+import 'package:inha_notice/core/constants/identifier_constants.dart';
 
 /// **BaseAbsoluteStyleNoticeScraper**
 /// 이 클래스는 Absolute Style의 공지사항을 크롤링을 정의하는 추상 클래스입니다.
@@ -27,13 +27,13 @@ abstract class BaseAbsoluteStyleNoticeScraper {
   String makeUniqueNoticeId(String postUrl) {
     // postUrl이 빈 문자열인지 확인
     if (postUrl.isEmpty) {
-      return IdentifierConstant.kUnknownId;
+      return IdentifierConstants.kUnknownId;
     }
 
     final List<String> postUrlList = postUrl.split('/');
     // postUrlList가 정해진 규격을 따르는지 확인
     if (postUrlList.length <= 4) {
-      return IdentifierConstant.kUnknownId;
+      return IdentifierConstants.kUnknownId;
     }
 
     final String provider = postUrlList[2];

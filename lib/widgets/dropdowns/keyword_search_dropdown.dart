@@ -9,7 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/keyword_search_option_constant.dart';
+import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
 import 'package:inha_notice/fonts/font.dart';
 import 'package:inha_notice/themes/theme.dart';
 
@@ -62,7 +62,7 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
               ),
               items: [
                 DropdownMenuItem<String>(
-                  value: KeywordSearchOptionConstant.kTitle,
+                  value: KeywordSearchOptionConstants.kTitle,
                   child: Text(
                     '제목',
                     style: TextStyle(
@@ -75,7 +75,7 @@ class _KeywordSearchDropdownState extends State<KeywordSearchDropdown> {
                   ),
                 ),
                 DropdownMenuItem<String>(
-                  value: KeywordSearchOptionConstant.kWriter,
+                  value: KeywordSearchOptionConstants.kWriter,
                   child: Text(
                     '작성자',
                     style: TextStyle(

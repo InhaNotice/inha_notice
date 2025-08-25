@@ -8,9 +8,10 @@
  * Latest Updated Date: 2025-08-23
  */
 
-/// **PageConstant**
-/// 이 클래스는 페이지와 관련된 상수를 정의하는 추상 클래스입니다.
-abstract class PageConstant {
-  static const int kInitialAbsolutePage = 1;
-  static const int kInitialRelativePage = 0;
+/// **StringConstants**
+/// 이 클래스는 문자열과 관련된 상수를 정의하는 추상 클래스입니다.
+abstract class StringConstants {
+  static const String kEmptyString = '';
+  static const String kDefaultSortedType = 'DATE';
+  static const String kEUCKR = 'euc-kr';
 }
