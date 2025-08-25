@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/widgets/webview//web_navigator.dart';
 
 /// **MoreWebNavigationTile**

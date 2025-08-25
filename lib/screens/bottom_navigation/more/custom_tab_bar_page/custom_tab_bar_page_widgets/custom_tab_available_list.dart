@@ -10,8 +10,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list.dart';
-import 'package:inha_notice/themes/theme.dart';
 
 /// **CustomTabAvailableList**
 /// 커스텀 된 추가 가능한 탭 리스트를 출력합니다.

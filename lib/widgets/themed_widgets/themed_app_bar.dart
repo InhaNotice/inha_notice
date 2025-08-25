@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 /// **ThemedAppBar**
 /// 이 클래스는 화이트/다크모드가 적용된 AppBar 클래스입니다.

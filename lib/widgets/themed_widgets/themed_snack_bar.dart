@@ -12,7 +12,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 class ThemedSnackBar {
   static void succeedSnackBar(BuildContext context, String message) {

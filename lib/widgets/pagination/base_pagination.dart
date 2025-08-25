@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 /// **BasePagination**
 /// 이 클래스는 페이지네이션을 정의하는 추상 클래스입니다.

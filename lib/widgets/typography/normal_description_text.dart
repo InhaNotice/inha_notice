@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 /// **NormalDescriptionText**
 /// 이 클래스는 더보기 페이지의 제목 타일을 정의하는 클래스입니다.

@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 /// **CustomTabPreview**
 /// 현재 설정된 나만의 탭 구성 미리보기를 제공합니다.

@@ -12,9 +12,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
-import 'package:inha_notice/themes/theme.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});

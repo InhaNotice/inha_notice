@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 /// **ThemedActionAppBar**
 /// Action 위젯이 포함된 테마가 설정된 AppBar를 정의합니다.

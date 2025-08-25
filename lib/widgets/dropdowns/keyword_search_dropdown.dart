@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/themes/theme.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 
 class KeywordSearchDropdown extends StatefulWidget {
   final String value;

@@ -15,8 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/app_theme_constants.dart';
 import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/main.dart';
-import 'package:inha_notice/themes/theme.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/themed_widgets/themed_snack_bar.dart';
 
