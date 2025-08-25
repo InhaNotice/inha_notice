@@ -20,6 +20,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/university_settings/c
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/screens/notice_board/no_search_result.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/screens/pagination/absolute_style_pagination.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
@@ -423,27 +424,31 @@ class _AbsoluteStyleNoticeBoardState
                     onRefresh: _refreshNotices,
                     enablePullDown: true,
                     header: const NoticeRefreshHeader(),
-                    child: ListView.builder(
-                      // 중요 공지와 일반 공지 중 하나만 선택이 가능
-                      itemCount: _isHeadlineSelected
-                          ? notices['headline'].length
-                          : notices['general'].length,
-                      itemBuilder: (context, index) {
-                        final notice = _isHeadlineSelected
-                            ? notices['headline'][index]
-                            : notices['general'][index];
-                        final isRead = isNoticeRead(notice['id'].toString());
-                        final isBookmarked =
-                            isNoticeBookmarked(notice['id'].toString());
-                        return NoticeListTile(
-                          notice: notice,
-                          isRead: isRead,
-                          isBookmarked: isBookmarked,
-                          markNoticeAsRead: markNoticeAsRead,
-                          toggleBookmark: toggleBookmark,
-                        );
-                      },
-                    ),
+                    // 일반 공지의 결과가 없는 경우, NoSearchResult 화면을 보여줌
+                    child: (notices['general'].isEmpty)
+                        ? NoSearchResult()
+                        : ListView.builder(
+                            // 중요 공지와 일반 공지 중 하나만 선택이 가능
+                            itemCount: _isHeadlineSelected
+                                ? notices['headline'].length
+                                : notices['general'].length,
+                            itemBuilder: (context, index) {
+                              final notice = _isHeadlineSelected
+                                  ? notices['headline'][index]
+                                  : notices['general'][index];
+                              final isRead =
+                                  isNoticeRead(notice['id'].toString());
+                              final isBookmarked =
+                                  isNoticeBookmarked(notice['id'].toString());
+                              return NoticeListTile(
+                                notice: notice,
+                                isRead: isRead,
+                                isBookmarked: isBookmarked,
+                                markNoticeAsRead: markNoticeAsRead,
+                                toggleBookmark: toggleBookmark,
+                              );
+                            },
+                          ),
                   ),
       ),
     );
