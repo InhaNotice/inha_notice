@@ -14,7 +14,7 @@ import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
-import 'package:inha_notice/widgets/loading/blue_loading_indicator.dart';
+import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
