@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/widgets/search/search_result_page.dart';
+import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 
 class TopicsItem extends StatelessWidget {
   final int rank;
