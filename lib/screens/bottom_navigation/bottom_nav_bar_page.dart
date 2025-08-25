@@ -16,7 +16,7 @@ import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
-import 'package:inha_notice/widgets/webview/web_navigator.dart';
+import 'package:inha_notice/screens/webview/web_navigator.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});

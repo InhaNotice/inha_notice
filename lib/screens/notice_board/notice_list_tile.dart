@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/theme/theme.dart';
-import 'package:inha_notice/widgets/webview/web_navigator.dart';
+import 'package:inha_notice/screens/webview/web_navigator.dart';
 
 /// **NoticeListTile**
 /// 이 클래스는 공지사항 하나에 대한 정보를 출력하는 클래스입니다.
