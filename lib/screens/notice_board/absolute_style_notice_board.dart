@@ -20,6 +20,7 @@ import 'package:inha_notice/screens/bottom_navigation/more/university_settings/c
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
+import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/inha_design_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
@@ -29,7 +30,6 @@ import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.da
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/dropdowns/keyword_search_dropdown.dart';
 import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
-import 'package:inha_notice/widgets/notice/notice_list_tile.dart';
 import 'package:inha_notice/widgets/pagination/absolute_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/textfields/keyword_search_textfield.dart';
