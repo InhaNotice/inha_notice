@@ -60,3 +60,9 @@ flutter:
     - family: TossFaceFontMac
       fonts:
         - asset: assets/fonts/TossFaceFontMac.ttf
+    - family: NanumGothic
+      fonts:
+        - asset: assets/fonts/NanumGothic.otf
+        - asset: assets/fonts/NanumGothicBold.otf
+        - asset: assets/fonts/NanumGothicExtraBold.otf
+        - asset: assets/fonts/NanumGothicLight.otf

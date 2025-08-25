@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 /// **Font**
@@ -13,6 +13,7 @@
 abstract class Fonts {
   static const String kDefaultFont = 'Pretendard';
   static const String kTossFaceFontMac = 'TossFaceFontMac';
+  static const String kNanumGothic = 'NanumGothic';
   static const String kEmptyString = '';
   static const int kInitialPage = 1;
 }
