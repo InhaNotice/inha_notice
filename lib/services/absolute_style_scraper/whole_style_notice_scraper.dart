@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants/status_code_constants.dart';
-import 'package:inha_notice/selectors/whole_tag_selectors.dart';
+import 'package:inha_notice/core/selectors/whole_tag_selectors.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
 /// **WholeNoticeScraper**

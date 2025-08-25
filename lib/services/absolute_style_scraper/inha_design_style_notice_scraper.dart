@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants//status_code_constants.dart';
 import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
-import 'package:inha_notice/selectors/inha_design_style_tag_selectors.dart';
+import 'package:inha_notice/core/selectors/inha_design_style_tag_selectors.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
 /// **InhaDesignStyleNoticeScraper**

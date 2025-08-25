@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-25
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,7 +13,7 @@ import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/status_code_constants.dart';
-import 'package:inha_notice/selectors/search_tag_selectors.dart';
+import 'package:inha_notice/core/selectors/search_tag_selectors.dart';
 
 /// **SearchSraper**
 /// 이 클래스는 사용자의 입력에 따른 검색 크롤링을 정의하는 클래스입니다.
