@@ -14,10 +14,14 @@ import 'package:inha_notice/core/theme/theme.dart';
 
 class KeywordSearchTextField extends StatefulWidget {
   final TextEditingController controller;
+  final FocusNode focusNode;
   final VoidCallback onSubmitted;
 
   const KeywordSearchTextField(
-      {super.key, required this.controller, required this.onSubmitted});
+      {super.key,
+      required this.controller,
+      required this.focusNode,
+      required this.onSubmitted});
 
   @override
   State<KeywordSearchTextField> createState() => _KeywordSearchTextFieldState();
@@ -31,6 +35,7 @@ class _KeywordSearchTextFieldState extends State<KeywordSearchTextField> {
         duration: Duration(milliseconds: 250),
         curve: Curves.easeInOut,
         child: TextField(
+          focusNode: widget.focusNode,
           cursorColor: Colors.blue,
           controller: widget.controller,
           textInputAction: TextInputAction.search,
