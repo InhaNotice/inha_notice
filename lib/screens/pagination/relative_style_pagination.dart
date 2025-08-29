@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'base_pagination.dart';
@@ -24,9 +24,9 @@ class RelativeStylePagination extends BasePagination {
   });
 
   @override
-  int getRelativePage(Map<String, dynamic> pageData) {
+  int getRelativePage(Map<String, dynamic> pageMeta) {
     return (pageType == 'LIBRARY')
-        ? pageData['offset']
-        : pageData['startCount'];
+        ? pageMeta['offset']
+        : pageMeta['startCount'];
   }
 }

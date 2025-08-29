@@ -5,12 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
+import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
@@ -92,8 +93,9 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       setState(() {
         notices = fetchedNotices;
         // 최초 공지사항 로드시 페이지 리스트 초기화
-        if (startCount == PageConstants.kInitialRelativePage && pages.isEmpty) {
-          pages = List<Map<String, dynamic>>.from(notices['pages']);
+        if (startCount == PageConstants.kInitialRelativePage &&
+            pages['pageMetas'].isEmpty) {
+          pages = Pages.from(notices['pages']);
         }
         // offset을 통한 현재 페이지로 변환
         currentPage = (startCount ~/ 10) + 1;
@@ -197,7 +199,7 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
   @override
   Widget buildFooter() {
     // 중요공지 옵션일 경우 페이지 버튼을 숨기기
-    if (pages.isEmpty) return const SizedBox();
+    if (pages['pageMetas'].isEmpty) return const SizedBox();
 
     // SearchResultPage가 아닌 경우 padding을 추가하지 않음
     if (!widget.isSearchResultPage) {

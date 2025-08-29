@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
@@ -33,8 +34,12 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
 
   void toggleOption(String option);
 
-  Map<String, dynamic> notices = {'headline': [], 'general': [], 'pages': []};
-  List<Map<String, dynamic>> pages = [];
+  Map<String, dynamic> notices = {
+    'headline': [],
+    'general': [],
+    'pages': createPages(),
+  };
+  Pages pages = createPages();
 
   bool isLoading = true;
   int currentPage = PageConstants.kInitialAbsolutePage;

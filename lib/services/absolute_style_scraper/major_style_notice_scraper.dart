@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,6 +13,7 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants/status_code_constants.dart';
 import 'package:inha_notice/core/selectors/major_style_tag_selectors.dart';
+import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
 /// **MajorStyleNoticeScraper**
@@ -163,9 +164,9 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  List<Map<String, dynamic>> fetchPages(document,
-      [String? searchColumn, String? searchWord]) {
-    final List<Map<String, dynamic>> results = [];
+  Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
+    final Pages results = createPages();
+
     final pages = document.querySelector(PageTagSelectors.kPageBoard);
     if (pages == null) return results;
     final lastPageHref =
@@ -177,13 +178,7 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
     final lastPage = int.parse(match?.group(1) ?? '1');
     for (int i = 1; i <= lastPage; i++) {
       final int page = i;
-      final bool isCurrent = (i == 1) ? true : false;
-      results.add({
-        'page': page,
-        'isCurrent': isCurrent,
-        'searchColumn': searchColumn,
-        'searchWord': searchWord
-      });
+      results['pageMetas'].add({'page': page});
     }
     return results;
   }
