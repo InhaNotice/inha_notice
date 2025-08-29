@@ -153,6 +153,10 @@ class _AbsoluteStyleNoticeBoardState
   }
 
   void _loadNoticesByKeyword() async {
+    // 중요 옵션이 선택된 경우, 토글을 일반 옵션으로 변경함
+    if (_isHeadlineSelected) {
+      toggleOption('general');
+    }
     await _loadNotices(
       PageConstants.kInitialAbsolutePage,
       _selectedKeywordSearchOption,
