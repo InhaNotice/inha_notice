@@ -16,9 +16,9 @@ import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/status_code_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
-import 'package:inha_notice/core/selectors/oceanography_style_tag_selectors.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
+import 'package:inha_notice/utils/selectors/oceanography_style_tag_selectors.dart';
 
 /// **OceanographyStyleNoticeScraper**
 /// 인하대학교 해양과학과의 공지사항을 크롤링하여 반환합니다.
