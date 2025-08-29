@@ -105,7 +105,7 @@ class LibraryScraper extends BaseRelativeStyleNoticeScraper {
 
   @override
   Pages fetchPages([String? searchColumn, String? searchWord]) {
-    final Pages results = createPages();
+    final Pages results = createPages(searchColumn, searchWord);
 
     for (int i = 1; i <= 10; i++) {
       final int page = i;

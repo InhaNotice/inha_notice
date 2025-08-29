@@ -165,7 +165,7 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
   @override
   Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
-    final Pages results = createPages();
+    final Pages results = createPages(searchColumn, searchWord);
 
     final pages = document.querySelector(PageTagSelectors.kPageBoard);
     if (pages == null) return results;

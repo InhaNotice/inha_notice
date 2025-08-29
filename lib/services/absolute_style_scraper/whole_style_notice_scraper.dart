@@ -161,7 +161,7 @@ class WholeStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   // 페이지 번호 가져오는 함수
   @override
   Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
-    final Pages results = createPages();
+    final Pages results = createPages(searchColumn, searchWord);
 
     final pages = document.querySelector(PageTagSelectors.kPageBoard);
     if (pages == null) return results;

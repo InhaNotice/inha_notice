@@ -116,7 +116,7 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
   @override
   Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
-    final Pages results = createPages();
+    final Pages results = createPages(searchColumn, searchWord);
 
     final int lastPage = 16;
     for (int i = 1; i <= lastPage; i++) {

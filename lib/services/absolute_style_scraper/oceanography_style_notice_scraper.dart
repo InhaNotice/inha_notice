@@ -190,7 +190,7 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   @override
   Pages fetchPages(Document document,
       [String? searchColumn, String? searchWord]) {
-    final Pages results = createPages();
+    final Pages results = createPages(searchColumn, searchWord);
 
     final tableElements =
         document.querySelectorAll(OceanographyStyleTagSelectors.kNoticeBoard);

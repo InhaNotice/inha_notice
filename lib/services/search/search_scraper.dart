@@ -107,8 +107,9 @@ class SearchScraper {
   }
 
   /// **응답 객체를 통해 마지막 페이지 분석 후 페이지네이션 리턴**
-  Pages fetchPages(document) {
-    final Pages results = createPages();
+  Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
+    final Pages results = createPages(searchColumn, searchWord);
+
     final pages = document.querySelectorAll(PageTagSelectors.kPageBoard);
     if (pages.isEmpty) return results;
 
