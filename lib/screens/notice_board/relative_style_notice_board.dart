@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
@@ -97,8 +98,9 @@ class _RelativeStyleNoticeBoardState
       if (!mounted) return;
       setState(() {
         notices = fetchedNotices;
-        if (offset == PageConstants.kInitialRelativePage && pages.isEmpty) {
-          pages = List<Map<String, dynamic>>.from(notices['pages']);
+        if (offset == PageConstants.kInitialRelativePage &&
+            pages['pageMetas'].isEmpty) {
+          pages = Pages.from(notices['pages']);
         }
         // offset을 통한 현재 페이지로 변환
         currentPage = (offset ~/ 10) + 1;
@@ -197,7 +199,9 @@ class _RelativeStyleNoticeBoardState
 
   @override
   Widget buildFooter() {
-    if (pages.isEmpty || _isHeadlineSelected) return const SizedBox();
+    if (pages['pageMetas'].isEmpty || _isHeadlineSelected) {
+      return const SizedBox();
+    }
     return RelativeStylePagination(
       pageType: 'LIBRARY',
       pages: pages,

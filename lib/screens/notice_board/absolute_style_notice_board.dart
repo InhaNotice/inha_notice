@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/theme/theme.dart';
+import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
@@ -135,8 +136,10 @@ class _AbsoluteStyleNoticeBoardState
               (searchColumn != null && searchColumn.isNotEmpty) ||
                   (searchWord != null && searchWord.isNotEmpty);
 
-          if (pages.isEmpty || isKeywordSearch || _isPullRefreshing) {
-            pages = List<Map<String, dynamic>>.from(notices['pages']);
+          if (pages['pageMetas'].isEmpty ||
+              isKeywordSearch ||
+              _isPullRefreshing) {
+            pages = Pages.from(notices['pages']);
           }
         }
         currentPage = page;
@@ -458,7 +461,9 @@ class _AbsoluteStyleNoticeBoardState
   @override
   Widget buildFooter() {
     // 페이지 리스트가 초기화 되지 않았을 때
-    if (pages.isEmpty || _isHeadlineSelected) return const SizedBox();
+    if (pages['pageMetas'].isEmpty || _isHeadlineSelected) {
+      return const SizedBox();
+    }
     // 페이지 리스트가 초기화 되었을 때
     return AbsoluteStylePagination(
       pages: pages,

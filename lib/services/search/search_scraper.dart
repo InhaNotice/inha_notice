@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/status_code_constants.dart';
 import 'package:inha_notice/core/selectors/search_tag_selectors.dart';
+import 'package:inha_notice/models/pages_model.dart';
 
 /// **SearchSraper**
 /// 이 클래스는 사용자의 입력에 따른 검색 크롤링을 정의하는 클래스입니다.
@@ -106,8 +107,8 @@ class SearchScraper {
   }
 
   /// **응답 객체를 통해 마지막 페이지 분석 후 페이지네이션 리턴**
-  List<Map<String, dynamic>> fetchPages(document) {
-    final List<Map<String, dynamic>> results = [];
+  Pages fetchPages(document) {
+    final Pages results = createPages();
     final pages = document.querySelectorAll(PageTagSelectors.kPageBoard);
     if (pages.isEmpty) return results;
 
@@ -126,9 +127,7 @@ class SearchScraper {
       final int page = i;
       // SearchPage는 Relative style이라 상댓값 사용
       final int startCount = (i - 1) * 10;
-      final bool isCurrent = (i == 1) ? true : false;
-      results.add(
-          {'page': page, 'startCount': startCount, 'isCurrent': isCurrent});
+      results['pageMetas'].add({'page': page, 'startCount': startCount});
     }
     return results;
   }

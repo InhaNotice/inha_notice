@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:charset_converter/charset_converter.dart';
@@ -17,6 +17,7 @@ import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/status_code_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/core/selectors/oceanography_style_tag_selectors.dart';
+import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 
 /// **OceanographyStyleNoticeScraper**
@@ -52,7 +53,7 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
         final generalNotices = fetchGeneralNotices(document);
 
         // 페이지 번호 가져오기
-        final List<Map<String, dynamic>> pages = fetchPages(document);
+        final pages = fetchPages(document);
 
         return {
           'headline': headlineNotices,
@@ -187,9 +188,9 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   }
 
   @override
-  List<Map<String, dynamic>> fetchPages(Document document,
+  Pages fetchPages(Document document,
       [String? searchColumn, String? searchWord]) {
-    final List<Map<String, dynamic>> results = [];
+    final Pages results = createPages();
 
     final tableElements =
         document.querySelectorAll(OceanographyStyleTagSelectors.kNoticeBoard);
@@ -211,11 +212,7 @@ class OceanographyStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
     for (int i = 1; i <= lastPageNum; i++) {
       final int page = i;
-      final bool isCurrent = (i == 1) ? true : false;
-      results.add({
-        'page': page,
-        'isCurrent': isCurrent,
-      });
+      results['pageMetas'].add({'page': page});
     }
     return results;
   }

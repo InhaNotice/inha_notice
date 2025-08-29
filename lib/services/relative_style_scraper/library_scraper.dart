@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'dart:convert';
@@ -13,6 +13,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants/status_code_constants.dart';
+import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 
 /// **LibraryScraper**
@@ -103,18 +104,13 @@ class LibraryScraper extends BaseRelativeStyleNoticeScraper {
   }
 
   @override
-  List<Map<String, dynamic>> fetchPages() {
-    final List<Map<String, dynamic>> results = [];
+  Pages fetchPages([String? searchColumn, String? searchWord]) {
+    final Pages results = createPages();
 
     for (int i = 1; i <= 10; i++) {
       final int page = i;
       final int offset = ((i - 1) * 10);
-      final bool isCurrent = (i == 1) ? true : false;
-      results.add({
-        'page': page,
-        'offset': offset,
-        'isCurrent': isCurrent,
-      });
+      results['pageMetas'].add({'page': page, 'offset': offset});
     }
     return results;
   }

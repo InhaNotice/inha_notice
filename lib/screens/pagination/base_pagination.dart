@@ -5,17 +5,18 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-08-29
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/theme/theme.dart';
+import 'package:inha_notice/models/pages_model.dart';
 
 /// **BasePagination**
 /// 이 클래스는 페이지네이션을 정의하는 추상 클래스입니다.
 abstract class BasePagination extends StatelessWidget {
-  final List<Map<String, dynamic>> pages;
+  final Pages pages;
   final int currentPage;
   final Function(int, [String?, String?]) loadNotices;
 
@@ -28,7 +29,7 @@ abstract class BasePagination extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (pages.isEmpty) {
+    if (pages['pageMetas'].isEmpty) {
       return const SizedBox.shrink();
     }
 
@@ -44,12 +45,12 @@ abstract class BasePagination extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: pages.map<Widget>((pageData) {
-            final int pageNumber = pageData['page'];
+          children: pages['pageMetas'].map<Widget>((pageMeta) {
+            final String? searchColumn = pages['searchOptions']['searchColumn'];
+            final String? searchWord = pages['searchOptions']['searchWord'];
+            final int pageNumber = pageMeta['page'];
             final bool isCurrentPage = (pageNumber == currentPage);
-            final String? searchColumn = pageData['searchColumn'];
-            final String? searchWord = pageData['searchWord'];
-            final int relativePage = getRelativePage(pageData);
+            final int relativePage = getRelativePage(pageMeta);
 
             return TextButton(
               style: TextButton.styleFrom(
@@ -80,5 +81,5 @@ abstract class BasePagination extends StatelessWidget {
   }
 
   /// **각 서브 클래스에서 페이지 계산 방식이 다르므로 오버라이딩 필수**
-  int getRelativePage(Map<String, dynamic> pageData);
+  int getRelativePage(Map<String, dynamic> pageMeta);
 }
