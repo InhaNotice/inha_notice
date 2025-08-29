@@ -164,7 +164,9 @@ class _AbsoluteStyleNoticeBoardState
     setState(() {
       _isKeywordSearchSelected = true;
     });
-    Future.microtask(() => _searchFocusNode.requestFocus());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _searchFocusNode.requestFocus();
+    });
   }
 
   void _deactivateKeywordSearch() {
@@ -349,6 +351,7 @@ class _AbsoluteStyleNoticeBoardState
             const SizedBox(width: 6),
             KeywordSearchTextField(
               controller: _keywordSearchController,
+              focusNode: _searchFocusNode,
               onSubmitted: _loadNoticesByKeyword,
             ),
           ],
