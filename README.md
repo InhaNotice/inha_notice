@@ -51,6 +51,74 @@ In total, the app supports over **100 announcement categories**, ensuring that s
 - **iOS** (iPhone, iPad, Mac): [Download on the App Store](https://apps.apple.com/app/인하공지/id6740850198)
 - **Android**: [Download on Google Play](https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&pcampaignid=web_share)
 
+## 📂 Project structure
+```bash
+inha_notice
+├─ android # Android build files and configuration
+├─ ios # iOS build files and configuration
+│ 
+├─ lib/
+│  ├─ main.dart # App entry point
+│  ├─ core/ # Core settings and resources
+│  │  ├─ constants/
+│  │  ├─ font/ 
+│  │  ├─ keys/
+│  │  └─ theme/
+│  ├─ firebase/ # Firebase 
+│  ├─ models/ # Data model definitions
+│  ├─ screens/ # App screens (pages)
+│  │  ├─ bottom_navigation/ # Bottom navigation bar (Home, Search, Bookmark, More)
+│  │  │  ├─ bookmark/ # Bookmark (saved notice) page
+│  │  │  ├─ home/ # Home page (aggregated notices)
+│  │  │  ├─ more/ # More (settings and utilities) page
+│  │  │  │  ├─ more_page.dart # Main 'More' page
+│  │  │  │  ├─ cache_deletetion/ # Cache deletion feature widget
+│  │  │  │  ├─ custom_license/ # License page
+│  │  │  │  ├─ custom_tab_bar_page/ # 'My Tabs' setup page
+│  │  │  │  │  ├─ custom_tab_bar_page.dart
+│  │  │  │  │  └─ custom_tab_bar_page_widgets/
+│  │  │  │  ├─ more_page_titles/ # Menu item widgets for 'More' page
+│  │  │  │  │  ├─ more_navigation_tile.dart
+│  │  │  │  │  ├─ more_non_navigation_tile.dart
+│  │  │  │  │  ├─ more_title_tile.dart
+│  │  │  │  │  └─ more_web_navigation_tile.dart
+│  │  │  │  ├─ notification_setting/ # Notice topic notification settings
+│  │  │  │  │  ├─ categories/ # (Major, College, Graduate School, Research/Academic Support, Academic Notices)
+│  │  │  │  │  ├─ notification_major_item.dart
+│  │  │  │  │  ├─ notification_setting_page.dart
+│  │  │  │  │  └─ notification_tile.dart
+│  │  │  │  ├─ theme_preference/ # Theme settings (Light/Dark)
+│  │  │  │  └─ university_settings/ # User's department settings
+│  │  │  └─ search/ # Search page
+│  │  ├─ notice_board/ # Notice board
+│  │  ├─ onboarding/ # Onboarding page
+│  │  ├─ pagination/ # Page navigation button definitions
+│  │  └─ webview/ # WebView screen
+│  ├─ services/ # Scraping and API services
+│  │  ├─ absolute_style_scraper/ 
+│  │  ├─ relative_style_scraper/
+│  │  ├─ search/
+│  │  └─ trending_topics/
+│  ├─ utils/ 
+│  │  ├─ bookmark/ # Bookmark related logic (save, delete)
+│  │  ├─ custom_tab_list_utils/ # 'My Tabs' list management utility
+│  │  ├─ read_notice/ # Notice read status logic
+│  │  ├─ recent_search/ # Recent search query logic
+│  │  ├─ selectors/ # HTML element selector utility (scraping helper)
+│  │  ├─ shared_prefs/ # Shared Preferences management helper
+│  │  └─ university_utils/ # Department/university information utility
+│  └─ widgets/ 
+│     ├─ app_bars/ # Custom App Bar widgets
+│     ├─ buttons/ # Custom Button widgets
+│     ├─ dialogs/ # Custom Dialog widgets
+│     ├─ dropdowns/ # Custom Dropdown widgets
+│     ├─ loading_indicators/ # Loading indicator widgets
+│     ├─ refresh_headers/ # 'Pull-to-refresh' header widgets
+│     ├─ snack_bars/ # Snackbar widgets
+│     ├─ textfields/ # Custom Text Field widgets
+│     └─ texts/ # Custom Text style widgets
+```
+
 ## 🚀 Start
 
 ### 1. Requirements
