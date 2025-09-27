@@ -106,7 +106,7 @@ This project was developed and tested in the following environment.
       - Place the ```key.properties``` file in the ```android/``` directory.
    
    3. **Verify** ```key.properties```: The ```key.properties``` file must contain the following format:
-      ```TOML
+      ```
       storePassword=[your_store_password]
       keyPassword=[your_key_password]
       keyAlias=[your_key_alias]
