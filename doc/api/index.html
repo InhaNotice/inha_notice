@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="inha_notice API docs, for the Dart programming language.">
+  <title>inha_notice - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">inha_notice package</li>
+  </ol>
+  <div class="self-name">inha_notice</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="inha-notice">Inha Notice</h1>
+<div align="center">
+  <img src="public/google_playstore_graphic image.png" alt="inha-notice_introduce-image">
+</div>
+<p>This project is <strong>a notice board application</strong> designed for Inha family community. It helps students <strong>stay on top of important announcements</strong> without the hassle of constantly checking the school website.</p>
+<h2 id="-goal">🎯 Goal</h2>
+<p>Reduce missed notices as much as possible and maximize the benefits students can receive.</p>
+<h2 id="-motivation">✨ Motivation</h2>
+<p>Students often struggle with inconvenient notice checks and tend to miss critical information (e.g., exam schedules, deadlines, events). This project was started to solve that problem through real-time push notifications and easy management tools.</p>
+<h2 id="-key-features">🔑 Key Features</h2>
+<ul>
+<li>
+<p><strong>Real-time Push Alerts</strong>: Get notified the moment a new notice is posted.</p>
+</li>
+<li>
+<p><strong>Custom Tabs</strong>: Personalize your home screen with only the categories you care about.</p>
+</li>
+<li>
+<p><strong>Bookmarking</strong>: Save and organize important notices for later.</p>
+</li>
+<li>
+<p><strong>Academic Calendar Alerts</strong>: Receive reminders for major academic events.</p>
+</li>
+<li>
+<p><strong>Search</strong>: Quickly find specific notices.</p>
+</li>
+<li>
+<p><strong>Light/Dark Mode</strong>: Choose the style that suits you.</p>
+</li>
+</ul>
+<h2 id="-supported-notices">📌 Supported Notices</h2>
+<p>Inha Notice collects and providers announcements from a wide range of univerity sources. including:</p>
+<ul>
+<li><strong>Departments</strong> (80+ across Engineering, Natural Sciences, Business, Education, Social Sciences, Humanities, Medicine, Arts &amp; Sports, Life Sciences, and interdisciplinary programs)</li>
+<li><strong>Colleges</strong> (9 colleges)</li>
+<li><strong>Graduate Schools</strong> (10 schools, including Law, Public Policy, Education, and more)</li>
+<li><strong>University-wide Notices</strong> (e.g., Academic Affairs, Scholarships, Recruitment, International Affairs, Library)</li>
+<li><strong>Special Projects</strong> (e.g., SW-Oriented University Project, Climate Change Response Project)</li>
+</ul>
+<p>In total, the app supports over <strong>100 announcement categories</strong>, ensuring that students can subscribe only to the notices that matter to them.</p>
+<h2 id="-contributors">👥 Contributors</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kim Jun-Ho</td>
+<td>Full-Stack Developer &amp; Lead Product Owner</td>
+</tr>
+</tbody>
+</table>
+<h2 id="-platforms">📱 Platforms</h2>
+<ul>
+<li><strong>iOS</strong>: Released on 02/17/2025.</li>
+<li><strong>Android Beta</strong>: 02/17/2015 ~ 03/24/2025.</li>
+<li><strong>Android Official Release</strong>: 03/03/2025.</li>
+</ul>
+<h2 id="visit-our-notion-page-and-get-the-app">Visit our Notion Page and Get the App.</h2>
+<ul>
+<li><strong>Notion</strong>: <a href="https://inha-notice.notion.site/">Click</a></li>
+<li><strong>iOS</strong> (iPhone, iPad, Mac): <a href="https://apps.apple.com/app/%EC%9D%B8%ED%95%98%EA%B3%B5%EC%A7%80/id6740850198">Download on the App Store</a></li>
+<li><strong>Android</strong>: <a href="https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&amp;pcampaignid=web_share">Download on Google Play</a></li>
+</ul>
+<h2 id="-start">🚀 Start</h2>
+<h3 id="1-requirements">1. Requirements</h3>
+<p>This project was developed and tested in the following environment.</p>
+<ul>
+<li><strong>Flutter v3.27.4</strong></li>
+<li><strong>Dart v3.6.2</strong></li>
+<li><strong>Supported Platforms:</strong> iOS (13.0+), Android (SDK 21+)</li>
+<li><strong>Encoding:</strong> UTF-8 (includes some Korean content)</li>
+</ul>
+<h3 id="2-install">2. Install</h3>
+<h4 id="copy-your-local-environment"><strong>Copy your local environment</strong></h4>
+<ol>
+<li>
+<p><strong>Clone the repository</strong></p>
+<pre class="language-bash"><code class="language-bash">git clone https://github.com/InhaNotice/inha_notice.git
+cd inha_notice
+</code></pre>
+</li>
+<li>
+<p><strong>Install dependancy</strong></p>
+<pre class="language-bash"><code class="language-bash">flutter pub get
+</code></pre>
+</li>
+<li>
+<p><strong>Configure Environment Variables (.env)</strong></p>
+<p>This project uses environment variables to manage API keys and service configurations.</p>
+<ul>
+<li>
+<p><strong>Create the file</strong>: Create a new file named <code>.env</code> in the root directory of the project.</p>
+</li>
+<li>
+<p><strong>Add required keys</strong>: Copy the following structure into your new <code>.env</code> file, replacing the placeholder values with your actual keys:</p>
+<pre class="language-bash"><code class="language-bash"># Firebase Configuration
+FIREBASE_API_KEY = your-api-key
+FIREBASE_APP_ID = your-app-id
+FIREBASE_MESSAGING_SENDER_ID = your-messaging-sender-id
+FIREBASE_PROJECT_ID = your-project-id
+FIREBASE_STORAGE_BUCKET = your-storage-bucket
+FIREBASE_IOS_BUNDLE_ID = your-ios-bundle-id
+
+# Other Keys (e.g., department-specific APIs)
+# Other department-specific keys are requested to the person in charge of this project.
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Android Signing Setup (required for Android)</strong></p>
+<p>To successfully build and release the Android application, you must configure the signing keys. <strong>These files are sensitive and are not included in the repository.</strong></p>
+<ol>
+<li>
+<p><strong>Obtain Key Files</strong>: You will need the following files, which must be obtained from the project maintainer:</p>
+<ul>
+<li><strong>Keystore File</strong> (<code>*.jks</code> or <code>*.keystore</code>)</li>
+<li><strong>Key Properties File</strong> (<code>key.properties</code>) - <i>This file contains the key alias, password, and store password</i></li>
+</ul>
+</li>
+<li>
+<p><strong>Place Key Files</strong>:</p>
+<ul>
+<li>Place the keystore file (e.g., <code>inha_notice_key.jks</code>) in the <code>android/app/</code> directory.</li>
+<li>Place the <code>key.properties</code> file in the <code>android/</code> directory.</li>
+</ul>
+</li>
+<li>
+<p><strong>Verify</strong> <code>key.properties</code>: The <code>key.properties</code> file must contain the following format:</p>
+<pre class="language-TOML"><code class="language-TOML">storePassword=[your_store_password]
+keyPassword=[your_key_password]
+keyAlias=[your_key_alias]
+storeFile=[your_keystore_filename].jks
+</code></pre>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Build and Run the App</strong>
+After configuring all keys, you can run the app on a connected device or build the final package.</p>
+</li>
+</ol>
+<p><strong>Run Locally</strong>:</p>
+<pre class="language-bash"><code class="language-bash">flutter run
+</code></pre>
+<p><strong>Build for Release</strong></p>
+<pre class="language-bash"><code class="language-bash"># For Android (APK/AAB)
+flutter build appbundle --release
+
+# For iOS (Requires XCode)
+flutter build ipa --release
+
+# For Web (Chrome)
+flutter build web
+</code></pre>
+<h2 id="-how-to-use-api">📡 How to Use API</h2>
+<p>This project provides a comprehensive API for seamless integration.
+For detailed instructions and examples, please refer to the <a href="docs/API_USAGE.md">API Usage Guide</a>.</p>
+<h2 id="-project-architecture">🗂️ Project architecture</h2>
+<p><img src="public/architecture.png" alt="project-architecture-image"></p>
+<ol>
+<li>
+<p><strong>Client request</strong></p>
+<ul>
+<li>When a user sends a request, it is routed to the Express.js server through the GCP Load Balancer.</li>
+</ul>
+</li>
+<li>
+<p><strong>GCP Express.js server</strong></p>
+<ul>
+<li>The Express.js server handles CRUD operations by communicating with MySQL Cloud SQL.</li>
+<li>Image processing requests are forwarded to the GPU-powered Flask server.</li>
+</ul>
+</li>
+<li>
+<p><strong>Inha University Artificial Intelligence Convergence Research Center Flask server</strong></p>
+<ul>
+<li>The Flask preprocessing server utilizes the SAM2 model to generate preprocessed garment data.</li>
+<li>The Flask virtual fitting server processes API requests from the Express.js server and interacts with the KlingAI server to generate the final virtual try-on image. This image is then sent back to the GCP Node.js server for storage and management and ultimately delivered to the Flutter application.</li>
+</ul>
+</li>
+<li>
+<p><strong>Note: What is GCP Load Balancer?</strong></p>
+<ul>
+<li>A load balancer distributes incoming client requests across multiple server instances to ensure optimal performance and reliability.</li>
+<li>Our current setup is configured to limit each backend instance's utilization to a maximum of 80%.</li>
+<li>If the utilization exceeds 80%, GCP's autoscaling feature automatically provisions a new server instance to handle the additional load.</li>
+</ul>
+</li>
+</ol>
+<h2 id="-tech-stacks">⚙️ Tech Stacks</h2>
+<ul>
+<li><strong>Front-end</strong>: Flutter</li>
+<li><strong>Back-end</strong>: NestJS, Firebase</li>
+<li><strong>Cloud Provider</strong>: Google Cloud Platform (GCP)
+<ul>
+<li>GCP VM Instances (with Auto-scaling)</li>
+<li>GCP Cloud Load Balancer</li>
+<li>GCP Cloud Build (for CI/CD)</li>
+</ul>
+</li>
+<li><strong>Code Formatting</strong>: Clang-format</li>
+<li><strong>Style Guide</strong>: Google C++ Style Guide (adapted where applicable)</li>
+</ul>
+<h2 id="-how-to-contribute">🧑‍💻 How to contribute</h2>
+<ol>
+<li><strong>Fork this repository</strong></li>
+<li><strong>Create a new branch</strong>
+<pre class="language-bash"><code class="language-bash">git checkout -b feature/your-new-feature-name your-remote-name/feature/your-new-feature-name
+</code></pre>
+</li>
+<li><strong>Commit your change logs</strong>
+<pre class="language-bash"><code class="language-bash">git commit -m "feat: add your-change-logs"
+</code></pre>
+</li>
+<li><strong>Push your branch</strong>
+<pre class="language-bash"><code class="language-bash">git push your-remote-name feature/your-new-feature-name
+</code></pre>
+</li>
+<li><strong>Create a pull request at github</strong></li>
+</ol>
+<h2 id="-licesne">📄 Licesne</h2>
+<p>This project is licensed under the Apache License 2.0. For more details, please refer to the <a href="LICENSE.txt">LICENSE</a> file.</p>
+<h2 id="-questions-or-support">📝 Questions or Support</h2>
+<p>If you have any questions or need support, feel free to open an issue on GitHub or reach out via the following contact methods:</p>
+<ul>
+<li>Email: <a href="mailto:ingong.korea@gmail.com">ingong.korea@gmail.com</a></li>
+<li>GitHub: InhaNotice</li>
+</ul>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="app_theme_constants">
+  <span class="name"><a href="core_constants_app_theme_constants/core_constants_app_theme_constants-library.html">core/constants/app_theme_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="font_constants">
+  <span class="name"><a href="core_constants_font_constants/core_constants_font_constants-library.html">core/constants/font_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="identifier_constants">
+  <span class="name"><a href="core_constants_identifier_constants/core_constants_identifier_constants-library.html">core/constants/identifier_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="keyword_search_option_constants">
+  <span class="name"><a href="core_constants_keyword_search_option_constants/core_constants_keyword_search_option_constants-library.html">core/constants/keyword_search_option_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="page_constants">
+  <span class="name"><a href="core_constants_page_constants/core_constants_page_constants-library.html">core/constants/page_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="status_code_constants">
+  <span class="name"><a href="core_constants_status_code_constants/core_constants_status_code_constants-library.html">core/constants/status_code_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="string_constants">
+  <span class="name"><a href="core_constants_string_constants/core_constants_string_constants-library.html">core/constants/string_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="fonts">
+  <span class="name"><a href="core_font_fonts/core_font_fonts-library.html">core/font/fonts</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="college_keys">
+  <span class="name"><a href="core_keys_college_keys/core_keys_college_keys-library.html">core/keys/college_keys</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_keys">
+  <span class="name"><a href="core_keys_custom_tab_keys/core_keys_custom_tab_keys-library.html">core/keys/custom_tab_keys</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="graduate_school_keys">
+  <span class="name"><a href="core_keys_graduate_school_keys/core_keys_graduate_school_keys-library.html">core/keys/graduate_school_keys</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_keys">
+  <span class="name"><a href="core_keys_major_keys/core_keys_major_keys-library.html">core/keys/major_keys</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shared_pref_keys">
+  <span class="name"><a href="core_keys_shared_pref_keys/core_keys_shared_pref_keys-library.html">core/keys/shared_pref_keys</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme">
+  <span class="name"><a href="core_theme_theme/core_theme_theme-library.html">core/theme/theme</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="firebase_options">
+  <span class="name"><a href="firebase_firebase_options/firebase_firebase_options-library.html">firebase/firebase_options</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="firebase_service">
+  <span class="name"><a href="firebase_firebase_service/firebase_firebase_service-library.html">firebase/firebase_service</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/main-library.html">main</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="pages_model">
+  <span class="name"><a href="models_pages_model/models_pages_model-library.html">models/pages_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_page">
+  <span class="name"><a href="screens_bottom_navigation_bookmark_bookmark_page/screens_bottom_navigation_bookmark_bookmark_page-library.html">screens/bottom_navigation/bookmark/bookmark_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bottom_nav_bar_page">
+  <span class="name"><a href="screens_bottom_navigation_bottom_nav_bar_page/screens_bottom_navigation_bottom_nav_bar_page-library.html">screens/bottom_navigation/bottom_nav_bar_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_page">
+  <span class="name"><a href="screens_bottom_navigation_home_home_page/screens_bottom_navigation_home_home_page-library.html">screens/bottom_navigation/home/home_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_tab">
+  <span class="name"><a href="screens_bottom_navigation_home_notice_board_tab/screens_bottom_navigation_home_notice_board_tab-library.html">screens/bottom_navigation/home/notice_board_tab</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_deletion_tile">
+  <span class="name"><a href="screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile/screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile-library.html">screens/bottom_navigation/more/cache_deletetion/cache_deletion_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_license_text_page">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_license_custom_license_text_page/screens_bottom_navigation_more_custom_license_custom_license_text_page-library.html">screens/bottom_navigation/more/custom_license/custom_license_text_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_licenses_page">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_license_custom_licenses_page/screens_bottom_navigation_more_custom_license_custom_licenses_page-library.html">screens/bottom_navigation/more/custom_license/custom_licenses_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_bar_page">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_custom_tab_list">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_available_list">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_preview">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_save_button">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_save_button</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_selected_list">
+  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_selected_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_page">
+  <span class="name"><a href="screens_bottom_navigation_more_more_page/screens_bottom_navigation_more_more_page-library.html">screens/bottom_navigation/more/more_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_navigation_tile">
+  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_navigation_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_non_navigation_tile">
+  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_title_tile">
+  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_title_tile/screens_bottom_navigation_more_more_page_titles_more_title_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_title_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_web_navigation_tile">
+  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_web_navigation_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="college_notification_category">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_college_notification_category/screens_bottom_navigation_more_notification_setting_categories_college_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/college_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="education_notification_category">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_education_notification_category/screens_bottom_navigation_more_notification_setting_categories_education_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/education_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="graduate_school_notification_category">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category/screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_notification_category">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_major_notification_category/screens_bottom_navigation_more_notification_setting_categories_major_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/major_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="research_notification_category">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_research_notification_category/screens_bottom_navigation_more_notification_setting_categories_research_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/research_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="undergraduate_schedule_notification_category">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category/screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/undergraduate_schedule_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_major_item">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_notification_major_item/screens_bottom_navigation_more_notification_setting_notification_major_item-library.html">screens/bottom_navigation/more/notification_setting/notification_major_item</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_page">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_notification_setting_page/screens_bottom_navigation_more_notification_setting_notification_setting_page-library.html">screens/bottom_navigation/more/notification_setting/notification_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_tile">
+  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_notification_tile/screens_bottom_navigation_more_notification_setting_notification_tile-library.html">screens/bottom_navigation/more/notification_setting/notification_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_tile">
+  <span class="name"><a href="screens_bottom_navigation_more_theme_preference_theme_preference_tile/screens_bottom_navigation_more_theme_preference_theme_preference_tile-library.html">screens/bottom_navigation/more/theme_preference/theme_preference_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_setting_page">
+  <span class="name"><a href="screens_bottom_navigation_more_university_settings_base_setting_page/screens_bottom_navigation_more_university_settings_base_setting_page-library.html">screens/bottom_navigation/more/university_settings/base_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="college_setting_page">
+  <span class="name"><a href="screens_bottom_navigation_more_university_settings_college_setting_page/screens_bottom_navigation_more_university_settings_college_setting_page-library.html">screens/bottom_navigation/more/university_settings/college_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="graduate_school_setting_page">
+  <span class="name"><a href="screens_bottom_navigation_more_university_settings_graduate_school_setting_page/screens_bottom_navigation_more_university_settings_graduate_school_setting_page-library.html">screens/bottom_navigation/more/university_settings/graduate_school_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_setting_page">
+  <span class="name"><a href="screens_bottom_navigation_more_university_settings_major_setting_page/screens_bottom_navigation_more_university_settings_major_setting_page-library.html">screens/bottom_navigation/more/university_settings/major_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_page">
+  <span class="name"><a href="screens_bottom_navigation_search_search_page/screens_bottom_navigation_search_search_page-library.html">screens/bottom_navigation/search/search_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_result_page">
+  <span class="name"><a href="screens_bottom_navigation_search_search_result_page/screens_bottom_navigation_search_search_result_page-library.html">screens/bottom_navigation/search/search_result_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="topics_item">
+  <span class="name"><a href="screens_bottom_navigation_search_topics_item/screens_bottom_navigation_search_topics_item-library.html">screens/bottom_navigation/search/topics_item</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="absolute_style_notice_board">
+  <span class="name"><a href="screens_notice_board_absolute_style_notice_board/screens_notice_board_absolute_style_notice_board-library.html">screens/notice_board/absolute_style_notice_board</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_notice_board">
+  <span class="name"><a href="screens_notice_board_base_notice_board/screens_notice_board_base_notice_board-library.html">screens/notice_board/base_notice_board</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="no_search_result">
+  <span class="name"><a href="screens_notice_board_no_search_result/screens_notice_board_no_search_result-library.html">screens/notice_board/no_search_result</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_list_tile">
+  <span class="name"><a href="screens_notice_board_notice_list_tile/screens_notice_board_notice_list_tile-library.html">screens/notice_board/notice_list_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="relative_style_notice_board">
+  <span class="name"><a href="screens_notice_board_relative_style_notice_board/screens_notice_board_relative_style_notice_board-library.html">screens/notice_board/relative_style_notice_board</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="onboarding_screen">
+  <span class="name"><a href="screens_onboarding_onboarding_screen/screens_onboarding_onboarding_screen-library.html">screens/onboarding/onboarding_screen</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="absolute_style_pagination">
+  <span class="name"><a href="screens_pagination_absolute_style_pagination/screens_pagination_absolute_style_pagination-library.html">screens/pagination/absolute_style_pagination</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_pagination">
+  <span class="name"><a href="screens_pagination_base_pagination/screens_pagination_base_pagination-library.html">screens/pagination/base_pagination</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="relative_style_pagination">
+  <span class="name"><a href="screens_pagination_relative_style_pagination/screens_pagination_relative_style_pagination-library.html">screens/pagination/relative_style_pagination</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="in_app_web_page">
+  <span class="name"><a href="screens_webview_in_app_web_page/screens_webview_in_app_web_page-library.html">screens/webview/in_app_web_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="web_navigator">
+  <span class="name"><a href="screens_webview_web_navigator/screens_webview_web_navigator-library.html">screens/webview/web_navigator</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_absolute_style_notice_scraper">
+  <span class="name"><a href="services_absolute_style_scraper_base_absolute_style_notice_scraper/services_absolute_style_scraper_base_absolute_style_notice_scraper-library.html">services/absolute_style_scraper/base_absolute_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="inha_design_style_notice_scraper">
+  <span class="name"><a href="services_absolute_style_scraper_inha_design_style_notice_scraper/services_absolute_style_scraper_inha_design_style_notice_scraper-library.html">services/absolute_style_scraper/inha_design_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_style_notice_scraper">
+  <span class="name"><a href="services_absolute_style_scraper_major_style_notice_scraper/services_absolute_style_scraper_major_style_notice_scraper-library.html">services/absolute_style_scraper/major_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oceanography_style_notice_scraper">
+  <span class="name"><a href="services_absolute_style_scraper_oceanography_style_notice_scraper/services_absolute_style_scraper_oceanography_style_notice_scraper-library.html">services/absolute_style_scraper/oceanography_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="whole_style_notice_scraper">
+  <span class="name"><a href="services_absolute_style_scraper_whole_style_notice_scraper/services_absolute_style_scraper_whole_style_notice_scraper-library.html">services/absolute_style_scraper/whole_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_relative_style_notice_scraper">
+  <span class="name"><a href="services_relative_style_scraper_base_relative_style_notice_scraper/services_relative_style_scraper_base_relative_style_notice_scraper-library.html">services/relative_style_scraper/base_relative_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="library_scraper">
+  <span class="name"><a href="services_relative_style_scraper_library_scraper/services_relative_style_scraper_library_scraper-library.html">services/relative_style_scraper/library_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_scraper">
+  <span class="name"><a href="services_search_search_scraper/services_search_search_scraper-library.html">services/search/search_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="trending_topics_api">
+  <span class="name"><a href="services_trending_topics_trending_topics_api/services_trending_topics_trending_topics_api-library.html">services/trending_topics/trending_topics_api</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_manager">
+  <span class="name"><a href="utils_bookmark_bookmark_manager/utils_bookmark_bookmark_manager-library.html">utils/bookmark/bookmark_manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_list_utils">
+  <span class="name"><a href="utils_custom_tab_list_utils_custom_tab_list_utils/utils_custom_tab_list_utils_custom_tab_list_utils-library.html">utils/custom_tab_list_utils/custom_tab_list_utils</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="read_notice_manager">
+  <span class="name"><a href="utils_read_notice_read_notice_manager/utils_read_notice_read_notice_manager-library.html">utils/read_notice/read_notice_manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="recent_search_manager">
+  <span class="name"><a href="utils_recent_search_recent_search_manager/utils_recent_search_recent_search_manager-library.html">utils/recent_search/recent_search_manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="inha_design_style_tag_selectors">
+  <span class="name"><a href="utils_selectors_inha_design_style_tag_selectors/utils_selectors_inha_design_style_tag_selectors-library.html">utils/selectors/inha_design_style_tag_selectors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_style_tag_selectors">
+  <span class="name"><a href="utils_selectors_major_style_tag_selectors/utils_selectors_major_style_tag_selectors-library.html">utils/selectors/major_style_tag_selectors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oceanography_style_tag_selectors">
+  <span class="name"><a href="utils_selectors_oceanography_style_tag_selectors/utils_selectors_oceanography_style_tag_selectors-library.html">utils/selectors/oceanography_style_tag_selectors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_tag_selectors">
+  <span class="name"><a href="utils_selectors_search_tag_selectors/utils_selectors_search_tag_selectors-library.html">utils/selectors/search_tag_selectors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="whole_tag_selectors">
+  <span class="name"><a href="utils_selectors_whole_tag_selectors/utils_selectors_whole_tag_selectors-library.html">utils/selectors/whole_tag_selectors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shared_prefs_manager">
+  <span class="name"><a href="utils_shared_prefs_shared_prefs_manager/utils_shared_prefs_shared_prefs_manager-library.html">utils/shared_prefs/shared_prefs_manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="college_utils">
+  <span class="name"><a href="utils_university_utils_college_utils/utils_university_utils_college_utils-library.html">utils/university_utils/college_utils</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="graduate_school_utils">
+  <span class="name"><a href="utils_university_utils_graduate_school_utils/utils_university_utils_graduate_school_utils-library.html">utils/university_utils/graduate_school_utils</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_utils">
+  <span class="name"><a href="utils_university_utils_major_utils/utils_university_utils_major_utils-library.html">utils/university_utils/major_utils</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="themed_action_app_bar">
+  <span class="name"><a href="widgets_app_bars_themed_action_app_bar/widgets_app_bars_themed_action_app_bar-library.html">widgets/app_bars/themed_action_app_bar</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="themed_app_bar">
+  <span class="name"><a href="widgets_app_bars_themed_app_bar/widgets_app_bars_themed_app_bar-library.html">widgets/app_bars/themed_app_bar</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="refresh_button">
+  <span class="name"><a href="widgets_buttons_refresh_button/widgets_buttons_refresh_button-library.html">widgets/buttons/refresh_button</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="rounded_toggle_button">
+  <span class="name"><a href="widgets_buttons_rounded_toggle_button/widgets_buttons_rounded_toggle_button-library.html">widgets/buttons/rounded_toggle_button</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="blocking_dialog">
+  <span class="name"><a href="widgets_dialogs_blocking_dialog/widgets_dialogs_blocking_dialog-library.html">widgets/dialogs/blocking_dialog</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_deletion_dialog">
+  <span class="name"><a href="widgets_dialogs_cache_deletion_dialog/widgets_dialogs_cache_deletion_dialog-library.html">widgets/dialogs/cache_deletion_dialog</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_mode_selection_dialog">
+  <span class="name"><a href="widgets_dialogs_theme_mode_selection_dialog/widgets_dialogs_theme_mode_selection_dialog-library.html">widgets/dialogs/theme_mode_selection_dialog</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="keyword_search_dropdown">
+  <span class="name"><a href="widgets_dropdowns_keyword_search_dropdown/widgets_dropdowns_keyword_search_dropdown-library.html">widgets/dropdowns/keyword_search_dropdown</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="blue_loading_indicator">
+  <span class="name"><a href="widgets_loading_indicators_blue_loading_indicator/widgets_loading_indicators_blue_loading_indicator-library.html">widgets/loading_indicators/blue_loading_indicator</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_refresh_header">
+  <span class="name"><a href="widgets_refresh_headers_bookmark_refresh_header/widgets_refresh_headers_bookmark_refresh_header-library.html">widgets/refresh_headers/bookmark_refresh_header</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_refresh_header">
+  <span class="name"><a href="widgets_refresh_headers_notice_refresh_header/widgets_refresh_headers_notice_refresh_header-library.html">widgets/refresh_headers/notice_refresh_header</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="themed_snack_bar">
+  <span class="name"><a href="widgets_snack_bars_themed_snack_bar/widgets_snack_bars_themed_snack_bar-library.html">widgets/snack_bars/themed_snack_bar</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="keyword_search_textfield">
+  <span class="name"><a href="widgets_textfields_keyword_search_textfield/widgets_textfields_keyword_search_textfield-library.html">widgets/textfields/keyword_search_textfield</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bold_title_text">
+  <span class="name"><a href="widgets_texts_bold_title_text/widgets_texts_bold_title_text-library.html">widgets/texts/bold_title_text</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="normal_description_text">
+  <span class="name"><a href="widgets_texts_normal_description_text/widgets_texts_normal_description_text-library.html">widgets/texts/normal_description_text</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">inha_notice package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">inha_notice</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="core_constants_app_theme_constants/core_constants_app_theme_constants-library.html">core/constants/app_theme_constants</a></li>
+      <li><a href="core_constants_font_constants/core_constants_font_constants-library.html">core/constants/font_constants</a></li>
+      <li><a href="core_constants_identifier_constants/core_constants_identifier_constants-library.html">core/constants/identifier_constants</a></li>
+      <li><a href="core_constants_keyword_search_option_constants/core_constants_keyword_search_option_constants-library.html">core/constants/keyword_search_option_constants</a></li>
+      <li><a href="core_constants_page_constants/core_constants_page_constants-library.html">core/constants/page_constants</a></li>
+      <li><a href="core_constants_status_code_constants/core_constants_status_code_constants-library.html">core/constants/status_code_constants</a></li>
+      <li><a href="core_constants_string_constants/core_constants_string_constants-library.html">core/constants/string_constants</a></li>
+      <li><a href="core_font_fonts/core_font_fonts-library.html">core/font/fonts</a></li>
+      <li><a href="core_keys_college_keys/core_keys_college_keys-library.html">core/keys/college_keys</a></li>
+      <li><a href="core_keys_custom_tab_keys/core_keys_custom_tab_keys-library.html">core/keys/custom_tab_keys</a></li>
+      <li><a href="core_keys_graduate_school_keys/core_keys_graduate_school_keys-library.html">core/keys/graduate_school_keys</a></li>
+      <li><a href="core_keys_major_keys/core_keys_major_keys-library.html">core/keys/major_keys</a></li>
+      <li><a href="core_keys_shared_pref_keys/core_keys_shared_pref_keys-library.html">core/keys/shared_pref_keys</a></li>
+      <li><a href="core_theme_theme/core_theme_theme-library.html">core/theme/theme</a></li>
+      <li><a href="firebase_firebase_options/firebase_firebase_options-library.html">firebase/firebase_options</a></li>
+      <li><a href="firebase_firebase_service/firebase_firebase_service-library.html">firebase/firebase_service</a></li>
+      <li><a href="main/main-library.html">main</a></li>
+      <li><a href="models_pages_model/models_pages_model-library.html">models/pages_model</a></li>
+      <li><a href="screens_bottom_navigation_bookmark_bookmark_page/screens_bottom_navigation_bookmark_bookmark_page-library.html">screens/bottom_navigation/bookmark/bookmark_page</a></li>
+      <li><a href="screens_bottom_navigation_bottom_nav_bar_page/screens_bottom_navigation_bottom_nav_bar_page-library.html">screens/bottom_navigation/bottom_nav_bar_page</a></li>
+      <li><a href="screens_bottom_navigation_home_home_page/screens_bottom_navigation_home_home_page-library.html">screens/bottom_navigation/home/home_page</a></li>
+      <li><a href="screens_bottom_navigation_home_notice_board_tab/screens_bottom_navigation_home_notice_board_tab-library.html">screens/bottom_navigation/home/notice_board_tab</a></li>
+      <li><a href="screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile/screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile-library.html">screens/bottom_navigation/more/cache_deletetion/cache_deletion_tile</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_license_custom_license_text_page/screens_bottom_navigation_more_custom_license_custom_license_text_page-library.html">screens/bottom_navigation/more/custom_license/custom_license_text_page</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_license_custom_licenses_page/screens_bottom_navigation_more_custom_license_custom_licenses_page-library.html">screens/bottom_navigation/more/custom_license/custom_licenses_page</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_save_button</a></li>
+      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_selected_list</a></li>
+      <li><a href="screens_bottom_navigation_more_more_page/screens_bottom_navigation_more_more_page-library.html">screens/bottom_navigation/more/more_page</a></li>
+      <li><a href="screens_bottom_navigation_more_more_page_titles_more_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_navigation_tile</a></li>
+      <li><a href="screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile</a></li>
+      <li><a href="screens_bottom_navigation_more_more_page_titles_more_title_tile/screens_bottom_navigation_more_more_page_titles_more_title_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_title_tile</a></li>
+      <li><a href="screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_web_navigation_tile</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_categories_college_notification_category/screens_bottom_navigation_more_notification_setting_categories_college_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/college_notification_category</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_categories_education_notification_category/screens_bottom_navigation_more_notification_setting_categories_education_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/education_notification_category</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category/screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_categories_major_notification_category/screens_bottom_navigation_more_notification_setting_categories_major_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/major_notification_category</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_categories_research_notification_category/screens_bottom_navigation_more_notification_setting_categories_research_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/research_notification_category</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category/screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/undergraduate_schedule_notification_category</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_notification_major_item/screens_bottom_navigation_more_notification_setting_notification_major_item-library.html">screens/bottom_navigation/more/notification_setting/notification_major_item</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_notification_setting_page/screens_bottom_navigation_more_notification_setting_notification_setting_page-library.html">screens/bottom_navigation/more/notification_setting/notification_setting_page</a></li>
+      <li><a href="screens_bottom_navigation_more_notification_setting_notification_tile/screens_bottom_navigation_more_notification_setting_notification_tile-library.html">screens/bottom_navigation/more/notification_setting/notification_tile</a></li>
+      <li><a href="screens_bottom_navigation_more_theme_preference_theme_preference_tile/screens_bottom_navigation_more_theme_preference_theme_preference_tile-library.html">screens/bottom_navigation/more/theme_preference/theme_preference_tile</a></li>
+      <li><a href="screens_bottom_navigation_more_university_settings_base_setting_page/screens_bottom_navigation_more_university_settings_base_setting_page-library.html">screens/bottom_navigation/more/university_settings/base_setting_page</a></li>
+      <li><a href="screens_bottom_navigation_more_university_settings_college_setting_page/screens_bottom_navigation_more_university_settings_college_setting_page-library.html">screens/bottom_navigation/more/university_settings/college_setting_page</a></li>
+      <li><a href="screens_bottom_navigation_more_university_settings_graduate_school_setting_page/screens_bottom_navigation_more_university_settings_graduate_school_setting_page-library.html">screens/bottom_navigation/more/university_settings/graduate_school_setting_page</a></li>
+      <li><a href="screens_bottom_navigation_more_university_settings_major_setting_page/screens_bottom_navigation_more_university_settings_major_setting_page-library.html">screens/bottom_navigation/more/university_settings/major_setting_page</a></li>
+      <li><a href="screens_bottom_navigation_search_search_page/screens_bottom_navigation_search_search_page-library.html">screens/bottom_navigation/search/search_page</a></li>
+      <li><a href="screens_bottom_navigation_search_search_result_page/screens_bottom_navigation_search_search_result_page-library.html">screens/bottom_navigation/search/search_result_page</a></li>
+      <li><a href="screens_bottom_navigation_search_topics_item/screens_bottom_navigation_search_topics_item-library.html">screens/bottom_navigation/search/topics_item</a></li>
+      <li><a href="screens_notice_board_absolute_style_notice_board/screens_notice_board_absolute_style_notice_board-library.html">screens/notice_board/absolute_style_notice_board</a></li>
+      <li><a href="screens_notice_board_base_notice_board/screens_notice_board_base_notice_board-library.html">screens/notice_board/base_notice_board</a></li>
+      <li><a href="screens_notice_board_no_search_result/screens_notice_board_no_search_result-library.html">screens/notice_board/no_search_result</a></li>
+      <li><a href="screens_notice_board_notice_list_tile/screens_notice_board_notice_list_tile-library.html">screens/notice_board/notice_list_tile</a></li>
+      <li><a href="screens_notice_board_relative_style_notice_board/screens_notice_board_relative_style_notice_board-library.html">screens/notice_board/relative_style_notice_board</a></li>
+      <li><a href="screens_onboarding_onboarding_screen/screens_onboarding_onboarding_screen-library.html">screens/onboarding/onboarding_screen</a></li>
+      <li><a href="screens_pagination_absolute_style_pagination/screens_pagination_absolute_style_pagination-library.html">screens/pagination/absolute_style_pagination</a></li>
+      <li><a href="screens_pagination_base_pagination/screens_pagination_base_pagination-library.html">screens/pagination/base_pagination</a></li>
+      <li><a href="screens_pagination_relative_style_pagination/screens_pagination_relative_style_pagination-library.html">screens/pagination/relative_style_pagination</a></li>
+      <li><a href="screens_webview_in_app_web_page/screens_webview_in_app_web_page-library.html">screens/webview/in_app_web_page</a></li>
+      <li><a href="screens_webview_web_navigator/screens_webview_web_navigator-library.html">screens/webview/web_navigator</a></li>
+      <li><a href="services_absolute_style_scraper_base_absolute_style_notice_scraper/services_absolute_style_scraper_base_absolute_style_notice_scraper-library.html">services/absolute_style_scraper/base_absolute_style_notice_scraper</a></li>
+      <li><a href="services_absolute_style_scraper_inha_design_style_notice_scraper/services_absolute_style_scraper_inha_design_style_notice_scraper-library.html">services/absolute_style_scraper/inha_design_style_notice_scraper</a></li>
+      <li><a href="services_absolute_style_scraper_major_style_notice_scraper/services_absolute_style_scraper_major_style_notice_scraper-library.html">services/absolute_style_scraper/major_style_notice_scraper</a></li>
+      <li><a href="services_absolute_style_scraper_oceanography_style_notice_scraper/services_absolute_style_scraper_oceanography_style_notice_scraper-library.html">services/absolute_style_scraper/oceanography_style_notice_scraper</a></li>
+      <li><a href="services_absolute_style_scraper_whole_style_notice_scraper/services_absolute_style_scraper_whole_style_notice_scraper-library.html">services/absolute_style_scraper/whole_style_notice_scraper</a></li>
+      <li><a href="services_relative_style_scraper_base_relative_style_notice_scraper/services_relative_style_scraper_base_relative_style_notice_scraper-library.html">services/relative_style_scraper/base_relative_style_notice_scraper</a></li>
+      <li><a href="services_relative_style_scraper_library_scraper/services_relative_style_scraper_library_scraper-library.html">services/relative_style_scraper/library_scraper</a></li>
+      <li><a href="services_search_search_scraper/services_search_search_scraper-library.html">services/search/search_scraper</a></li>
+      <li><a href="services_trending_topics_trending_topics_api/services_trending_topics_trending_topics_api-library.html">services/trending_topics/trending_topics_api</a></li>
+      <li><a href="utils_bookmark_bookmark_manager/utils_bookmark_bookmark_manager-library.html">utils/bookmark/bookmark_manager</a></li>
+      <li><a href="utils_custom_tab_list_utils_custom_tab_list_utils/utils_custom_tab_list_utils_custom_tab_list_utils-library.html">utils/custom_tab_list_utils/custom_tab_list_utils</a></li>
+      <li><a href="utils_read_notice_read_notice_manager/utils_read_notice_read_notice_manager-library.html">utils/read_notice/read_notice_manager</a></li>
+      <li><a href="utils_recent_search_recent_search_manager/utils_recent_search_recent_search_manager-library.html">utils/recent_search/recent_search_manager</a></li>
+      <li><a href="utils_selectors_inha_design_style_tag_selectors/utils_selectors_inha_design_style_tag_selectors-library.html">utils/selectors/inha_design_style_tag_selectors</a></li>
+      <li><a href="utils_selectors_major_style_tag_selectors/utils_selectors_major_style_tag_selectors-library.html">utils/selectors/major_style_tag_selectors</a></li>
+      <li><a href="utils_selectors_oceanography_style_tag_selectors/utils_selectors_oceanography_style_tag_selectors-library.html">utils/selectors/oceanography_style_tag_selectors</a></li>
+      <li><a href="utils_selectors_search_tag_selectors/utils_selectors_search_tag_selectors-library.html">utils/selectors/search_tag_selectors</a></li>
+      <li><a href="utils_selectors_whole_tag_selectors/utils_selectors_whole_tag_selectors-library.html">utils/selectors/whole_tag_selectors</a></li>
+      <li><a href="utils_shared_prefs_shared_prefs_manager/utils_shared_prefs_shared_prefs_manager-library.html">utils/shared_prefs/shared_prefs_manager</a></li>
+      <li><a href="utils_university_utils_college_utils/utils_university_utils_college_utils-library.html">utils/university_utils/college_utils</a></li>
+      <li><a href="utils_university_utils_graduate_school_utils/utils_university_utils_graduate_school_utils-library.html">utils/university_utils/graduate_school_utils</a></li>
+      <li><a href="utils_university_utils_major_utils/utils_university_utils_major_utils-library.html">utils/university_utils/major_utils</a></li>
+      <li><a href="widgets_app_bars_themed_action_app_bar/widgets_app_bars_themed_action_app_bar-library.html">widgets/app_bars/themed_action_app_bar</a></li>
+      <li><a href="widgets_app_bars_themed_app_bar/widgets_app_bars_themed_app_bar-library.html">widgets/app_bars/themed_app_bar</a></li>
+      <li><a href="widgets_buttons_refresh_button/widgets_buttons_refresh_button-library.html">widgets/buttons/refresh_button</a></li>
+      <li><a href="widgets_buttons_rounded_toggle_button/widgets_buttons_rounded_toggle_button-library.html">widgets/buttons/rounded_toggle_button</a></li>
+      <li><a href="widgets_dialogs_blocking_dialog/widgets_dialogs_blocking_dialog-library.html">widgets/dialogs/blocking_dialog</a></li>
+      <li><a href="widgets_dialogs_cache_deletion_dialog/widgets_dialogs_cache_deletion_dialog-library.html">widgets/dialogs/cache_deletion_dialog</a></li>
+      <li><a href="widgets_dialogs_theme_mode_selection_dialog/widgets_dialogs_theme_mode_selection_dialog-library.html">widgets/dialogs/theme_mode_selection_dialog</a></li>
+      <li><a href="widgets_dropdowns_keyword_search_dropdown/widgets_dropdowns_keyword_search_dropdown-library.html">widgets/dropdowns/keyword_search_dropdown</a></li>
+      <li><a href="widgets_loading_indicators_blue_loading_indicator/widgets_loading_indicators_blue_loading_indicator-library.html">widgets/loading_indicators/blue_loading_indicator</a></li>
+      <li><a href="widgets_refresh_headers_bookmark_refresh_header/widgets_refresh_headers_bookmark_refresh_header-library.html">widgets/refresh_headers/bookmark_refresh_header</a></li>
+      <li><a href="widgets_refresh_headers_notice_refresh_header/widgets_refresh_headers_notice_refresh_header-library.html">widgets/refresh_headers/notice_refresh_header</a></li>
+      <li><a href="widgets_snack_bars_themed_snack_bar/widgets_snack_bars_themed_snack_bar-library.html">widgets/snack_bars/themed_snack_bar</a></li>
+      <li><a href="widgets_textfields_keyword_search_textfield/widgets_textfields_keyword_search_textfield-library.html">widgets/textfields/keyword_search_textfield</a></li>
+      <li><a href="widgets_texts_bold_title_text/widgets_texts_bold_title_text-library.html">widgets/texts/bold_title_text</a></li>
+      <li><a href="widgets_texts_normal_description_text/widgets_texts_normal_description_text-library.html">widgets/texts/normal_description_text</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    inha_notice
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
