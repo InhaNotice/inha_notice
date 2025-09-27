@@ -174,6 +174,20 @@ The API documentation is automatically generated from the code comments and is s
 ## 📄 License
 This project is licensed under the Apache License 2.0. For more details, please refer to the [LICENSE](LICENSE.txt) file.
 
+## 💻 Open-Source Software (OSS)
+This project utilizes the following open-source libraries and packages to deliver its core functionality:
+
+| Category | Package(s) | Description |
+| :--- | :--- | :--- |
+| **Firebase Services** | `firebase_core`, `firebase_messaging` | Core integration and services for real-time push notifications. |
+| **Notification Handling** | `flutter_local_notifications`, `flutter_background_service` | Manages local notifications and background processing tasks for receiving updates. |
+| **Networking & Data Parsing** | `http`, `xml` | Handles HTTP requests for network communication and parses XML data from web sources. |
+| **Data & Locale Utilities** | `intl` | Provides internationalization and localization features, including date/number formatting. |
+| **Storage & File System** | `shared_preferences`, `sqflite`, `path_provider`, `path` | Manages local key-value storage, stores data in a local SQLite database, and handles platform-specific file paths. |
+| **User Interface & UX** | `flutter_inappwebview`, `share_plus`, `pull_to_refresh`, `cupertino_icons` | Provides an embedded web view, enables content sharing, implements pull-to-refresh functionality, and uses iOS-style icons. |
+| **Development Utilities** | `flutter_dotenv`, `logger` | Loads environment variables from `.env` files and provides advanced logging capabilities for development and debugging. |
+| **Custom Fonts** | `Pretendard`, `Tossface`, `NanumGothic` | Custom typeface assets used to ensure optimal readability and design consistency across the application. |
+
 ## 📝 Questions or Support
 If you have any questions or need support, feel free to open an issue on GitHub or reach out via the following contact methods:
  - Email: ingong.korea@gmail.com
