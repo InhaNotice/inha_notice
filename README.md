@@ -46,7 +46,7 @@ In total, the app supports over **100 announcement categories**, ensuring that s
 - **Android Beta**: 02/17/2025 ~ 03/24/2025.
 - **Android Official Release**: 03/03/2025.
 
-## Visit our Notion Page and Get the App.
+## Visit our Notion Page and Get the App (available only in South Korea).
 - **Notion**: [Click](https://inha-notice.notion.site/)
 - **iOS** (iPhone, iPad, Mac): [Download on the App Store](https://apps.apple.com/app/인하공지/id6740850198)
 - **Android**: [Download on Google Play](https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&pcampaignid=web_share)
@@ -259,4 +259,5 @@ This project utilizes the following open-source libraries and packages to delive
 ## 📝 Questions or Support
 If you have any questions or need support, feel free to open an issue on GitHub or reach out via the following contact methods:
  - Email: ingong.korea@gmail.com
+
  - GitHub: InhaNotice
