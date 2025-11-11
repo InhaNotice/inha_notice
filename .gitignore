@@ -34,5 +34,3 @@ README.md
 key.properties
 **/*.keystore
 **/*.jks
-
-doc/
