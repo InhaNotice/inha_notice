@@ -12,16 +12,18 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.logicallawbio.inha_notice"
-    compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 36
+    ndkVersion = "29.0.14033849"
+    buildToolsVersion = "36.0.0"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17
+        jvmTarget = JavaVersion.VERSION_21
     }
 
     defaultConfig {
@@ -29,10 +31,10 @@ android {
         applicationId = "com.logicallawbio.inha_notice"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = 21
+        minSdkVersion = flutter.minSdkVersion
         targetSdk = 35
-        versionCode = 20
-        versionName = "2.6.0"
+        versionCode = 21
+        versionName = "2.6.1"
     }
 
     signingConfigs {
@@ -68,4 +70,5 @@ flutter {
 
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.9.0')
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
 }
