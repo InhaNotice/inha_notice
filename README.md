@@ -125,8 +125,8 @@ inha_notice
 
 This project was developed and tested in the following environment.
 
-- **Flutter v3.27.4**
-- **Dart v3.6.2**
+- **Flutter v3.38.1**
+- **Dart v3.10.0**
 - **Supported Platforms:** iOS (13.0+), Android (SDK 21+)
 - **Encoding:** UTF-8 (includes some Korean content)
 
@@ -261,5 +261,6 @@ If you have any questions or need support, feel free to open an issue on GitHub 
  - Email: ingong.korea@gmail.com
 
  - GitHub: InhaNotice
+
 
 
