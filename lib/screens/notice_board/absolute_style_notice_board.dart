@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-29
+ * Latest Updated Date: 2025-12-16
  */
 
 import 'package:flutter/material.dart';
@@ -27,7 +27,6 @@ import 'package:inha_notice/screens/pagination/absolute_style_pagination.dart';
 import 'package:inha_notice/services/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/inha_design_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
-import 'package:inha_notice/services/absolute_style_scraper/oceanography_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
@@ -227,13 +226,6 @@ class _AbsoluteStyleNoticeBoardState
         widget.noticeType == CustomTabKeys.INHAHUSS) {
       _absoluteStyleNoticeScraper = MajorStyleNoticeScraper(widget.noticeType);
       _isKeywordSearchableNoticeType = true;
-      return;
-    }
-
-    // (예외) 해양과학과인 경우
-    if (_userSettingKey == MajorKeys.OCEANOGRAPHY) {
-      _absoluteStyleNoticeScraper =
-          OceanographyStyleNoticeScraper(_userSettingKey!);
       return;
     }
 
