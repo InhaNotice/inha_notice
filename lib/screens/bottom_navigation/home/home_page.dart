@@ -58,20 +58,21 @@ class _HomePageState extends State<HomePage> {
   }
 
   String _loadTabName(String noticeType) {
-    // 학과 타입이 아니면, noticeType을 번역해서 탭 이름을 반환
-    // 학과 타입이 아닌 경우: MAJOR, MAJOR2, MAJOR3을 제외한 나머지
+    // noticeType이 학과 타입이 아니면(예: WHOLE, SWUNIV, LIBRARY 등), noticeType을 국문 탭 이름(예: 학사, SW중심대학사업단, 정석 등)으로 번역해서 반환
     if (!CustomTabListUtils.isMajorType(noticeType)) {
       return CustomTabListUtils.kTabMappingOnValue[noticeType]!;
     }
-    // 학과 타입일 때, 유저 설정 값을 불러온다.
+
+    // 학과 타입(예: MAJOR, MAJOR2, MAJOR3)이면, 유저의 설정 값(예: EES, MATH, CSE 등)를 불러옴
     final userSettingKey = CustomTabListUtils.loadUserSettingKey(noticeType);
-    // 설정 값이 존재하지 않으면, 기본 탭 이름을 사용
+
+    // 아직 유저가 학과 설정을 하지 않았다면 기본 탭 이름(예: 학과, 학과2, 학과3)을 반환
     if (userSettingKey == null) {
       return CustomTabListUtils.kTabMappingOnValue[noticeType]!;
-    } else {
-      // 존재하면, 유저 설정 값을 번역해서 사용
-      return MajorUtils.kMajorMappingOnValue[userSettingKey]!;
     }
+
+    // 유저가 학과 설정을 마쳤다면, 아래 함수를 통해 반환
+    return MajorUtils.loadMajorTabName(userSettingKey);
   }
 
   @override

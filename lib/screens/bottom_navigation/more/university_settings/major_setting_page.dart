@@ -63,7 +63,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
       _currentMajorKey =
           SharedPrefsManager().getPreference(widget.majorKeyType);
       if (_currentMajorKey != null) {
-        _currentMajor = MajorUtils.kMajorMappingOnValue[_currentMajorKey];
+        _currentMajor = MajorUtils.loadMajorTabName(_currentMajorKey);
       }
       _filteredMajorGroups = _allMajorGroups;
       _filteredMajors = [];
