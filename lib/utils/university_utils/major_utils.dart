@@ -114,6 +114,7 @@ abstract class MajorUtils {
       MajorKeys.interdisciplinaryStudies: MajorKeys.LAS,
       MajorKeys.engineeringFusion: MajorKeys.ECS,
       MajorKeys.naturalScienceFusion: MajorKeys.NCS,
+      MajorKeys.businessFusion: MajorKeys.CVGBA,
       MajorKeys.socialScienceFusion: MajorKeys.CVGSOSCI,
       MajorKeys.humanitiesFusion: MajorKeys.CVGHUMAN,
     },

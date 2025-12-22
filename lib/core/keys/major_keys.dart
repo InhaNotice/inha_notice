@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-12-20
+ * Latest Updated Date: 2025-12-22
  */
 
 abstract class MajorKeys {
@@ -126,6 +126,7 @@ abstract class MajorKeys {
   static const String interdisciplinaryStudies = '자유전공융합학부';
   static const String engineeringFusion = '공학융합학부';
   static const String naturalScienceFusion = '자연과학융합학부';
+  static const String businessFusion = '경영융합학부';
   static const String socialScienceFusion = '사회과학융합학부';
   static const String humanitiesFusion = '인문융합학부';
 
@@ -232,6 +233,7 @@ abstract class MajorKeys {
   static const String LAS = 'LAS';
   static const String ECS = 'ECS';
   static const String NCS = 'NCS';
+  static const String CVGBA = 'CVGBA';
   static const String CVGSOSCI = 'CVGSOSCI';
   static const String CVGHUMAN = 'CVGHUMAN';
 }
