@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-12-20
+ * Latest Updated Date: 2025-12-22
  */
 
 import 'package:inha_notice/core/keys/major_keys.dart';
@@ -146,14 +146,4 @@ abstract class MajorUtils {
     MajorKeys.ENGLISH: MajorKeys.angloEuropeanHumanities,
     MajorKeys.FRANCE: MajorKeys.angloEuropeanHumanities,
   };
-
-  static String loadMajorTabName(String? userSettingKey) {
-    String? tabName = MajorUtils.kMajorMappingOnValue[userSettingKey];
-
-    if (tabName != null) {
-      return tabName;
-    }
-
-    return MajorUtils.kUnsupportedMajorKeys[userSettingKey]!;
-  }
 }

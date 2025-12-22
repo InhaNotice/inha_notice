@@ -5,13 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2025-12-22
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
+import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
@@ -63,7 +64,8 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
       _currentMajorKey =
           SharedPrefsManager().getPreference(widget.majorKeyType);
       if (_currentMajorKey != null) {
-        _currentMajor = MajorUtils.loadMajorTabName(_currentMajorKey);
+        _currentMajor =
+            CustomTabListUtils.getMajorDisplayName(_currentMajorKey!);
       }
       _filteredMajorGroups = _allMajorGroups;
       _filteredMajors = [];
