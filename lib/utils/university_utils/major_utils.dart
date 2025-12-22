@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2025-12-22
  */
 
 import 'package:inha_notice/core/keys/major_keys.dart';
@@ -70,10 +70,8 @@ abstract class MajorUtils {
       MajorKeys.philosophy: MajorKeys.PHILOSOPHY,
       MajorKeys.chineseStudies: MajorKeys.CHINESE,
       MajorKeys.japaneseLanguageCulture: MajorKeys.JAPAN,
-      MajorKeys.englishLiterature: MajorKeys.ENGLISH,
-      MajorKeys.frenchCulture: MajorKeys.FRANCE,
-      MajorKeys.cultureContentManagement: MajorKeys.CULTURECM,
       MajorKeys.angloEuropeanHumanities: MajorKeys.EES,
+      MajorKeys.cultureContentManagement: MajorKeys.CULTURECM,
     },
     MajorKeys.kMedicine: {
       MajorKeys.preMedicine: MajorKeys.MEDICINE,
@@ -142,4 +140,10 @@ abstract class MajorUtils {
   /// 전체 영문 키 → 한국어 학과명 역매핑 (자동 생성)
   static Map<String, String> get kMajorMappingOnValue =>
       {for (var entry in kMajorMappingOnKey.entries) entry.value: entry.key};
+
+  /// 학과 폐지 등 이유로 더 이상 지원되지 않은 학과 키에 대한 국문 탭 이름 반환
+  static const Map<String, String> kUnsupportedMajorKeys = {
+    MajorKeys.ENGLISH: MajorKeys.angloEuropeanHumanities,
+    MajorKeys.FRANCE: MajorKeys.angloEuropeanHumanities,
+  };
 }
