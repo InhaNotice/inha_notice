@@ -23,12 +23,16 @@ import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
+import 'injection_container.dart' as di;
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final ValueNotifier<ThemeMode> themeModeNotifier =
     ValueNotifier(ThemeMode.system);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await di.init();
 
   await _initializeApp();
   // FCM 초기화는 백그라운드에서 진행

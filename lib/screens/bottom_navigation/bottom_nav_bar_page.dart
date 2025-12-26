@@ -10,13 +10,13 @@
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:inha_notice/features/notice/presentation/pages/home_page.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/bottom_navigation/bookmark/bookmark_page.dart';
-import 'package:inha_notice/screens/bottom_navigation/home/home_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
-import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/screens/webview/web_navigator.dart';
+import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   const BottomNavBarPage({super.key});
