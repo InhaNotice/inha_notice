@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -159,7 +159,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
     String? newMajorKey = MajorUtils.kMajorMappingOnKey[item];
     if (_currentMajorKey != null && _currentMajorKey == newMajorKey) {
       if (mounted) {
-        ThemedSnackBarWidget.warnSnackBar(context, '이미 설정되어있습니다.');
+        AppSnackBar.warn(context, '이미 설정되어있습니다.');
       }
       return;
     }
@@ -171,14 +171,13 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
       await SharedPrefsManager().setMajorPreference(
           _currentMajorKey, newMajorKey!, widget.majorKeyType);
       if (mounted) {
-        ThemedSnackBarWidget.succeedSnackBar(context, '$item로 설정되었습니다!');
+        AppSnackBar.success(context, '$item로 설정되었습니다!');
       }
       if (mounted) Navigator.pop(context);
     } catch (e) {
       logger.e('❌ Error saving major: $e');
       if (mounted) {
-        ThemedSnackBarWidget.failSnackBar(
-            context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
+        AppSnackBar.error(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
       }
     } finally {
       if (mounted) BlockingDialog.dismiss(context);

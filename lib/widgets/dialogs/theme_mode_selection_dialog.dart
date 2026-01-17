@@ -16,7 +16,7 @@ import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 
@@ -51,11 +51,11 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
       }
 
       if (mounted) {
-        ThemedSnackBarWidget.succeedSnackBar(context, '설정되었어요.');
+        AppSnackBar.success(context, '설정되었어요.');
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackBarWidget.failSnackBar(context, '다시 시도해주세요.');
+        AppSnackBar.error(context, '다시 시도해주세요.');
       }
     } finally {
       // 현재 다이얼로그를 pop

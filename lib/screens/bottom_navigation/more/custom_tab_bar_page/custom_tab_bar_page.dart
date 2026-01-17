@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_save_button.dart';
@@ -87,12 +87,12 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
     try {
       await saveTabs();
       if (mounted) {
-        ThemedSnackBarWidget.succeedSnackBar(context, '저장되었어요.');
+        AppSnackBar.success(context, '저장되었어요.');
       }
       setState(() {}); // 상태 갱신
     } catch (e) {
       if (mounted) {
-        ThemedSnackBarWidget.failSnackBar(context, '문제가 발생하였어요.');
+        AppSnackBar.error(context, '문제가 발생하였어요.');
       }
     }
   }
@@ -224,8 +224,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                         selectedTabs.removeAt(index);
                       });
                     } else {
-                      ThemedSnackBarWidget.warnSnackBar(
-                          context, '최소 하나는 선택해야 해요.');
+                      AppSnackBar.warn(context, '최소 하나는 선택해야 해요.');
                     }
                   },
                   scrollController: _selectedTabsScrollController,
@@ -262,8 +261,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                         selectedTabs.add(tab);
                       });
                     } else {
-                      ThemedSnackBarWidget.warnSnackBar(
-                          context, '최대 개수를 넘어갈 수 없어요.');
+                      AppSnackBar.warn(context, '최대 개수를 넘어갈 수 없어요.');
                     }
                   },
                   scrollController: _selectedTabsScrollController,

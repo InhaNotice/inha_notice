@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
-import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 
 /// **CustomTabSaveButton**
 /// 커스텀 된 탭 저장 버튼을 제공합니다.
@@ -37,7 +37,7 @@ class CustomTabSaveButton extends StatelessWidget {
       onPressed: hasChanges
           ? () async => await onSave()
           : () {
-              ThemedSnackBarWidget.warnSnackBar(context, '변경사항이 없어요.');
+              AppSnackBar.warn(context, '변경사항이 없어요.');
             },
       child: Text(
         hasChanges ? "✅" : "☑️",

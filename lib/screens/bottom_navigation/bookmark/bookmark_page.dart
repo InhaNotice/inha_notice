@@ -11,10 +11,10 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
-import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
@@ -184,14 +184,14 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
             ),
             onPressed: () async {
               if (mounted && bookmarkedNotices.isEmpty) {
-                ThemedSnackBarWidget.warnSnackBar(context, '삭제할 북마크가 없어요.');
+                AppSnackBar.warn(context, '삭제할 북마크가 없어요.');
                 return;
               }
               await BookmarkManager.clearAllBookmarks();
               setState(() {
                 bookmarkedNotices.clear();
                 if (mounted) {
-                  ThemedSnackBarWidget.succeedSnackBar(context, '모두 삭제하였어요.');
+                  AppSnackBar.success(context, '모두 삭제하였어요.');
                 }
               });
             },

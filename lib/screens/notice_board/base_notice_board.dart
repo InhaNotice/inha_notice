@@ -10,7 +10,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
-import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
@@ -65,11 +65,11 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
     if (isNoticeBookmarked(notice['id'])) {
       await BookmarkManager.removeBookmark(notice['id']);
       if (!mounted) return;
-      ThemedSnackBarWidget.succeedSnackBar(context, '삭제되었습니다.');
+      AppSnackBar.success(context, '삭제되었습니다.');
     } else {
       await BookmarkManager.addBookmark(notice);
       if (!mounted) return;
-      ThemedSnackBarWidget.succeedSnackBar(context, '저장되었습니다.');
+      AppSnackBar.success(context, '저장되었습니다.');
     }
     setState(() {});
   }
