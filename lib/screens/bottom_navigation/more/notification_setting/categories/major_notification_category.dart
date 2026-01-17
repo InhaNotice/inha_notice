@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/presentation/widgets/bold_title_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_major_item.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
-import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 class MajorNotificationCategory extends StatefulWidget {
   final String title;
@@ -44,7 +44,7 @@ class _MajorNotificationCategoryState extends State<MajorNotificationCategory> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BoldTitleText(text: widget.title, size: 20),
+            BoldTitleWidget(text: widget.title, size: 20),
             ...widget.items.map((item) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),

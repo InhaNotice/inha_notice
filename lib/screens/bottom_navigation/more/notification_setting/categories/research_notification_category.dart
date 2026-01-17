@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/bold_title_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
-import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 class ResearchNotificationCategory extends StatefulWidget {
   const ResearchNotificationCategory({super.key});
@@ -41,7 +41,7 @@ class _ResearchNotificationCategoryState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BoldTitleText(text: '연구 및 학술 지원', size: 20),
+            BoldTitleWidget(text: '연구 및 학술 지원', size: 20),
             NotificationTile(
               title: 'SW중심대학사업단',
               description: '해커톤, 부트캠프, 기업 특강 등 최신 SW·AI 프로그램 안내',

@@ -11,8 +11,8 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/college_type.dart';
+import 'package:inha_notice/core/presentation/widgets/bold_title_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
-import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 /// **NotificationMajorCategory**
 /// 모든 학과에 대한 알림 카테고리를 정의한다.
@@ -43,7 +43,7 @@ class _CollegeNotificationCategoryState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BoldTitleText(text: '단과대', size: 20),
+            BoldTitleWidget(text: '단과대', size: 20),
             ...CollegeType.values.map((college) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),

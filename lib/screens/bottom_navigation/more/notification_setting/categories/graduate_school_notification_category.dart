@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/presentation/widgets/bold_title_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
-import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 class GraduateSchoolNotificationCategory extends StatefulWidget {
   const GraduateSchoolNotificationCategory({super.key});
@@ -41,7 +41,7 @@ class _GraduateSchoolNotificationCategoryState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BoldTitleText(text: '대학원', size: 20),
+            BoldTitleWidget(text: '대학원', size: 20),
             ...GraduateSchoolUtils.kGraduateSchoolMappingOnKey.entries
                 .map((entry) {
               return Padding(

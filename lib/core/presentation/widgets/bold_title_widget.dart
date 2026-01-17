@@ -12,18 +12,17 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 
-/// **BoldTitleTile**
-class BoldTitleText extends StatefulWidget {
+class BoldTitleWidget extends StatefulWidget {
   final String text;
   final double size;
 
-  const BoldTitleText({super.key, required this.text, required this.size});
+  const BoldTitleWidget({super.key, required this.text, required this.size});
 
   @override
-  State<BoldTitleText> createState() => _BoldTitleTextState();
+  State<BoldTitleWidget> createState() => _BoldTitleWidgetState();
 }
 
-class _BoldTitleTextState extends State<BoldTitleText> {
+class _BoldTitleWidgetState extends State<BoldTitleWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(

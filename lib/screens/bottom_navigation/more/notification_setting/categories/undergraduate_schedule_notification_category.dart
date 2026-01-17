@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/bold_title_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
-import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 class UndergraduateScheduleNotificationCategory extends StatefulWidget {
   const UndergraduateScheduleNotificationCategory({super.key});
@@ -41,7 +41,7 @@ class _UndergraduateScheduleNotificationCategoryState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BoldTitleText(text: '학사일정', size: 20),
+              BoldTitleWidget(text: '학사일정', size: 20),
               NotificationTile(
                 title: '하루 전 알림',
                 description: '18시에 다음 날 일정을 미리 알려드려요.',
