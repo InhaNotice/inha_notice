@@ -16,6 +16,7 @@ import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
@@ -31,7 +32,6 @@ import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_s
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/dropdowns/keyword_search_dropdown.dart';
-import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/textfields/keyword_search_textfield.dart';
 import 'package:logger/logger.dart';
@@ -363,7 +363,7 @@ class _AbsoluteStyleNoticeBoardState
       child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
-            ? const Center(child: BlueLoadingIndicator())
+            ? const Center(child: BlueLoadingIndicatorWidget())
             : (CustomTabListUtils.isUserSettingType(widget.noticeType) &&
                     !_isUserSettingKey)
                 ? Center(

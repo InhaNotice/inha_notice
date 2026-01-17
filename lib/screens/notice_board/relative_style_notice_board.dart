@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-29
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
@@ -17,7 +18,6 @@ import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/services/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/services/relative_style_scraper/library_scraper.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
-import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -163,7 +163,7 @@ class _RelativeStyleNoticeBoardState
       child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
-            ? const Center(child: BlueLoadingIndicator())
+            ? const Center(child: BlueLoadingIndicatorWidget())
             : SmartRefresher(
                 controller: _refreshController,
                 onRefresh: _onRefresh,

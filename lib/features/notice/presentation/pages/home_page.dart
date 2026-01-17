@@ -12,13 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_state.dart';
 import 'package:inha_notice/injection_container.dart';
 import 'package:inha_notice/screens/bottom_navigation/home/notice_board_tab.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
-import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading || state is HomeInitial) {
-              return const Center(child: BlueLoadingIndicator());
+              return const Center(child: BlueLoadingIndicatorWidget());
             }
             if (state is HomeError) {
               return Center(
