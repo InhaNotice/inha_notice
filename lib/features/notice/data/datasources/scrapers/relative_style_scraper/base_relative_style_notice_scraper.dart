@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-29
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:inha_notice/models/pages_model.dart';
