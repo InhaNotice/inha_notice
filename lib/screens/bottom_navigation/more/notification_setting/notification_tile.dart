@@ -14,7 +14,7 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
-import 'package:inha_notice/firebase/firebase_service.dart';
+import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 
 /// **NotificationTile**
@@ -77,9 +77,9 @@ class _NotificationTileState extends State<NotificationTile> {
 
     try {
       if (value) {
-        await FirebaseService().subscribeToTopic(widget.fcmTopic);
+        await FirebaseRemoteDataSource().subscribeToTopic(widget.fcmTopic);
       } else {
-        await FirebaseService().unsubscribeFromTopic(widget.fcmTopic);
+        await FirebaseRemoteDataSource().unsubscribeFromTopic(widget.fcmTopic);
       }
 
       if (_isSynchronizedWithMajor) {

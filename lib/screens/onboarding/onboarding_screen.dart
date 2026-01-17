@@ -13,7 +13,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/firebase/firebase_service.dart';
+import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Future.delayed(Duration.zero, () {
       if (Platform.isIOS) {
         // 백그라운드 진행
-        FirebaseService().requestPermission();
+        FirebaseRemoteDataSource().requestPermission();
       }
     });
 

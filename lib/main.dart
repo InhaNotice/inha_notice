@@ -16,7 +16,7 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/config/firebase_options.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/firebase/firebase_service.dart';
+import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
@@ -113,7 +113,7 @@ Future<FirebaseApp> _initializeFirebase() async {
   );
 
   // Firebase 서비스 초기화
-  await FirebaseService().initialize();
+  await FirebaseRemoteDataSource().initialize();
 
   return app;
 }

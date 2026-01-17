@@ -20,13 +20,13 @@ import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
-/// **FirebaseService**
 /// 이 클래스는 싱글톤으로 정의된 Firebase Cloud Messaging을 관리하는 클래스입니다.
-class FirebaseService {
+class FirebaseRemoteDataSource {
   // 싱글톤 인스턴스 정의
-  static final FirebaseService _instance = FirebaseService._internal();
+  static final FirebaseRemoteDataSource _instance =
+      FirebaseRemoteDataSource._internal();
 
-  factory FirebaseService() => _instance;
+  factory FirebaseRemoteDataSource() => _instance;
 
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
@@ -35,7 +35,7 @@ class FirebaseService {
       FlutterLocalNotificationsPlugin();
 
   /// 외부에서 객체 생성 방지
-  FirebaseService._internal();
+  FirebaseRemoteDataSource._internal();
 
   FirebaseMessaging get messaging => _messaging;
 
