@@ -123,7 +123,7 @@ class SharedPrefsManager {
   }
 
   /// **알림 설정 통합 함수**
-  Future<void> setPreference(String key, dynamic value) async {
+  Future<void> setValue<T>(String key, T value) async {
     if (!_cache.containsKey(key)) {
       logger.w("설정 키 '$key'가 존재하지 않습니다.");
       return;
@@ -160,7 +160,7 @@ class SharedPrefsManager {
   /// **새로운 학과 설정**
   Future<void> setMajorPreference(
       String? currentMajorKey, String newMajorKey, String majorKeyType) async {
-    setPreference(majorKeyType, newMajorKey);
+    setValue<String>(majorKeyType, newMajorKey);
     logger.d(
         "${runtimeType.toString()} - setMajorKey() 성공: '$currentMajorKey' to '$newMajorKey'");
   }

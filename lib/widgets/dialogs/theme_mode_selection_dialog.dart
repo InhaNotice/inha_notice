@@ -39,7 +39,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
   Future<void> _setThemeMode(String selectedValue) async {
     try {
       await SharedPrefsManager()
-          .setPreference(SharedPrefKeys.kUserThemeSetting, selectedValue);
+          .setValue<String>(SharedPrefKeys.kUserThemeSetting, selectedValue);
 
       // 글로벌 themeModeNotifier 업데이트
       if (selectedValue == AppThemeType.light.text) {

@@ -65,7 +65,8 @@ class _CacheDeletionTileState extends State<CacheDeletionTile> {
     setState(() {
       description = capacity;
     });
-    SharedPrefsManager().setPreference(SharedPrefKeys.kCacheCapacity, capacity);
+    SharedPrefsManager()
+        .setValue<String>(SharedPrefKeys.kCacheCapacity, capacity);
   }
 
   /// **다이얼로그 push -> pop 후, 변경사항 반영**

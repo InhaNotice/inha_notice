@@ -74,7 +74,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
 
   Future<void> saveTabs() async {
     await SharedPrefsManager()
-        .setPreference(SharedPrefKeys.kCustomTabList, selectedTabs);
+        .setValue<List<String>>(SharedPrefKeys.kCustomTabList, selectedTabs);
     // 저장 후 원본 리스트 업데이트
     _initialTabs = List.from(selectedTabs);
   }

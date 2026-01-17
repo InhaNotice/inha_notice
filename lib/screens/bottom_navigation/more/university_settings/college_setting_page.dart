@@ -128,7 +128,7 @@ class _CollegeSettingPageState
 
     try {
       await SharedPrefsManager()
-          .setPreference(SharedPrefKeys.kCollegeKey, newCollegeKey);
+          .setValue<String>(SharedPrefKeys.kCollegeKey, newCollegeKey);
 
       if (mounted) {
         AppSnackBar.success(context, '$item로 설정되었습니다!');

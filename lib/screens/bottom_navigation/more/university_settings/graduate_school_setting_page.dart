@@ -122,8 +122,8 @@ class _GraduateSchoolSettingPageState
     });
 
     try {
-      await SharedPrefsManager().setPreference(
-          SharedPrefKeys.kGraduateSchoolKey, newGraduateSchoolValue);
+      await SharedPrefsManager().setValue<String>(
+          SharedPrefKeys.kGraduateSchoolKey, newGraduateSchoolValue!);
       if (mounted) {
         AppSnackBar.success(context, '$item로 설정되었습니다!');
       }

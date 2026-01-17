@@ -156,7 +156,7 @@ class FirebaseService {
       try {
         await _messaging.subscribeToTopic(SharedPrefKeys.kAllUsers);
         await SharedPrefsManager()
-            .setPreference(SharedPrefKeys.kIsSubscribedToAllUsers, true);
+            .setValue<bool>(SharedPrefKeys.kIsSubscribedToAllUsers, true);
         logger.d(
             "✅ Successfully subscribed to '${SharedPrefKeys.kAllUsers}' topic");
       } catch (e) {
@@ -204,15 +204,15 @@ class FirebaseService {
   /// **구독 리스트 추가(내부 확인용)**
   void _addSubscribedTopic(String topic) {
     _subscribedTopics.add(topic);
-    SharedPrefsManager()
-        .setPreference(SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
+    SharedPrefsManager().setValue<Set<String>>(
+        SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
   }
 
   /// **구독 리스트 제거(내부 확인용)**
   void _removeSubscribedTopic(String topic) {
     _subscribedTopics.remove(topic);
-    SharedPrefsManager()
-        .setPreference(SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
+    SharedPrefsManager().setValue<Set<String>>(
+        SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
   }
 
   /// **푸시 알림 클릭 시 WebPage로 이동**

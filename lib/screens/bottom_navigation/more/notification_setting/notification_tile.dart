@@ -84,9 +84,9 @@ class _NotificationTileState extends State<NotificationTile> {
 
       if (_isSynchronizedWithMajor) {
         await SharedPrefsManager()
-            .setPreference(SharedPrefKeys.kMajorNotification, value);
+            .setValue<bool>(SharedPrefKeys.kMajorNotification, value);
       }
-      await SharedPrefsManager().setPreference(widget.prefKey, value);
+      await SharedPrefsManager().setValue<bool>(widget.prefKey, value);
 
       setState(() {
         _isNotificationOn = value;
