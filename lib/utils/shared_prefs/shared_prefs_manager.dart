@@ -5,10 +5,10 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2026-01-17
  */
 
-import 'package:inha_notice/core/constants/app_theme_constants.dart';
+import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/utils/university_utils/college_utils.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
@@ -27,7 +27,7 @@ class SharedPrefsManager {
   // 캐싱 전략
   static final Map<String, dynamic> _cachedPrefs = {
     // 테마 모드 (기본값: system)
-    SharedPrefKeys.kUserThemeSetting: AppThemeConstants.kSystem,
+    SharedPrefKeys.kUserThemeSetting: AppThemeType.system.text,
     // 캐시 용량
     SharedPrefKeys.kCacheCapacity: null,
     // 구독 리스트

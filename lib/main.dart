@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/constants/app_theme_constants.dart';
+import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/firebase/firebase_options.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
@@ -120,23 +120,23 @@ Future<FirebaseApp> _initializeFirebase() async {
 
 /// **테마 설정 불러오기**
 Future<void> _initializeThemeSetting() async {
-  final logger = Logger();
+  final Logger logger = Logger();
   try {
     final String userThemeSetting = await SharedPrefsManager()
-        .getPreference(SharedPrefKeys.kUserThemeSetting);
-    ThemeMode themeMode;
-    switch (userThemeSetting) {
-      case AppThemeConstants.kLight:
-        themeMode = ThemeMode.light;
-        break;
-      case AppThemeConstants.kDark:
-        themeMode = ThemeMode.dark;
-        break;
-      default:
-        themeMode = ThemeMode.system;
+            .getPreference(SharedPrefKeys.kUserThemeSetting) ??
+        AppThemeType.system.text;
+
+    if (userThemeSetting == AppThemeType.light.text) {
+      themeModeNotifier.value = ThemeMode.light;
+      return;
     }
 
-    themeModeNotifier.value = themeMode;
+    if (userThemeSetting == AppThemeType.dark.text) {
+      themeModeNotifier.value = ThemeMode.dark;
+      return;
+    }
+
+    themeModeNotifier.value = ThemeMode.system;
   } catch (e) {
     logger.e('❌ 테마 설정 불러오기 실패: $e');
   }

@@ -5,12 +5,16 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
-/// **앱 테마 설정 값**
-abstract class AppThemeConstants {
-  static const String kSystem = '시스템 설정';
-  static const String kLight = '화이트';
-  static const String kDark = '다크';
+/// 앱 테마 설정 값
+enum AppThemeType {
+  system('시스템 설정'),
+  light('화이트'),
+  dark('다크');
+
+  final String text;
+
+  const AppThemeType(this.text);
 }
