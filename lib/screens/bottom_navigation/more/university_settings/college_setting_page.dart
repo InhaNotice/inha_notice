@@ -56,7 +56,7 @@ class _CollegeSettingPageState
   @override
   Future<void> loadPreference() async {
     final String? savedKey =
-        await SharedPrefsManager().getPreference(SharedPrefKeys.kCollegeKey);
+        SharedPrefsManager().getValue<String>(SharedPrefKeys.kCollegeKey);
 
     String? convertedName;
     if (savedKey != null) {

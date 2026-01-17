@@ -52,14 +52,17 @@ class _NotificationTileState extends State<NotificationTile> {
   /// **알림 토글의 설정값을 불러옴**
   Future<void> _loadNotificationPreference() async {
     setState(() {
-      majorKey = SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
+      majorKey =
+          SharedPrefsManager().getValue<String>(SharedPrefKeys.kMajorKey);
       // 현재 설정된 나의 학과인 경우, 나의 학과의 설정된 불 값으로 반영
       if (majorKey != null && widget.prefKey == majorKey) {
         _isSynchronizedWithMajor = true;
         _isNotificationOn = SharedPrefsManager()
-            .getPreference(SharedPrefKeys.kMajorNotification);
+                .getValue<bool>(SharedPrefKeys.kMajorNotification) ??
+            false;
       } else {
-        _isNotificationOn = SharedPrefsManager().getPreference(widget.prefKey);
+        _isNotificationOn =
+            SharedPrefsManager().getValue<bool>(widget.prefKey) ?? false;
       }
     });
   }

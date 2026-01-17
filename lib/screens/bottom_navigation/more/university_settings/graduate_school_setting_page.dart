@@ -56,8 +56,8 @@ class _GraduateSchoolSettingPageState
   @override
   Future<void> loadPreference() async {
     setState(() {
-      _graduateSchoolValue =
-          SharedPrefsManager().getPreference(SharedPrefKeys.kGraduateSchoolKey);
+      _graduateSchoolValue = SharedPrefsManager()
+          .getValue<String>(SharedPrefKeys.kGraduateSchoolKey);
       if (_graduateSchoolValue != null) {
         _graduateSchoolKey = GraduateSchoolUtils
             .kGraduateSchoolMappingOnValue[_graduateSchoolValue];

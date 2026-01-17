@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-12-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
@@ -27,7 +27,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     try {
       // 1. SharedPrefs에서 저장된 탭 키 리스트 가져오기
       final List<String>? savedTabs = sharedPrefsManager
-          .getPreference(SharedPrefKeys.kCustomTabList) as List<String>?;
+          .getValue<List<String>>(SharedPrefKeys.kCustomTabList);
 
       late List<String> selectedTabs;
       if (savedTabs == null || savedTabs.isEmpty) {

@@ -62,7 +62,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
   Future<void> loadPreference() async {
     setState(() {
       _currentMajorKey =
-          SharedPrefsManager().getPreference(widget.majorKeyType);
+          SharedPrefsManager().getValue<String>(widget.majorKeyType);
       if (_currentMajorKey != null) {
         _currentMajor =
             CustomTabListUtils.getMajorDisplayName(_currentMajorKey!);

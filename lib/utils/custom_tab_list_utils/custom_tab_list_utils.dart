@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-12-22
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
@@ -80,35 +80,18 @@ abstract class CustomTabListUtils {
   /// **유저 설정 값이 있는 경우, 유저 설정 값을 불러옴.**
   /// noticeType이 유저 설정 값이 없는 경우, null을 리턴
   static String? loadUserSettingKey(String noticeType) {
-    String? userSettingKey;
-    switch (noticeType) {
-      // 학과
-      case CustomTabKeys.MAJOR:
-        userSettingKey =
-            SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey);
-        break;
-      case CustomTabKeys.MAJOR2:
-        userSettingKey =
-            SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey2);
-        break;
-      case CustomTabKeys.MAJOR3:
-        userSettingKey =
-            SharedPrefsManager().getPreference(SharedPrefKeys.kMajorKey3);
-        break;
-      // 단과대
-      case CustomTabKeys.COLLEGE:
-        userSettingKey =
-            SharedPrefsManager().getPreference(SharedPrefKeys.kCollegeKey);
-        break;
-      // 대학원
-      case CustomTabKeys.GRADUATESCHOOL:
-        userSettingKey = SharedPrefsManager()
-            .getPreference(SharedPrefKeys.kGraduateSchoolKey);
-        break;
-      default:
-        break;
-    }
-    return userSettingKey;
+    final SharedPrefsManager prefs = SharedPrefsManager();
+
+    return switch (noticeType) {
+      CustomTabKeys.MAJOR => prefs.getValue<String>(SharedPrefKeys.kMajorKey),
+      CustomTabKeys.MAJOR2 => prefs.getValue<String>(SharedPrefKeys.kMajorKey2),
+      CustomTabKeys.MAJOR3 => prefs.getValue<String>(SharedPrefKeys.kMajorKey3),
+      CustomTabKeys.COLLEGE =>
+        prefs.getValue<String>(SharedPrefKeys.kCollegeKey),
+      CustomTabKeys.GRADUATESCHOOL =>
+        prefs.getValue<String>(SharedPrefKeys.kGraduateSchoolKey),
+      _ => null, // default 케이스
+    };
   }
 
   /// 주어진 학과 키 ([majorKey])에 대응하는 UI 표시용 국문 학과명을 반환한다.

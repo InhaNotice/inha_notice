@@ -12,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/dialogs/theme_mode_selection_dialog.dart';
@@ -38,7 +39,8 @@ class ThemePreferenceTile extends StatefulWidget {
 
 class _ThemePreferenceTileState extends State<ThemePreferenceTile> {
   String description =
-      SharedPrefsManager().getPreference(SharedPrefKeys.kUserThemeSetting);
+      SharedPrefsManager().getValue<String>(SharedPrefKeys.kUserThemeSetting) ??
+          AppThemeType.system.text;
 
   /// **다이얼로그 push -> pop 후, 변경사항 반영**
   Future<void> handleThemePreferenceTap() async {
@@ -47,8 +49,9 @@ class _ThemePreferenceTileState extends State<ThemePreferenceTile> {
       builder: (context) => const ThemeModeSelectionDialog(),
     );
     setState(() {
-      description =
-          SharedPrefsManager().getPreference(SharedPrefKeys.kUserThemeSetting);
+      description = SharedPrefsManager()
+              .getValue<String>(SharedPrefKeys.kUserThemeSetting) ??
+          AppThemeType.system.text;
     });
   }
 

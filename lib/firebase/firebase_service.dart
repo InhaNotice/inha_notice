@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'dart:io';
@@ -43,7 +43,9 @@ class FirebaseService {
 
   /// **캐싱된 구독된 토픽 목록 가져오기**
   Set<String> get _subscribedTopics =>
-      SharedPrefsManager().getPreference(SharedPrefKeys.kSubscribedTopics);
+      SharedPrefsManager()
+          .getValue<Set<String>>(SharedPrefKeys.kSubscribedTopics) ??
+      <String>{};
 
   /// **Firebase 초기화 및 설정**
   /// 순서 보장: 알림 권한 요청 -> 'all-users' 구독 -> 플랫폼별 설정 -> FCM 토큰 출력
@@ -147,7 +149,8 @@ class FirebaseService {
   /// **'all-users' 토픽(앱 공지사항) 구독 (최초 1회)**
   Future<void> _subscribeToAppAnnouncements() async {
     bool isSubscribedUsers = SharedPrefsManager()
-        .getPreference(SharedPrefKeys.kIsSubscribedToAllUsers);
+            .getValue<bool>(SharedPrefKeys.kIsSubscribedToAllUsers) ??
+        false;
 
     if (!isSubscribedUsers) {
       try {

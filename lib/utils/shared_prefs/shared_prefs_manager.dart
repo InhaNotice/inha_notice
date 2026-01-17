@@ -19,13 +19,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// **SharedPrefsManager**
 /// 이 클래스는 싱글톤으로 정의된 shared_preferences를 관리하는 클래스입니다.
 class SharedPrefsManager {
+  // Singleton 정의
   static final SharedPrefsManager _instance = SharedPrefsManager._internal();
-  static final logger = Logger();
+  factory SharedPrefsManager() => _instance;
+  SharedPrefsManager._internal();
 
+  static final Logger logger = Logger();
   SharedPreferences? _prefs;
 
   // 캐싱 전략
-  static final Map<String, dynamic> _cachedPrefs = {
+  static final Map<String, dynamic> _cache = {
     // 테마 모드 (기본값: system)
     SharedPrefKeys.kUserThemeSetting: AppThemeType.system.text,
     // 캐시 용량
@@ -98,10 +101,6 @@ class SharedPrefsManager {
     return graduatePrefs;
   }
 
-  factory SharedPrefsManager() => _instance;
-
-  SharedPrefsManager._internal();
-
   /// **SharedPreferences 초기화**
   Future<void> initialize() async {
     _prefs = await SharedPreferences.getInstance();
@@ -110,27 +109,27 @@ class SharedPrefsManager {
 
   /// **모든 설정을 한 번에 불러와 캐싱**
   Future<void> loadPreferences() async {
-    _cachedPrefs.forEach((key, value) {
+    _cache.forEach((key, value) {
       if (value is bool) {
-        _cachedPrefs[key] = _prefs?.getBool(key) ?? value;
+        _cache[key] = _prefs?.getBool(key) ?? value;
       } else if (value is String?) {
-        _cachedPrefs[key] = _prefs?.getString(key) ?? value;
+        _cache[key] = _prefs?.getString(key) ?? value;
       } else if (value is List<String>) {
-        _cachedPrefs[key] = _prefs?.getStringList(key) ?? value;
+        _cache[key] = _prefs?.getStringList(key) ?? value;
       } else if (value is Set<String>) {
-        _cachedPrefs[key] = _prefs?.getStringList(key)?.toSet() ?? value;
+        _cache[key] = _prefs?.getStringList(key)?.toSet() ?? value;
       }
     });
   }
 
   /// **알림 설정 통합 함수**
   Future<void> setPreference(String key, dynamic value) async {
-    if (!_cachedPrefs.containsKey(key)) {
+    if (!_cache.containsKey(key)) {
       logger.w("설정 키 '$key'가 존재하지 않습니다.");
       return;
     }
 
-    _cachedPrefs[key] = value;
+    _cache[key] = value;
 
     try {
       if (value is bool) {
@@ -148,9 +147,14 @@ class SharedPrefsManager {
     }
   }
 
-  /// **설정 값 가져오기**
-  dynamic getPreference(String key) {
-    return _cachedPrefs[key];
+  /// 설정 값 가져오기
+  /// 사용법 예시: final isDark = SharedPrefsManager().getValue<bool>(Keys.isDark);
+  T? getValue<T>(String key) {
+    final value = _cache[key];
+    if (value is T) {
+      return value;
+    }
+    return null;
   }
 
   /// **새로운 학과 설정**

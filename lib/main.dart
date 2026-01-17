@@ -122,8 +122,8 @@ Future<FirebaseApp> _initializeFirebase() async {
 Future<void> _initializeThemeSetting() async {
   final Logger logger = Logger();
   try {
-    final String userThemeSetting = await SharedPrefsManager()
-            .getPreference(SharedPrefKeys.kUserThemeSetting) ??
+    final String userThemeSetting = SharedPrefsManager()
+            .getValue<String>(SharedPrefKeys.kUserThemeSetting) ??
         AppThemeType.system.text;
 
     if (userThemeSetting == AppThemeType.light.text) {

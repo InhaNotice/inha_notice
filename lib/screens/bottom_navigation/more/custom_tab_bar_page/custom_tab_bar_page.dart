@@ -50,8 +50,8 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
   }
 
   Future<void> loadTabs() async {
-    final List<String>? savedTabs =
-        SharedPrefsManager().getPreference(SharedPrefKeys.kCustomTabList);
+    final List<String>? savedTabs = SharedPrefsManager()
+        .getValue<List<String>>(SharedPrefKeys.kCustomTabList);
     if (savedTabs == null || savedTabs.isEmpty) {
       selectedTabs = List.from(CustomTabListUtils.kDefaultTabs);
     } else {
