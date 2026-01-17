@@ -14,10 +14,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 class CacheDeletionDialog extends StatefulWidget {
   const CacheDeletionDialog({
@@ -39,11 +39,11 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
       ]);
 
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(context, '모두 삭제되었어요!');
+        ThemedSnackBarWidget.succeedSnackBar(context, '모두 삭제되었어요!');
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackBar.failSnackBar(context, '실패하였어요. 다시 시도해보세요.');
+        ThemedSnackBarWidget.failSnackBar(context, '실패하였어요. 다시 시도해보세요.');
       }
     } finally {
       if (mounted) {

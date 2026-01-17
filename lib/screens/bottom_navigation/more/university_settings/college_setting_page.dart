@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/keys/college_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 class CollegeSettingPage extends BaseSettingPage {
@@ -116,7 +116,7 @@ class _CollegeSettingPageState
     // 이미 설정된 값과 동일하면 경고
     if (_collegeKey != null && _collegeKey == newCollegeKey) {
       if (mounted) {
-        ThemedSnackBar.warnSnackBar(context, '이미 설정되어있습니다.');
+        ThemedSnackBarWidget.warnSnackBar(context, '이미 설정되어있습니다.');
       }
       return;
     }
@@ -131,7 +131,7 @@ class _CollegeSettingPageState
           .setPreference(SharedPrefKeys.kCollegeKey, newCollegeKey);
 
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(context, '$item로 설정되었습니다!');
+        ThemedSnackBarWidget.succeedSnackBar(context, '$item로 설정되었습니다!');
       }
       if (mounted) {
         Navigator.pop(context);
@@ -139,7 +139,8 @@ class _CollegeSettingPageState
     } catch (e) {
       logger.e('❌ Error saving college: $e');
       if (mounted) {
-        ThemedSnackBar.failSnackBar(context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
+        ThemedSnackBarWidget.failSnackBar(
+            context, '저장 중 오류가 발생했습니다. 다시 시도해주세요!');
       }
     } finally {
       if (mounted) BlockingDialog.dismiss(context);

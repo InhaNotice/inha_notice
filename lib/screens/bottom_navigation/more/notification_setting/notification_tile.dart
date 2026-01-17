@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 /// **NotificationTile**
 /// 이 클래스는 알림설정 페이지의 알림 온/오프의 동작을 정의합니다.
@@ -90,7 +90,7 @@ class _NotificationTileState extends State<NotificationTile> {
       });
 
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(
+        ThemedSnackBarWidget.succeedSnackBar(
             context,
             value
                 ? '${widget.title}의 알림이 활성화되었습니다.'
@@ -98,7 +98,7 @@ class _NotificationTileState extends State<NotificationTile> {
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackBar.failSnackBar(context, '알림 설정 중 오류가 발생했습니다.');
+        ThemedSnackBarWidget.failSnackBar(context, '알림 설정 중 오류가 발생했습니다.');
       }
     } finally {
       if (mounted) {

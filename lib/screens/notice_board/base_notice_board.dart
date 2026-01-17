@@ -5,15 +5,15 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-29
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 /// **BaseNoticeBoard**
 ///
@@ -65,11 +65,11 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
     if (isNoticeBookmarked(notice['id'])) {
       await BookmarkManager.removeBookmark(notice['id']);
       if (!mounted) return;
-      ThemedSnackBar.succeedSnackBar(context, '삭제되었습니다.');
+      ThemedSnackBarWidget.succeedSnackBar(context, '삭제되었습니다.');
     } else {
       await BookmarkManager.addBookmark(notice);
       if (!mounted) return;
-      ThemedSnackBar.succeedSnackBar(context, '저장되었습니다.');
+      ThemedSnackBarWidget.succeedSnackBar(context, '저장되었습니다.');
     }
     setState(() {});
   }

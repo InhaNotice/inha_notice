@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_save_button.dart';
@@ -20,7 +21,6 @@ import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/c
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/app_bars/themed_action_app_bar.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 /// **CustomTabBarPage**
 /// 사용자는 나만의 탭 구성으로 원하는 공지사항을 볼 수 있습니다.
@@ -86,12 +86,12 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
     try {
       await saveTabs();
       if (mounted) {
-        ThemedSnackBar.succeedSnackBar(context, '저장되었어요.');
+        ThemedSnackBarWidget.succeedSnackBar(context, '저장되었어요.');
       }
       setState(() {}); // 상태 갱신
     } catch (e) {
       if (mounted) {
-        ThemedSnackBar.failSnackBar(context, '문제가 발생하였어요.');
+        ThemedSnackBarWidget.failSnackBar(context, '문제가 발생하였어요.');
       }
     }
   }
@@ -221,7 +221,8 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                         selectedTabs.removeAt(index);
                       });
                     } else {
-                      ThemedSnackBar.warnSnackBar(context, '최소 하나는 선택해야 해요.');
+                      ThemedSnackBarWidget.warnSnackBar(
+                          context, '최소 하나는 선택해야 해요.');
                     }
                   },
                   scrollController: _selectedTabsScrollController,
@@ -258,7 +259,8 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                         selectedTabs.add(tab);
                       });
                     } else {
-                      ThemedSnackBar.warnSnackBar(context, '최대 개수를 넘어갈 수 없어요.');
+                      ThemedSnackBarWidget.warnSnackBar(
+                          context, '최대 개수를 넘어갈 수 없어요.');
                     }
                   },
                   scrollController: _selectedTabsScrollController,

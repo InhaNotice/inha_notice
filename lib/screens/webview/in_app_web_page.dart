@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:logger/logger.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -52,7 +52,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
       }
     } catch (e) {
       if (mounted) {
-        ThemedSnackBar.failSnackBar(context, '웹 페이지 로딩에 실패하였습니다.');
+        ThemedSnackBarWidget.failSnackBar(context, '웹 페이지 로딩에 실패하였습니다.');
       }
     } finally {
       if (mounted) {
@@ -132,7 +132,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
                 );
 
                 if (mounted) {
-                  ThemedSnackBar.succeedSnackBar(
+                  ThemedSnackBarWidget.succeedSnackBar(
                     context,
                     _isDesktopMode ? '데스크탑 모드로 전환되었습니다.' : '모바일 모드로 전환되었습니다.',
                   );

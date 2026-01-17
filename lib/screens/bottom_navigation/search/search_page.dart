@@ -11,12 +11,12 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 
 /// **SearchPage**
@@ -75,7 +75,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _search() async {
     final query = _searchController.text.trim();
     if (query.length < 2) {
-      ThemedSnackBar.warnSnackBar(context, '검색어는 두 글자 이상 입력해주세요.');
+      ThemedSnackBarWidget.warnSnackBar(context, '검색어는 두 글자 이상 입력해주세요.');
       return;
     }
 
@@ -95,12 +95,12 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   /// **최근검색어 모두 삭제**
   void _clearRecentSearchTopics() async {
     if (!RecentSearchManager.isCachedSearchHistory()) {
-      ThemedSnackBar.warnSnackBar(context, '최근 검색어가 존재하지 않아요.');
+      ThemedSnackBarWidget.warnSnackBar(context, '최근 검색어가 존재하지 않아요.');
       return;
     }
     await RecentSearchManager.clearSearchHistory();
     setState(() {
-      ThemedSnackBar.succeedSnackBar(context, '최근 검색어를 모두 삭제하였어요!');
+      ThemedSnackBarWidget.succeedSnackBar(context, '최근 검색어를 모두 삭제하였어요!');
     });
   }
 
@@ -108,7 +108,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   void _removeRecentSearchTopic(String query) async {
     await RecentSearchManager.removeRecentSearch(query);
     setState(() {
-      ThemedSnackBar.succeedSnackBar(context, '$query이 삭제하였어요!');
+      ThemedSnackBarWidget.succeedSnackBar(context, '$query이 삭제하였어요!');
     });
   }
 

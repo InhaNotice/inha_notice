@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
-import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
+import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 
 /// **CustomTabSaveButton**
 /// 커스텀 된 탭 저장 버튼을 제공합니다.
@@ -37,7 +37,7 @@ class CustomTabSaveButton extends StatelessWidget {
       onPressed: hasChanges
           ? () async => await onSave()
           : () {
-              ThemedSnackBar.warnSnackBar(context, '변경사항이 없어요.');
+              ThemedSnackBarWidget.warnSnackBar(context, '변경사항이 없어요.');
             },
       child: Text(
         hasChanges ? "✅" : "☑️",

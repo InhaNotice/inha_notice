@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 
-class ThemedSnackBar {
+class ThemedSnackBarWidget {
   static void succeedSnackBar(BuildContext context, String message) {
     if (Platform.isIOS) {
       ScaffoldMessenger.of(context).showSnackBar(
