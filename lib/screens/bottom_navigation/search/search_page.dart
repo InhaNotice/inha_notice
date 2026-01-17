@@ -13,7 +13,7 @@ import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
-import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
+import 'package:inha_notice/features/search/presentation/pages/search_result_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
