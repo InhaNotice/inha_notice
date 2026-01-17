@@ -18,6 +18,7 @@ import 'package:inha_notice/features/notice/presentation/bloc/home_state.dart';
 import 'package:inha_notice/injection_container.dart';
 import 'package:inha_notice/screens/bottom_navigation/home/notice_board_tab.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
+import 'package:inha_notice/widgets/loading_indicators/blue_loading_indicator.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<HomeBloc>()..add(HomeTabsRequested()),
+      create: (_) => sl<HomeBloc>()..add(LoadHomeTabsEvent()),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading || state is HomeInitial) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: BlueLoadingIndicator());
             }
             if (state is HomeError) {
               return Center(
