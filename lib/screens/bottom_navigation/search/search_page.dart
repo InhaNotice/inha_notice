@@ -11,12 +11,12 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/themed_snack_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
-import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 import 'package:logger/logger.dart';
 
 /// **SearchPage**
@@ -115,7 +115,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ThemedAppBar(title: '검색', titleSize: 20, isCenter: false),
+      appBar:
+          const CommonAppBarWidget(title: '검색', titleSize: 20, isCenter: false),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(

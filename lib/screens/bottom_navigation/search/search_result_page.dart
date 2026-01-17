@@ -5,18 +5,18 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-29
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
+import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/services/search/search_scraper.dart';
-import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:logger/logger.dart';
@@ -124,8 +124,11 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       );
     }
     return Scaffold(
-      appBar: ThemedAppBar(
-          title: '검색 결과: ${widget.query}', titleSize: 17, isCenter: true),
+      appBar: CommonAppBarWidget(
+        title: '검색 결과: ${widget.query}',
+        titleSize: 17,
+        isCenter: true,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

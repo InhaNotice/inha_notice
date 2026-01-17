@@ -5,10 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/college_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/education_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category.dart';
@@ -16,7 +17,6 @@ import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/research_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/undergraduate_schedule_notification_category.dart';
 import 'package:inha_notice/utils/university_utils/major_utils.dart';
-import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 
 import 'notification_major_item.dart';
 
@@ -40,7 +40,8 @@ class _NotificationSettingPageState extends State<NotificationSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ThemedAppBar(title: '알림 설정', titleSize: 20, isCenter: true),
+      appBar: const CommonAppBarWidget(
+          title: '알림 설정', titleSize: 20, isCenter: true),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Column(

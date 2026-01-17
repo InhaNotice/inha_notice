@@ -20,7 +20,8 @@ import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/c
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_selected_list.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/app_bars/themed_action_app_bar.dart';
+
+import '../../../../core/presentation/widgets/common_app_bar_widget.dart';
 
 /// **CustomTabBarPage**
 /// 사용자는 나만의 탭 구성으로 원하는 공지사항을 볼 수 있습니다.
@@ -99,14 +100,16 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemedActionAppBar(
+      appBar: CommonAppBarWidget(
         title: '나만의 탭 설정',
         titleSize: 20,
         isCenter: true,
-        actionWidget: CustomTabSaveButton(
-          hasChanges: hasChanges,
-          onSave: _handleSaveTabs,
-        ),
+        actions: [
+          CustomTabSaveButton(
+            hasChanges: hasChanges,
+            onSave: _handleSaveTabs,
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

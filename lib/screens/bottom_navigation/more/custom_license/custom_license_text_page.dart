@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
+import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 
 /// **CustomLicenseTextPage**
 /// 라이선스 본문을 출력하는 페이지입니다.
@@ -31,7 +31,7 @@ class _CustomLicenseTextPageState extends State<CustomLicenseTextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemedAppBar(
+      appBar: CommonAppBarWidget(
           title: widget.appBarTitle, titleSize: 20, isCenter: true),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(

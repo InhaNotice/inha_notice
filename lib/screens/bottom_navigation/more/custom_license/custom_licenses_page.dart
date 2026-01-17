@@ -5,17 +5,17 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_license/custom_license_text_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_title_tile.dart';
-import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 
 /// **CustomLicensePage**
 /// 라이선스 페이지를 정의합니다.
@@ -55,8 +55,8 @@ class _CustomLicensePageState extends State<CustomLicensePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          const ThemedAppBar(title: '사용된 라이선스', titleSize: 20, isCenter: true),
+      appBar: const CommonAppBarWidget(
+          title: '사용된 라이선스', titleSize: 20, isCenter: true),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: _licensesData.isEmpty
           ? const Center(child: CircularProgressIndicator())

@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/cache_deletetion/cache_deletion_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
@@ -18,7 +19,6 @@ import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_web_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/theme_preference/theme_preference_tile.dart';
-import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 
 import 'custom_license/custom_licenses_page.dart';
 
@@ -59,7 +59,8 @@ class _MorePageState extends State<MorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ThemedAppBar(title: '더보기', titleSize: 20, isCenter: false),
+      appBar: const CommonAppBarWidget(
+          title: '더보기', titleSize: 20, isCenter: false),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Padding(

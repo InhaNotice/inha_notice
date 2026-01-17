@@ -18,19 +18,19 @@ import 'package:inha_notice/core/config/app_theme.dart';
 /// ### 주요 기능:
 /// - 테마(화이트, 다크 모드)가 설정된 AppBar
 /// - Action 위젯 설정 가능
-class ThemedActionAppBar extends StatelessWidget
+class CommonAppBarWidget extends StatelessWidget
     implements PreferredSizeWidget {
   final String title;
   final double titleSize;
   final bool isCenter;
-  final Widget actionWidget;
+  final List<Widget>? actions;
 
-  const ThemedActionAppBar({
+  const CommonAppBarWidget({
     super.key,
     required this.title,
     required this.titleSize,
     required this.isCenter,
-    required this.actionWidget,
+    this.actions,
   });
 
   @override
@@ -48,7 +48,7 @@ class ThemedActionAppBar extends StatelessWidget
               Theme.of(context).defaultThemedTextColor,
         ),
       ),
-      actions: [actionWidget],
+      actions: actions,
     );
   }
 

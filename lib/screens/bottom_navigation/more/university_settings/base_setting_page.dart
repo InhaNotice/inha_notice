@@ -11,7 +11,7 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
+import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 
 abstract class BaseSettingPage extends StatefulWidget {
   const BaseSettingPage({super.key});
@@ -49,7 +49,8 @@ abstract class BaseSettingPageState<T extends BaseSettingPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ThemedAppBar(title: appBarTitle, titleSize: 20, isCenter: true),
+      appBar:
+          CommonAppBarWidget(title: appBarTitle, titleSize: 20, isCenter: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
