@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:inha_notice/core/constants/app_theme_constants.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
@@ -23,6 +24,7 @@ import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
+import 'core/config/app_bloc_observer.dart';
 import 'injection_container.dart' as di;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -31,6 +33,7 @@ final ValueNotifier<ThemeMode> themeModeNotifier =
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
 
   await di.init();
 
