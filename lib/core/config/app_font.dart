@@ -5,15 +5,16 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
-/// **Font**
+/// **AppFont**
 /// 이 클래스는 폰트와 관련된 상수를 정의하는 추상 클래스입니다.
-abstract class Fonts {
-  static const String kDefaultFont = 'Pretendard';
-  static const String kTossFaceFontMac = 'TossFaceFontMac';
-  static const String kNanumGothic = 'NanumGothic';
-  static const String kEmptyString = '';
-  static const int kInitialPage = 1;
+enum AppFont {
+  pretendard('Pretendard'),
+  tossFaceFontMac('TossFaceFontMac'),
+  nanumGothic('NanumGothic');
+
+  final String family;
+  const AppFont(this.family);
 }

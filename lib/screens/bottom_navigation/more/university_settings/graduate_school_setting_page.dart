@@ -5,11 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -87,8 +87,13 @@ class _GraduateSchoolSettingPageState
       itemBuilder: (context, index) {
         final item = _filteredItems[index];
         return ListTile(
-          title: Text(item,
-              style: TextStyle(fontFamily: Fonts.kDefaultFont, fontSize: 18)),
+          title: Text(
+            item,
+            style: TextStyle(
+              fontFamily: AppFont.pretendard.family,
+              fontSize: 18,
+            ),
+          ),
           onTap: () async {
             await handleSelection(item);
           },

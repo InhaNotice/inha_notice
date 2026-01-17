@@ -12,8 +12,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/widgets/dialogs/cache_deletion_dialog.dart';
@@ -101,7 +101,7 @@ class _CacheDeletionTileState extends State<CacheDeletionTile> {
                 Text(
                   widget.title,
                   style: TextStyle(
-                    fontFamily: Fonts.kDefaultFont,
+                    fontFamily: AppFont.pretendard.family,
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -113,7 +113,7 @@ class _CacheDeletionTileState extends State<CacheDeletionTile> {
             Text(
               description,
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogGreyTextColor,

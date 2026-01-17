@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/models/pages_model.dart';
 
 /// **BasePagination**
@@ -64,7 +64,7 @@ abstract class BasePagination extends StatelessWidget {
               child: Text(
                 pageNumber.toString(),
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 14,
                   fontWeight:
                       isCurrentPage ? FontWeight.bold : FontWeight.normal,

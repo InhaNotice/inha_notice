@@ -12,8 +12,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
@@ -60,7 +60,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
         title: Text(
           '캐시 삭제',
           style: TextStyle(
-            fontFamily: Fonts.kDefaultFont,
+            fontFamily: AppFont.pretendard.family,
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -76,7 +76,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
               '읽은 공지, 북마크, 검색 기록이\n모두 깔끔하게 정리돼요!',
               softWrap: true,
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 13,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -95,7 +95,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
             child: Text(
               '취소',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogTextColor,
@@ -107,7 +107,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
             child: Text(
               '삭제',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogDeleteTextColor,
@@ -123,7 +123,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
         title: Text(
           '캐시 삭제',
           style: TextStyle(
-            fontFamily: Fonts.kDefaultFont,
+            fontFamily: AppFont.pretendard.family,
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -134,7 +134,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
           '읽은 공지, 북마크, 검색 기록이\n모두 깔끔하게 정리돼요!',
           softWrap: true,
           style: TextStyle(
-            fontFamily: Fonts.kDefaultFont,
+            fontFamily: AppFont.pretendard.family,
             fontSize: 13,
             fontWeight: FontWeight.normal,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -151,7 +151,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
             child: Text(
               '취소',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogTextColor,
@@ -163,7 +163,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
             child: Text(
               '삭제',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).dialogDeleteTextColor,

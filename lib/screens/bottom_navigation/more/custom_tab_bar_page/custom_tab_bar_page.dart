@@ -10,8 +10,8 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview.dart';
@@ -120,7 +120,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                   TextSpan(
                     text: '나만의 탭 설정으로 ',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).defaultThemedTextColor),
@@ -128,7 +128,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                   TextSpan(
                     text: '원하는 공지사항만',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Theme.of(context).defaultThemedTextColor),
@@ -136,7 +136,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                   TextSpan(
                     text: ' 골라보세요!',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).defaultThemedTextColor),
@@ -148,7 +148,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
             Text(
               '최소 1개부터 최대 7개까지 설정할 수 있어요!',
               style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
                   color: Theme.of(context).defaultThemedTextColor),
@@ -160,7 +160,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                   TextSpan(
                     text: '설정 후, ',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).defaultThemedTextColor),
@@ -168,7 +168,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                   TextSpan(
                     text: '저장버튼',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Theme.of(context).defaultThemedTextColor),
@@ -176,7 +176,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
                   TextSpan(
                     text: '을 꼭 누르세요!',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).defaultThemedTextColor),
@@ -188,7 +188,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
             Text(
               '선택된 탭: ${selectedTabs.length}개',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -232,7 +232,7 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
             Text(
               '추가 가능한 탭: ${availableTabs.length}개',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??

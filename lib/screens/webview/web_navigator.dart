@@ -5,11 +5,10 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/cupertino.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 import 'in_app_web_page.dart';
 
@@ -20,7 +19,7 @@ class WebNavigator {
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            InAppWebPage(url: url ?? Fonts.kEmptyString),
+            InAppWebPage(url: url ?? ''),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return child; // 애니메이션 없이 바로 전환
         },

@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -100,8 +100,13 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
         itemBuilder: (context, index) {
           final major = _filteredMajors[index];
           return ListTile(
-            title: Text(major,
-                style: TextStyle(fontFamily: Fonts.kDefaultFont, fontSize: 18)),
+            title: Text(
+              major,
+              style: TextStyle(
+                fontFamily: AppFont.pretendard.family,
+                fontSize: 18,
+              ),
+            ),
             onTap: () async {
               await handleSelection(major);
             },
@@ -120,7 +125,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
               title: Text(
                 entry.key,
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 19,
                   fontWeight: FontWeight.normal,
                   color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -129,9 +134,13 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
               ),
               children: entry.value.keys.map((major) {
                 return ListTile(
-                  title: Text(major,
-                      style: TextStyle(
-                          fontFamily: Fonts.kDefaultFont, fontSize: 18)),
+                  title: Text(
+                    major,
+                    style: TextStyle(
+                      fontFamily: AppFont.pretendard.family,
+                      fontSize: 18,
+                    ),
+                  ),
                   onTap: () async {
                     await handleSelection(major);
                   },

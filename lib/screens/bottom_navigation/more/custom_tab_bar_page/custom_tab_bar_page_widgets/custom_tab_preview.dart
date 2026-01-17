@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 /// **CustomTabPreview**
 /// 현재 설정된 나만의 탭 구성 미리보기를 제공합니다.
@@ -42,7 +42,7 @@ class CustomTabPreview extends StatelessWidget {
                 label: Text(
                   tab,
                   style: TextStyle(
-                    fontFamily: Fonts.kDefaultFont,
+                    fontFamily: AppFont.pretendard.family,
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).chipText,

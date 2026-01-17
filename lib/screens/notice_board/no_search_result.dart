@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 class NoSearchResult extends StatefulWidget {
   const NoSearchResult({super.key});
@@ -31,7 +31,7 @@ class _NoSearchResultState extends State<NoSearchResult> {
             Text(
               '공지사항을 찾지 못했어요!',
               style: TextStyle(
-                  fontFamily: Fonts.kNanumGothic,
+                  fontFamily: AppFont.nanumGothic.family,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).fixedGreyText),
@@ -47,7 +47,7 @@ class _NoSearchResultState extends State<NoSearchResult> {
                     Text(
                       '아래로 당겨서 새로고침',
                       style: TextStyle(
-                        fontFamily: Fonts.kNanumGothic,
+                        fontFamily: AppFont.nanumGothic.family,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).fixedGreyText,
@@ -56,7 +56,7 @@ class _NoSearchResultState extends State<NoSearchResult> {
                     Text(
                       '을 하거나',
                       style: TextStyle(
-                        fontFamily: Fonts.kNanumGothic,
+                        fontFamily: AppFont.nanumGothic.family,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).fixedGreyText,
@@ -70,7 +70,7 @@ class _NoSearchResultState extends State<NoSearchResult> {
                     Text(
                       '검색 키워드',
                       style: TextStyle(
-                        fontFamily: Fonts.kNanumGothic,
+                        fontFamily: AppFont.nanumGothic.family,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).fixedGreyText,
@@ -79,7 +79,7 @@ class _NoSearchResultState extends State<NoSearchResult> {
                     Text(
                       '를 다시 입력해주세요!',
                       style: TextStyle(
-                        fontFamily: Fonts.kNanumGothic,
+                        fontFamily: AppFont.nanumGothic.family,
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Theme.of(context).fixedGreyText,

@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 /// **NormalDescriptionText**
 /// 이 클래스는 더보기 페이지의 제목 타일을 정의하는 클래스입니다.
@@ -40,7 +40,7 @@ class _NormalDescriptionTextState extends State<NormalDescriptionText> {
           Text(
             widget.text,
             style: TextStyle(
-              fontFamily: Fonts.kDefaultFont,
+              fontFamily: AppFont.pretendard.family,
               fontSize: widget.size,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.bodyMedium?.color ??

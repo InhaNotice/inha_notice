@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -28,7 +28,7 @@ class NotificationTile extends StatefulWidget {
   const NotificationTile({
     super.key,
     required this.title,
-    this.description = Fonts.kEmptyString,
+    this.description = '',
     required this.prefKey,
     required this.fcmTopic,
   });
@@ -121,7 +121,7 @@ class _NotificationTileState extends State<NotificationTile> {
             Text(
               widget.title,
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -144,7 +144,7 @@ class _NotificationTileState extends State<NotificationTile> {
             softWrap: true,
             widget.description,
             style: TextStyle(
-              fontFamily: Fonts.kDefaultFont,
+              fontFamily: AppFont.pretendard.family,
               fontSize: 13,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.bodyMedium?.color ??

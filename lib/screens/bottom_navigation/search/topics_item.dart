@@ -5,11 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 
 class TopicsItem extends StatelessWidget {
@@ -42,7 +42,7 @@ class TopicsItem extends StatelessWidget {
             Text(
               '$rank',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -54,7 +54,7 @@ class TopicsItem extends StatelessWidget {
               child: Text(
                 topic['text'] ?? 'N/A',
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                   color: Theme.of(context).textTheme.bodyLarge?.color,
@@ -69,8 +69,8 @@ class TopicsItem extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     topic['count'] ?? '0', // 상승 수치
-                    style: const TextStyle(
-                      fontFamily: Fonts.kDefaultFont,
+                    style: TextStyle(
+                      fontFamily: AppFont.pretendard.family,
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                       color: Colors.red,
@@ -86,8 +86,8 @@ class TopicsItem extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     topic['count'] ?? '0', // 하락 수치
-                    style: const TextStyle(
-                      fontFamily: Fonts.kDefaultFont,
+                    style: TextStyle(
+                      fontFamily: AppFont.pretendard.family,
                       fontSize: 14,
                       fontWeight: FontWeight.normal,
                       color: Colors.blue,

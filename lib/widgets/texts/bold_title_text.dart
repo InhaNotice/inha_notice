@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 /// **BoldTitleTile**
 class BoldTitleText extends StatefulWidget {
@@ -38,7 +38,7 @@ class _BoldTitleTextState extends State<BoldTitleText> {
           Text(
             widget.text,
             style: TextStyle(
-              fontFamily: Fonts.kDefaultFont,
+              fontFamily: AppFont.pretendard.family,
               fontSize: widget.size,
               fontWeight: FontWeight.w600,
               color: Theme.of(context).textTheme.bodyMedium?.color ??

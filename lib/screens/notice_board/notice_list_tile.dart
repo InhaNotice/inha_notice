@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/screens/webview/web_navigator.dart';
 
 /// **NoticeListTile**
@@ -51,15 +51,12 @@ class _NoticeListTileState extends State<NoticeListTile> {
     final String title = widget.notice.containsKey('title')
         ? widget.notice['title'] ?? '제목이 없는 게시글입니다'
         : '제목이 없는 게시글입니다';
-    final String body = widget.notice.containsKey('body')
-        ? widget.notice['body']
-        : Fonts.kEmptyString;
-    final String date = widget.notice.containsKey('date')
-        ? widget.notice['date']
-        : Fonts.kEmptyString;
-    final String access = widget.notice.containsKey('access')
-        ? widget.notice['access']
-        : Fonts.kEmptyString;
+    final String body =
+        widget.notice.containsKey('body') ? widget.notice['body'] : '';
+    final String date =
+        widget.notice.containsKey('date') ? widget.notice['date'] : '';
+    final String access =
+        widget.notice.containsKey('access') ? widget.notice['access'] : '';
 
     return (widget.notice.containsKey('id') && widget.notice['id'] == null)
         ? const SizedBox.shrink()
@@ -96,7 +93,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
                       Text(
                         title,
                         style: TextStyle(
-                          fontFamily: Fonts.kDefaultFont,
+                          fontFamily: AppFont.pretendard.family,
                           fontSize: 16.0,
                           fontWeight: FontWeight.normal,
                           color: textColor,
@@ -109,7 +106,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontFamily: Fonts.kDefaultFont,
+                            fontFamily: AppFont.pretendard.family,
                             fontSize: 14.0,
                             fontWeight: FontWeight.normal,
                             color: textColor.withValues(alpha: (0.2 * 255)),
@@ -126,7 +123,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
                               Text(
                                 date,
                                 style: TextStyle(
-                                  fontFamily: Fonts.kDefaultFont,
+                                  fontFamily: AppFont.pretendard.family,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,
                                   color:
@@ -138,7 +135,7 @@ class _NoticeListTileState extends State<NoticeListTile> {
                               Text(
                                 '조회 $access',
                                 style: TextStyle(
-                                  fontFamily: Fonts.kDefaultFont,
+                                  fontFamily: AppFont.pretendard.family,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,
                                   color:

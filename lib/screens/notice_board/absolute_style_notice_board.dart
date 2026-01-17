@@ -9,10 +9,10 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
@@ -374,7 +374,7 @@ class _AbsoluteStyleNoticeBoardState
                           Text(
                             '$_noticeTypeDisplayName를 설정해주세요!',
                             style: TextStyle(
-                              fontFamily: Fonts.kDefaultFont,
+                              fontFamily: AppFont.pretendard.family,
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color: Theme.of(context)
@@ -406,7 +406,7 @@ class _AbsoluteStyleNoticeBoardState
                           label: Text(
                             '$_noticeTypeDisplayName 설정하기',
                             style: TextStyle(
-                              fontFamily: Fonts.kDefaultFont,
+                              fontFamily: AppFont.pretendard.family,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context)

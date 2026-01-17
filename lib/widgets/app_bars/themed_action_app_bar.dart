@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 /// **ThemedActionAppBar**
 /// Action 위젯이 포함된 테마가 설정된 AppBar를 정의합니다.
@@ -41,7 +41,7 @@ class ThemedActionAppBar extends StatelessWidget
       title: Text(
         title,
         style: TextStyle(
-          fontFamily: Fonts.kDefaultFont,
+          fontFamily: AppFont.pretendard.family,
           fontWeight: FontWeight.bold,
           fontSize: titleSize,
           color: Theme.of(context).textTheme.bodyMedium?.color ??

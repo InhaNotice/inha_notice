@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
@@ -213,7 +213,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
                   child: Text(
                     "저장된 북마크가 없어요.",
                     style: TextStyle(
-                      fontFamily: Fonts.kDefaultFont,
+                      fontFamily: AppFont.pretendard.family,
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       color: Theme.of(context).textTheme.bodyMedium?.color ??

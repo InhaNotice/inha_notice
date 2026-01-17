@@ -11,8 +11,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/firebase/firebase_service.dart';
 import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
 
@@ -56,10 +56,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Text.rich(
               TextSpan(
                 children: [
-                  const TextSpan(
+                  TextSpan(
                     text: '인',
                     style: TextStyle(
-                      fontFamily: Fonts.kDefaultFont,
+                      fontFamily: AppFont.pretendard.family,
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
@@ -68,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextSpan(
                     text: '하',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -80,10 +80,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Text.rich(
               TextSpan(
                 children: [
-                  const TextSpan(
+                  TextSpan(
                     text: '공',
                     style: TextStyle(
-                      fontFamily: Fonts.kDefaultFont,
+                      fontFamily: AppFont.pretendard.family,
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,
@@ -92,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   TextSpan(
                     text: '지',
                     style: TextStyle(
-                        fontFamily: Fonts.kDefaultFont,
+                        fontFamily: AppFont.pretendard.family,
                         fontSize: 50,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).textTheme.bodyMedium?.color ??

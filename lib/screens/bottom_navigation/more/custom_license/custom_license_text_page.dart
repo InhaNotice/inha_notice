@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/widgets/app_bars/themed_app_bar.dart';
 
 /// **CustomLicenseTextPage**
@@ -46,7 +46,7 @@ class _CustomLicenseTextPageState extends State<CustomLicenseTextPage> {
                   softWrap: true,
                   widget.description,
                   style: TextStyle(
-                    fontFamily: Fonts.kDefaultFont,
+                    fontFamily: AppFont.pretendard.family,
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??

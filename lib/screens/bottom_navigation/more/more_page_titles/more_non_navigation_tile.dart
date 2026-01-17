@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 /// **MoreNonNavigationTile**
 /// 이 클래스는 더보기 페이지의 다른 페이지로 이동하지 않는 타일을 정의합니다.
@@ -49,7 +49,7 @@ class _MoreNonNavigationTileState extends State<MoreNonNavigationTile> {
               Text(
                 widget.title,
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                   color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -61,7 +61,7 @@ class _MoreNonNavigationTileState extends State<MoreNonNavigationTile> {
           Text(
             widget.description,
             style: TextStyle(
-              fontFamily: Fonts.kDefaultFont,
+              fontFamily: AppFont.pretendard.family,
               fontSize: 16,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.bodyMedium?.color ??

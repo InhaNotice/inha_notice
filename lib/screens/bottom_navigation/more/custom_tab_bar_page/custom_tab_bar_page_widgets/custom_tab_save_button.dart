@@ -9,7 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/font/fonts.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 
 /// **CustomTabSaveButton**
@@ -42,7 +42,7 @@ class CustomTabSaveButton extends StatelessWidget {
       child: Text(
         hasChanges ? "✅" : "☑️",
         style: TextStyle(
-          fontFamily: Fonts.kTossFaceFontMac,
+          fontFamily: AppFont.tossFaceFontMac.family,
           fontSize: 25,
         ),
       ),

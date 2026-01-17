@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_result_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/topics_item.dart';
 import 'package:inha_notice/services/trending_topics/trending_topics_api.dart';
@@ -39,8 +39,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
 
   List<Map<String, dynamic>> _topicsList = [];
 
-  String _warning = Fonts.kEmptyString;
-  String _makeTimes = Fonts.kEmptyString;
+  String _warning = '';
+  String _makeTimes = '';
 
   @override
   void initState() {
@@ -58,8 +58,8 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
       setState(() {
         _topicsList = response;
         if (response.isNotEmpty) {
-          _makeTimes = response.first['makeTimes'] ?? Fonts.kEmptyString;
-          _warning = Fonts.kEmptyString;
+          _makeTimes = response.first['makeTimes'] ?? '';
+          _warning = '';
         } else {
           _warning = '인기 검색어가 없어요.';
         }
@@ -151,7 +151,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               controller: _searchController,
               textInputAction: TextInputAction.search,
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontWeight: FontWeight.normal,
                 fontSize: 16,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -160,7 +160,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               decoration: InputDecoration(
                 hintText: '검색어를 입력하세요',
                 hintStyle: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
                   color: Theme.of(context).textFieldTextColor,
                 ),
@@ -197,7 +197,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             Text(
               '최근 검색어',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -209,7 +209,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
               child: Text(
                 '전체삭제',
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -247,7 +247,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             label: Text(
               text,
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -257,7 +257,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             backgroundColor: Theme.of(context).tagBackgroundColor,
             deleteIcon: const Icon(Icons.close, size: 14),
             onDeleted: () => _removeRecentSearchTopic(text),
-            deleteButtonTooltipMessage: Fonts.kEmptyString,
+            deleteButtonTooltipMessage: '',
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             visualDensity: VisualDensity.compact,
             shape: RoundedRectangleBorder(
@@ -283,7 +283,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             Text(
               '실시간 인기 검색어',
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -293,7 +293,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
             Text(
               _makeTimes,
               style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -308,7 +308,7 @@ class _SearchPageState extends State<SearchPage> with TickerProviderStateMixin {
                 child: Text(
                   _warning.isNotEmpty ? _warning : '실시간 인기 검색어를 불러오고 있어요...',
                   style: TextStyle(
-                    fontFamily: Fonts.kDefaultFont,
+                    fontFamily: AppFont.pretendard.family,
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                     color: Theme.of(context).textTheme.bodyMedium?.color ??

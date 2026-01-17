@@ -12,8 +12,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
 import 'package:share_plus/share_plus.dart';
@@ -101,7 +101,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontFamily: Fonts.kDefaultFont,
+              fontFamily: AppFont.pretendard.family,
               fontWeight: FontWeight.bold,
               fontSize: 16,
               color: Theme.of(context).textTheme.bodyMedium?.color ??

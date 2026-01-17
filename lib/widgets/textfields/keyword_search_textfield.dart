@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 class KeywordSearchTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -40,7 +40,7 @@ class _KeywordSearchTextFieldState extends State<KeywordSearchTextField> {
           controller: widget.controller,
           textInputAction: TextInputAction.search,
           style: TextStyle(
-            fontFamily: Fonts.kDefaultFont,
+            fontFamily: AppFont.pretendard.family,
             fontWeight: FontWeight.normal,
             fontSize: 16,
             color: Theme.of(context).textTheme.bodyMedium?.color ??
@@ -49,7 +49,7 @@ class _KeywordSearchTextFieldState extends State<KeywordSearchTextField> {
           decoration: InputDecoration(
             hintText: '검색어를 입력하세요',
             hintStyle: TextStyle(
-              fontFamily: Fonts.kDefaultFont,
+              fontFamily: AppFont.pretendard.family,
               fontSize: 16,
               color: Theme.of(context).textFieldTextColor,
             ),

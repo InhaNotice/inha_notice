@@ -10,8 +10,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_state.dart';
@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
               return Center(
                   child: Text(state.message,
                       style: TextStyle(
-                          fontFamily: Fonts.kDefaultFont,
+                          fontFamily: AppFont.pretendard.family,
                           fontWeight: FontWeight.bold,
                           fontSize: 13)));
             }
@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
               TextSpan(
                 text: '인',
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
                   color: Theme.of(context).fixedBlueText,
                   fontWeight: FontWeight.bold,
@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
               TextSpan(
                 text: '하',
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
                   color: Theme.of(context).fixedLightGreyText,
                   fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
               TextSpan(
                 text: '공',
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
                   color: Theme.of(context).fixedBlueText,
                   fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class HomePage extends StatelessWidget {
               TextSpan(
                 text: '지',
                 style: TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                  fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
                   color: Theme.of(context).fixedLightGreyText,
                   fontWeight: FontWeight.bold,
@@ -139,13 +139,13 @@ class HomePage extends StatelessWidget {
                 indicatorColor: Theme.of(context).tabIndicatorColor,
                 labelColor: Theme.of(context).tabLabelColor,
                 unselectedLabelColor: Theme.of(context).tabUnSelectedLabelColor,
-                labelStyle: const TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                labelStyle: TextStyle(
+                  fontFamily: AppFont.pretendard.family,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),
-                unselectedLabelStyle: const TextStyle(
-                  fontFamily: Fonts.kDefaultFont,
+                unselectedLabelStyle: TextStyle(
+                  fontFamily: AppFont.pretendard.family,
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
                 ),

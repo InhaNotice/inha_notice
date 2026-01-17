@@ -11,8 +11,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/font/fonts.dart';
 
 class ThemedSnackBar {
   static void succeedSnackBar(BuildContext context, String message) {
@@ -22,7 +22,7 @@ class ThemedSnackBar {
           content: Text(
             '✅ $message',
             style: TextStyle(
-                fontFamily: Fonts.kTossFaceFontMac,
+                fontFamily: AppFont.tossFaceFontMac.family,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).snackBarTextColor),
@@ -38,7 +38,7 @@ class ThemedSnackBar {
           content: Text(
             message,
             style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).snackBarTextColor),
@@ -57,7 +57,7 @@ class ThemedSnackBar {
           content: Text(
             '❌ $message',
             style: TextStyle(
-                fontFamily: Fonts.kTossFaceFontMac,
+                fontFamily: AppFont.tossFaceFontMac.family,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).snackBarTextColor),
@@ -73,7 +73,7 @@ class ThemedSnackBar {
           content: Text(
             message,
             style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).snackBarTextColor),
@@ -92,7 +92,7 @@ class ThemedSnackBar {
           content: Text(
             '⚠️ $message',
             style: TextStyle(
-              fontFamily: Fonts.kTossFaceFontMac,
+              fontFamily: AppFont.tossFaceFontMac.family,
               fontSize: 14,
               fontWeight: FontWeight.normal,
               color: Theme.of(context).snackBarTextColor,
@@ -109,7 +109,7 @@ class ThemedSnackBar {
           content: Text(
             message,
             style: TextStyle(
-                fontFamily: Fonts.kDefaultFont,
+                fontFamily: AppFont.pretendard.family,
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
                 color: Theme.of(context).snackBarTextColor),
