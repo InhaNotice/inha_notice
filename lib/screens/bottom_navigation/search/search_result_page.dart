@@ -12,12 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
+import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/services/search/search_scraper.dart';
-import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -150,13 +150,13 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          RoundedToggleButton(
+          RoundedToggleWidget(
               text: '정확도순',
               option: 'RANK',
               isSelected: showRank,
               onTap: toggleOption),
           const SizedBox(width: 10),
-          RoundedToggleButton(
+          RoundedToggleWidget(
               text: '최신순',
               option: 'DATE',
               isSelected: showDate,

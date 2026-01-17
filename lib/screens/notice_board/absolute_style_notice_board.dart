@@ -17,6 +17,7 @@ import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
+import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
@@ -30,7 +31,6 @@ import 'package:inha_notice/services/absolute_style_scraper/inha_design_style_no
 import 'package:inha_notice/services/absolute_style_scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/services/absolute_style_scraper/whole_style_notice_scraper.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
-import 'package:inha_notice/widgets/buttons/rounded_toggle_button.dart';
 import 'package:inha_notice/widgets/dropdowns/keyword_search_dropdown.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:inha_notice/widgets/textfields/keyword_search_textfield.dart';
@@ -306,7 +306,7 @@ class _AbsoluteStyleNoticeBoardState
             // 중요공지가 있을때만 토글 버튼이 생성됩니다.
             if (notices['headline'].isNotEmpty)
               // 중요공지 버튼
-              RoundedToggleButton(
+              RoundedToggleWidget(
                 text: '중요',
                 option: 'headline',
                 isSelected: _isHeadlineSelected,
@@ -314,7 +314,7 @@ class _AbsoluteStyleNoticeBoardState
               ),
             const SizedBox(width: 10),
             // 일반공지 버튼
-            RoundedToggleButton(
+            RoundedToggleWidget(
               text: '일반',
               option: 'general',
               isSelected: _isGeneralSelected,
