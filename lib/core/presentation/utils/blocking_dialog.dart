@@ -5,12 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 
 class BlockingDialog {
+  BlockingDialog._();
+
   /// **사용자가 닫을 수 없는 다이얼로그 표시**
   static void show(BuildContext context) {
     showDialog(

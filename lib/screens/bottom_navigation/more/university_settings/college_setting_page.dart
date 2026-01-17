@@ -13,9 +13,9 @@ import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/keys/college_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
+import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
 import 'package:logger/logger.dart';
 
 class CollegeSettingPage extends BaseSettingPage {
