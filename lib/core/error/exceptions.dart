@@ -8,29 +8,15 @@
  * Latest Updated Date: 2026-01-17
  */
 
-import 'package:equatable/equatable.dart';
-
-import 'error_types.dart';
-
-class LocalDatabaseException extends Equatable implements Exception {
-  final DatabaseErrorType type;
+class LocalDatabaseException implements Exception {
   final String message;
   final Object? error;
 
-  LocalDatabaseException({required this.type, String? message, this.error})
-      : message = message ?? type.defaultMessage;
-
-  @override
-  List<Object?> get props => [type, message, error];
-
-  @override
-  bool? get stringify => true;
+  LocalDatabaseException(this.message, [this.error]);
 
   @override
   String toString() {
-    if (error != null) {
-      return 'LocalDatabaseException: $message (Code: ${type.code}, Cause: $error)';
-    }
-    return 'LocalDatabaseException: $message (Code: ${type.code})';
+    if (error != null) return 'LocalDatabaseException: $message ($error)';
+    return 'LocalDatabaseException: $message';
   }
 }
