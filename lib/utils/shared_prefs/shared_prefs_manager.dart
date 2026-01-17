@@ -9,8 +9,8 @@
  */
 
 import 'package:inha_notice/core/config/app_theme_type.dart';
+import 'package:inha_notice/core/keys/college_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/utils/university_utils/college_utils.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
 import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:logger/logger.dart';
@@ -83,8 +83,8 @@ class SharedPrefsManager {
   /// **단과대 설정값 로딩**
   static Map<String, bool> _buildCollegePrefs() {
     final Map<String, bool> collegePrefs = {};
-    for (final value in CollegeUtils.kCollegeValueList) {
-      collegePrefs[value] = false;
+    for (final key in CollegeType.keys) {
+      collegePrefs[key] = false;
     }
     return collegePrefs;
   }

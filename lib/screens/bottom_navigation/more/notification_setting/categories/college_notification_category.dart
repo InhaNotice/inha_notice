@@ -5,13 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/keys/college_type.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
-import 'package:inha_notice/utils/university_utils/college_utils.dart';
 import 'package:inha_notice/widgets/texts/bold_title_text.dart';
 
 /// **NotificationMajorCategory**
@@ -44,13 +44,13 @@ class _CollegeNotificationCategoryState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BoldTitleText(text: '단과대', size: 20),
-            ...CollegeUtils.kCollegeMappingOnKey.entries.map((entry) {
+            ...CollegeType.values.map((college) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: NotificationTile(
-                  title: entry.key,
-                  prefKey: entry.value,
-                  fcmTopic: entry.value,
+                  title: college.name,
+                  prefKey: college.key,
+                  fcmTopic: college.key,
                 ),
               );
             }),

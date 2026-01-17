@@ -10,10 +10,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
+import 'package:inha_notice/core/keys/college_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/utils/university_utils/college_utils.dart';
 import 'package:inha_notice/widgets/dialogs/blocking_dialog.dart';
 import 'package:inha_notice/widgets/snack_bars/themed_snack_bar.dart';
 import 'package:logger/logger.dart';
@@ -30,10 +30,10 @@ class _CollegeSettingPageState
   final Logger logger = Logger();
 
   // 데이터 원본: 단과대 키 리스트 (국문)와 매핑 (영문)
-  final List<String> _allItems = CollegeUtils.kCollegeKeyList;
+  final List<String> _allItems = CollegeType.names;
   List<String> _filteredItems = [];
+  String? _collegeName;
   String? _collegeKey;
-  String? _collegeValue;
 
   @override
   String get appBarTitle => '단과대 설정';
@@ -45,7 +45,7 @@ class _CollegeSettingPageState
   String get settingType => '단과대';
 
   @override
-  String? get currentSetting => _collegeKey;
+  String? get currentSetting => _collegeName;
 
   @override
   void initState() {
@@ -55,14 +55,21 @@ class _CollegeSettingPageState
 
   @override
   Future<void> loadPreference() async {
-    setState(() {
-      _collegeValue =
-          SharedPrefsManager().getPreference(SharedPrefKeys.kCollegeKey);
-      if (_collegeValue != null) {
-        _collegeKey = CollegeUtils.kCollegeMappingOnValue[_collegeValue];
-      }
-      _filteredItems = _allItems;
-    });
+    final String? savedKey =
+        await SharedPrefsManager().getPreference(SharedPrefKeys.kCollegeKey);
+
+    String? convertedName;
+    if (savedKey != null) {
+      convertedName = CollegeType.getByKey(savedKey).name;
+    }
+
+    if (mounted) {
+      setState(() {
+        _collegeKey = savedKey; // 영어 키 저장
+        _collegeName = convertedName; // 한글 이름 저장
+        _filteredItems = _allItems; // 필터 초기화
+      });
+    }
   }
 
   @override
@@ -104,10 +111,10 @@ class _CollegeSettingPageState
   @override
   Future<void> handleSelection(String item) async {
     if (isProcessing) return;
-    String? newCollegeValue = CollegeUtils.kCollegeMappingOnKey[item];
+    String? newCollegeKey = CollegeType.getByName(item).key;
 
     // 이미 설정된 값과 동일하면 경고
-    if (_collegeValue != null && _collegeValue == newCollegeValue) {
+    if (_collegeKey != null && _collegeKey == newCollegeKey) {
       if (mounted) {
         ThemedSnackBar.warnSnackBar(context, '이미 설정되어있습니다.');
       }
@@ -121,7 +128,7 @@ class _CollegeSettingPageState
 
     try {
       await SharedPrefsManager()
-          .setPreference(SharedPrefKeys.kCollegeKey, newCollegeValue);
+          .setPreference(SharedPrefKeys.kCollegeKey, newCollegeKey);
 
       if (mounted) {
         ThemedSnackBar.succeedSnackBar(context, '$item로 설정되었습니다!');
