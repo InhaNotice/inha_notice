@@ -9,7 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/theme/theme.dart';
+import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_major_item.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
 import 'package:inha_notice/widgets/texts/bold_title_text.dart';

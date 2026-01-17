@@ -5,13 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/core/theme/theme.dart';
 
 class KeywordSearchDropdown extends StatefulWidget {
   final String value;

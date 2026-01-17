@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-25
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/font/fonts.dart';
-import 'package:inha_notice/core/theme/theme.dart';
 
 /// **NormalDescriptionText**
 /// 이 클래스는 더보기 페이지의 제목 타일을 정의하는 클래스입니다.

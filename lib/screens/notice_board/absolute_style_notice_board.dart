@@ -5,17 +5,17 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-12-16
+ * Latest Updated Date: 2026-01-17
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/font/fonts.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/core/theme/theme.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
