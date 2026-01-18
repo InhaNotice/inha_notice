@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'dart:io';
@@ -15,7 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
-import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
+import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 
@@ -33,7 +34,7 @@ class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
   Future<void> _deleteAllCaches() async {
     try {
       await Future.wait([
-        BookmarkManager.clearAllBookmarks(),
+        di.sl<BookmarkLocalDataSource>().clearBookmarks(),
         ReadNoticeManager.clearAllReadNotices(),
         RecentSearchManager.clearSearchHistory()
       ]);

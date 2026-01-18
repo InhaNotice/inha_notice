@@ -13,7 +13,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:inha_notice/core/constants/status_code_constants.dart';
-import 'package:inha_notice/features/notice/data/datasources/scrapers/relative_style_scraper//base_relative_style_notice_scraper.dart';
+import 'package:inha_notice/features/notice/data/datasources/scrapers/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/models/pages_model.dart';
 
 /// **LibraryScraper**

@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:firebase_core/firebase_core.dart';
@@ -18,13 +18,13 @@ import 'package:inha_notice/core/config/firebase_options.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
-import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
 
 import 'core/config/app_bloc_observer.dart';
+import 'features/bookmark/data/datasources/bookmark_local_data_source.dart';
 import 'injection_container.dart' as di;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -96,7 +96,7 @@ Future<void> _initializeStorage() async {
   try {
     await Future.wait([
       SharedPrefsManager().initialize(),
-      BookmarkManager.initialize(),
+      di.sl<BookmarkLocalDataSource>().initialize(),
       ReadNoticeManager.initialize(),
       RecentSearchManager.initialize(),
     ]);

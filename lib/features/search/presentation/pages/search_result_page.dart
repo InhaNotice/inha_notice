@@ -12,13 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
+import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
 import 'package:inha_notice/features/search/data/datasources/search_scraper.dart';
 import 'package:inha_notice/models/pages_model.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
-import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
+import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -57,7 +58,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
     _refreshController.refreshCompleted();
   }
 
-  @override
   Future<void> initialize() async {
     try {
       await loadNotices(PageConstants.kInitialRelativePage);
@@ -66,7 +66,6 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
     }
   }
 
-  @override
   void toggleOption(String option) {
     setState(() {
       if (option == 'RANK') {
@@ -185,8 +184,8 @@ class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
                     final isRead = isNoticeRead(notice['id'].toString());
                     final isBookmarked =
                         isNoticeBookmarked(notice['id'].toString());
-                    return NoticeListTile(
-                      notice: notice,
+                    return NoticeTileWidget(
+                      notice: NoticeTileModel.fromMap(notice),
                       isRead: isRead,
                       isBookmarked: isBookmarked,
                       markNoticeAsRead: markNoticeAsRead,

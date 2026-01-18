@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:flutter/material.dart';
@@ -16,7 +16,9 @@ import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/major_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
+import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/inha_design_style_notice_scraper.dart';
@@ -28,7 +30,6 @@ import 'package:inha_notice/screens/bottom_navigation/more/university_settings/g
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/no_search_result.dart';
-import 'package:inha_notice/screens/notice_board/notice_list_tile.dart';
 import 'package:inha_notice/screens/pagination/absolute_style_pagination.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/widgets/dropdowns/keyword_search_dropdown.dart';
@@ -89,7 +90,6 @@ class _AbsoluteStyleNoticeBoardState
   }
 
   /// 초기화 순서(순서를 보장해야함): 스크래퍼 초기화 -> 공지사항 불러오기
-  @override
   Future<void> initialize() async {
     try {
       await _initializeScraper();
@@ -99,7 +99,6 @@ class _AbsoluteStyleNoticeBoardState
     }
   }
 
-  @override
   void toggleOption(String option) {
     setState(() {
       if (option == 'headline') {
@@ -442,8 +441,8 @@ class _AbsoluteStyleNoticeBoardState
                                   isNoticeRead(notice['id'].toString());
                               final isBookmarked =
                                   isNoticeBookmarked(notice['id'].toString());
-                              return NoticeListTile(
-                                notice: notice,
+                              return NoticeTileWidget(
+                                notice: NoticeTileModel.fromMap(notice),
                                 isRead: isRead,
                                 isBookmarked: isBookmarked,
                                 markNoticeAsRead: markNoticeAsRead,

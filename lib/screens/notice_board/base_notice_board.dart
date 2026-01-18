@@ -5,14 +5,16 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
+import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
+import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/models/pages_model.dart';
-import 'package:inha_notice/utils/bookmark/bookmark_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 
 /// **BaseNoticeBoard**
@@ -29,11 +31,6 @@ abstract class BaseNoticeBoard extends StatefulWidget {
 
 abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
     extends State<T> {
-  // 추상 메서드
-  Future<void> initialize();
-
-  void toggleOption(String option);
-
   Map<String, dynamic> notices = {
     'headline': [],
     'general': [],
@@ -51,7 +48,7 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
 
   /// **공지 북마크 여부 확인 (캐싱 활용)**
   bool isNoticeBookmarked(String noticeId) {
-    return BookmarkManager.isBookmarked(noticeId);
+    return di.sl<BookmarkLocalDataSource>().isBookmarked(noticeId);
   }
 
   /// **공지 읽음 처리 (캐싱 활용)**
@@ -61,13 +58,13 @@ abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
   }
 
   /// **공지의 북마크 상태 토글 (캐싱 반영)**
-  Future<void> toggleBookmark(Map<String, dynamic> notice) async {
-    if (isNoticeBookmarked(notice['id'])) {
-      await BookmarkManager.removeBookmark(notice['id']);
+  Future<void> toggleBookmark(NoticeTileModel notice) async {
+    if (isNoticeBookmarked(notice.id)) {
+      await di.sl<BookmarkLocalDataSource>().removeBookmark(notice.id);
       if (!mounted) return;
       AppSnackBar.success(context, '삭제되었습니다.');
     } else {
-      await BookmarkManager.addBookmark(notice);
+      await di.sl<BookmarkLocalDataSource>().addBookmark(notice);
       if (!mounted) return;
       AppSnackBar.success(context, '저장되었습니다.');
     }
