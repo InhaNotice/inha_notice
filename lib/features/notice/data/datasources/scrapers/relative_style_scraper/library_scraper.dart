@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/core/constants/status_code_constants.dart';
+import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/models/pages_model.dart';
 
@@ -74,7 +74,7 @@ class LibraryScraper extends BaseRelativeStyleNoticeScraper {
     var response = await http.get(connectUrl);
     List<Map<String, String>> results = [];
 
-    if (response.statusCode == StatusCodeConstants.kStatusOkay) {
+    if (response.statusCode == StatusCode.OK) {
       final data = json.decode(response.body);
       final List<dynamic> notices = data["data"]?["list"];
       for (var notice in notices) {

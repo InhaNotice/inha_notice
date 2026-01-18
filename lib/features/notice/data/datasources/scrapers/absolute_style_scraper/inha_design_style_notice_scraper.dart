@@ -5,13 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:inha_notice/core/constants//status_code_constants.dart';
+import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
@@ -38,7 +38,7 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       final String connectUrl = '$queryUrl$page';
       final response = await http.get(Uri.parse(connectUrl));
 
-      if (response.statusCode == StatusCodeConstants.kStatusOkay) {
+      if (response.statusCode == StatusCode.OK) {
         final document = parse(response.body);
 
         // 디자인융합학과는 중요 공지가 존재하지 않음
