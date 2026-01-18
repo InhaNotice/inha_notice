@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-19
  */
 
 class LocalDatabaseException implements Exception {
@@ -18,5 +18,18 @@ class LocalDatabaseException implements Exception {
   String toString() {
     if (error != null) return 'LocalDatabaseException: $message ($error)';
     return 'LocalDatabaseException: $message';
+  }
+}
+
+class ServerException implements Exception {
+  final String message;
+  final Object? error;
+
+  ServerException(this.message, [this.error]);
+
+  @override
+  String toString() {
+    if (error != null) return 'ServerException: $message ($error)';
+    return 'ServerException: $message';
   }
 }
