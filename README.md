@@ -64,8 +64,7 @@ subscribe only to the notices that matter to them.
 - **Notion**: [Click](https://inha-notice.notion.site/)
 - **iOS** (iPhone, iPad,
   Mac): [Download on the App Store](https://apps.apple.com/app/인하공지/id6740850198)
-- **Android
-  **: [Download on Google Play](https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&pcampaignid=web_share)
+- **Android**: [Download on Google Play](https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&pcampaignid=web_share)
 
 ## 📂 Project structure
 
