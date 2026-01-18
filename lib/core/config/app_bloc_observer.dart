@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,11 +44,10 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    logger
-        .d('twisted_rightwards_arrows [State Transition] ${bloc.runtimeType}\n'
-            '   Current: ${transition.currentState}\n'
-            '   Event:   ${transition.event}\n'
-            '   Next:    ${transition.nextState}');
+    logger.d('${bloc.runtimeType}\n'
+        '   Current: ${transition.currentState}\n'
+        '   Event:   ${transition.event}\n'
+        '   Next:    ${transition.nextState}');
   }
 
   /// 4. onError
