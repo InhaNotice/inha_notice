@@ -178,10 +178,17 @@ class _SearchPageViewState extends State<_SearchPageView> {
         ),
         const SizedBox(height: 8),
         if (recentSearches.isEmpty)
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
-            child:
-                Text("최근 검색 기록이 없습니다.", style: TextStyle(color: Colors.grey)),
+            child: Text(
+              "최근 검색 기록이 없습니다.",
+              style: TextStyle(
+                fontFamily: AppFont.pretendard.family,
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: Theme.of(context).fixedGreyText,
+              ),
+            ),
           )
         else
           Wrap(

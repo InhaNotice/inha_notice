@@ -128,7 +128,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
               const Spacer(),
               IconButton(
                 icon: Icon(
-                  Icons.delete_forever_outlined,
+                  Icons.delete_outline_rounded,
                   color: Theme.of(context).iconTheme.color,
                   size: 25,
                 ),
@@ -174,33 +174,48 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
             );
           }
           if (state is BookmarkLoaded) {
-            return SmartRefresher(
-              controller: _refreshController,
-              onRefresh: () async {
-                final Completer completer = Completer();
-                context.read<BookmarkBloc>().add(
-                      LoadBookmarksEvent(isRefresh: true, completer: completer),
-                    );
-                await completer.future;
+            if (state.bookmarks.isEmpty) {
+              return Center(
+                child: Text(
+                  '북마크한 공지사항이 없어요.',
+                  style: TextStyle(
+                    fontFamily: AppFont.pretendard.family,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    color: Theme.of(context).fixedGreyText,
+                  ),
+                ),
+              );
+            } else {
+              return SmartRefresher(
+                controller: _refreshController,
+                onRefresh: () async {
+                  final Completer completer = Completer();
+                  context.read<BookmarkBloc>().add(
+                        LoadBookmarksEvent(
+                            isRefresh: true, completer: completer),
+                      );
+                  await completer.future;
 
-                _refreshController.refreshCompleted();
-              },
-              header: const BookmarkRefreshHeader(),
-              child: ListView.builder(
-                itemCount: state.bookmarks.length,
-                itemBuilder: (context, index) {
-                  final NoticeTileModel notice = state.bookmarks[index];
-                  final bool isRead = isNoticeRead(notice.id);
-                  return NoticeTileWidget(
-                    notice: notice,
-                    isRead: isRead,
-                    isBookmarked: isNoticeBookmarked(notice.id),
-                    markNoticeAsRead: markNoticeAsRead,
-                    toggleBookmark: toggleBookmark,
-                  );
+                  _refreshController.refreshCompleted();
                 },
-              ),
-            );
+                header: const BookmarkRefreshHeader(),
+                child: ListView.builder(
+                  itemCount: state.bookmarks.length,
+                  itemBuilder: (context, index) {
+                    final NoticeTileModel notice = state.bookmarks[index];
+                    final bool isRead = isNoticeRead(notice.id);
+                    return NoticeTileWidget(
+                      notice: notice,
+                      isRead: isRead,
+                      isBookmarked: isNoticeBookmarked(notice.id),
+                      markNoticeAsRead: markNoticeAsRead,
+                      toggleBookmark: toggleBookmark,
+                    );
+                  },
+                ),
+              );
+            }
           }
 
           return const SizedBox();
