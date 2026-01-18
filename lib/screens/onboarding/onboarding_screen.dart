@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'dart:io';
@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Future.delayed(Duration.zero, () {
       if (Platform.isIOS) {
         // 백그라운드 진행
-        FirebaseRemoteDataSource().requestPermission();
+        di.sl<FirebaseRemoteDataSource>().requestPermission();
       }
     });
 

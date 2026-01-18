@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:flutter/foundation.dart';
@@ -15,6 +15,7 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_save_button.dart';
@@ -50,7 +51,8 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
   }
 
   Future<void> loadTabs() async {
-    final List<String>? savedTabs = SharedPrefsManager()
+    final List<String>? savedTabs = di
+        .sl<SharedPrefsManager>()
         .getValue<List<String>>(SharedPrefKeys.kCustomTabList);
     if (savedTabs == null || savedTabs.isEmpty) {
       selectedTabs = List.from(CustomTabListUtils.kDefaultTabs);
@@ -73,7 +75,8 @@ class _CustomTabBarPageState extends State<CustomTabBarPage> {
   }
 
   Future<void> saveTabs() async {
-    await SharedPrefsManager()
+    await di
+        .sl<SharedPrefsManager>()
         .setValue<List<String>>(SharedPrefKeys.kCustomTabList, selectedTabs);
     // 저장 후 원본 리스트 업데이트
     _initialTabs = List.from(selectedTabs);

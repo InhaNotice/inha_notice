@@ -5,14 +5,15 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
- */
+ * Latest Updated Date: 2026-01-18
+*/
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -62,7 +63,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
   Future<void> loadPreference() async {
     setState(() {
       _currentMajorKey =
-          SharedPrefsManager().getValue<String>(widget.majorKeyType);
+          di.sl<SharedPrefsManager>().getValue<String>(widget.majorKeyType);
       if (_currentMajorKey != null) {
         _currentMajor =
             CustomTabListUtils.getMajorDisplayName(_currentMajorKey!);
@@ -168,7 +169,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
       BlockingDialog.show(context);
     });
     try {
-      await SharedPrefsManager().setMajorPreference(
+      await di.sl<SharedPrefsManager>().setMajorPreference(
           _currentMajorKey, newMajorKey!, widget.majorKeyType);
       if (mounted) {
         AppSnackBar.success(context, '$item로 설정되었습니다!');

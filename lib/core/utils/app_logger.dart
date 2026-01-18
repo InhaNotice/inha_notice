@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:logger/logger.dart';
@@ -23,6 +23,10 @@ class AppLogger {
 
   static void d(String message) {
     _logger.d(message);
+  }
+
+  static void w(String message) {
+    _logger.w(message);
   }
 
   static void e(String message, [Object? error, StackTrace? stackTrace]) {

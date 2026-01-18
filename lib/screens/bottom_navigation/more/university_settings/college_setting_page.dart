@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import 'package:inha_notice/core/keys/college_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:logger/logger.dart';
@@ -55,8 +56,9 @@ class _CollegeSettingPageState
 
   @override
   Future<void> loadPreference() async {
-    final String? savedKey =
-        SharedPrefsManager().getValue<String>(SharedPrefKeys.kCollegeKey);
+    final String? savedKey = di
+        .sl<SharedPrefsManager>()
+        .getValue<String>(SharedPrefKeys.kCollegeKey);
 
     String? convertedName;
     if (savedKey != null) {
@@ -127,7 +129,8 @@ class _CollegeSettingPageState
     });
 
     try {
-      await SharedPrefsManager()
+      await di
+          .sl<SharedPrefsManager>()
           .setValue<String>(SharedPrefKeys.kCollegeKey, newCollegeKey);
 
       if (mounted) {

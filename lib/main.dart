@@ -16,12 +16,12 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/config/firebase_options.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/utils/app_logger.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:logger/logger.dart';
 
 import 'core/config/app_bloc_observer.dart';
 import 'features/bookmark/data/datasources/bookmark_local_data_source.dart';
@@ -37,9 +37,25 @@ Future<void> main() async {
 
   await di.init();
 
-  await _initializeApp();
-  // FCM 초기화는 백그라운드에서 진행
-  await _initializeFirebase();
+  await dotenv.load(fileName: '.env');
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  try {
+    await Future.wait([
+      di.sl<BookmarkLocalDataSource>().initialize(),
+      di.sl<SharedPrefsManager>().initialize(),
+      di.sl<FirebaseRemoteDataSource>().initialize(),
+      ReadNoticeManager.initialize(),
+      RecentSearchManager.initialize(),
+    ]);
+  } catch (e, stackTrace) {
+    AppLogger.e('앱 초기화 작업 중 일부 실패: $e');
+    AppLogger.e('$stackTrace');
+  }
+
   // 테마 설정 불러오기
   await _initializeThemeSetting();
 
@@ -56,16 +72,6 @@ class MyApp extends StatefulWidget {
 
 /// MyAppState 클래스 정의
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<ThemeMode>(
@@ -84,45 +90,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 }
 
-/// **앱 초기화**
-Future<void> _initializeApp() async {
-  await dotenv.load(fileName: ".env");
-  await _initializeStorage();
-}
-
-/// **데이터베이스 초기화**
-Future<void> _initializeStorage() async {
-  final Logger logger = Logger();
-  try {
-    await Future.wait([
-      SharedPrefsManager().initialize(),
-      di.sl<BookmarkLocalDataSource>().initialize(),
-      ReadNoticeManager.initialize(),
-      RecentSearchManager.initialize(),
-    ]);
-  } catch (e, stackTrace) {
-    logger.e('Error initializing storage: $e');
-    logger.e('Stack trace: $stackTrace');
-  }
-}
-
-/// **Firebase 초기화 함수 (싱글톤 적용)**
-Future<FirebaseApp> _initializeFirebase() async {
-  final app = await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  // Firebase 서비스 초기화
-  await FirebaseRemoteDataSource().initialize();
-
-  return app;
-}
-
 /// **테마 설정 불러오기**
 Future<void> _initializeThemeSetting() async {
-  final Logger logger = Logger();
   try {
-    final String userThemeSetting = SharedPrefsManager()
+    final String userThemeSetting = di
+            .sl<SharedPrefsManager>()
             .getValue<String>(SharedPrefKeys.kUserThemeSetting) ??
         AppThemeType.system.text;
 
@@ -138,6 +110,7 @@ Future<void> _initializeThemeSetting() async {
 
     themeModeNotifier.value = ThemeMode.system;
   } catch (e) {
-    logger.e('❌ 테마 설정 불러오기 실패: $e');
+    AppLogger.e('테마 설정 불러오기 실패 (기본값 적용): $e');
+    themeModeNotifier.value = ThemeMode.system;
   }
 }

@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'dart:io';
@@ -17,6 +17,7 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 
@@ -38,7 +39,8 @@ class ThemeModeSelectionDialog extends StatefulWidget {
 class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
   Future<void> _setThemeMode(String selectedValue) async {
     try {
-      await SharedPrefsManager()
+      await di
+          .sl<SharedPrefsManager>()
           .setValue<String>(SharedPrefKeys.kUserThemeSetting, selectedValue);
 
       // 글로벌 themeModeNotifier 업데이트

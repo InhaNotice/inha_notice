@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:inha_notice/core/config/app_theme_type.dart';
@@ -19,13 +19,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// **SharedPrefsManager**
 /// 이 클래스는 싱글톤으로 정의된 shared_preferences를 관리하는 클래스입니다.
 class SharedPrefsManager {
-  // Singleton 정의
-  static final SharedPrefsManager _instance = SharedPrefsManager._internal();
-  factory SharedPrefsManager() => _instance;
-  SharedPrefsManager._internal();
+  SharedPreferences? _prefs;
+  SharedPrefsManager(this._prefs);
 
   static final Logger logger = Logger();
-  SharedPreferences? _prefs;
 
   // 캐싱 전략
   static final Map<String, dynamic> _cache = {

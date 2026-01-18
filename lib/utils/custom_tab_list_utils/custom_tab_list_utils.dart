@@ -5,11 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/utils/university_utils/major_utils.dart';
 
@@ -80,7 +81,7 @@ abstract class CustomTabListUtils {
   /// **유저 설정 값이 있는 경우, 유저 설정 값을 불러옴.**
   /// noticeType이 유저 설정 값이 없는 경우, null을 리턴
   static String? loadUserSettingKey(String noticeType) {
-    final SharedPrefsManager prefs = SharedPrefsManager();
+    final SharedPrefsManager prefs = di.sl<SharedPrefsManager>();
 
     return switch (noticeType) {
       CustomTabKeys.MAJOR => prefs.getValue<String>(SharedPrefKeys.kMajorKey),

@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
@@ -56,7 +57,8 @@ class _GraduateSchoolSettingPageState
   @override
   Future<void> loadPreference() async {
     setState(() {
-      _graduateSchoolValue = SharedPrefsManager()
+      _graduateSchoolValue = di
+          .sl<SharedPrefsManager>()
           .getValue<String>(SharedPrefKeys.kGraduateSchoolKey);
       if (_graduateSchoolValue != null) {
         _graduateSchoolKey = GraduateSchoolUtils
@@ -122,7 +124,7 @@ class _GraduateSchoolSettingPageState
     });
 
     try {
-      await SharedPrefsManager().setValue<String>(
+      await di.sl<SharedPrefsManager>().setValue<String>(
           SharedPrefKeys.kGraduateSchoolKey, newGraduateSchoolValue!);
       if (mounted) {
         AppSnackBar.success(context, '$item로 설정되었습니다!');

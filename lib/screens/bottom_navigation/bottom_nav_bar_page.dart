@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/features/bookmark/presentation/pages/bookmark_page.dart';
 import 'package:inha_notice/features/notice/presentation/pages/home_page.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/search/search_page.dart';
 import 'package:inha_notice/screens/webview/web_navigator.dart';
@@ -43,7 +44,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
 
   Future<void> _loadWebPage() async {
     RemoteMessage? initialMessage =
-        await FirebaseRemoteDataSource().getInitialNotification();
+        await di.sl<FirebaseRemoteDataSource>().getInitialNotification();
     final String? initialLink = initialMessage?.data['link'];
 
     // 읽은 공지로 추가 (백그라운드 진행)

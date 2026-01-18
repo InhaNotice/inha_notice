@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'dart:io';
@@ -14,37 +14,29 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/utils/app_logger.dart';
 import 'package:inha_notice/main.dart';
 import 'package:inha_notice/screens/webview//web_navigator.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:logger/logger.dart';
 
 /// 이 클래스는 싱글톤으로 정의된 Firebase Cloud Messaging을 관리하는 클래스입니다.
 class FirebaseRemoteDataSource {
-  // 싱글톤 인스턴스 정의
-  static final FirebaseRemoteDataSource _instance =
-      FirebaseRemoteDataSource._internal();
+  final FirebaseMessaging _messaging;
+  final FlutterLocalNotificationsPlugin _localNotifications;
+  final SharedPrefsManager _prefsManager;
 
-  factory FirebaseRemoteDataSource() => _instance;
-
-  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-
-  /// Foreground 알림을 위해 FlutterLocalNotificationsPlugin 추가
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  /// 외부에서 객체 생성 방지
-  FirebaseRemoteDataSource._internal();
-
-  FirebaseMessaging get messaging => _messaging;
-
-  static final logger = Logger();
+  FirebaseRemoteDataSource({
+    required FirebaseMessaging messaging,
+    required FlutterLocalNotificationsPlugin localNotifications,
+    required SharedPrefsManager prefsManager,
+  })  : _messaging = messaging,
+        _localNotifications = localNotifications,
+        _prefsManager = prefsManager;
 
   /// **캐싱된 구독된 토픽 목록 가져오기**
   Set<String> get _subscribedTopics =>
-      SharedPrefsManager()
-          .getValue<Set<String>>(SharedPrefKeys.kSubscribedTopics) ??
+      _prefsManager.getValue<Set<String>>(SharedPrefKeys.kSubscribedTopics) ??
       <String>{};
 
   /// **Firebase 초기화 및 설정**
@@ -102,7 +94,7 @@ class FirebaseRemoteDataSource {
 
   /// **iOS Foreground 알림 표시 설정**
   Future<void> _configureForegroundPresentationOptions() async {
-    await messaging.setForegroundNotificationPresentationOptions(
+    await _messaging.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
@@ -116,7 +108,7 @@ class FirebaseRemoteDataSource {
     final initializationSettings =
         InitializationSettings(android: androidSettings);
 
-    await flutterLocalNotificationsPlugin.initialize(
+    await _localNotifications.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         if (response.payload != null) {
@@ -126,7 +118,7 @@ class FirebaseRemoteDataSource {
       },
     );
 
-    await flutterLocalNotificationsPlugin
+    await _localNotifications
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(const AndroidNotificationChannel(
@@ -138,29 +130,29 @@ class FirebaseRemoteDataSource {
 
   /// **디바이스 FCM 토큰 로그 출력**
   Future<void> _logDeviceToken() async {
-    String? fcmToken = await messaging.getToken();
+    String? fcmToken = await _messaging.getToken();
     if (fcmToken != null) {
-      logger.d('✅ FCM Token created successfully: $fcmToken');
+      AppLogger.d('✅ FCM Token created successfully: $fcmToken');
     } else {
-      logger.w('⚠️ FCM Token not available.');
+      AppLogger.w('⚠️ FCM Token not available.');
     }
   }
 
   /// **'all-users' 토픽(앱 공지사항) 구독 (최초 1회)**
   Future<void> _subscribeToAppAnnouncements() async {
-    bool isSubscribedUsers = SharedPrefsManager()
-            .getValue<bool>(SharedPrefKeys.kIsSubscribedToAllUsers) ??
-        false;
+    bool isSubscribedUsers =
+        _prefsManager.getValue<bool>(SharedPrefKeys.kIsSubscribedToAllUsers) ??
+            false;
 
     if (!isSubscribedUsers) {
       try {
         await _messaging.subscribeToTopic(SharedPrefKeys.kAllUsers);
-        await SharedPrefsManager()
-            .setValue<bool>(SharedPrefKeys.kIsSubscribedToAllUsers, true);
-        logger.d(
+        await _prefsManager.setValue<bool>(
+            SharedPrefKeys.kIsSubscribedToAllUsers, true);
+        AppLogger.d(
             "✅ Successfully subscribed to '${SharedPrefKeys.kAllUsers}' topic");
       } catch (e) {
-        logger.e(
+        AppLogger.e(
             "🚨 Error subscribing to '${SharedPrefKeys.kAllUsers}' topic: $e");
       }
     }
@@ -169,30 +161,30 @@ class FirebaseRemoteDataSource {
   /// **개별 토픽 구독 (캐싱 활용)**
   Future<void> subscribeToTopic(String topic) async {
     if (_isSubscribedToTopic(topic)) {
-      logger.d("⚡ Already subscribed to '$topic' topic");
+      AppLogger.d("⚡ Already subscribed to '$topic' topic");
       return;
     }
     try {
       await _messaging.subscribeToTopic(topic);
       _addSubscribedTopic(topic);
-      logger.d("✅ Successfully subscribed to '$topic' topic");
+      AppLogger.d("✅ Successfully subscribed to '$topic' topic");
     } catch (e) {
-      logger.e("🚨 Error subscribing to '$topic' topic: $e");
+      AppLogger.e("🚨 Error subscribing to '$topic' topic: $e");
     }
   }
 
   /// **개별 토픽 구독 해제 (캐싱 활용)**
   Future<void> unsubscribeFromTopic(String topic) async {
     if (!_isSubscribedToTopic(topic)) {
-      logger.d("⚡ Not subscribed to '$topic' topic");
+      AppLogger.d("⚡ Not subscribed to '$topic' topic");
       return;
     }
     try {
       await _messaging.unsubscribeFromTopic(topic);
       _removeSubscribedTopic(topic);
-      logger.d("🔄 Unsubscribed from topic: '$topic'");
+      AppLogger.d("🔄 Unsubscribed from topic: '$topic'");
     } catch (e) {
-      logger.e("🚨 Error unsubscribing from '$topic' topic: $e");
+      AppLogger.e("🚨 Error unsubscribing from '$topic' topic: $e");
     }
   }
 
@@ -204,14 +196,14 @@ class FirebaseRemoteDataSource {
   /// **구독 리스트 추가(내부 확인용)**
   void _addSubscribedTopic(String topic) {
     _subscribedTopics.add(topic);
-    SharedPrefsManager().setValue<Set<String>>(
+    _prefsManager.setValue<Set<String>>(
         SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
   }
 
   /// **구독 리스트 제거(내부 확인용)**
   void _removeSubscribedTopic(String topic) {
     _subscribedTopics.remove(topic);
-    SharedPrefsManager().setValue<Set<String>>(
+    _prefsManager.setValue<Set<String>>(
         SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
   }
 
@@ -266,7 +258,7 @@ class FirebaseRemoteDataSource {
       const NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
 
-      await flutterLocalNotificationsPlugin.show(
+      await _localNotifications.show(
         notification.hashCode,
         notification.title,
         notification.body,

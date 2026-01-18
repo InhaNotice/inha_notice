@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-18
  */
 
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 
 /// **NotificationTile**
@@ -52,17 +53,19 @@ class _NotificationTileState extends State<NotificationTile> {
   /// **알림 토글의 설정값을 불러옴**
   Future<void> _loadNotificationPreference() async {
     setState(() {
-      majorKey =
-          SharedPrefsManager().getValue<String>(SharedPrefKeys.kMajorKey);
+      majorKey = di
+          .sl<SharedPrefsManager>()
+          .getValue<String>(SharedPrefKeys.kMajorKey);
       // 현재 설정된 나의 학과인 경우, 나의 학과의 설정된 불 값으로 반영
       if (majorKey != null && widget.prefKey == majorKey) {
         _isSynchronizedWithMajor = true;
-        _isNotificationOn = SharedPrefsManager()
+        _isNotificationOn = di
+                .sl<SharedPrefsManager>()
                 .getValue<bool>(SharedPrefKeys.kMajorNotification) ??
             false;
       } else {
         _isNotificationOn =
-            SharedPrefsManager().getValue<bool>(widget.prefKey) ?? false;
+            di.sl<SharedPrefsManager>().getValue<bool>(widget.prefKey) ?? false;
       }
     });
   }
@@ -77,16 +80,21 @@ class _NotificationTileState extends State<NotificationTile> {
 
     try {
       if (value) {
-        await FirebaseRemoteDataSource().subscribeToTopic(widget.fcmTopic);
+        await di
+            .sl<FirebaseRemoteDataSource>()
+            .subscribeToTopic(widget.fcmTopic);
       } else {
-        await FirebaseRemoteDataSource().unsubscribeFromTopic(widget.fcmTopic);
+        await di
+            .sl<FirebaseRemoteDataSource>()
+            .unsubscribeFromTopic(widget.fcmTopic);
       }
 
       if (_isSynchronizedWithMajor) {
-        await SharedPrefsManager()
+        await di
+            .sl<SharedPrefsManager>()
             .setValue<bool>(SharedPrefKeys.kMajorNotification, value);
       }
-      await SharedPrefsManager().setValue<bool>(widget.prefKey, value);
+      await di.sl<SharedPrefsManager>().setValue<bool>(widget.prefKey, value);
 
       setState(() {
         _isNotificationOn = value;

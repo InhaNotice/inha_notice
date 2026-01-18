@@ -8,6 +8,8 @@
  * Latest Updated Date: 2026-01-18
  */
 
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +26,7 @@ import 'features/notice/data/repositories/home_repository_impl.dart';
 import 'features/notice/domain/repositories/home_repository.dart';
 import 'features/notice/domain/usecases/get_home_tabs_usecase.dart';
 import 'features/notice/presentation/bloc/home_bloc.dart';
+import 'features/notification/data/datasources/firebase_remote_data_source.dart';
 
 final sl = GetIt.instance;
 
@@ -60,10 +63,19 @@ Future<void> init() async {
   sl.registerLazySingleton<BookmarkLocalDataSource>(
     () => BookmarkLocalDataSourceImpl(),
   );
+  sl.registerLazySingleton<FirebaseRemoteDataSource>(
+    () => FirebaseRemoteDataSource(
+      messaging: sl(),
+      localNotifications: sl(),
+      prefsManager: sl(),
+    ),
+  );
 
   // External
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
+  final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => SharedPrefsManager());
+  sl.registerLazySingleton(() => SharedPrefsManager(sl()));
+
+  sl.registerLazySingleton(() => FirebaseMessaging.instance);
+  sl.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
 }
