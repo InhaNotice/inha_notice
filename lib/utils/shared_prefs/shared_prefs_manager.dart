@@ -10,10 +10,10 @@
 
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/utils/app_logger.dart';
 import 'package:inha_notice/features/notice/domain/entities/college_type.dart';
 import 'package:inha_notice/features/notice/domain/entities/graduate_school_type.dart';
 import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// **SharedPrefsManager**
@@ -21,8 +21,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefsManager {
   SharedPreferences? _prefs;
   SharedPrefsManager(this._prefs);
-
-  static final Logger logger = Logger();
 
   // 캐싱 전략
   static final Map<String, dynamic> _cache = {
@@ -122,7 +120,7 @@ class SharedPrefsManager {
   /// **알림 설정 통합 함수**
   Future<void> setValue<T>(String key, T value) async {
     if (!_cache.containsKey(key)) {
-      logger.w("설정 키 '$key'가 존재하지 않습니다.");
+      AppLogger.w("설정 키 '$key'가 존재하지 않습니다.");
       return;
     }
 
@@ -138,9 +136,9 @@ class SharedPrefsManager {
       } else if (value is List<String>) {
         await _prefs?.setStringList(key, value.toList());
       }
-      logger.d('✅ Preference 성공적으로 저장 - $key: $value');
+      AppLogger.d('✅ Preference 성공적으로 저장 - $key: $value');
     } catch (e) {
-      logger.e('❌ Preference 저장 중 에러가 발생: $e');
+      AppLogger.e('❌ Preference 저장 중 에러가 발생: $e');
     }
   }
 
@@ -158,7 +156,7 @@ class SharedPrefsManager {
   Future<void> setMajorPreference(
       String? currentMajorKey, String newMajorKey, String majorKeyType) async {
     setValue<String>(majorKeyType, newMajorKey);
-    logger.d(
+    AppLogger.d(
         "${runtimeType.toString()} - setMajorKey() 성공: '$currentMajorKey' to '$newMajorKey'");
   }
 }
