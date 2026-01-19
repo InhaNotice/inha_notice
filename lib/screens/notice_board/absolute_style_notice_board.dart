@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
-import 'package:inha_notice/core/keys/major_keys.dart';
+import 'package:inha_notice/core/keys/major_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
@@ -229,7 +229,7 @@ class _AbsoluteStyleNoticeBoardState
     }
 
     // (예외) 디자인융합학과인 경우
-    if (_userSettingKey == MajorKeys.INHADESIGN) {
+    if (_userSettingKey == MajorType.inhaDesign.key) {
       _absoluteStyleNoticeScraper =
           InhaDesignStyleNoticeScraper(_userSettingKey!);
       return;

@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/college_type.dart';
+import 'package:inha_notice/core/keys/major_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
-import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -74,7 +74,7 @@ class SharedPrefsManager {
   /// **학과 설정값 로딩**
   static Map<String, bool> _buildMajorPrefs() {
     final Map<String, bool> majorPrefs = {};
-    for (final value in MajorUtils.kMajorValueList) {
+    for (final value in MajorType.majorValueList) {
       majorPrefs[value] = false;
     }
     return majorPrefs;

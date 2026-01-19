@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
+import 'package:inha_notice/core/keys/major_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/utils/university_utils/major_utils.dart';
 
 abstract class CustomTabListUtils {
   static const List<String> kDefaultTabs = [
@@ -97,14 +97,14 @@ abstract class CustomTabListUtils {
 
   /// 주어진 학과 키 ([majorKey])에 대응하는 UI 표시용 국문 학과명을 반환한다.
   ///
-  /// 우선적으로 현재 지원되는 학과 목록([MajorUtils.kMajorMappingOnValue])에서 조회를 시도한다.
-  /// 만약 해당 키가 존재하지 않을 경우(예: 공지사항 게시판 폐지, 통합 등), 미지원 학과 목록([MajorUtils.kUnsupportedMajorKeys])을 조회하여
+  /// 우선적으로 현재 지원되는 학과 목록([MajorType.majorMappingOnValue])에서 조회를 시도한다.
+  /// 만약 해당 키가 존재하지 않을 경우(예: 공지사항 게시판 폐지, 통합 등), 미지원 학과 목록([MajorType.getUnsupportedMajorKoreanName])을 통해
   /// 통합된 학과명을 반환하거나 기본값('미지원 학과')을 반환한다.
   static String getMajorDisplayName(String majorKey) {
-    final String? activeMajorName = MajorUtils.kMajorMappingOnValue[majorKey];
+    final String? activeMajorName = MajorType.majorMappingOnValue[majorKey];
     if (activeMajorName != null) {
       return activeMajorName;
     }
-    return MajorUtils.kUnsupportedMajorKeys[majorKey] ?? '미지원 학과';
+    return MajorType.getUnsupportedMajorKoreanName(majorKey) ?? '미지원 학과';
   }
 }

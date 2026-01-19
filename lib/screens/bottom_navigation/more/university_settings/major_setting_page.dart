@@ -5,19 +5,19 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-19
 */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/core/keys/major_type.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/utils/university_utils/major_utils.dart';
 import 'package:logger/logger.dart';
 
 class MajorSettingPage extends BaseSettingPage {
@@ -34,9 +34,8 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
 
   // 학과 데이터: 그룹별 매핑 (국문:영문)
   final Map<String, Map<String, String>> _allMajorGroups =
-      MajorUtils.majorGroups;
-  Map<String, Map<String, String>> _filteredMajorGroups =
-      MajorUtils.majorGroups;
+      MajorType.majorGroups;
+  Map<String, Map<String, String>> _filteredMajorGroups = MajorType.majorGroups;
   List<String> _filteredMajors = [];
   String? _currentMajor;
   String? _currentMajorKey;
@@ -157,7 +156,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
   @override
   Future<void> handleSelection(String item) async {
     if (isProcessing) return;
-    String? newMajorKey = MajorUtils.kMajorMappingOnKey[item];
+    String? newMajorKey = MajorType.majorMappingOnKey[item];
     if (_currentMajorKey != null && _currentMajorKey == newMajorKey) {
       if (mounted) {
         AppSnackBar.warn(context, '이미 설정되어있습니다.');
