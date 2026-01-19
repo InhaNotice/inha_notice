@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'package:flutter/material.dart';
@@ -13,10 +13,10 @@ import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/screens/notice_board/absolute_style_notice_board.dart';
 import 'package:inha_notice/screens/notice_board/relative_style_notice_board.dart';
 
-class NoticeBoardTab extends StatelessWidget {
+class NoticeBoardTabWidget extends StatelessWidget {
   final String noticeType;
 
-  const NoticeBoardTab({
+  const NoticeBoardTabWidget({
     super.key,
     required this.noticeType,
   });

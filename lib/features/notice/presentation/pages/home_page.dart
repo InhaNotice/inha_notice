@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'package:flutter/material.dart';
@@ -16,8 +16,8 @@ import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_wid
 import 'package:inha_notice/features/notice/presentation/bloc/home_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_state.dart';
+import 'package:inha_notice/features/notice/presentation/widgets/notice_board_tab_widget.dart';
 import 'package:inha_notice/injection_container.dart';
-import 'package:inha_notice/screens/bottom_navigation/home/notice_board_tab.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -157,7 +157,8 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: TabBarView(
               children: state.tabs
-                  .map((tab) => NoticeBoardTab(noticeType: tab.noticeType))
+                  .map(
+                      (tab) => NoticeBoardTabWidget(noticeType: tab.noticeType))
                   .toList(),
             ),
           ),
