@@ -13,8 +13,8 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
+import 'package:inha_notice/features/notice/domain/entities/notice_selectors.dart';
 import 'package:inha_notice/models/pages_model.dart';
-import 'package:inha_notice/utils/selectors/major_style_tag_selectors.dart';
 
 /// **MajorStyleNoticeScraper**
 /// 이 클래스는 인하대학교 학과 스타일의 공지사항을 크롤링하는 클래스입니다.
@@ -67,19 +67,20 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   @override
   List<Map<String, String>> fetchHeadlineNotices(document) {
     final headlines =
-        document.querySelectorAll(HeadlineTagSelectors.kNoticeBoard);
+        document.querySelectorAll(NoticeSelectors.standard.headline.row);
 
     final List<Map<String, String>> results = [];
     for (var headline in headlines) {
       final titleLinkTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeTitleLink);
+          headline.querySelector(NoticeSelectors.standard.headline.title);
       final titleStrongTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeTitleStrong);
-      final dateTag = headline.querySelector(HeadlineTagSelectors.kNoticeDate);
+          headline.querySelector(NoticeSelectors.standard.headline.titleStrong);
+      final dateTag =
+          headline.querySelector(NoticeSelectors.standard.headline.date);
       final writerTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeWriter);
+          headline.querySelector(NoticeSelectors.standard.headline.writer);
       final accessTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeAccess);
+          headline.querySelector(NoticeSelectors.standard.headline.access);
 
       // 필수 태그(학과 공지 스타일의 태그는 고정적): titleLinkTag, titleStrongTag, dataTag, writerTag, accessTag
       if (titleLinkTag == null ||
@@ -117,18 +118,19 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   @override
   List<Map<String, String>> fetchGeneralNotices(document) {
     final generals =
-        document.querySelectorAll(GeneralTagSelectors.kNoticeBoard);
+        document.querySelectorAll(NoticeSelectors.standard.general.row);
     final List<Map<String, String>> results = [];
     for (var general in generals.skip(1)) {
       final titleLinkTag =
-          general.querySelector(GeneralTagSelectors.kNoticeTitleLink);
+          general.querySelector(NoticeSelectors.standard.general.title);
       final titleStrongTag =
-          general.querySelector(GeneralTagSelectors.kNoticeTitleStrong);
-      final dateTag = general.querySelector(GeneralTagSelectors.kNoticeDate);
+          general.querySelector(NoticeSelectors.standard.general.titleStrong);
+      final dateTag =
+          general.querySelector(NoticeSelectors.standard.general.date);
       final writerTag =
-          general.querySelector(GeneralTagSelectors.kNoticeWriter);
+          general.querySelector(NoticeSelectors.standard.general.writer);
       final accessTag =
-          general.querySelector(GeneralTagSelectors.kNoticeAccess);
+          general.querySelector(NoticeSelectors.standard.general.access);
 
       if (titleLinkTag == null ||
           titleStrongTag == null ||
@@ -166,11 +168,13 @@ class MajorStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
     final Pages results = createPages(searchColumn, searchWord);
 
-    final pages = document.querySelector(PageTagSelectors.kPageBoard);
+    final pages =
+        document.querySelector(NoticeSelectors.standard.pagination.container);
     if (pages == null) return results;
-    final lastPageHref =
-        pages.querySelector(PageTagSelectors.kLastPage)?.attributes['href'] ??
-            '';
+    final lastPageHref = pages
+            .querySelector(NoticeSelectors.standard.pagination.lastPageParams)
+            ?.attributes['href'] ??
+        '';
     if (lastPageHref == '') return results;
 
     final match = RegExp(r"page_link\('(\d+)'\)").firstMatch(lastPageHref);

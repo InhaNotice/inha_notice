@@ -15,8 +15,8 @@ import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
+import 'package:inha_notice/features/notice/domain/entities/notice_selectors.dart';
 import 'package:inha_notice/models/pages_model.dart';
-import 'package:inha_notice/utils/selectors/inha_design_style_tag_selectors.dart';
 
 /// **InhaDesignStyleNoticeScraper**
 /// 인하대학교 디자인융합학과 공지사항을 크롤링 후 전처리하여 반환하는 클래스입니다.
@@ -70,22 +70,17 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
 
   @override
   List<Map<String, String>> fetchGeneralNotices(document) {
-    final wsiteContent =
-        document.querySelector(InhaDesignStyleTagSelectors.kNoticeBoard);
+    final wsiteContent = document.querySelector(NoticeSelectors.blog.container);
     if (wsiteContent == null) return [];
 
-    final generals = wsiteContent
-        .querySelectorAll(InhaDesignStyleTagSelectors.kNoticeBoardPosts);
+    final generals = wsiteContent.querySelectorAll(NoticeSelectors.blog.post);
     if (generals.isEmpty) return [];
 
     final List<Map<String, String>> results = [];
     for (final general in generals) {
-      final titleTag =
-          general.querySelector(InhaDesignStyleTagSelectors.kNoticeTitle);
-      final linkTag =
-          general.querySelector(InhaDesignStyleTagSelectors.kNoticeTitleLink);
-      final dateTag =
-          general.querySelector(InhaDesignStyleTagSelectors.kNoticeDate);
+      final titleTag = general.querySelector(NoticeSelectors.blog.title);
+      final linkTag = general.querySelector(NoticeSelectors.blog.titleLink);
+      final dateTag = general.querySelector(NoticeSelectors.blog.date);
 
       if (titleTag == null || linkTag == null || dateTag == null) {
         continue;
@@ -95,12 +90,12 @@ class InhaDesignStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
       final String id =
           general.attributes['id'] ?? IdentifierConstants.kUnknownId;
 
-      final String title = titleTag.text.trim() ?? '';
+      final String title = titleTag.text.trim();
 
       final String originalLink = linkTag.attributes['href'] ?? '';
       final String link = _parseLink(originalLink);
 
-      final String originalDate = dateTag.text.trim() ?? '';
+      final String originalDate = dateTag.text.trim();
       final String date = _parseDate(originalDate);
 
       results.add({

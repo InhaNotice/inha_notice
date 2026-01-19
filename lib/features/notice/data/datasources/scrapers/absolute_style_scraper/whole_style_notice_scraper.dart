@@ -13,8 +13,8 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
+import 'package:inha_notice/features/notice/domain/entities/notice_selectors.dart';
 import 'package:inha_notice/models/pages_model.dart';
-import 'package:inha_notice/utils/selectors/whole_tag_selectors.dart';
 
 /// **WholeNoticeScraper**
 /// 이 클래스는 인하대학교 학사 공지사항을 크롤링하는 클래스입니다.
@@ -68,17 +68,18 @@ class WholeStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   @override
   List<Map<String, String>> fetchHeadlineNotices(document) {
     final headlines =
-        document.querySelectorAll(HeadlineTagSelectors.kNoticeBoard);
+        document.querySelectorAll(NoticeSelectors.standard.headline.row);
 
     final List<Map<String, String>> results = [];
     for (var headline in headlines) {
       final titleTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeTitle);
-      final dateTag = headline.querySelector(HeadlineTagSelectors.kNoticeDate);
+          headline.querySelector(NoticeSelectors.standard.headline.title);
+      final dateTag =
+          headline.querySelector(NoticeSelectors.standard.headline.date);
       final writerTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeWriter);
+          headline.querySelector(NoticeSelectors.standard.headline.writer);
       final accessTag =
-          headline.querySelector(HeadlineTagSelectors.kNoticeAccess);
+          headline.querySelector(NoticeSelectors.standard.headline.access);
 
       if (titleTag == null ||
           dateTag == null ||
@@ -115,15 +116,17 @@ class WholeStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   @override
   List<Map<String, String>> fetchGeneralNotices(document) {
     final generals =
-        document.querySelectorAll(GeneralTagSelectors.kNoticeBoard);
+        document.querySelectorAll(NoticeSelectors.standard.general.row);
     final List<Map<String, String>> results = [];
     for (var general in generals.skip(1)) {
-      final titleTag = general.querySelector(GeneralTagSelectors.kNoticeTitle);
-      final dateTag = general.querySelector(GeneralTagSelectors.kNoticeDate);
+      final titleTag =
+          general.querySelector(NoticeSelectors.standard.general.title);
+      final dateTag =
+          general.querySelector(NoticeSelectors.standard.general.date);
       final writerTag =
-          general.querySelector(GeneralTagSelectors.kNoticeWriter);
+          general.querySelector(NoticeSelectors.standard.general.writer);
       final accessTag =
-          general.querySelector(GeneralTagSelectors.kNoticeAccess);
+          general.querySelector(NoticeSelectors.standard.general.access);
 
       // 필수 태그(학사 공지 태그는 고정적): titleTag, dateTag, writerTag, accessTag
       if (titleTag == null ||
@@ -163,12 +166,14 @@ class WholeStyleNoticeScraper extends BaseAbsoluteStyleNoticeScraper {
   Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
     final Pages results = createPages(searchColumn, searchWord);
 
-    final pages = document.querySelector(PageTagSelectors.kPageBoard);
+    final pages =
+        document.querySelector(NoticeSelectors.standard.pagination.container);
     if (pages == null) return results;
 
-    final lastPageHref =
-        pages.querySelector(PageTagSelectors.kLastPage)?.attributes['href'] ??
-            '';
+    final lastPageHref = pages
+            .querySelector(NoticeSelectors.standard.pagination.lastPageParams)
+            ?.attributes['href'] ??
+        '';
     if (lastPageHref == '') return results;
 
     final match = RegExp(r"page_link\('(\d+)'\)").firstMatch(lastPageHref);

@@ -13,8 +13,8 @@ import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/core/constants/identifier_constants.dart';
+import 'package:inha_notice/features/search/domain/entities/search_selectors.dart';
 import 'package:inha_notice/models/pages_model.dart';
-import 'package:inha_notice/utils/selectors/search_tag_selectors.dart';
 
 /// **SearchSraper**
 /// 이 클래스는 사용자의 입력에 따른 검색 크롤링을 정의하는 클래스입니다.
@@ -60,17 +60,16 @@ class SearchScraper {
   }
 
   /// **응답 객체를 통해 검색 결과를 전처리**
-  List<Map<String, dynamic>> fetchSearchedNotices(document) {
+  List<Map<String, dynamic>> fetchSearchedNotices(dynamic document) {
     // dl.resultsty_1 태그를 가져오기(여러 개일 수 있음)
-    final notices = document.querySelectorAll(NoticeTagSelectors.kNoticeBoard);
+    final notices = document.querySelectorAll(SearchSelectors.result.item);
     final List<Map<String, String>> results = [];
 
     // dl.resultsty_1 태그를 순회하면서 공지사항을 가져오기
     for (var notice in notices) {
-      final titleTags =
-          notice.querySelectorAll(NoticeTagSelectors.kNoticeTitle);
-      final bodyTags = notice.querySelectorAll(NoticeTagSelectors.kNoticeBody);
-      final dateTags = notice.querySelectorAll(NoticeTagSelectors.kNoticeDate);
+      final titleTags = notice.querySelectorAll(SearchSelectors.result.title);
+      final bodyTags = notice.querySelectorAll(SearchSelectors.result.body);
+      final dateTags = notice.querySelectorAll(SearchSelectors.result.date);
 
       for (int i = 0; i < titleTags.length; i++) {
         final titleTag = (i < titleTags.length) ? titleTags[i] : null;
@@ -83,7 +82,7 @@ class SearchScraper {
         }
 
         final postUrl =
-            titleTag.attributes[NoticeTagSelectors.kNoticeTitleHref] ?? '';
+            titleTag.attributes[SearchSelectors.result.hrefAttr] ?? '';
 
         final id = makeUniqueNoticeId(postUrl);
         final title = titleTag.text.trim();
@@ -107,10 +106,11 @@ class SearchScraper {
   }
 
   /// **응답 객체를 통해 마지막 페이지 분석 후 페이지네이션 리턴**
-  Pages fetchPages(document, [String? searchColumn, String? searchWord]) {
+  Pages fetchPages(dynamic document,
+      [String? searchColumn, String? searchWord]) {
     final Pages results = createPages(searchColumn, searchWord);
 
-    final pages = document.querySelectorAll(PageTagSelectors.kPageBoard);
+    final pages = document.querySelectorAll(SearchSelectors.pagination.number);
     if (pages.isEmpty) return results;
 
     final String? lastPageOnClick = pages.last.attributes['onclick'];
