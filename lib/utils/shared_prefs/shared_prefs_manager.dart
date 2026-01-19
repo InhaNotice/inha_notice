@@ -11,8 +11,8 @@
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/features/notice/domain/entities/college_type.dart';
+import 'package:inha_notice/features/notice/domain/entities/graduate_school_type.dart';
 import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
-import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -92,8 +92,8 @@ class SharedPrefsManager {
   /// **대학원 설정값 로딩**
   static Map<String, bool> _buildGraduateSchoolPrefs() {
     final Map<String, bool> graduatePrefs = {};
-    for (final value in GraduateSchoolUtils.kGraduateSchoolValueList) {
-      graduatePrefs[value] = false;
+    for (final key in GraduateSchoolType.graduateSchoolKeyList) {
+      graduatePrefs[key] = false;
     }
     return graduatePrefs;
   }
@@ -138,7 +138,7 @@ class SharedPrefsManager {
       } else if (value is List<String>) {
         await _prefs?.setStringList(key, value.toList());
       }
-      // logger.d('✅ Preference 성공적으로 저장 - $key: $value');
+      logger.d('✅ Preference 성공적으로 저장 - $key: $value');
     } catch (e) {
       logger.e('❌ Preference 저장 중 에러가 발생: $e');
     }

@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-19
  */
 
 import 'package:flutter/material.dart';
@@ -13,10 +13,10 @@ import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
+import 'package:inha_notice/features/notice/domain/entities/graduate_school_type.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
-import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
 import 'package:logger/logger.dart';
 
 class GraduateSchoolSettingPage extends BaseSettingPage {
@@ -31,10 +31,10 @@ class _GraduateSchoolSettingPageState
     extends BaseSettingPageState<GraduateSchoolSettingPage> {
   final Logger logger = Logger();
 
-  final List<String> _allItems = GraduateSchoolUtils.kGraduateSchoolKeyList;
-  List<String> _filteredItems = [];
+  final List<String> _names = GraduateSchoolType.graduateSchoolNameList;
+  List<String> _filteredNames = [];
+  String? _graduateSchoolName;
   String? _graduateSchoolKey;
-  String? _graduateSchoolValue;
 
   @override
   String get appBarTitle => '대학원 설정';
@@ -46,7 +46,7 @@ class _GraduateSchoolSettingPageState
   String get settingType => '대학원';
 
   @override
-  String? get currentSetting => _graduateSchoolKey;
+  String? get currentSetting => _graduateSchoolName;
 
   @override
   void initState() {
@@ -57,14 +57,14 @@ class _GraduateSchoolSettingPageState
   @override
   Future<void> loadPreference() async {
     setState(() {
-      _graduateSchoolValue = di
+      _graduateSchoolKey = di
           .sl<SharedPrefsManager>()
           .getValue<String>(SharedPrefKeys.kGraduateSchoolKey);
-      if (_graduateSchoolValue != null) {
-        _graduateSchoolKey = GraduateSchoolUtils
-            .kGraduateSchoolMappingOnValue[_graduateSchoolValue];
+      if (_graduateSchoolKey != null) {
+        _graduateSchoolName =
+            GraduateSchoolType.graduateSchoolMappingOnKey[_graduateSchoolKey];
       }
-      _filteredItems = _allItems;
+      _filteredNames = _names;
     });
   }
 
@@ -72,22 +72,22 @@ class _GraduateSchoolSettingPageState
   void filterItems(String query) {
     if (query.isEmpty) {
       setState(() {
-        _filteredItems = _allItems;
+        _filteredNames = _names;
       });
       return;
     }
-    final filtered = _allItems.where((item) => item.contains(query)).toList();
+    final filtered = _names.where((item) => item.contains(query)).toList();
     setState(() {
-      _filteredItems = filtered;
+      _filteredNames = filtered;
     });
   }
 
   @override
   Widget buildListView() {
     return ListView.builder(
-      itemCount: _filteredItems.length,
+      itemCount: _filteredNames.length,
       itemBuilder: (context, index) {
-        final item = _filteredItems[index];
+        final item = _filteredNames[index];
         return ListTile(
           title: Text(
             item,
@@ -107,11 +107,11 @@ class _GraduateSchoolSettingPageState
   @override
   Future<void> handleSelection(String item) async {
     if (isProcessing) return;
-    String? newGraduateSchoolValue =
-        GraduateSchoolUtils.kGraduateSchoolMappingOnKey[item];
+    String? newGraduateSchoolKey =
+        GraduateSchoolType.graduateSchoolMappingOnName[item];
 
-    if (_graduateSchoolValue != null &&
-        _graduateSchoolValue == newGraduateSchoolValue) {
+    if (_graduateSchoolKey != null &&
+        _graduateSchoolKey == newGraduateSchoolKey) {
       if (mounted) {
         AppSnackBar.warn(context, '이미 설정되어있습니다.');
       }
@@ -125,7 +125,7 @@ class _GraduateSchoolSettingPageState
 
     try {
       await di.sl<SharedPrefsManager>().setValue<String>(
-          SharedPrefKeys.kGraduateSchoolKey, newGraduateSchoolValue!);
+          SharedPrefKeys.kGraduateSchoolKey, newGraduateSchoolKey!);
       if (mounted) {
         AppSnackBar.success(context, '$item로 설정되었습니다!');
       }
