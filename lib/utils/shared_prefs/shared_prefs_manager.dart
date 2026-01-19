@@ -9,9 +9,9 @@
  */
 
 import 'package:inha_notice/core/config/app_theme_type.dart';
-import 'package:inha_notice/core/keys/college_type.dart';
-import 'package:inha_notice/core/keys/major_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/features/notice/domain/entities/college_type.dart';
+import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
 import 'package:inha_notice/utils/university_utils/graduate_school_utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';

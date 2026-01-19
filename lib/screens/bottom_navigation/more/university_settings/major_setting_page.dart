@@ -11,9 +11,9 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/keys/major_type.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
+import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
 import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';

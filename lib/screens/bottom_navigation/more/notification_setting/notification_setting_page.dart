@@ -9,8 +9,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/keys/major_type.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
+import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/college_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/education_notification_category.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category.dart';
