@@ -5,13 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-20
  */
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_license/custom_license_text_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
@@ -59,7 +60,7 @@ class _CustomLicensePageState extends State<CustomLicensePage> {
           title: '사용된 라이선스', titleSize: 20, isCenter: true),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: _licensesData.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: BlueLoadingIndicatorWidget())
           : ListView.builder(
               padding: const EdgeInsets.all(10.0),
               itemCount: _licensesData.keys.length,
