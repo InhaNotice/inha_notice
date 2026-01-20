@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-20
  */
 
 import 'package:firebase_core/firebase_core.dart';
@@ -18,7 +18,7 @@ import 'package:inha_notice/core/config/firebase_options.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/utils/app_logger.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
-import 'package:inha_notice/screens/onboarding/onboarding_screen.dart';
+import 'package:inha_notice/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           darkTheme: darkTheme,
           themeMode: themeMode,
           navigatorKey: navigatorKey,
-          home: const OnboardingScreen(),
+          home: const OnboardingPage(),
         );
       },
     );

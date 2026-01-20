@@ -5,12 +5,16 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-19
+ * Latest Updated Date: 2026-01-20
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
+import 'package:inha_notice/features/notification/data/repositories/notification_repository_impl.dart';
+import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
+import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_usecase.dart';
+import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,12 +64,15 @@ Future<void> init() async {
         removeRecentSearchWord: sl(),
         clearRecentSearchWords: sl(),
       ));
+  sl.registerFactory(() => OnboardingBloc(requestPermissionUseCase: sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
   sl.registerLazySingleton(() => GetBookmarksUseCase(repository: sl()));
   sl.registerLazySingleton(() => ClearBookmarksUseCase(repository: sl()));
   sl.registerLazySingleton(() => RemoveBookmarkUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => RequestInitialPermissionUseCase(repository: sl()));
   // 인기 검색어
   sl.registerLazySingleton(() => GetTrendingTopicsUseCase(sl()));
   // 최근 검색어
@@ -87,6 +94,8 @@ Future<void> init() async {
       localDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<NotificationRepository>(
+      () => NotificationRepositoryImpl(remoteDataSource: sl()));
 
   // Datasources
   sl.registerLazySingleton<HomeLocalDataSource>(
