@@ -5,13 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-01-
  */
 
 import 'package:dartz/dartz.dart';
 import 'package:inha_notice/core/error/failures.dart';
 import 'package:inha_notice/features/notice/data/datasources/home_local_data_source.dart';
-import 'package:inha_notice/features/notice/data/models/home_tab_model.dart';
 import 'package:inha_notice/features/notice/domain/entities/home_tab_entity.dart';
 import 'package:inha_notice/features/notice/domain/repositories/home_repository.dart';
 
@@ -25,7 +24,7 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<Either<HomeFailure, List<HomeTabEntity>>> getHomeTabs() async {
     try {
-      final List<HomeTabModel> result = await localDataSource.fetchHomeTabs();
+      final List<HomeTabEntity> result = await localDataSource.fetchHomeTabs();
       return Right(result);
     } catch (e) {
       return Left(HomeFailure.tabs(e.toString()));
