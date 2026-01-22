@@ -11,13 +11,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/features/bookmark/presentation/pages/bookmark_page.dart';
-import 'package:inha_notice/features/main_navigation/presentation/bloc/main_navigation_bloc.dart';
-import 'package:inha_notice/features/main_navigation/presentation/bloc/main_navigation_event.dart';
-import 'package:inha_notice/features/main_navigation/presentation/bloc/main_navigation_state.dart';
+import 'package:inha_notice/features/main/presentation/bloc/main_navigation_bloc.dart';
+import 'package:inha_notice/features/main/presentation/bloc/main_navigation_event.dart';
+import 'package:inha_notice/features/main/presentation/bloc/main_navigation_state.dart';
+import 'package:inha_notice/features/more/presentation/pages/more_page.dart';
 import 'package:inha_notice/features/notice/presentation/pages/home_page.dart';
 import 'package:inha_notice/features/search/presentation/pages/search_page.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/screens/bottom_navigation/more/more_page.dart';
 import 'package:inha_notice/screens/webview/web_navigator.dart';
 
 class MainNavigationPage extends StatelessWidget {

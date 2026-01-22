@@ -9,9 +9,9 @@
  */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inha_notice/features/main_navigation/domain/usecases/get_initial_deep_link_usecase.dart';
-import 'package:inha_notice/features/main_navigation/presentation/bloc/main_navigation_event.dart';
-import 'package:inha_notice/features/main_navigation/presentation/bloc/main_navigation_state.dart';
+import 'package:inha_notice/features/main/domain/usecases/get_initial_deep_link_usecase.dart';
+import 'package:inha_notice/features/main/presentation/bloc/main_navigation_event.dart';
+import 'package:inha_notice/features/main/presentation/bloc/main_navigation_state.dart';
 
 class MainNavigationBloc
     extends Bloc<MainNavigationEvent, MainNavigationState> {
