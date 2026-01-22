@@ -5,18 +5,18 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-20
+ * Latest Updated Date: 2026-01-22
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/features/main_navigation/presentation/pages/main_navigation_page.dart';
 import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_state.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/screens/bottom_navigation/bottom_nav_bar_page.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -34,7 +34,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
         listener: (context, state) {
           if (state is OnboardingNavigateToMain) {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const BottomNavBarPage()),
+              MaterialPageRoute(
+                  builder: (context) => const MainNavigationPage()),
             );
           }
         },

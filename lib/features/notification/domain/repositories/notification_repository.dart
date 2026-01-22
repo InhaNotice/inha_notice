@@ -5,9 +5,10 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-20
+ * Latest Updated Date: 2026-01-22
  */
 
 abstract class NotificationRepository {
   Future<void> requestPermission();
+  Future<String?> getInitialMessageLink();
 }

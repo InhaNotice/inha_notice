@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-20
+ * Latest Updated Date: 2026-01-22
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -25,6 +25,8 @@ import 'features/bookmark/domain/usecases/clear_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/get_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
 import 'features/bookmark/presentation/bloc/bookmark_bloc.dart';
+import 'features/main/domain/usecases/get_initial_deep_link_usecase.dart';
+import 'features/main/presentation/bloc/main_navigation_bloc.dart';
 import 'features/notice/data/datasources/home_local_data_source.dart';
 import 'features/notice/data/repositories/home_repository_impl.dart';
 import 'features/notice/domain/repositories/home_repository.dart';
@@ -80,6 +82,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddRecentSearchWordUseCase(sl()));
   sl.registerLazySingleton(() => RemoveRecentSearchWordUseCase(sl()));
   sl.registerLazySingleton(() => ClearRecentSearchWordsUseCase(sl()));
+  sl.registerFactory(() => MainNavigationBloc(getInitialDeepLinkUseCase: sl()));
+  sl.registerLazySingleton(() => GetInitialDeepLinkUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(

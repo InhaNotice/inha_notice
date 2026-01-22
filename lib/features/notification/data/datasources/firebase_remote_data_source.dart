@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-22
  */
 
 import 'dart:io';
@@ -82,9 +82,12 @@ class FirebaseRemoteDataSource {
   }
 
   /// **BottomNavBarPage에서 웹페이지 로딩을 위해 필요**
-  /// 푸시알림 메시지를 읽어오는 함수
-  Future<RemoteMessage?> getInitialNotification() async {
-    return await FirebaseMessaging.instance.getInitialMessage();
+  /// 푸시알림 메시지가 있다면 공지 링크를 읽어와 반환한다.
+  Future<String?> getInitialMessageLink() async {
+    final RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    return initialMessage?.data['link'];
   }
 
   /// **iOS 설정 초기화**
