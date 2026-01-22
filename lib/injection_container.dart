@@ -11,6 +11,10 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
+import 'package:inha_notice/features/more/data/datasources/more_local_data_source.dart';
+import 'package:inha_notice/features/more/data/repositories/more_repository_impl.dart';
+import 'package:inha_notice/features/more/domain/repositories/more_repository.dart';
+import 'package:inha_notice/features/more/domain/usecases/get_web_urls_usecase.dart';
 import 'package:inha_notice/features/notification/data/repositories/notification_repository_impl.dart';
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
 import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_usecase.dart';
@@ -27,6 +31,7 @@ import 'features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
 import 'features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'features/main/domain/usecases/get_initial_deep_link_usecase.dart';
 import 'features/main/presentation/bloc/main_navigation_bloc.dart';
+import 'features/more/presentation/bloc/more_bloc.dart';
 import 'features/notice/data/datasources/home_local_data_source.dart';
 import 'features/notice/data/repositories/home_repository_impl.dart';
 import 'features/notice/domain/repositories/home_repository.dart';
@@ -67,6 +72,7 @@ Future<void> init() async {
         clearRecentSearchWords: sl(),
       ));
   sl.registerFactory(() => OnboardingBloc(requestPermissionUseCase: sl()));
+  sl.registerFactory(() => MoreBloc(getWebUrlsUseCase: sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
@@ -84,6 +90,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ClearRecentSearchWordsUseCase(sl()));
   sl.registerFactory(() => MainNavigationBloc(getInitialDeepLinkUseCase: sl()));
   sl.registerLazySingleton(() => GetInitialDeepLinkUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetWebUrlsUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -100,6 +107,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<NotificationRepository>(
       () => NotificationRepositoryImpl(remoteDataSource: sl()));
+  sl.registerLazySingleton<MoreRepository>(
+    () => MoreRepositoryImpl(localDataSource: sl()),
+  );
 
   // Datasources
   sl.registerLazySingleton<HomeLocalDataSource>(
@@ -120,6 +130,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<MoreLocalDataSource>(
+    () => MoreLocalDataSourceImpl(),
   );
 
   // External
