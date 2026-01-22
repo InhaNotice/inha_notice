@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-19
+ * Latest Updated Date: 2026-01-22
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,12 +13,11 @@ import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/core/error/exceptions.dart';
 import 'package:inha_notice/features/search/data/models/trending_topic_model.dart';
-import 'package:inha_notice/features/search/domain/entities/trending_topic_entity.dart';
 import 'package:intl/intl.dart';
 import 'package:xml/xml.dart';
 
 abstract class SearchRemoteDataSource {
-  Future<List<TrendingTopicEntity>> getTrendingTopics();
+  Future<List<TrendingTopicModel>> getTrendingTopics();
 }
 
 class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
@@ -28,7 +27,7 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
     baseUrl = dotenv.get("TRENDING_TOPICS_URL");
   }
   @override
-  Future<List<TrendingTopicEntity>> getTrendingTopics() async {
+  Future<List<TrendingTopicModel>> getTrendingTopics() async {
     final url = Uri.parse(baseUrl);
 
     try {
