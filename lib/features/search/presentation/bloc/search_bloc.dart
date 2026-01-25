@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-19
+ * Latest Updated Date: 2026-01-25
  */
 
 import 'package:dartz/dartz.dart';
@@ -50,12 +50,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     // 1. 로딩 상태 설정
     emit(state.copyWith(status: SearchStatus.loading));
 
-    // 2. 인기 검색어 불러오기
+    // 2. 최근 검색어 불러오기
+    final List<String> recentSearchWords = getRecentSearchWords();
+
+    emit(state.copyWith(
+      status: SearchStatus.loading,
+      recentSearchWords: recentSearchWords,
+    ));
+
+    // 3. 인기 검색어 불러오기
     final Either<SearchFailure, List<TrendingTopicEntity>>
         trendingTopicsResult = await getTrendingTopics();
-
-    // 3. 최근 검색어 불러오기
-    final List<String> recentSearchWords = getRecentSearchWords();
 
     // 4. 임시 변수
     List<TrendingTopicEntity> trendingTopics = [];
