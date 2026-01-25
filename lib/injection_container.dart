@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-22
+ * Latest Updated Date: 2026-01-25
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,6 +31,11 @@ import 'features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
 import 'features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'features/main/domain/usecases/get_initial_deep_link_usecase.dart';
 import 'features/main/presentation/bloc/main_navigation_bloc.dart';
+import 'features/more/data/datasources/cache_local_data_source.dart';
+import 'features/more/data/repositories/cache_repository_impl.dart';
+import 'features/more/domain/repositories/cache_repository.dart';
+import 'features/more/domain/usecases/get_cache_size_usecase.dart';
+import 'features/more/presentation/bloc/cache_bloc.dart';
 import 'features/more/presentation/bloc/more_bloc.dart';
 import 'features/notice/data/datasources/home_local_data_source.dart';
 import 'features/notice/data/repositories/home_repository_impl.dart';
@@ -73,6 +78,7 @@ Future<void> init() async {
       ));
   sl.registerFactory(() => OnboardingBloc(requestPermissionUseCase: sl()));
   sl.registerFactory(() => MoreBloc(getWebUrlsUseCase: sl()));
+  sl.registerFactory(() => CacheBloc(getCacheSizeUseCase: sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
@@ -91,6 +97,7 @@ Future<void> init() async {
   sl.registerFactory(() => MainNavigationBloc(getInitialDeepLinkUseCase: sl()));
   sl.registerLazySingleton(() => GetInitialDeepLinkUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetWebUrlsUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetCacheSizeUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -109,6 +116,9 @@ Future<void> init() async {
       () => NotificationRepositoryImpl(remoteDataSource: sl()));
   sl.registerLazySingleton<MoreRepository>(
     () => MoreRepositoryImpl(localDataSource: sl()),
+  );
+  sl.registerLazySingleton<CacheRepository>(
+    () => CacheRepositoryImpl(localDataSource: sl()),
   );
 
   // Datasources
@@ -133,6 +143,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<MoreLocalDataSource>(
     () => MoreLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<CacheLocalDataSource>(
+    () => CacheLocalDataSourceImpl(sharedPrefsManager: sl()),
   );
 
   // External

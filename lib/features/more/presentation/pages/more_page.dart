@@ -4,7 +4,7 @@
  * Copyright (c) 2025 INGONG
  * For full license text, see the LICENSE file in the root directory
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-22
+ * Latest Updated Date: 2026-01-25
  */
 
 import 'package:flutter/material.dart';
@@ -15,8 +15,8 @@ import 'package:inha_notice/features/more/domain/entities/more_configuration_ent
 import 'package:inha_notice/features/more/presentation/bloc/more_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_event.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_state.dart';
+import 'package:inha_notice/features/more/presentation/widgets/cache_deletion_widget.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/screens/bottom_navigation/more/cache_deletetion/cache_deletion_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_license/custom_licenses_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
@@ -138,7 +138,7 @@ class _MorePageView extends StatelessWidget {
               title: '테마',
               icon: Icons.palette_outlined,
             ),
-            const CacheDeletionTile(
+            const CacheDeletionWidget(
               title: '캐시 삭제',
               icon: Icons.cleaning_services_outlined,
             ),
