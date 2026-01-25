@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-01-25
  */
 
 import 'package:equatable/equatable.dart';
@@ -33,8 +33,16 @@ class NoticeTileModel extends Equatable {
     String title = map['title'] ?? '';
     String link = map['link'] ?? '';
     String date = map['date'] ?? '';
+    String? body = map['body'];
+    String? access = map['access'];
 
-    return NoticeTileModel(id: id, title: title, link: link, date: date);
+    return NoticeTileModel(
+        id: id,
+        title: title,
+        link: link,
+        date: date,
+        body: body,
+        access: access);
   }
 
   @override
