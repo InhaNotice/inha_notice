@@ -5,16 +5,20 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-25
+ * Latest Updated Date: 2026-02-08
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:inha_notice/features/more/data/datasources/more_local_data_source.dart';
+import 'package:inha_notice/features/more/data/datasources/oss_license_local_data_source.dart';
 import 'package:inha_notice/features/more/data/repositories/more_repository_impl.dart';
+import 'package:inha_notice/features/more/data/repositories/oss_license_repository_impl.dart';
 import 'package:inha_notice/features/more/domain/repositories/more_repository.dart';
+import 'package:inha_notice/features/more/domain/usecases/get_oss_licenses_usecase.dart';
 import 'package:inha_notice/features/more/domain/usecases/get_web_urls_usecase.dart';
+import 'package:inha_notice/features/more/presentation/bloc/oss_license_bloc.dart';
 import 'package:inha_notice/features/notification/data/repositories/notification_repository_impl.dart';
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
 import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_usecase.dart';
@@ -34,6 +38,7 @@ import 'features/main/presentation/bloc/main_navigation_bloc.dart';
 import 'features/more/data/datasources/cache_local_data_source.dart';
 import 'features/more/data/repositories/cache_repository_impl.dart';
 import 'features/more/domain/repositories/cache_repository.dart';
+import 'features/more/domain/repositories/oss_license_repository.dart';
 import 'features/more/domain/usecases/get_cache_size_usecase.dart';
 import 'features/more/presentation/bloc/cache_bloc.dart';
 import 'features/more/presentation/bloc/more_bloc.dart';
@@ -79,6 +84,7 @@ Future<void> init() async {
   sl.registerFactory(() => OnboardingBloc(requestPermissionUseCase: sl()));
   sl.registerFactory(() => MoreBloc(getWebUrlsUseCase: sl()));
   sl.registerFactory(() => CacheBloc(getCacheSizeUseCase: sl()));
+  sl.registerFactory(() => OssLicenseBloc(getOssLicensesUseCase: sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
@@ -98,6 +104,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetInitialDeepLinkUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetWebUrlsUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetCacheSizeUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetOssLicensesUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -120,6 +127,8 @@ Future<void> init() async {
   sl.registerLazySingleton<CacheRepository>(
     () => CacheRepositoryImpl(localDataSource: sl()),
   );
+  sl.registerLazySingleton<OssLicenseRepository>(
+      () => OssLicenseRepositoryImpl(localDataSource: sl()));
 
   // Datasources
   sl.registerLazySingleton<HomeLocalDataSource>(
@@ -147,6 +156,8 @@ Future<void> init() async {
   sl.registerLazySingleton<CacheLocalDataSource>(
     () => CacheLocalDataSourceImpl(sharedPrefsManager: sl()),
   );
+  sl.registerLazySingleton<OssLicenseLocalDataSource>(
+      () => OssLicenseLocalDataSourceImpl());
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

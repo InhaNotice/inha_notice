@@ -1,9 +1,19 @@
+/*
+ * This is file of the project inha_notice
+ * Licensed under the Apache License 2.0.
+ * Copyright (c) 2025 INGONG
+ * For full license text, see the LICENSE file in the root directory or at
+ * http://www.apache.org/licenses/
+ * Author: Junho Kim
+ * Latest Updated Date: 2026-02-08
+ */
+
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'search_failure.dart';
+part of 'oss_license_failure.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,12 +23,12 @@ part of 'search_failure.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$SearchFailure {
+mixin _$OssLicenseFailure {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is SearchFailure &&
+            other is OssLicenseFailure &&
             super == other);
   }
 
@@ -27,12 +37,13 @@ mixin _$SearchFailure {
 }
 
 /// @nodoc
-class $SearchFailureCopyWith<$Res> {
-  $SearchFailureCopyWith(SearchFailure _, $Res Function(SearchFailure) __);
+class $OssLicenseFailureCopyWith<$Res> {
+  $OssLicenseFailureCopyWith(
+      OssLicenseFailure _, $Res Function(OssLicenseFailure) __);
 }
 
-/// Adds pattern-matching-related methods to [SearchFailure].
-extension SearchFailurePatterns on SearchFailure {
+/// Adds pattern-matching-related methods to [OssLicenseFailure].
+extension OssLicenseFailurePatterns on OssLicenseFailure {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -47,16 +58,13 @@ extension SearchFailurePatterns on SearchFailure {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LocalDatabase value)? localDatabase,
-    TResult Function(_Server value)? server,
+    TResult Function(_LoadError value)? loadError,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _LocalDatabase() when localDatabase != null:
-        return localDatabase(_that);
-      case _Server() when server != null:
-        return server(_that);
+      case _LoadError() when loadError != null:
+        return loadError(_that);
       case _:
         return orElse();
     }
@@ -77,15 +85,12 @@ extension SearchFailurePatterns on SearchFailure {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_LocalDatabase value) localDatabase,
-    required TResult Function(_Server value) server,
+    required TResult Function(_LoadError value) loadError,
   }) {
     final _that = this;
     switch (_that) {
-      case _LocalDatabase():
-        return localDatabase(_that);
-      case _Server():
-        return server(_that);
+      case _LoadError():
+        return loadError(_that);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -105,15 +110,12 @@ extension SearchFailurePatterns on SearchFailure {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_LocalDatabase value)? localDatabase,
-    TResult? Function(_Server value)? server,
+    TResult? Function(_LoadError value)? loadError,
   }) {
     final _that = this;
     switch (_that) {
-      case _LocalDatabase() when localDatabase != null:
-        return localDatabase(_that);
-      case _Server() when server != null:
-        return server(_that);
+      case _LoadError() when loadError != null:
+        return loadError(_that);
       case _:
         return null;
     }
@@ -133,16 +135,13 @@ extension SearchFailurePatterns on SearchFailure {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? localDatabase,
-    TResult Function()? server,
+    TResult Function()? loadError,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _LocalDatabase() when localDatabase != null:
-        return localDatabase();
-      case _Server() when server != null:
-        return server();
+      case _LoadError() when loadError != null:
+        return loadError();
       case _:
         return orElse();
     }
@@ -163,15 +162,12 @@ extension SearchFailurePatterns on SearchFailure {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() localDatabase,
-    required TResult Function() server,
+    required TResult Function() loadError,
   }) {
     final _that = this;
     switch (_that) {
-      case _LocalDatabase():
-        return localDatabase();
-      case _Server():
-        return server();
+      case _LoadError():
+        return loadError();
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -191,15 +187,12 @@ extension SearchFailurePatterns on SearchFailure {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? localDatabase,
-    TResult? Function()? server,
+    TResult? Function()? loadError,
   }) {
     final _that = this;
     switch (_that) {
-      case _LocalDatabase() when localDatabase != null:
-        return localDatabase();
-      case _Server() when server != null:
-        return server();
+      case _LoadError() when loadError != null:
+        return loadError();
       case _:
         return null;
     }
@@ -208,31 +201,14 @@ extension SearchFailurePatterns on SearchFailure {
 
 /// @nodoc
 
-class _LocalDatabase extends SearchFailure {
-  const _LocalDatabase() : super._();
+class _LoadError extends OssLicenseFailure {
+  const _LoadError() : super._();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LocalDatabase &&
-            super == other);
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, super.hashCode);
-}
-
-/// @nodoc
-
-class _Server extends SearchFailure {
-  const _Server() : super._();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _Server &&
+            other is _LoadError &&
             super == other);
   }
 

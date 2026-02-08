@@ -2,9 +2,10 @@
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
  * Copyright (c) 2025 INGONG
- * For full license text, see the LICENSE file in the root directory
+ * For full license text, see the LICENSE file in the root directory or at
+ * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-25
+ * Latest Updated Date: 2026-02-08
  */
 
 import 'package:flutter/material.dart';
@@ -15,9 +16,9 @@ import 'package:inha_notice/features/more/domain/entities/more_configuration_ent
 import 'package:inha_notice/features/more/presentation/bloc/more_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_event.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_state.dart';
+import 'package:inha_notice/features/more/presentation/pages/oss_license_page.dart';
 import 'package:inha_notice/features/more/presentation/widgets/cache_deletion_widget.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/screens/bottom_navigation/more/custom_license/custom_licenses_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_navigation_tile.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile.dart';
@@ -154,7 +155,7 @@ class _MorePageView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (context) => const CustomLicensePage()),
+                      builder: (context) => const OssLicensePage()),
                 );
               },
             ),

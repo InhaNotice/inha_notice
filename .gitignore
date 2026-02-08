@@ -36,3 +36,8 @@ key.jks
 key.properties
 **/*.keystore
 **/*.jks
+
+lib/features/auth/
+lib/features/feed/
+lib/features/post/
+lib/features/recruitment/
