@@ -20,16 +20,17 @@ import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 
-class CacheDeletionDialog extends StatefulWidget {
-  const CacheDeletionDialog({
+class CacheDeletionDialogWidget extends StatefulWidget {
+  const CacheDeletionDialogWidget({
     super.key,
   });
 
   @override
-  State<CacheDeletionDialog> createState() => _CacheDeletionDialogState();
+  State<CacheDeletionDialogWidget> createState() =>
+      _CacheDeletionDialogWidgetState();
 }
 
-class _CacheDeletionDialogState extends State<CacheDeletionDialog> {
+class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
   /// **모든 캐시를 삭제**
   Future<void> _deleteAllCaches() async {
     try {

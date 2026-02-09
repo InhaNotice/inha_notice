@@ -16,7 +16,7 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/features/more/presentation/bloc/cache_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/cache_event.dart';
 import 'package:inha_notice/features/more/presentation/bloc/cache_state.dart';
-import 'package:inha_notice/features/more/presentation/widgets/cache_deletion_dialog.dart';
+import 'package:inha_notice/features/more/presentation/widgets/cache_deletion_dialog_widget.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 
 class CacheDeletionWidget extends StatelessWidget {
@@ -57,7 +57,7 @@ class _CacheDeletionWidgetBodyState extends State<_CacheDeletionWidgetBody> {
   Future<void> handleCacheDeletionTap(BuildContext context) async {
     await showCupertinoDialog(
       context: context,
-      builder: (context) => const CacheDeletionDialog(),
+      builder: (context) => const CacheDeletionDialogWidget(),
     );
 
     // 다이얼로그가 닫히면(캐시 삭제 후) 다시 로드 이벤트 발생

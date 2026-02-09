@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'dart:async';
@@ -24,9 +24,9 @@ import 'package:inha_notice/features/bookmark/domain/entities/bookmark_sorting_t
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_event.dart';
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_state.dart';
+import 'package:inha_notice/features/bookmark/presentation/widgets/bookmark_refresh_header_widget.dart';
 import 'package:inha_notice/injection_container.dart';
 import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
-import 'package:inha_notice/widgets/refresh_headers/bookmark_refresh_header.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **BookmarkPage**
@@ -199,7 +199,7 @@ class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
 
                   _refreshController.refreshCompleted();
                 },
-                header: const BookmarkRefreshHeader(),
+                header: const BookmarkRefreshHeaderWidget(),
                 child: ListView.builder(
                   itemCount: state.bookmarks.length,
                   itemBuilder: (context, index) {
