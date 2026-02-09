@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-22
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'dart:io';
@@ -14,9 +14,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/web_navigator_widget.dart';
 import 'package:inha_notice/core/utils/app_logger.dart';
 import 'package:inha_notice/main.dart';
-import 'package:inha_notice/screens/webview//web_navigator.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 
@@ -228,7 +228,7 @@ class FirebaseRemoteDataSource {
 
     // 앱이 실행 중일 때 푸시알림으로 웹페이지 이동을 핸들링
     if (isRunning) {
-      WebNavigator.navigate(
+      WebNavigatorWidget.navigate(
         context: navigatorKey.currentContext!,
         url: link,
       );

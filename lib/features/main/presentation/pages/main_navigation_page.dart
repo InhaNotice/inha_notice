@@ -1,15 +1,16 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-22
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inha_notice/core/presentation/widgets/web_navigator_widget.dart';
 import 'package:inha_notice/features/bookmark/presentation/pages/bookmark_page.dart';
 import 'package:inha_notice/features/main/presentation/bloc/main_navigation_bloc.dart';
 import 'package:inha_notice/features/main/presentation/bloc/main_navigation_event.dart';
@@ -18,7 +19,6 @@ import 'package:inha_notice/features/more/presentation/pages/more_page.dart';
 import 'package:inha_notice/features/notice/presentation/pages/home_page.dart';
 import 'package:inha_notice/features/search/presentation/pages/search_page.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/screens/webview/web_navigator.dart';
 
 class MainNavigationPage extends StatelessWidget {
   const MainNavigationPage({super.key});
@@ -56,7 +56,7 @@ class _MainNavigationPageViewState extends State<_MainNavigationPageView> {
       listenWhen: (previous, current) =>
           previous.targetUrl != current.targetUrl,
       listener: (context, state) {
-        WebNavigator.navigate(context: context, url: state.targetUrl);
+        WebNavigatorWidget.navigate(context: context, url: state.targetUrl);
       },
       child: BlocBuilder<MainNavigationBloc, MainNavigationState>(
         buildWhen: (previous, current) => previous.tabIndex != current.tabIndex,

@@ -1,18 +1,18 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:flutter/cupertino.dart';
 
-import 'in_app_web_page.dart';
+import '../pages/in_app_web_page.dart';
 
-class WebNavigator {
+class WebNavigatorWidget {
   /// **사파리 웹 페이지를 띄우는 함수**
   static Future<void> navigate(
       {required BuildContext context, required String? url}) async {

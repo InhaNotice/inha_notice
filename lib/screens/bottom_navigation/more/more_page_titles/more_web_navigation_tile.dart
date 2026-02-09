@@ -1,17 +1,17 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/screens/webview//web_navigator.dart';
+import 'package:inha_notice/core/presentation/widgets/web_navigator_widget.dart';
 
 /// **MoreWebNavigationTile**
 /// 이 클래스는 더보기 페이지의 웹 네이게이션 타일을 정의하는 클래스입니다.
@@ -33,7 +33,7 @@ class _MoreWebNavigationTileState extends State<MoreWebNavigationTile> {
     return GestureDetector(
       onTap: () async {
         if (mounted) {
-          await WebNavigator.navigate(context: context, url: widget.url);
+          await WebNavigatorWidget.navigate(context: context, url: widget.url);
         }
       },
       child: Container(
