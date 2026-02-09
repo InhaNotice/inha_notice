@@ -43,10 +43,15 @@ import 'features/more/domain/usecases/get_cache_size_usecase.dart';
 import 'features/more/presentation/bloc/cache_bloc.dart';
 import 'features/more/presentation/bloc/more_bloc.dart';
 import 'features/notice/data/datasources/home_local_data_source.dart';
+import 'features/notice/data/datasources/notice_board_remote_data_source.dart';
 import 'features/notice/data/repositories/home_repository_impl.dart';
+import 'features/notice/data/repositories/notice_board_repository_impl.dart';
 import 'features/notice/domain/repositories/home_repository.dart';
+import 'features/notice/domain/repositories/notice_board_repository.dart';
 import 'features/notice/domain/usecases/get_home_tabs_usecase.dart';
+import 'features/notice/domain/usecases/get_notices_use_case.dart';
 import 'features/notice/presentation/bloc/home_bloc.dart';
+import 'features/notice/presentation/bloc/notice_board_bloc.dart';
 import 'features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'features/search/data/datasources/search_local_data_source.dart';
 import 'features/search/data/datasources/search_remote_data_source.dart';
@@ -85,9 +90,15 @@ Future<void> init() async {
   sl.registerFactory(() => MoreBloc(getWebUrlsUseCase: sl()));
   sl.registerFactory(() => CacheBloc(getCacheSizeUseCase: sl()));
   sl.registerFactory(() => OssLicenseBloc(getOssLicensesUseCase: sl()));
+  sl.registerFactory(() => NoticeBoardBloc(
+        getAbsoluteNoticesUseCase: sl(),
+        getRelativeNoticesUseCase: sl(),
+      ));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
+  sl.registerLazySingleton(() => GetAbsoluteNoticesUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetRelativeNoticesUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetBookmarksUseCase(repository: sl()));
   sl.registerLazySingleton(() => ClearBookmarksUseCase(repository: sl()));
   sl.registerLazySingleton(() => RemoveBookmarkUseCase(repository: sl()));
@@ -109,6 +120,12 @@ Future<void> init() async {
   // Repository
   sl.registerLazySingleton<HomeRepository>(
     () => HomeRepositoryImpl(localDataSource: sl()),
+  );
+  sl.registerLazySingleton<NoticeBoardRepository>(
+    () => NoticeBoardRepositoryImpl(
+      remoteDataSource: sl(),
+      sharedPrefsManager: sl(),
+    ),
   );
   sl.registerLazySingleton<BookmarkRepository>(
     () => BookmarkRepositoryImpl(localDataSource: sl()),
@@ -133,6 +150,9 @@ Future<void> init() async {
   // Datasources
   sl.registerLazySingleton<HomeLocalDataSource>(
     () => HomeLocalDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<NoticeBoardRemoteDataSource>(
+    () => NoticeBoardRemoteDataSourceImpl(),
   );
   sl.registerLazySingleton<BookmarkLocalDataSource>(
     () => BookmarkLocalDataSourceImpl(),

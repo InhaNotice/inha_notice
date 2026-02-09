@@ -11,13 +11,13 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
+import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
+import 'package:inha_notice/core/utils/read_notice_manager.dart';
 import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/models/pages_model.dart';
-import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 
-/// **BaseNoticeBoard**
+/// **BaseNoticeBoardPage**
 ///
 /// 이 클래스는 공지사항을 표시하는 기본적인 인터페이스를 제공하는 추상 클래스입니다.
 ///
@@ -25,11 +25,11 @@ import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 /// - 공지사항의 읽음 상태 관리
 /// - 공지사항 북마크 기능 제공
 /// - 공통적인 UI 구조 (`buildHeader()`, `buildMain()`, `buildFooter()`) 제공
-abstract class BaseNoticeBoard extends StatefulWidget {
-  const BaseNoticeBoard({super.key});
+abstract class BaseNoticeBoardPage extends StatefulWidget {
+  const BaseNoticeBoardPage({super.key});
 }
 
-abstract class BaseNoticeBoardState<T extends BaseNoticeBoard>
+abstract class BaseNoticeBoardPageState<T extends BaseNoticeBoardPage>
     extends State<T> {
   Map<String, dynamic> notices = {
     'headline': [],

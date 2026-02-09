@@ -14,9 +14,9 @@ import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
+import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/domain/entities/notice_selectors.dart';
-import 'package:inha_notice/models/pages_model.dart';
 
 /// **InhaDesignStyleNoticeScraper**
 /// 인하대학교 디자인융합학과 공지사항을 크롤링 후 전처리하여 반환하는 클래스입니다.

@@ -16,9 +16,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/widgets/web_navigator_widget.dart';
 import 'package:inha_notice/core/utils/app_logger.dart';
+import 'package:inha_notice/core/utils/read_notice_manager.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/main.dart';
-import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 
 /// 이 클래스는 싱글톤으로 정의된 Firebase Cloud Messaging을 관리하는 클래스입니다.
 class FirebaseRemoteDataSource {

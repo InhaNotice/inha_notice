@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:flutter/material.dart';
@@ -13,18 +13,26 @@ import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
 
-/// **BasePagination**
-/// 이 클래스는 페이지네이션을 정의하는 추상 클래스입니다.
-abstract class BasePagination extends StatelessWidget {
+/// **PaginationWidget**
+/// Absolute/Relative 스타일의 페이지네이션을 통합한 위젯입니다.
+class PaginationWidget extends StatelessWidget {
   final Pages pages;
   final int currentPage;
-  final Function(int, [String?, String?]) loadNotices;
+  final bool isRelativeStyle;
+  final void Function(int page) onAbsolutePageTap;
+  final void Function(int offset)? onRelativePageTap;
+  final String? searchColumn;
+  final String? searchWord;
 
-  const BasePagination({
+  const PaginationWidget({
     super.key,
     required this.pages,
     required this.currentPage,
-    required this.loadNotices,
+    this.isRelativeStyle = false,
+    required this.onAbsolutePageTap,
+    this.onRelativePageTap,
+    this.searchColumn,
+    this.searchWord,
   });
 
   @override
@@ -33,7 +41,8 @@ abstract class BasePagination extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final pageButtonBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final pageButtonBackgroundColor =
+        Theme.of(context).scaffoldBackgroundColor;
     final selectedPageButtonTextColor =
         Theme.of(context).selectedPageButtonTextColor;
     final unSelectedPageButtonTextColor =
@@ -46,11 +55,8 @@ abstract class BasePagination extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: pages['pageMetas'].map<Widget>((pageMeta) {
-            final String? searchColumn = pages['searchOptions']['searchColumn'];
-            final String? searchWord = pages['searchOptions']['searchWord'];
             final int pageNumber = pageMeta['page'];
             final bool isCurrentPage = (pageNumber == currentPage);
-            final int relativePage = getRelativePage(pageMeta);
 
             return TextButton(
               style: TextButton.styleFrom(
@@ -60,7 +66,15 @@ abstract class BasePagination extends StatelessWidget {
               ),
               onPressed: isCurrentPage
                   ? null
-                  : () => loadNotices(relativePage, searchColumn, searchWord),
+                  : () {
+                      if (isRelativeStyle) {
+                        final int relativeValue =
+                            pageMeta['offset'] ?? pageMeta['startCount'] ?? 0;
+                        onRelativePageTap?.call(relativeValue);
+                      } else {
+                        onAbsolutePageTap(pageMeta['page']);
+                      }
+                    },
               child: Text(
                 pageNumber.toString(),
                 style: TextStyle(
@@ -79,7 +93,4 @@ abstract class BasePagination extends StatelessWidget {
       ),
     );
   }
-
-  /// **각 서브 클래스에서 페이지 계산 방식이 다르므로 오버라이딩 필수**
-  int getRelativePage(Map<String, dynamic> pageMeta);
 }

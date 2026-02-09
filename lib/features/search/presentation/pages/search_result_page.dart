@@ -11,21 +11,21 @@
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
+import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
+import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
+import 'package:inha_notice/features/notice/presentation/pages/base_notice_board_page.dart';
 import 'package:inha_notice/features/search/data/datasources/search_scraper.dart';
-import 'package:inha_notice/models/pages_model.dart';
-import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
 import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
-import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **SearchResultPage**
 /// 이 클래스는 사용자 입력에 따른 검색 결과를 불러오는 클래스입니다.
-class SearchResultPage extends BaseNoticeBoard {
+class SearchResultPage extends BaseNoticeBoardPage {
   final String query;
   final bool isSearchResultPage;
 
@@ -36,7 +36,8 @@ class SearchResultPage extends BaseNoticeBoard {
   State<SearchResultPage> createState() => _LibraryNoticeBoardState();
 }
 
-class _LibraryNoticeBoardState extends BaseNoticeBoardState<SearchResultPage> {
+class _LibraryNoticeBoardState
+    extends BaseNoticeBoardPageState<SearchResultPage> {
   final logger = Logger();
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);

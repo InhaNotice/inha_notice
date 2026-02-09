@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-19
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'dart:convert';
@@ -13,8 +13,8 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
+import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/relative_style_scraper/base_relative_style_notice_scraper.dart';
-import 'package:inha_notice/models/pages_model.dart';
 
 /// **LibraryScraper**
 /// 이 클래스는 인하대학교 정석학술정보관 공지사항 크롤링하는 클래스입니다.

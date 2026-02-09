@@ -12,9 +12,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
+import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/domain/entities/notice_selectors.dart';
-import 'package:inha_notice/models/pages_model.dart';
 
 /// **MajorStyleNoticeScraper**
 /// 이 클래스는 인하대학교 학과 스타일의 공지사항을 크롤링하는 클래스입니다.

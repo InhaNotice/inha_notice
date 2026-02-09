@@ -25,8 +25,8 @@ import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_bloc.da
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_event.dart';
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_state.dart';
 import 'package:inha_notice/features/bookmark/presentation/widgets/bookmark_refresh_header_widget.dart';
+import 'package:inha_notice/features/notice/presentation/pages/base_notice_board_page.dart';
 import 'package:inha_notice/injection_container.dart';
-import 'package:inha_notice/screens/notice_board/base_notice_board.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **BookmarkPage**
@@ -37,14 +37,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 /// ### 주요 기능:
 /// - 북마크 관리(삭제)
 /// - 공지사항 정렬 옵션 제공(북마크된 순서, 이름순, 날짜순)
-class BookmarkPage extends BaseNoticeBoard {
+class BookmarkPage extends BaseNoticeBoardPage {
   const BookmarkPage({super.key});
 
   @override
   State<BookmarkPage> createState() => _BookmarkPageState();
 }
 
-class _BookmarkPageState extends BaseNoticeBoardState<BookmarkPage> {
+class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 

@@ -13,8 +13,8 @@ import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 import 'package:inha_notice/core/constants/identifier_constants.dart';
+import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/search/domain/entities/search_selectors.dart';
-import 'package:inha_notice/models/pages_model.dart';
 
 /// **SearchSraper**
 /// 이 클래스는 사용자의 입력에 따른 검색 크롤링을 정의하는 클래스입니다.

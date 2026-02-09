@@ -15,10 +15,10 @@ import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
+import 'package:inha_notice/core/utils/read_notice_manager.dart';
 import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
 import 'package:inha_notice/features/search/data/datasources/recent_search_manager.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
 
 class CacheDeletionDialogWidget extends StatefulWidget {
   const CacheDeletionDialogWidget({
