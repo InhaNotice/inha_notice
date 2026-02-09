@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-20
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:firebase_core/firebase_core.dart';
@@ -20,8 +20,8 @@ import 'package:inha_notice/core/utils/app_logger.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:inha_notice/features/search/data/datasources/recent_search_manager.dart';
 import 'package:inha_notice/utils/read_notice/read_notice_manager.dart';
-import 'package:inha_notice/utils/recent_search/recent_search_manager.dart';
 
 import 'core/config/app_bloc_observer.dart';
 import 'features/bookmark/data/datasources/bookmark_local_data_source.dart';
