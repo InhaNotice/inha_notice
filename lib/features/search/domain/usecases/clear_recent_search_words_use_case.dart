@@ -5,13 +5,18 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-19
+ * Latest Updated Date: 2026-02-09
  */
 
+import 'package:dartz/dartz.dart';
+import 'package:inha_notice/features/search/domain/failures/search_failure.dart';
 import 'package:inha_notice/features/search/domain/repositories/search_repository.dart';
 
-class RemoveRecentSearchWordUseCase {
+class ClearRecentSearchWordsUseCase {
   final SearchRepository repository;
-  RemoveRecentSearchWordUseCase(this.repository);
-  Future<void> call(String query) => repository.removeRecentSearchWord(query);
+  ClearRecentSearchWordsUseCase(this.repository);
+
+  Future<Either<SearchFailure, void>> call() async {
+    return await repository.clearRecentSearchWords();
+  }
 }

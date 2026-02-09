@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-25
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:dartz/dartz.dart';

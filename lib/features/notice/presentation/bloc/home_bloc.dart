@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/features/notice/domain/entities/home_tab_entity.dart';
 import 'package:inha_notice/features/notice/domain/failures/home_failure.dart';
-import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_usecase.dart';
+import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_use case.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_state.dart';
 

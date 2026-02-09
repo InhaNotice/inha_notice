@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-08
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/features/more/domain/entities/oss_license_category_entity.dart';
 import 'package:inha_notice/features/more/domain/failures/oss_license_failure.dart';
-import 'package:inha_notice/features/more/domain/usecases/get_oss_licenses_usecase.dart';
+import 'package:inha_notice/features/more/domain/usecases/get_oss_licenses_use_case.dart';
 
 import 'oss_license_event.dart';
 import 'oss_license_state.dart';

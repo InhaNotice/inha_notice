@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-08
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -17,12 +17,12 @@ import 'package:inha_notice/features/more/data/datasources/oss_license_local_dat
 import 'package:inha_notice/features/more/data/repositories/more_repository_impl.dart';
 import 'package:inha_notice/features/more/data/repositories/oss_license_repository_impl.dart';
 import 'package:inha_notice/features/more/domain/repositories/more_repository.dart';
-import 'package:inha_notice/features/more/domain/usecases/get_oss_licenses_usecase.dart';
-import 'package:inha_notice/features/more/domain/usecases/get_web_urls_usecase.dart';
+import 'package:inha_notice/features/more/domain/usecases/get_oss_licenses_use_case.dart';
+import 'package:inha_notice/features/more/domain/usecases/get_web_urls_use_case.dart';
 import 'package:inha_notice/features/more/presentation/bloc/oss_license_bloc.dart';
 import 'package:inha_notice/features/notification/data/repositories/notification_repository_impl.dart';
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
-import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_usecase.dart';
+import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_use_case.dart';
 import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,13 +33,13 @@ import 'features/bookmark/domain/usecases/clear_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/get_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
 import 'features/bookmark/presentation/bloc/bookmark_bloc.dart';
-import 'features/main/domain/usecases/get_initial_deep_link_usecase.dart';
+import 'features/main/domain/usecases/get_initial_deep_link_use_case.dart';
 import 'features/main/presentation/bloc/main_navigation_bloc.dart';
 import 'features/more/data/datasources/cache_local_data_source.dart';
 import 'features/more/data/repositories/cache_repository_impl.dart';
 import 'features/more/domain/repositories/cache_repository.dart';
 import 'features/more/domain/repositories/oss_license_repository.dart';
-import 'features/more/domain/usecases/get_cache_size_usecase.dart';
+import 'features/more/domain/usecases/get_cache_size_use_case.dart';
 import 'features/more/presentation/bloc/cache_bloc.dart';
 import 'features/more/presentation/bloc/more_bloc.dart';
 import 'features/notice/data/datasources/home_local_data_source.dart';
@@ -48,7 +48,7 @@ import 'features/notice/data/repositories/home_repository_impl.dart';
 import 'features/notice/data/repositories/notice_board_repository_impl.dart';
 import 'features/notice/domain/repositories/home_repository.dart';
 import 'features/notice/domain/repositories/notice_board_repository.dart';
-import 'features/notice/domain/usecases/get_home_tabs_usecase.dart';
+import 'features/notice/domain/usecases/get_home_tabs_use case.dart';
 import 'features/notice/domain/usecases/get_notices_use_case.dart';
 import 'features/notice/presentation/bloc/home_bloc.dart';
 import 'features/notice/presentation/bloc/notice_board_bloc.dart';
@@ -57,11 +57,11 @@ import 'features/search/data/datasources/search_local_data_source.dart';
 import 'features/search/data/datasources/search_remote_data_source.dart';
 import 'features/search/data/repositories/search_repository_impl.dart';
 import 'features/search/domain/repositories/search_repository.dart';
-import 'features/search/domain/usecases/add_recent_search_word_usecase.dart';
-import 'features/search/domain/usecases/clear_recent_search_words_usecase.dart';
-import 'features/search/domain/usecases/get_recent_search_words_usecase.dart';
-import 'features/search/domain/usecases/get_trending_topics_usecase.dart';
-import 'features/search/domain/usecases/remove_recent_search_word_usecase.dart';
+import 'features/search/domain/usecases/add_recent_search_word_use_case.dart';
+import 'features/search/domain/usecases/clear_recent_search_words_use_case.dart';
+import 'features/search/domain/usecases/get_recent_search_words_use_case.dart';
+import 'features/search/domain/usecases/get_trending_topics_use_case.dart';
+import 'features/search/domain/usecases/remove_recent_search_word_use_case.dart';
 import 'features/search/presentation/bloc/search_bloc.dart';
 
 final sl = GetIt.instance;

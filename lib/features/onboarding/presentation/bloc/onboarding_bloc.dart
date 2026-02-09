@@ -5,13 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-20
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_usecase.dart';
+import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_use_case.dart';
 import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_state.dart';
 

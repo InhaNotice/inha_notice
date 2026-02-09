@@ -5,11 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-22
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inha_notice/features/main/domain/usecases/get_initial_deep_link_usecase.dart';
+import 'package:inha_notice/features/main/domain/usecases/get_initial_deep_link_use_case.dart';
 import 'package:inha_notice/features/main/presentation/bloc/main_navigation_event.dart';
 import 'package:inha_notice/features/main/presentation/bloc/main_navigation_state.dart';
 
