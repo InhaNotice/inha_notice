@@ -1,18 +1,18 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2026-02-09
  */
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class BookmarkRefreshHeader extends StatelessWidget {
-  const BookmarkRefreshHeader({super.key});
+class BookmarkRefreshHeaderWidget extends StatelessWidget {
+  const BookmarkRefreshHeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
