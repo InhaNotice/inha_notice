@@ -11,6 +11,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
+import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/more/data/datasources/more_local_data_source.dart';
 import 'package:inha_notice/features/more/data/datasources/oss_license_local_data_source.dart';
 import 'package:inha_notice/features/more/data/repositories/more_repository_impl.dart';
@@ -23,7 +24,6 @@ import 'package:inha_notice/features/notification/data/repositories/notification
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
 import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_usecase.dart';
 import 'package:inha_notice/features/onboarding/presentation/bloc/onboarding_bloc.dart';
-import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/bookmark/data/datasources/bookmark_local_data_source.dart';

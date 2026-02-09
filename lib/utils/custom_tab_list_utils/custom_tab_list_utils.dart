@@ -10,9 +10,9 @@
 
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/utils/shared_prefs/shared_prefs_manager.dart';
 
 abstract class CustomTabListUtils {
   static const List<String> kDefaultTabs = [
