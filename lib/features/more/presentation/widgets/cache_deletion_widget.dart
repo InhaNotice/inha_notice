@@ -16,8 +16,8 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/features/more/presentation/bloc/cache_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/cache_event.dart';
 import 'package:inha_notice/features/more/presentation/bloc/cache_state.dart';
+import 'package:inha_notice/features/more/presentation/widgets/cache_deletion_dialog.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/widgets/dialogs/cache_deletion_dialog.dart';
 
 class CacheDeletionWidget extends StatelessWidget {
   final String title;
