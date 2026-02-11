@@ -14,12 +14,16 @@ import 'package:get_it/get_it.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/more/data/datasources/more_local_data_source.dart';
 import 'package:inha_notice/features/more/data/datasources/oss_license_local_data_source.dart';
+import 'package:inha_notice/features/more/data/datasources/theme_preference_local_data_source.dart';
 import 'package:inha_notice/features/more/data/repositories/more_repository_impl.dart';
 import 'package:inha_notice/features/more/data/repositories/oss_license_repository_impl.dart';
 import 'package:inha_notice/features/more/domain/repositories/more_repository.dart';
 import 'package:inha_notice/features/more/domain/usecases/get_oss_licenses_use_case.dart';
+import 'package:inha_notice/features/more/domain/usecases/get_theme_preference_use_case.dart';
 import 'package:inha_notice/features/more/domain/usecases/get_web_urls_use_case.dart';
+import 'package:inha_notice/features/more/domain/usecases/set_theme_preference_use_case.dart';
 import 'package:inha_notice/features/more/presentation/bloc/oss_license_bloc.dart';
+import 'package:inha_notice/features/more/presentation/bloc/theme_preference_bloc.dart';
 import 'package:inha_notice/features/notification/data/repositories/notification_repository_impl.dart';
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
 import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_use_case.dart';
@@ -37,8 +41,10 @@ import 'features/main/domain/usecases/get_initial_notification_message.dart';
 import 'features/main/presentation/bloc/main_navigation_bloc.dart';
 import 'features/more/data/datasources/cache_local_data_source.dart';
 import 'features/more/data/repositories/cache_repository_impl.dart';
+import 'features/more/data/repositories/theme_preference_repository_impl.dart';
 import 'features/more/domain/repositories/cache_repository.dart';
 import 'features/more/domain/repositories/oss_license_repository.dart';
+import 'features/more/domain/repositories/theme_preference_repository.dart';
 import 'features/more/domain/usecases/get_cache_size_use_case.dart';
 import 'features/more/presentation/bloc/cache_bloc.dart';
 import 'features/more/presentation/bloc/more_bloc.dart';
@@ -94,6 +100,10 @@ Future<void> init() async {
         getAbsoluteNoticesUseCase: sl(),
         getRelativeNoticesUseCase: sl(),
       ));
+  sl.registerFactory(
+      () => MainNavigationBloc(getInitialNotificationMessage: sl()));
+  sl.registerFactory(() => ThemePreferenceBloc(
+      getThemePreferenceUseCase: sl(), setThemePreferenceUseCase: sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
@@ -111,13 +121,13 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddRecentSearchWordUseCase(sl()));
   sl.registerLazySingleton(() => RemoveRecentSearchWordUseCase(sl()));
   sl.registerLazySingleton(() => ClearRecentSearchWordsUseCase(sl()));
-  sl.registerFactory(
-      () => MainNavigationBloc(getInitialNotificationMessage: sl()));
   sl.registerLazySingleton(
       () => GetInitialNotificationMessage(repository: sl()));
   sl.registerLazySingleton(() => GetWebUrlsUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetCacheSizeUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetOssLicensesUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetThemePreferenceUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SetThemePreferenceUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -148,6 +158,8 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<OssLicenseRepository>(
       () => OssLicenseRepositoryImpl(localDataSource: sl()));
+  sl.registerLazySingleton<ThemePreferenceRepository>(
+      () => ThemePreferenceRepositoryImpl(localDataSource: sl()));
 
   // Datasources
   sl.registerLazySingleton<HomeLocalDataSource>(
@@ -180,6 +192,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<OssLicenseLocalDataSource>(
       () => OssLicenseLocalDataSourceImpl());
+  sl.registerLazySingleton<ThemePreferenceLocalDataSource>(
+    () => ThemePreferenceLocalDataSourceImpl(sharedPrefsManager: sl()),
+  );
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

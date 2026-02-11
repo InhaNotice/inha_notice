@@ -15,8 +15,8 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/features/more/presentation/widgets/theme_mode_selection_dialog.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/widgets/dialogs/theme_mode_selection_dialog.dart';
 
 /// **ThemePreferenceTile**
 /// 사용자의 현재 테마 설정을 보여주기 위한 타일입니다.
