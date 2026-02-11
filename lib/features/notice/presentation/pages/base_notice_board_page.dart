@@ -13,8 +13,8 @@ import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
-import 'package:inha_notice/core/utils/read_notice_manager.dart';
 import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
+import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 
 /// **BaseNoticeBoardPage**
@@ -43,7 +43,7 @@ abstract class BaseNoticeBoardPageState<T extends BaseNoticeBoardPage>
 
   /// **공지 읽음 여부 확인**
   bool isNoticeRead(String noticeId) {
-    return ReadNoticeManager.isReadNotice(noticeId);
+    return ReadNoticeLocalDataSource.isReadNotice(noticeId);
   }
 
   /// **공지 북마크 여부 확인 (캐싱 활용)**
@@ -53,7 +53,7 @@ abstract class BaseNoticeBoardPageState<T extends BaseNoticeBoardPage>
 
   /// **공지 읽음 처리 (캐싱 활용)**
   Future<void> markNoticeAsRead(String noticeId) async {
-    await ReadNoticeManager.addReadNotice(noticeId);
+    await ReadNoticeLocalDataSource.addReadNotice(noticeId);
     setState(() {});
   }
 

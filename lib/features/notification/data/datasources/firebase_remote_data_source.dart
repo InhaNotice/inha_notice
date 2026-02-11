@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-09
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'dart:io';
@@ -16,11 +16,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/widgets/web_navigator_widget.dart';
 import 'package:inha_notice/core/utils/app_logger.dart';
-import 'package:inha_notice/core/utils/read_notice_manager.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
+import 'package:inha_notice/features/notification/data/models/notification_message_model.dart';
 import 'package:inha_notice/main.dart';
 
-/// 이 클래스는 싱글톤으로 정의된 Firebase Cloud Messaging을 관리하는 클래스입니다.
 class FirebaseRemoteDataSource {
   final FirebaseMessaging _messaging;
   final FlutterLocalNotificationsPlugin _localNotifications;
@@ -81,13 +81,12 @@ class FirebaseRemoteDataSource {
     );
   }
 
-  /// **BottomNavBarPage에서 웹페이지 로딩을 위해 필요**
   /// 푸시알림 메시지가 있다면 공지 링크를 읽어와 반환한다.
-  Future<String?> getInitialMessageLink() async {
-    final RemoteMessage? initialMessage =
+  Future<NoticeNotificationModel> getNotificationMessage() async {
+    final RemoteMessage? remoteMessage =
         await FirebaseMessaging.instance.getInitialMessage();
-
-    return initialMessage?.data['link'];
+    return NoticeNotificationModel(
+        id: remoteMessage?.data['id'], link: remoteMessage?.data['link']);
   }
 
   /// **iOS 설정 초기화**
@@ -223,7 +222,7 @@ class FirebaseRemoteDataSource {
 
     // 읽은 공지로 추가 (백그라운드 진행)
     if (message.data.containsKey('id')) {
-      ReadNoticeManager.addReadNotice(message.data['id']);
+      ReadNoticeLocalDataSource.addReadNotice(message.data['id']);
     }
 
     // 앱이 실행 중일 때 푸시알림으로 웹페이지 이동을 핸들링

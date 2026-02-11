@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
-import 'package:inha_notice/core/utils/read_notice_manager.dart';
+import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notice/domain/entities/notice_board_entity.dart';
 import 'package:inha_notice/features/notice/domain/failures/notice_board_failure.dart';
 import 'package:inha_notice/features/notice/domain/usecases/get_notices_use_case.dart';
@@ -130,7 +130,7 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
 
   Future<void> _onMarkNoticeAsRead(
       MarkNoticeAsReadEvent event, Emitter<NoticeBoardState> emit) async {
-    await ReadNoticeManager.addReadNotice(event.noticeId);
+    await ReadNoticeLocalDataSource.addReadNotice(event.noticeId);
     // 현재 상태가 Loaded면 다시 emit하여 UI 갱신
     if (state is NoticeBoardLoaded) {
       final current = state as NoticeBoardLoaded;

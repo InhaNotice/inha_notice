@@ -1,21 +1,22 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-09
+ * Latest Updated Date: 2026-02-11
  */
 
+import 'package:inha_notice/features/notification/domain/entities/notification_message_entity.dart';
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
 
-class GetInitialDeepLinkUseCase {
+class GetInitialNotificationMessage {
   final NotificationRepository repository;
 
-  GetInitialDeepLinkUseCase({required this.repository});
+  GetInitialNotificationMessage({required this.repository});
 
-  Future<String?> call() async {
-    return await repository.getInitialMessageLink();
+  Future<NotificationMessageEntity> call() async {
+    return await repository.getNotificationMessage();
   }
 }

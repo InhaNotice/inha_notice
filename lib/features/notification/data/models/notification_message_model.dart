@@ -10,7 +10,6 @@
 
 import 'package:inha_notice/features/notification/domain/entities/notification_message_entity.dart';
 
-abstract class NotificationRepository {
-  Future<void> requestPermission();
-  Future<NotificationMessageEntity> getNotificationMessage();
+class NoticeNotificationModel extends NotificationMessageEntity {
+  const NoticeNotificationModel({required super.id, required super.link});
 }

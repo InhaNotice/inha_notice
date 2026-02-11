@@ -8,9 +8,14 @@
  * Latest Updated Date: 2026-02-11
  */
 
-import 'package:inha_notice/features/notification/domain/entities/notification_message_entity.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class NotificationRepository {
-  Future<void> requestPermission();
-  Future<NotificationMessageEntity> getNotificationMessage();
+class NotificationMessageEntity extends Equatable {
+  final String? id;
+  final String? link;
+
+  const NotificationMessageEntity({required this.id, required this.link});
+
+  @override
+  List<Object?> get props => [id, link];
 }

@@ -1,14 +1,15 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-22
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
+import 'package:inha_notice/features/notification/domain/entities/notification_message_entity.dart';
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
@@ -22,7 +23,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<String?> getInitialMessageLink() async {
-    return await remoteDataSource.getInitialMessageLink();
+  Future<NotificationMessageEntity> getNotificationMessage() async {
+    return await remoteDataSource.getNotificationMessage();
   }
 }

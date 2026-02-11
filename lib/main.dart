@@ -17,8 +17,8 @@ import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/config/firebase_options.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/utils/app_logger.dart';
-import 'package:inha_notice/core/utils/read_notice_manager.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:inha_notice/features/search/data/datasources/recent_search_manager.dart';
@@ -48,7 +48,7 @@ Future<void> main() async {
       di.sl<BookmarkLocalDataSource>().initialize(),
       di.sl<SharedPrefsManager>().initialize(),
       di.sl<FirebaseRemoteDataSource>().initialize(),
-      ReadNoticeManager.initialize(),
+      ReadNoticeLocalDataSource.initialize(),
       RecentSearchManager.initialize(),
     ]);
   } catch (e, stackTrace) {

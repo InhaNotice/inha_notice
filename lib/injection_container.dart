@@ -33,7 +33,7 @@ import 'features/bookmark/domain/usecases/clear_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/get_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
 import 'features/bookmark/presentation/bloc/bookmark_bloc.dart';
-import 'features/main/domain/usecases/get_initial_deep_link_use_case.dart';
+import 'features/main/domain/usecases/get_initial_notification_message.dart';
 import 'features/main/presentation/bloc/main_navigation_bloc.dart';
 import 'features/more/data/datasources/cache_local_data_source.dart';
 import 'features/more/data/repositories/cache_repository_impl.dart';
@@ -111,8 +111,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddRecentSearchWordUseCase(sl()));
   sl.registerLazySingleton(() => RemoveRecentSearchWordUseCase(sl()));
   sl.registerLazySingleton(() => ClearRecentSearchWordsUseCase(sl()));
-  sl.registerFactory(() => MainNavigationBloc(getInitialDeepLinkUseCase: sl()));
-  sl.registerLazySingleton(() => GetInitialDeepLinkUseCase(repository: sl()));
+  sl.registerFactory(
+      () => MainNavigationBloc(getInitialNotificationMessage: sl()));
+  sl.registerLazySingleton(
+      () => GetInitialNotificationMessage(repository: sl()));
   sl.registerLazySingleton(() => GetWebUrlsUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetCacheSizeUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetOssLicensesUseCase(repository: sl()));

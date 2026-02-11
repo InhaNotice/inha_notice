@@ -20,8 +20,8 @@ import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
-import 'package:inha_notice/core/utils/read_notice_manager.dart';
 import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
+import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_state.dart';
@@ -344,7 +344,8 @@ class _NoticeBoardPageState extends State<NoticeBoardPage> {
                   itemCount: notices.length,
                   itemBuilder: (context, index) {
                     final notice = notices[index];
-                    final isRead = ReadNoticeManager.isReadNotice(notice.id);
+                    final isRead =
+                        ReadNoticeLocalDataSource.isReadNotice(notice.id);
                     final isBookmarked = di
                         .sl<BookmarkLocalDataSource>()
                         .isBookmarked(notice.id);

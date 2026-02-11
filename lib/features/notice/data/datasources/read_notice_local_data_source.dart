@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'dart:async';
@@ -15,9 +15,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-/// **ReadNoticeManager**
 /// 이 클래스는 읽은 공지사항을 관리하는 데이터베이스를 정의하는 클래스입니다.
-class ReadNoticeManager {
+class ReadNoticeLocalDataSource {
   static const String tableName = 'read_notices';
   static Database? _database;
   static final logger = Logger();

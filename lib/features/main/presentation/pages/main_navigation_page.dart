@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-09
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class MainNavigationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          di.sl<MainNavigationBloc>()..add(CheckInitialDeepLinkEvent()),
+          di.sl<MainNavigationBloc>()..add(CheckNoticeNotificationEvent()),
       child: const _MainNavigationPageView(),
     );
   }

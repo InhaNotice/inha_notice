@@ -114,7 +114,7 @@ class BookmarkLocalDataSourceImpl implements BookmarkLocalDataSource {
     }
   }
 
-  /// 주어진 공지사항[noticeId]을 북마크에 추가한다.
+  /// 주어진 공지사항[id]을 북마크에 추가한다.
   @override
   Future<void> addBookmark(NoticeTileModel notice) async {
     try {
