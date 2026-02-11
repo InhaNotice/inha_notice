@@ -186,14 +186,7 @@ class _NoticeBoardPageState extends State<NoticeBoardPage> {
           }
 
           if (state is NoticeBoardError) {
-            return Center(
-              child: Text(state.message,
-                  style: TextStyle(
-                    fontFamily: AppFont.pretendard.family,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                  )),
-            );
+            return const NoSearchResult();
           }
 
           if (state is NoticeBoardLoaded) {
