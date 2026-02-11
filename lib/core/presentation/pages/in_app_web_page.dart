@@ -91,15 +91,15 @@ class _InAppWebPageState extends State<InAppWebPage> {
     } else {
       await controller.evaluateJavascript(source: """
         var meta = document.querySelector('meta[name="viewport"]');
-        var content = 'width=device-width, initial-scale=0.90, minimum-scale=0.1, maximum-scale=5.0, user-scalable=yes';
+        var content = 'width=device-width, initial-scale=0.95, minimum-scale=0.1, maximum-scale=5.0, user-scalable=yes';
         
         if (meta) {
           meta.setAttribute('content', content);
         } else {
-          var newMeta = document.createElement('meta');
+          var newMeta = document.createElement('meta'); 
           newMeta.name = "viewport";
           newMeta.content = content;
-          document.head.appendChild(newMeta);
+          document.head.appendChild(newMeta); 
         }
       """);
     }
