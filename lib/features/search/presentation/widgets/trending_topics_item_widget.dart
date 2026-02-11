@@ -30,8 +30,7 @@ class TrendingTopicsItemWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                SearchResultPage(query: topic.text, isSearchResultPage: true),
+            builder: (context) => SearchResultPage(query: topic.text),
           ),
         );
       },

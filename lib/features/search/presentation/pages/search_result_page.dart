@@ -17,9 +17,10 @@ import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart
 import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
 import 'package:inha_notice/features/notice/presentation/pages/base_notice_board_page.dart';
+import 'package:inha_notice/features/notice/presentation/widgets/no_search_result_widget.dart';
+import 'package:inha_notice/features/notice/presentation/widgets/notice_refresh_header.dart';
 import 'package:inha_notice/features/search/data/datasources/search_scraper.dart';
 import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
-import 'package:inha_notice/widgets/refresh_headers/notice_refresh_header.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -27,10 +28,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 /// 이 클래스는 사용자 입력에 따른 검색 결과를 불러오는 클래스입니다.
 class SearchResultPage extends BaseNoticeBoardPage {
   final String query;
-  final bool isSearchResultPage;
 
-  const SearchResultPage(
-      {super.key, required this.query, required this.isSearchResultPage});
+  const SearchResultPage({super.key, required this.query});
 
   @override
   State<SearchResultPage> createState() => _LibraryNoticeBoardState();
@@ -111,18 +110,6 @@ class _LibraryNoticeBoardState
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.isSearchResultPage) {
-      return Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildHeader(),
-            buildMain(),
-            buildFooter(),
-          ],
-        ),
-      );
-    }
     return Scaffold(
       appBar: CommonAppBarWidget(
         title: '검색 결과: ${widget.query}',
@@ -173,28 +160,30 @@ class _LibraryNoticeBoardState
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : SmartRefresher(
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                enablePullDown: true,
-                header: const NoticeRefreshHeader(),
-                child: ListView.builder(
-                  itemCount: notices['general'].length,
-                  itemBuilder: (context, index) {
-                    final notice = notices['general'][index];
-                    final isRead = isNoticeRead(notice['id'].toString());
-                    final isBookmarked =
-                        isNoticeBookmarked(notice['id'].toString());
-                    return NoticeTileWidget(
-                      notice: NoticeTileModel.fromMap(notice),
-                      isRead: isRead,
-                      isBookmarked: isBookmarked,
-                      markNoticeAsRead: markNoticeAsRead,
-                      toggleBookmark: toggleBookmark,
-                    );
-                  },
-                ),
-              ),
+            : notices['general'].isEmpty
+                ? NoSearchResult()
+                : SmartRefresher(
+                    controller: _refreshController,
+                    onRefresh: _onRefresh,
+                    enablePullDown: true,
+                    header: const NoticeRefreshHeader(),
+                    child: ListView.builder(
+                      itemCount: notices['general'].length,
+                      itemBuilder: (context, index) {
+                        final notice = notices['general'][index];
+                        final isRead = isNoticeRead(notice['id'].toString());
+                        final isBookmarked =
+                            isNoticeBookmarked(notice['id'].toString());
+                        return NoticeTileWidget(
+                          notice: NoticeTileModel.fromMap(notice),
+                          isRead: isRead,
+                          isBookmarked: isBookmarked,
+                          markNoticeAsRead: markNoticeAsRead,
+                          toggleBookmark: toggleBookmark,
+                        );
+                      },
+                    ),
+                  ),
       ),
     );
   }
@@ -204,17 +193,6 @@ class _LibraryNoticeBoardState
     // 중요공지 옵션일 경우 페이지 버튼을 숨기기
     if (pages['pageMetas'].isEmpty) return const SizedBox();
 
-    // SearchResultPage가 아닌 경우 padding을 추가하지 않음
-    if (!widget.isSearchResultPage) {
-      return RelativeStylePagination(
-        pageType: 'SEARCH',
-        pages: pages,
-        currentPage: currentPage,
-        loadNotices: loadNotices,
-      );
-    }
-
-    // SearchResultPage인 경우 padding을 추가함
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: RelativeStylePagination(

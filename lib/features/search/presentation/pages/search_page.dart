@@ -57,8 +57,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>
-            SearchResultPage(query: query, isSearchResultPage: true),
+        builder: (context) => SearchResultPage(query: query),
       ),
     );
   }
