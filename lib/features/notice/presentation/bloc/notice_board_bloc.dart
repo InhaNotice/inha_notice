@@ -80,14 +80,22 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
 
   Future<void> _onLoadPage(
       LoadPageEvent event, Emitter<NoticeBoardState> emit) async {
-    emit(NoticeBoardLoading());
+    if (state is NoticeBoardLoaded) {
+      emit((state as NoticeBoardLoaded).copyWith(isRefreshing: true));
+    } else {
+      emit(NoticeBoardLoading());
+    }
     await _fetchAbsoluteNotices(
         emit, event.page, false, event.searchColumn, event.searchWord);
   }
 
   Future<void> _onLoadOffset(
       LoadOffsetEvent event, Emitter<NoticeBoardState> emit) async {
-    emit(NoticeBoardLoading());
+    if (state is NoticeBoardLoaded) {
+      emit((state as NoticeBoardLoaded).copyWith(isRefreshing: true));
+    } else {
+      emit(NoticeBoardLoading());
+    }
     await _fetchRelativeNotices(emit, event.offset, false);
   }
 
@@ -114,6 +122,13 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
 
   Future<void> _onRefresh(
       RefreshNoticeBoardEvent event, Emitter<NoticeBoardState> emit) async {
+    if (state is NoticeBoardLoaded) {
+      final current = state as NoticeBoardLoaded;
+      emit(current.copyWith(isRefreshing: true));
+    } else {
+      emit(NoticeBoardLoading());
+    }
+
     _isPullRefreshing = true;
     try {
       if (_isRelativeStyle) {
@@ -177,6 +192,7 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
           currentPage: page,
           isHeadlineSelected: false,
           isKeywordSearchable: _isKeywordSearchable,
+          isRefreshing: false,
         ));
       },
     );
@@ -211,6 +227,7 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
           currentPage: currentPage,
           isHeadlineSelected: false,
           isKeywordSearchable: false,
+          isRefreshing: false,
         ));
       },
     );

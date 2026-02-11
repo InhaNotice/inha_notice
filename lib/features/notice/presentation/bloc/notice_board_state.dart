@@ -30,6 +30,7 @@ class NoticeBoardLoaded extends NoticeBoardState {
   final int currentPage;
   final bool isHeadlineSelected;
   final bool isKeywordSearchable;
+  final bool isRefreshing;
 
   const NoticeBoardLoaded({
     required this.headlineNotices,
@@ -38,6 +39,7 @@ class NoticeBoardLoaded extends NoticeBoardState {
     required this.currentPage,
     this.isHeadlineSelected = false,
     this.isKeywordSearchable = false,
+    this.isRefreshing = false,
   });
 
   NoticeBoardLoaded copyWith({
@@ -47,6 +49,7 @@ class NoticeBoardLoaded extends NoticeBoardState {
     int? currentPage,
     bool? isHeadlineSelected,
     bool? isKeywordSearchable,
+    bool? isRefreshing,
   }) {
     return NoticeBoardLoaded(
       headlineNotices: headlineNotices ?? this.headlineNotices,
@@ -55,6 +58,7 @@ class NoticeBoardLoaded extends NoticeBoardState {
       currentPage: currentPage ?? this.currentPage,
       isHeadlineSelected: isHeadlineSelected ?? this.isHeadlineSelected,
       isKeywordSearchable: isKeywordSearchable ?? this.isKeywordSearchable,
+      isRefreshing: isRefreshing ?? this.isRefreshing,
     );
   }
 
@@ -66,6 +70,7 @@ class NoticeBoardLoaded extends NoticeBoardState {
         currentPage,
         isHeadlineSelected,
         isKeywordSearchable,
+        isRefreshing,
       ];
 }
 

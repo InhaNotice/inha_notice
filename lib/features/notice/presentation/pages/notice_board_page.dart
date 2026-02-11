@@ -160,7 +160,19 @@ class _NoticeBoardPageState extends State<NoticeBoardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<NoticeBoardBloc, NoticeBoardState>(
+      body: BlocConsumer<NoticeBoardBloc, NoticeBoardState>(
+        listener: (context, state) {
+          if (state is NoticeBoardLoaded && !state.isRefreshing) {
+            if (_refreshController.isRefresh) {
+              _refreshController.refreshCompleted();
+            }
+          }
+          if (state is NoticeBoardError) {
+            if (_refreshController.isRefresh) {
+              _refreshController.refreshFailed();
+            }
+          }
+        },
         builder: (context, state) {
           if (state is NoticeBoardInitial || state is NoticeBoardLoading) {
             return const Center(child: BlueLoadingIndicatorWidget());
@@ -333,32 +345,34 @@ class _NoticeBoardPageState extends State<NoticeBoardPage> {
     return Expanded(
       child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
-        child: SmartRefresher(
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          enablePullDown: true,
-          header: const NoticeRefreshHeader(),
-          child: notices.isEmpty
-              ? const NoSearchResult()
-              : ListView.builder(
-                  itemCount: notices.length,
-                  itemBuilder: (context, index) {
-                    final notice = notices[index];
-                    final isRead =
-                        ReadNoticeLocalDataSource.isReadNotice(notice.id);
-                    final isBookmarked = di
-                        .sl<BookmarkLocalDataSource>()
-                        .isBookmarked(notice.id);
-                    return NoticeTileWidget(
-                      notice: notice,
-                      isRead: isRead,
-                      isBookmarked: isBookmarked,
-                      markNoticeAsRead: _markNoticeAsRead,
-                      toggleBookmark: _toggleBookmark,
-                    );
-                  },
-                ),
-        ),
+        child: state.isRefreshing
+            ? const Center(child: BlueLoadingIndicatorWidget())
+            : SmartRefresher(
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                enablePullDown: true,
+                header: const NoticeRefreshHeader(),
+                child: notices.isEmpty
+                    ? const NoSearchResult()
+                    : ListView.builder(
+                        itemCount: notices.length,
+                        itemBuilder: (context, index) {
+                          final notice = notices[index];
+                          final isRead =
+                              ReadNoticeLocalDataSource.isReadNotice(notice.id);
+                          final isBookmarked = di
+                              .sl<BookmarkLocalDataSource>()
+                              .isBookmarked(notice.id);
+                          return NoticeTileWidget(
+                            notice: notice,
+                            isRead: isRead,
+                            isBookmarked: isBookmarked,
+                            markNoticeAsRead: _markNoticeAsRead,
+                            toggleBookmark: _toggleBookmark,
+                          );
+                        },
+                      ),
+              ),
       ),
     );
   }
