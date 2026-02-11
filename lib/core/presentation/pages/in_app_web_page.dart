@@ -83,7 +83,7 @@ class _InAppWebPageState extends State<InAppWebPage> {
     // 데스크탑 모드일 때 강제로 PC 뷰포트로 변경
     if (_isDesktopMode) {
       double screenWidth = MediaQuery.of(context).size.width;
-      int desktopWidth = screenWidth < 1200 ? 1200 : screenWidth.toInt();
+      int desktopWidth = screenWidth < 800 ? 800 : screenWidth.toInt();
 
       await controller.evaluateJavascript(source: """
         document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=$desktopWidth');
