@@ -1,17 +1,17 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list.dart';
+import 'package:inha_notice/features/custom_tab/presentation/widgets/base_custom_tab_list.dart';
 
 /// **CustomTabSelectedList**
 /// 현재 선택된 탭 리스트를 출력합니다.

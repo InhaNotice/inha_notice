@@ -1,20 +1,19 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2025-08-23
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
-import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 
 /// **BaseTabList**
 /// 공통 기능을 모듈화한 추상 클래스입니다.
@@ -40,8 +39,11 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
   /// 자식 클래스에서 다른 onTap 로직을 추가할 수 있도록,
   /// 설정 페이지로 이동하는 로직만 공통으로 제공
   void handleToNavigate(String tab) {
-    switch (tab) {
-      case CustomTabKeys.kMajor:
+    final tabType = CustomTabType.fromKey(tab);
+    if (tabType == null) return;
+
+    switch (tabType) {
+      case CustomTabType.major:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -49,8 +51,7 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
                 const MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey),
           ),
         );
-        break;
-      case CustomTabKeys.kMajor2:
+      case CustomTabType.major2:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -58,8 +59,7 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
                 const MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey2),
           ),
         );
-        break;
-      case CustomTabKeys.kMajor3:
+      case CustomTabType.major3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -67,30 +67,27 @@ abstract class BaseCustomTabListState<T extends BaseCustomTabList>
                 const MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey3),
           ),
         );
-        break;
-      case CustomTabKeys.kCollege:
+      case CustomTabType.college:
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const CollegeSettingPage(),
           ),
         );
-        break;
-      case CustomTabKeys.kGraduateSchool:
+      case CustomTabType.graduateSchool:
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const GraduateSchoolSettingPage(),
           ),
         );
-        break;
       default:
         return;
     }
   }
 
   /// 탭에 따라 설정 페이지 이동 아이콘(arrow)을 표시할지 여부
-  bool showArrow(String tab) => CustomTabListUtils.doesTabHaveSettingsPage(tab);
+  bool showArrow(String tab) => CustomTabType.doesTabHaveSettingsPage(tab);
 
   /// 자식 클래스에서 구현해야 할 메서드
   /// - ListTile(혹은 itemBuilder)에서의 trailing UI (add/remove 버튼 등)

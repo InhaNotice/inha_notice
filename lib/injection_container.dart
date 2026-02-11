@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-09
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -37,6 +37,12 @@ import 'features/bookmark/domain/usecases/clear_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/get_bookmarks_use_case.dart';
 import 'features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
 import 'features/bookmark/presentation/bloc/bookmark_bloc.dart';
+import 'features/custom_tab/data/datasources/custom_tab_local_data_source.dart';
+import 'features/custom_tab/data/repositories/custom_tab_repository_impl.dart';
+import 'features/custom_tab/domain/repositories/custom_tab_repository.dart';
+import 'features/custom_tab/domain/usecases/get_selected_tabs_use_case.dart';
+import 'features/custom_tab/domain/usecases/save_tabs_use_case.dart';
+import 'features/custom_tab/presentation/bloc/custom_tab_bloc.dart';
 import 'features/main/domain/usecases/get_initial_notification_message.dart';
 import 'features/main/presentation/bloc/main_navigation_bloc.dart';
 import 'features/more/data/datasources/cache_local_data_source.dart';
@@ -104,6 +110,10 @@ Future<void> init() async {
       () => MainNavigationBloc(getInitialNotificationMessage: sl()));
   sl.registerFactory(() => ThemePreferenceBloc(
       getThemePreferenceUseCase: sl(), setThemePreferenceUseCase: sl()));
+  sl.registerFactory(() => CustomTabBloc(
+        getSelectedTabsUseCase: sl(),
+        saveTabsUseCase: sl(),
+      ));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
@@ -128,6 +138,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetOssLicensesUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetThemePreferenceUseCase(repository: sl()));
   sl.registerLazySingleton(() => SetThemePreferenceUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetSelectedTabsUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SaveTabsUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -160,6 +172,9 @@ Future<void> init() async {
       () => OssLicenseRepositoryImpl(localDataSource: sl()));
   sl.registerLazySingleton<ThemePreferenceRepository>(
       () => ThemePreferenceRepositoryImpl(localDataSource: sl()));
+  sl.registerLazySingleton<CustomTabRepository>(
+    () => CustomTabRepositoryImpl(localDataSource: sl()),
+  );
 
   // Datasources
   sl.registerLazySingleton<HomeLocalDataSource>(
@@ -194,6 +209,9 @@ Future<void> init() async {
       () => OssLicenseLocalDataSourceImpl());
   sl.registerLazySingleton<ThemePreferenceLocalDataSource>(
     () => ThemePreferenceLocalDataSourceImpl(sharedPrefsManager: sl()),
+  );
+  sl.registerLazySingleton<CustomTabLocalDataSource>(
+    () => CustomTabLocalDataSourceImpl(prefsManager: sl()),
   );
 
   // External

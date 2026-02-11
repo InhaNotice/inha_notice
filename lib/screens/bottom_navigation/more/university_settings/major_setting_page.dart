@@ -1,12 +1,12 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-19
-*/
+ * Latest Updated Date: 2026-02-11
+ */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
@@ -14,10 +14,10 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/presentation/utils/blocking_dialog.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
 import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 import 'package:inha_notice/screens/bottom_navigation/more/university_settings/base_setting_page.dart';
-import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 import 'package:logger/logger.dart';
 
 class MajorSettingPage extends BaseSettingPage {
@@ -64,8 +64,7 @@ class _MajorSettingPageState extends BaseSettingPageState<MajorSettingPage> {
       _currentMajorKey =
           di.sl<SharedPrefsManager>().getValue<String>(widget.majorKeyType);
       if (_currentMajorKey != null) {
-        _currentMajor =
-            CustomTabListUtils.getMajorDisplayName(_currentMajorKey!);
+        _currentMajor = CustomTabType.getMajorDisplayName(_currentMajorKey!);
       }
       _filteredMajorGroups = _allMajorGroups;
       _filteredMajors = [];

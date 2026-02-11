@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-09
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:flutter/material.dart';
@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/constants/keyword_search_option_constants.dart';
-import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
@@ -21,6 +20,7 @@ import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_wid
 import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
 import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
 import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_event.dart';
@@ -61,7 +61,7 @@ class _NoticeBoardPageState extends State<NoticeBoardPage> {
   @override
   void initState() {
     super.initState();
-    _isRelativeStyle = (widget.noticeType == CustomTabKeys.LIBRARY);
+    _isRelativeStyle = (widget.noticeType == CustomTabType.library.noticeType);
   }
 
   @override
@@ -105,22 +105,25 @@ class _NoticeBoardPageState extends State<NoticeBoardPage> {
   }
 
   void _handleNavigateToSetting(String tab) {
+    final tabType = CustomTabType.fromNoticeType(tab);
+    if (tabType == null) return;
+
     late Widget settingPage;
 
-    switch (tab) {
-      case CustomTabKeys.MAJOR:
+    switch (tabType) {
+      case CustomTabType.major:
         settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey);
         break;
-      case CustomTabKeys.MAJOR2:
+      case CustomTabType.major2:
         settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey2);
         break;
-      case CustomTabKeys.MAJOR3:
+      case CustomTabType.major3:
         settingPage = MajorSettingPage(majorKeyType: SharedPrefKeys.kMajorKey3);
         break;
-      case CustomTabKeys.COLLEGE:
+      case CustomTabType.college:
         settingPage = const CollegeSettingPage();
         break;
-      case CustomTabKeys.GRADUATESCHOOL:
+      case CustomTabType.graduateSchool:
         settingPage = const GraduateSchoolSettingPage();
         break;
       default:

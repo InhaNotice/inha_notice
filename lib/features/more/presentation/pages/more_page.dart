@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart'; // 로딩 위젯 가정
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
+import 'package:inha_notice/features/custom_tab/presentation/pages/custom_tab_page.dart';
 import 'package:inha_notice/features/more/domain/entities/more_configuration_entity.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_event.dart';
@@ -24,7 +25,6 @@ import 'package:inha_notice/features/more/presentation/widgets/more_title_tile.d
 import 'package:inha_notice/features/more/presentation/widgets/more_web_navigation_tile.dart';
 import 'package:inha_notice/features/more/presentation/widgets/theme_preference_tile.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page.dart';
 import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
 
 class MorePage extends StatelessWidget {
@@ -83,7 +83,7 @@ class _MorePageView extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const CustomTabBarPage(),
+                    builder: (context) => const CustomTabPage(),
                   ),
                 );
               },

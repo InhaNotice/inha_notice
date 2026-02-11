@@ -1,17 +1,17 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
 import 'package:inha_notice/features/notice/data/models/home_tab_model.dart';
-import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 
 abstract class HomeLocalDataSource {
   Future<List<HomeTabModel>> fetchHomeTabs();
@@ -31,14 +31,14 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
 
       late List<String> selectedTabs;
       if (savedTabs == null || savedTabs.isEmpty) {
-        selectedTabs = CustomTabListUtils.kDefaultTabs;
+        selectedTabs = CustomTabType.kDefaultTabs;
       } else {
         selectedTabs = List.from(savedTabs);
       }
 
       // 2. 키를 이용해 Model 리스트 생성
       return selectedTabs.map((tabName) {
-        final noticeType = CustomTabListUtils.kTabMappingOnKey[tabName]!;
+        final noticeType = CustomTabType.kTabMappingOnKey[tabName]!;
         final displayName = _resolveTabName(noticeType);
 
         return HomeTabModel(
@@ -52,13 +52,13 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
   }
 
   String _resolveTabName(String noticeType) {
-    if (!CustomTabListUtils.isMajorType(noticeType)) {
-      return CustomTabListUtils.kTabMappingOnValue[noticeType]!;
+    if (!CustomTabType.isMajorTypeOf(noticeType)) {
+      return CustomTabType.kTabMappingOnValue[noticeType]!;
     }
-    final userSettingKey = CustomTabListUtils.loadUserSettingKey(noticeType);
+    final userSettingKey = CustomTabType.loadUserSettingKey(noticeType);
     if (userSettingKey == null) {
-      return CustomTabListUtils.kTabMappingOnValue[noticeType]!;
+      return CustomTabType.kTabMappingOnValue[noticeType]!;
     }
-    return CustomTabListUtils.getMajorDisplayName(userSettingKey);
+    return CustomTabType.getMajorDisplayName(userSettingKey);
   }
 }
