@@ -1,25 +1,24 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-09
+ * Latest Updated Date: 2026-02-11
  */
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
-import 'package:inha_notice/core/keys/custom_tab_keys.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
 import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notice/domain/entities/notice_board_entity.dart';
 import 'package:inha_notice/features/notice/domain/failures/notice_board_failure.dart';
 import 'package:inha_notice/features/notice/domain/usecases/get_notices_use_case.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_state.dart';
-import 'package:inha_notice/utils/custom_tab_list_utils/custom_tab_list_utils.dart';
 
 class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
   final GetAbsoluteNoticesUseCase getAbsoluteNoticesUseCase;
@@ -47,18 +46,18 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
   Future<void> _onLoadNoticeBoard(
       LoadNoticeBoardEvent event, Emitter<NoticeBoardState> emit) async {
     _noticeType = event.noticeType;
-    _isRelativeStyle = (event.noticeType == CustomTabKeys.LIBRARY);
+    _isRelativeStyle = (event.noticeType == CustomTabType.library.noticeType);
 
     // 키워드 검색 가능 여부 판단
     _isKeywordSearchable = _checkKeywordSearchable(event.noticeType);
 
     // 유저 설정이 필요한 타입인지 확인
-    if (CustomTabListUtils.isUserSettingType(event.noticeType)) {
+    if (CustomTabType.isUserSettingTypeOf(event.noticeType)) {
       final String? userSettingKey =
-          CustomTabListUtils.loadUserSettingKey(event.noticeType);
+          CustomTabType.loadUserSettingKey(event.noticeType);
       if (userSettingKey == null) {
         final String? displayName =
-            CustomTabListUtils.kTabMappingOnValue[event.noticeType];
+            CustomTabType.kTabMappingOnValue[event.noticeType];
         emit(NoticeBoardSettingRequired(
           noticeType: event.noticeType,
           displayName: displayName,
@@ -234,14 +233,14 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
   }
 
   bool _checkKeywordSearchable(String noticeType) {
-    return noticeType == CustomTabKeys.WHOLE ||
-        noticeType == CustomTabKeys.SCHOLARSHIP ||
-        noticeType == CustomTabKeys.RECRUITMENT ||
-        noticeType == CustomTabKeys.INTERNATIONAL ||
-        noticeType == CustomTabKeys.SWUNIV ||
-        noticeType == CustomTabKeys.INHAHUSS ||
-        CustomTabListUtils.isMajorType(noticeType) ||
-        noticeType == CustomTabKeys.COLLEGE ||
-        noticeType == CustomTabKeys.GRADUATESCHOOL;
+    return noticeType == CustomTabType.whole.noticeType ||
+        noticeType == CustomTabType.scholarship.noticeType ||
+        noticeType == CustomTabType.recruitment.noticeType ||
+        noticeType == CustomTabType.international.noticeType ||
+        noticeType == CustomTabType.swUniv.noticeType ||
+        noticeType == CustomTabType.inhaHussUniv.noticeType ||
+        CustomTabType.isMajorTypeOf(noticeType) ||
+        noticeType == CustomTabType.college.noticeType ||
+        noticeType == CustomTabType.graduateSchool.noticeType;
   }
 }
