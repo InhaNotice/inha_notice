@@ -30,17 +30,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
@@ -50,11 +47,15 @@
 <div align="center">
   <img src="public/google_playstore_graphic image.png" alt="inha-notice_introduce-image">
 </div>
-<p>This project is <strong>a notice board application</strong> designed for Inha family community. It helps students <strong>stay on top of important announcements</strong> without the hassle of constantly checking the school website.</p>
+<p>This project is <strong>a notice board application</strong> designed for Inha family community. It helps students
+<strong>stay on top of important announcements</strong> without the hassle of constantly checking the school
+website.</p>
 <h2 id="-goal">🎯 Goal</h2>
 <p>Reduce missed notices as much as possible and maximize the benefits students can receive.</p>
 <h2 id="-motivation">✨ Motivation</h2>
-<p>Students often struggle with inconvenient notice checks and tend to miss critical information (e.g., exam schedules, deadlines, events). This project was started to solve that problem through real-time push notifications and easy management tools.</p>
+<p>Students often struggle with inconvenient notice checks and tend to miss critical information (e.g.,
+exam schedules, deadlines, events). This project was started to solve that problem through real-time
+push notifications and easy management tools.</p>
 <h2 id="-key-features">🔑 Key Features</h2>
 <ul>
 <li>
@@ -77,15 +78,18 @@
 </li>
 </ul>
 <h2 id="-supported-notices">📌 Supported Notices</h2>
-<p>Inha Notice collects and providers announcements from a wide range of univerity sources. including:</p>
+<p>Inha Notice collects and provides announcements from a wide range of university sources. including:</p>
 <ul>
-<li><strong>Departments</strong> (80+ across Engineering, Natural Sciences, Business, Education, Social Sciences, Humanities, Medicine, Arts &amp; Sports, Life Sciences, and interdisciplinary programs)</li>
+<li><strong>Departments</strong> (70+ across Engineering, Natural Sciences, Business, Education, Social Sciences,
+Humanities, Medicine, Arts &amp; Sports, Life Sciences, and interdisciplinary programs)</li>
 <li><strong>Colleges</strong> (9 colleges)</li>
 <li><strong>Graduate Schools</strong> (10 schools, including Law, Public Policy, Education, and more)</li>
-<li><strong>University-wide Notices</strong> (e.g., Academic Affairs, Scholarships, Recruitment, International Affairs, Library)</li>
+<li><strong>University-wide Notices</strong> (e.g., Academic Affairs, Scholarships, Recruitment, International
+Affairs, Library)</li>
 <li><strong>Special Projects</strong> (e.g., SW-Oriented University Project, Climate Change Response Project)</li>
 </ul>
-<p>In total, the app supports over <strong>100 announcement categories</strong>, ensuring that students can subscribe only to the notices that matter to them.</p>
+<p>In total, the app supports over <strong>100 announcement categories</strong>, ensuring that students can
+subscribe only to the notices that matter to them.</p>
 <h2 id="-contributors">👥 Contributors</h2>
 <table>
 <thead>
@@ -96,7 +100,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Kim Jun-Ho</td>
+<td>Kim Jun-Ho(logicallaw)</td>
 <td>Full-Stack Developer &amp; Lead Product Owner</td>
 </tr>
 </tbody>
@@ -104,22 +108,171 @@
 <h2 id="-platforms">📱 Platforms</h2>
 <ul>
 <li><strong>iOS</strong>: Released on 02/17/2025.</li>
-<li><strong>Android Beta</strong>: 02/17/2015 ~ 03/24/2025.</li>
+<li><strong>Android Beta</strong>: 02/17/2025 ~ 03/24/2025.</li>
 <li><strong>Android Official Release</strong>: 03/03/2025.</li>
 </ul>
-<h2 id="visit-our-notion-page-and-get-the-app">Visit our Notion Page and Get the App.</h2>
+<h2 id="visit-our-notion-page-and-get-the-app-available-only-in-south-korea">Visit our Notion Page and Get the App (available only in South Korea).</h2>
 <ul>
 <li><strong>Notion</strong>: <a href="https://inha-notice.notion.site/">Click</a></li>
-<li><strong>iOS</strong> (iPhone, iPad, Mac): <a href="https://apps.apple.com/app/%EC%9D%B8%ED%95%98%EA%B3%B5%EC%A7%80/id6740850198">Download on the App Store</a></li>
+<li><strong>iOS</strong> (iPhone, iPad,
+Mac): <a href="https://apps.apple.com/app/%EC%9D%B8%ED%95%98%EA%B3%B5%EC%A7%80/id6740850198">Download on the App Store</a></li>
 <li><strong>Android</strong>: <a href="https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&amp;pcampaignid=web_share">Download on Google Play</a></li>
 </ul>
+<h2 id="-project-structure">📂 Project structure</h2>
+<pre class="language-bash"><code class="language-bash">inha_notice
+├─ android                          # Android build files and configuration
+├─ ios                              # iOS build files and configuration
+│
+├─ lib/
+│  ├─ main.dart                     # App entry point
+│  ├─ injection_container.dart      # Dependency injection (GetIt) setup
+│  │
+│  ├─ core/                         # Shared core modules
+│  │  ├─ config/                    # App-wide configurations (theme, font, Firebase, BLoC observer)
+│  │  ├─ constants/                 # String, page, identifier constants
+│  │  ├─ error/                     # Common exceptions and failures
+│  │  ├─ keys/                      # SharedPreferences key definitions
+│  │  ├─ utils/                     # Shared utilities (logger, SharedPrefs manager)
+│  │  └─ presentation/              # Shared presentation layer
+│  │     ├─ models/                 # Shared models (NoticeTileModel, Pages)
+│  │     ├─ pages/                  # Shared pages (InAppWebPage)
+│  │     ├─ utils/                  # UI utilities (SnackBar, BlockingDialog)
+│  │     └─ widgets/                # Reusable widgets (AppBar, NoticeTile, Toggle, etc.)
+│  │
+│  └─ features/                     # Feature modules (Clean Architecture + BLoC)
+│     │
+│     ├─ notice/                    # Notice board feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Remote data source &amp; scrapers
+│     │  │  │  └─ scrapers/         # Absolute/Relative style notice scrapers
+│     │  │  ├─ models/              # Data models (HomeTabModel, NoticeBoardModel)
+│     │  │  └─ repositories/        # Repository implementations
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # Entities (MajorType, CollegeType, NoticeSelectors, etc.)
+│     │  │  ├─ failures/            # Feature-specific failures (Freezed)
+│     │  │  ├─ repositories/        # Repository interfaces
+│     │  │  └─ usecases/            # Use cases (GetNotices, GetHomeTabs)
+│     │  └─ presentation/
+│     │     ├─ bloc/                # HomeBloc, NoticeBoardBloc
+│     │     ├─ pages/               # HomePage, NoticeBoardPage
+│     │     └─ widgets/             # Pagination, KeywordSearch, RefreshHeader, etc.
+│     │
+│     ├─ search/                    # Search feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Search scraper, recent search, remote/local sources
+│     │  │  ├─ models/              # TrendingTopicModel
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # SearchSelectors, TrendingTopicEntity
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetTrendingTopics, RecentSearchWords, etc.
+│     │  └─ presentation/
+│     │     ├─ bloc/                # SearchBloc
+│     │     ├─ pages/               # SearchPage, SearchResultPage
+│     │     └─ widgets/             # TrendingTopicsItem
+│     │
+│     ├─ bookmark/                  # Bookmark feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # SQLite-based local data source
+│     │  │  ├─ models/              # BookmarkModel
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # BookmarkEntity, BookmarkSortingType
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetBookmarks, RemoveBookmark, ClearBookmarks
+│     │  └─ presentation/
+│     │     ├─ bloc/                # BookmarkBloc
+│     │     ├─ pages/               # BookmarkPage
+│     │     └─ widgets/             # BookmarkRefreshHeader
+│     │
+│     ├─ more/                      # More (settings &amp; utilities) feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Cache, theme, OSS license, more local data sources
+│     │  │  ├─ models/              # MoreConfiguration, OssLicense models
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # MoreConfiguration, OssLicense entities
+│     │  │  ├─ failures/            # Cache, More, OssLicense, ThemePreference failures
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetCacheSize, GetOssLicenses, ThemePreference, etc.
+│     │  └─ presentation/
+│     │     ├─ bloc/                # CacheBloc, MoreBloc, OssLicenseBloc, ThemePreferenceBloc
+│     │     ├─ pages/               # MorePage, OssLicensePage
+│     │     └─ widgets/             # Tiles, dialogs, theme selection
+│     │
+│     ├─ custom_tab/                # Custom tab feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Local data source
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # CustomTabType
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetSelectedTabs, SaveTabs
+│     │  └─ presentation/
+│     │     ├─ bloc/                # CustomTabBloc
+│     │     ├─ pages/               # CustomTabPage
+│     │     └─ widgets/             # AvailableList, SelectedList, Preview, SaveButton
+│     │
+│     ├─ notification/              # Firebase notification feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # FirebaseRemoteDataSource
+│     │  │  ├─ models/              # NotificationMessageModel
+│     │  │  └─ repositories/
+│     │  └─ domain/
+│     │     ├─ entities/            # NotificationMessageEntity
+│     │     ├─ repositories/
+│     │     └─ usecases/            # RequestInitialPermission
+│     │
+│     ├─ notification_setting/      # Notification subscription settings feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Local &amp; remote data sources
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # NotificationMajorItem
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetSubscriptionStatus, ToggleSubscription
+│     │  └─ presentation/
+│     │     ├─ bloc/                # NotificationSettingBloc
+│     │     ├─ pages/               # NotificationSettingPage
+│     │     └─ widgets/             # NotificationTile, category widgets
+│     │
+│     ├─ university_setting/        # University/department settings feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Local data source
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # UniversitySettingType
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetCurrentSetting, SaveSetting, SaveMajorSetting
+│     │  └─ presentation/
+│     │     ├─ bloc/                # UniversitySettingBloc
+│     │     ├─ pages/               # CollegeSetting, GraduateSchoolSetting, MajorSetting pages
+│     │     └─ widgets/             # SettingHeader, SettingListTile, SettingSearchField
+│     │
+│     ├─ main/                      # Main navigation feature
+│     │  ├─ domain/
+│     │  │  └─ usecases/            # GetInitialNotificationMessage
+│     │  └─ presentation/
+│     │     ├─ bloc/                # MainNavigationBloc
+│     │     └─ pages/               # MainNavigationPage (bottom navigation)
+│     │
+│     └─ onboarding/                # Onboarding feature
+│        └─ presentation/
+│           ├─ bloc/                # OnboardingBloc
+│           └─ pages/               # OnboardingPage
+</code></pre>
 <h2 id="-start">🚀 Start</h2>
 <h3 id="1-requirements">1. Requirements</h3>
 <p>This project was developed and tested in the following environment.</p>
 <ul>
-<li><strong>Flutter v3.27.4</strong></li>
-<li><strong>Dart v3.6.2</strong></li>
-<li><strong>Supported Platforms:</strong> iOS (13.0+), Android (SDK 21+)</li>
+<li><strong>Flutter v3.38.1</strong></li>
+<li><strong>Dart v3.10.0</strong></li>
+<li><strong>Supported Platforms:</strong> iOS (15.0+), Android (SDK 21+)</li>
 <li><strong>Encoding:</strong> UTF-8 (includes some Korean content)</li>
 </ul>
 <h3 id="2-install">2. Install</h3>
@@ -132,7 +285,7 @@ cd inha_notice
 </code></pre>
 </li>
 <li>
-<p><strong>Install dependancy</strong></p>
+<p><strong>Install dependency</strong></p>
 <pre class="language-bash"><code class="language-bash">flutter pub get
 </code></pre>
 </li>
@@ -144,7 +297,8 @@ cd inha_notice
 <p><strong>Create the file</strong>: Create a new file named <code>.env</code> in the root directory of the project.</p>
 </li>
 <li>
-<p><strong>Add required keys</strong>: Copy the following structure into your new <code>.env</code> file, replacing the placeholder values with your actual keys:</p>
+<p><strong>Add required keys</strong>: Copy the following structure into your new <code>.env</code> file, replacing
+the placeholder values with your actual keys:</p>
 <pre class="language-bash"><code class="language-bash"># Firebase Configuration
 FIREBASE_API_KEY = your-api-key
 FIREBASE_APP_ID = your-app-id
@@ -160,26 +314,31 @@ FIREBASE_IOS_BUNDLE_ID = your-ios-bundle-id
 </ul>
 </li>
 <li>
-<p><strong>Android Signing Setup (required for Android)</strong></p>
-<p>To successfully build and release the Android application, you must configure the signing keys. <strong>These files are sensitive and are not included in the repository.</strong></p>
+<p><strong>Android Signing Setup (Required for Android)</strong></p>
+<p>To successfully build and release the Android application, you must configure the signing keys. *
+<em>These files are sensitive and are not included in the repository.</em>*</p>
 <ol>
 <li>
-<p><strong>Obtain Key Files</strong>: You will need the following files, which must be obtained from the project maintainer:</p>
+<p><strong>Obtain Key Files</strong>: You will need the following files, which must be obtained from the
+project maintainer:</p>
 <ul>
 <li><strong>Keystore File</strong> (<code>*.jks</code> or <code>*.keystore</code>)</li>
-<li><strong>Key Properties File</strong> (<code>key.properties</code>) - <i>This file contains the key alias, password, and store password</i></li>
+<li><strong>Key Properties File</strong> (<code>key.properties</code>) - <i>This file contains the key alias,
+password, and store password</i></li>
 </ul>
 </li>
 <li>
 <p><strong>Place Key Files</strong>:</p>
 <ul>
-<li>Place the keystore file (e.g., <code>inha_notice_key.jks</code>) in the <code>android/app/</code> directory.</li>
+<li>Place the keystore file (e.g., <code>inha_notice_key.jks</code>) in the <code>android/app/</code>
+directory.</li>
 <li>Place the <code>key.properties</code> file in the <code>android/</code> directory.</li>
 </ul>
 </li>
 <li>
-<p><strong>Verify</strong> <code>key.properties</code>: The <code>key.properties</code> file must contain the following format:</p>
-<pre class="language-TOML"><code class="language-TOML">storePassword=[your_store_password]
+<p><strong>Verify</strong> <code>key.properties</code>: The <code>key.properties</code> file must contain the following
+format:</p>
+<pre class="language-dart"><code>storePassword=[your_store_password]
 keyPassword=[your_key_password]
 keyAlias=[your_key_alias]
 storeFile=[your_keystore_filename].jks
@@ -205,55 +364,29 @@ flutter build ipa --release
 # For Web (Chrome)
 flutter build web
 </code></pre>
-<h2 id="-how-to-use-api">📡 How to Use API</h2>
-<p>This project provides a comprehensive API for seamless integration.
-For detailed instructions and examples, please refer to the <a href="docs/API_USAGE.md">API Usage Guide</a>.</p>
-<h2 id="-project-architecture">🗂️ Project architecture</h2>
-<p><img src="public/architecture.png" alt="project-architecture-image"></p>
+<h2 id="-documentation-developer-docs">📚 Documentation (Developer Docs)</h2>
+<p>This project providers an <strong>API Reference</strong> for all major classes and methods, generated using
+DartDoc.</p>
+<p><strong>API Reference (DartDoc)</strong>
+The API documentation is automatically generated from the code comments and is stored in
+the <code>doc/api</code> directory.</p>
 <ol>
 <li>
-<p><strong>Client request</strong></p>
-<ul>
-<li>When a user sends a request, it is routed to the Express.js server through the GCP Load Balancer.</li>
-</ul>
+<p><strong>Generate and Update the Docs</strong>:</p>
+<p>To generate the latest documentation reflecting the current codebase, run the following command
+from the project root:</p>
+<pre class="language-bash"><code class="language-bash">dart doc
+</code></pre>
 </li>
 <li>
-<p><strong>GCP Express.js server</strong></p>
-<ul>
-<li>The Express.js server handles CRUD operations by communicating with MySQL Cloud SQL.</li>
-<li>Image processing requests are forwarded to the GPU-powered Flask server.</li>
-</ul>
-</li>
-<li>
-<p><strong>Inha University Artificial Intelligence Convergence Research Center Flask server</strong></p>
-<ul>
-<li>The Flask preprocessing server utilizes the SAM2 model to generate preprocessed garment data.</li>
-<li>The Flask virtual fitting server processes API requests from the Express.js server and interacts with the KlingAI server to generate the final virtual try-on image. This image is then sent back to the GCP Node.js server for storage and management and ultimately delivered to the Flutter application.</li>
-</ul>
-</li>
-<li>
-<p><strong>Note: What is GCP Load Balancer?</strong></p>
-<ul>
-<li>A load balancer distributes incoming client requests across multiple server instances to ensure optimal performance and reliability.</li>
-<li>Our current setup is configured to limit each backend instance's utilization to a maximum of 80%.</li>
-<li>If the utilization exceeds 80%, GCP's autoscaling feature automatically provisions a new server instance to handle the additional load.</li>
-</ul>
+<p>View the Documentation:</p>
+<p>Once generated, you can view the documentation by opening the <code>index.html</code> file in your web
+browser.</p>
+<p><strong>Local Path Example</strong>:
+<code>file:///Users/logicallaw/Downloads/inha_notice/doc/api/index.html</code></p>
+<p><i> Note: The actual path will vary depending on your local machine environment.</i></p>
 </li>
 </ol>
-<h2 id="-tech-stacks">⚙️ Tech Stacks</h2>
-<ul>
-<li><strong>Front-end</strong>: Flutter</li>
-<li><strong>Back-end</strong>: NestJS, Firebase</li>
-<li><strong>Cloud Provider</strong>: Google Cloud Platform (GCP)
-<ul>
-<li>GCP VM Instances (with Auto-scaling)</li>
-<li>GCP Cloud Load Balancer</li>
-<li>GCP Cloud Build (for CI/CD)</li>
-</ul>
-</li>
-<li><strong>Code Formatting</strong>: Clang-format</li>
-<li><strong>Style Guide</strong>: Google C++ Style Guide (adapted where applicable)</li>
-</ul>
 <h2 id="-how-to-contribute">🧑‍💻 How to contribute</h2>
 <ol>
 <li><strong>Fork this repository</strong></li>
@@ -271,13 +404,73 @@ For detailed instructions and examples, please refer to the <a href="docs/API_US
 </li>
 <li><strong>Create a pull request at github</strong></li>
 </ol>
-<h2 id="-licesne">📄 Licesne</h2>
-<p>This project is licensed under the Apache License 2.0. For more details, please refer to the <a href="LICENSE.txt">LICENSE</a> file.</p>
+<h2 id="-license">📄 License</h2>
+<p>This project is licensed under the Apache License 2.0. For more details, please refer to
+the <a href="LICENSE.txt">LICENSE</a> file.</p>
+<h2 id="-open-source-software-oss">💻 Open-Source Software (OSS)</h2>
+<p>This project utilizes the following open-source libraries and packages to deliver its core
+functionality:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Category</th>
+<th align="left">Package(s)</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Firebase Services</strong></td>
+<td align="left"><code>firebase_core</code>, <code>firebase_messaging</code></td>
+<td align="left">Core integration and services for real-time push notifications.</td>
+</tr>
+<tr>
+<td align="left"><strong>Notification Handling</strong></td>
+<td align="left"><code>flutter_local_notifications</code>, <code>flutter_background_service</code></td>
+<td align="left">Manages local notifications and background processing tasks for receiving updates.</td>
+</tr>
+<tr>
+<td align="left"><strong>Networking &amp; Data Parsing</strong></td>
+<td align="left"><code>http</code>, <code>xml</code></td>
+<td align="left">Handles HTTP requests for network communication and parses XML data from web sources.</td>
+</tr>
+<tr>
+<td align="left"><strong>Data &amp; Locale Utilities</strong></td>
+<td align="left"><code>intl</code></td>
+<td align="left">Provides internationalization and localization features, including date/number formatting.</td>
+</tr>
+<tr>
+<td align="left"><strong>Storage &amp; File System</strong></td>
+<td align="left"><code>shared_preferences</code>, <code>sqflite</code>, <code>path_provider</code>, <code>path</code></td>
+<td align="left">Manages local key-value storage, stores data in a local SQLite database, and handles platform-specific file paths.</td>
+</tr>
+<tr>
+<td align="left"><strong>User Interface &amp; UX</strong></td>
+<td align="left"><code>flutter_inappwebview</code>, <code>share_plus</code>, <code>pull_to_refresh</code>, <code>cupertino_icons</code></td>
+<td align="left">Provides an embedded web view, enables content sharing, implements pull-to-refresh functionality, and uses iOS-style icons.</td>
+</tr>
+<tr>
+<td align="left"><strong>Development Utilities</strong></td>
+<td align="left"><code>flutter_dotenv</code>, <code>logger</code></td>
+<td align="left">Loads environment variables from <code>.env</code> files and provides advanced logging capabilities for development and debugging.</td>
+</tr>
+<tr>
+<td align="left"><strong>Custom Fonts</strong></td>
+<td align="left"><code>Pretendard</code>, <code>Tossface</code>, <code>NanumGothic</code></td>
+<td align="left">Custom typeface assets used to ensure optimal readability and design consistency across the application.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="-questions-or-support">📝 Questions or Support</h2>
-<p>If you have any questions or need support, feel free to open an issue on GitHub or reach out via the following contact methods:</p>
+<p>If you have any questions or need support, feel free to open an issue on GitHub or reach out via the
+following contact methods:</p>
 <ul>
-<li>Email: <a href="mailto:ingong.korea@gmail.com">ingong.korea@gmail.com</a></li>
-<li>GitHub: InhaNotice</li>
+<li>
+<p>Email: <a href="mailto:ingong.korea@gmail.com">ingong.korea@gmail.com</a></p>
+</li>
+<li>
+<p>GitHub: InhaNotice</p>
+</li>
 </ul>
 </section>
 
@@ -285,708 +478,1632 @@ For detailed instructions and examples, please refer to the <a href="docs/API_US
       <section class="summary">
           <h2>Libraries</h2>
         <dl>
-          <dt id="app_theme_constants">
-  <span class="name"><a href="core_constants_app_theme_constants/core_constants_app_theme_constants-library.html">core/constants/app_theme_constants</a></span> 
+          <dt id="app_bloc_observer">
+  <span class="name"><a href="core_config_app_bloc_observer/">core/config/app_bloc_observer</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="font_constants">
-  <span class="name"><a href="core_constants_font_constants/core_constants_font_constants-library.html">core/constants/font_constants</a></span> 
+          <dt id="app_font">
+  <span class="name"><a href="core_config_app_font/">core/config/app_font</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="identifier_constants">
-  <span class="name"><a href="core_constants_identifier_constants/core_constants_identifier_constants-library.html">core/constants/identifier_constants</a></span> 
+          <dt id="app_theme">
+  <span class="name"><a href="core_config_app_theme/">core/config/app_theme</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="keyword_search_option_constants">
-  <span class="name"><a href="core_constants_keyword_search_option_constants/core_constants_keyword_search_option_constants-library.html">core/constants/keyword_search_option_constants</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="page_constants">
-  <span class="name"><a href="core_constants_page_constants/core_constants_page_constants-library.html">core/constants/page_constants</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="status_code_constants">
-  <span class="name"><a href="core_constants_status_code_constants/core_constants_status_code_constants-library.html">core/constants/status_code_constants</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="string_constants">
-  <span class="name"><a href="core_constants_string_constants/core_constants_string_constants-library.html">core/constants/string_constants</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="fonts">
-  <span class="name"><a href="core_font_fonts/core_font_fonts-library.html">core/font/fonts</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="college_keys">
-  <span class="name"><a href="core_keys_college_keys/core_keys_college_keys-library.html">core/keys/college_keys</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_tab_keys">
-  <span class="name"><a href="core_keys_custom_tab_keys/core_keys_custom_tab_keys-library.html">core/keys/custom_tab_keys</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="graduate_school_keys">
-  <span class="name"><a href="core_keys_graduate_school_keys/core_keys_graduate_school_keys-library.html">core/keys/graduate_school_keys</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="major_keys">
-  <span class="name"><a href="core_keys_major_keys/core_keys_major_keys-library.html">core/keys/major_keys</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="shared_pref_keys">
-  <span class="name"><a href="core_keys_shared_pref_keys/core_keys_shared_pref_keys-library.html">core/keys/shared_pref_keys</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="theme">
-  <span class="name"><a href="core_theme_theme/core_theme_theme-library.html">core/theme/theme</a></span> 
+          <dt id="app_theme_type">
+  <span class="name"><a href="core_config_app_theme_type/">core/config/app_theme_type</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="firebase_options">
-  <span class="name"><a href="firebase_firebase_options/firebase_firebase_options-library.html">firebase/firebase_options</a></span> 
+  <span class="name"><a href="core_config_firebase_options/">core/config/firebase_options</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="firebase_service">
-  <span class="name"><a href="firebase_firebase_service/firebase_firebase_service-library.html">firebase/firebase_service</a></span> 
+          <dt id="identifier_constants">
+  <span class="name"><a href="core_constants_identifier_constants/">core/constants/identifier_constants</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="main">
-  <span class="name"><a href="main/main-library.html">main</a></span> 
+          <dt id="keyword_search_option_constants">
+  <span class="name"><a href="core_constants_keyword_search_option_constants/">core/constants/keyword_search_option_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="page_constants">
+  <span class="name"><a href="core_constants_page_constants/">core/constants/page_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="string_constants">
+  <span class="name"><a href="core_constants_string_constants/">core/constants/string_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="exceptions">
+  <span class="name"><a href="core_error_exceptions/">core/error/exceptions</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="failures">
+  <span class="name"><a href="core_error_failures/">core/error/failures</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shared_pref_keys">
+  <span class="name"><a href="core_keys_shared_pref_keys/">core/keys/shared_pref_keys</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_tile_model">
+  <span class="name"><a href="core_presentation_models_notice_tile_model/">core/presentation/models/notice_tile_model</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="pages_model">
-  <span class="name"><a href="models_pages_model/models_pages_model-library.html">models/pages_model</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="bookmark_page">
-  <span class="name"><a href="screens_bottom_navigation_bookmark_bookmark_page/screens_bottom_navigation_bookmark_bookmark_page-library.html">screens/bottom_navigation/bookmark/bookmark_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="bottom_nav_bar_page">
-  <span class="name"><a href="screens_bottom_navigation_bottom_nav_bar_page/screens_bottom_navigation_bottom_nav_bar_page-library.html">screens/bottom_navigation/bottom_nav_bar_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="home_page">
-  <span class="name"><a href="screens_bottom_navigation_home_home_page/screens_bottom_navigation_home_home_page-library.html">screens/bottom_navigation/home/home_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="notice_board_tab">
-  <span class="name"><a href="screens_bottom_navigation_home_notice_board_tab/screens_bottom_navigation_home_notice_board_tab-library.html">screens/bottom_navigation/home/notice_board_tab</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="cache_deletion_tile">
-  <span class="name"><a href="screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile/screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile-library.html">screens/bottom_navigation/more/cache_deletetion/cache_deletion_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_license_text_page">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_license_custom_license_text_page/screens_bottom_navigation_more_custom_license_custom_license_text_page-library.html">screens/bottom_navigation/more/custom_license/custom_license_text_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_licenses_page">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_license_custom_licenses_page/screens_bottom_navigation_more_custom_license_custom_licenses_page-library.html">screens/bottom_navigation/more/custom_license/custom_licenses_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_tab_bar_page">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="base_custom_tab_list">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_tab_available_list">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_tab_preview">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_tab_save_button">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_save_button</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_tab_selected_list">
-  <span class="name"><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_selected_list</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="more_page">
-  <span class="name"><a href="screens_bottom_navigation_more_more_page/screens_bottom_navigation_more_more_page-library.html">screens/bottom_navigation/more/more_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="more_navigation_tile">
-  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_navigation_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="more_non_navigation_tile">
-  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="more_title_tile">
-  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_title_tile/screens_bottom_navigation_more_more_page_titles_more_title_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_title_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="more_web_navigation_tile">
-  <span class="name"><a href="screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_web_navigation_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="college_notification_category">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_college_notification_category/screens_bottom_navigation_more_notification_setting_categories_college_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/college_notification_category</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="education_notification_category">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_education_notification_category/screens_bottom_navigation_more_notification_setting_categories_education_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/education_notification_category</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="graduate_school_notification_category">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category/screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="major_notification_category">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_major_notification_category/screens_bottom_navigation_more_notification_setting_categories_major_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/major_notification_category</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="research_notification_category">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_research_notification_category/screens_bottom_navigation_more_notification_setting_categories_research_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/research_notification_category</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="undergraduate_schedule_notification_category">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category/screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/undergraduate_schedule_notification_category</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="notification_major_item">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_notification_major_item/screens_bottom_navigation_more_notification_setting_notification_major_item-library.html">screens/bottom_navigation/more/notification_setting/notification_major_item</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="notification_setting_page">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_notification_setting_page/screens_bottom_navigation_more_notification_setting_notification_setting_page-library.html">screens/bottom_navigation/more/notification_setting/notification_setting_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="notification_tile">
-  <span class="name"><a href="screens_bottom_navigation_more_notification_setting_notification_tile/screens_bottom_navigation_more_notification_setting_notification_tile-library.html">screens/bottom_navigation/more/notification_setting/notification_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="theme_preference_tile">
-  <span class="name"><a href="screens_bottom_navigation_more_theme_preference_theme_preference_tile/screens_bottom_navigation_more_theme_preference_theme_preference_tile-library.html">screens/bottom_navigation/more/theme_preference/theme_preference_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="base_setting_page">
-  <span class="name"><a href="screens_bottom_navigation_more_university_settings_base_setting_page/screens_bottom_navigation_more_university_settings_base_setting_page-library.html">screens/bottom_navigation/more/university_settings/base_setting_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="college_setting_page">
-  <span class="name"><a href="screens_bottom_navigation_more_university_settings_college_setting_page/screens_bottom_navigation_more_university_settings_college_setting_page-library.html">screens/bottom_navigation/more/university_settings/college_setting_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="graduate_school_setting_page">
-  <span class="name"><a href="screens_bottom_navigation_more_university_settings_graduate_school_setting_page/screens_bottom_navigation_more_university_settings_graduate_school_setting_page-library.html">screens/bottom_navigation/more/university_settings/graduate_school_setting_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="major_setting_page">
-  <span class="name"><a href="screens_bottom_navigation_more_university_settings_major_setting_page/screens_bottom_navigation_more_university_settings_major_setting_page-library.html">screens/bottom_navigation/more/university_settings/major_setting_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="search_page">
-  <span class="name"><a href="screens_bottom_navigation_search_search_page/screens_bottom_navigation_search_search_page-library.html">screens/bottom_navigation/search/search_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="search_result_page">
-  <span class="name"><a href="screens_bottom_navigation_search_search_result_page/screens_bottom_navigation_search_search_result_page-library.html">screens/bottom_navigation/search/search_result_page</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="topics_item">
-  <span class="name"><a href="screens_bottom_navigation_search_topics_item/screens_bottom_navigation_search_topics_item-library.html">screens/bottom_navigation/search/topics_item</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="absolute_style_notice_board">
-  <span class="name"><a href="screens_notice_board_absolute_style_notice_board/screens_notice_board_absolute_style_notice_board-library.html">screens/notice_board/absolute_style_notice_board</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="base_notice_board">
-  <span class="name"><a href="screens_notice_board_base_notice_board/screens_notice_board_base_notice_board-library.html">screens/notice_board/base_notice_board</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="no_search_result">
-  <span class="name"><a href="screens_notice_board_no_search_result/screens_notice_board_no_search_result-library.html">screens/notice_board/no_search_result</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="notice_list_tile">
-  <span class="name"><a href="screens_notice_board_notice_list_tile/screens_notice_board_notice_list_tile-library.html">screens/notice_board/notice_list_tile</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="relative_style_notice_board">
-  <span class="name"><a href="screens_notice_board_relative_style_notice_board/screens_notice_board_relative_style_notice_board-library.html">screens/notice_board/relative_style_notice_board</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="onboarding_screen">
-  <span class="name"><a href="screens_onboarding_onboarding_screen/screens_onboarding_onboarding_screen-library.html">screens/onboarding/onboarding_screen</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="absolute_style_pagination">
-  <span class="name"><a href="screens_pagination_absolute_style_pagination/screens_pagination_absolute_style_pagination-library.html">screens/pagination/absolute_style_pagination</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="base_pagination">
-  <span class="name"><a href="screens_pagination_base_pagination/screens_pagination_base_pagination-library.html">screens/pagination/base_pagination</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="relative_style_pagination">
-  <span class="name"><a href="screens_pagination_relative_style_pagination/screens_pagination_relative_style_pagination-library.html">screens/pagination/relative_style_pagination</a></span> 
+  <span class="name"><a href="core_presentation_models_pages_model/">core/presentation/models/pages_model</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="in_app_web_page">
-  <span class="name"><a href="screens_webview_in_app_web_page/screens_webview_in_app_web_page-library.html">screens/webview/in_app_web_page</a></span> 
+  <span class="name"><a href="core_presentation_pages_in_app_web_page/">core/presentation/pages/in_app_web_page</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="web_navigator">
-  <span class="name"><a href="screens_webview_web_navigator/screens_webview_web_navigator-library.html">screens/webview/web_navigator</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="base_absolute_style_notice_scraper">
-  <span class="name"><a href="services_absolute_style_scraper_base_absolute_style_notice_scraper/services_absolute_style_scraper_base_absolute_style_notice_scraper-library.html">services/absolute_style_scraper/base_absolute_style_notice_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="inha_design_style_notice_scraper">
-  <span class="name"><a href="services_absolute_style_scraper_inha_design_style_notice_scraper/services_absolute_style_scraper_inha_design_style_notice_scraper-library.html">services/absolute_style_scraper/inha_design_style_notice_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="major_style_notice_scraper">
-  <span class="name"><a href="services_absolute_style_scraper_major_style_notice_scraper/services_absolute_style_scraper_major_style_notice_scraper-library.html">services/absolute_style_scraper/major_style_notice_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="oceanography_style_notice_scraper">
-  <span class="name"><a href="services_absolute_style_scraper_oceanography_style_notice_scraper/services_absolute_style_scraper_oceanography_style_notice_scraper-library.html">services/absolute_style_scraper/oceanography_style_notice_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="whole_style_notice_scraper">
-  <span class="name"><a href="services_absolute_style_scraper_whole_style_notice_scraper/services_absolute_style_scraper_whole_style_notice_scraper-library.html">services/absolute_style_scraper/whole_style_notice_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="base_relative_style_notice_scraper">
-  <span class="name"><a href="services_relative_style_scraper_base_relative_style_notice_scraper/services_relative_style_scraper_base_relative_style_notice_scraper-library.html">services/relative_style_scraper/base_relative_style_notice_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="library_scraper">
-  <span class="name"><a href="services_relative_style_scraper_library_scraper/services_relative_style_scraper_library_scraper-library.html">services/relative_style_scraper/library_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="search_scraper">
-  <span class="name"><a href="services_search_search_scraper/services_search_search_scraper-library.html">services/search/search_scraper</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="trending_topics_api">
-  <span class="name"><a href="services_trending_topics_trending_topics_api/services_trending_topics_trending_topics_api-library.html">services/trending_topics/trending_topics_api</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="bookmark_manager">
-  <span class="name"><a href="utils_bookmark_bookmark_manager/utils_bookmark_bookmark_manager-library.html">utils/bookmark/bookmark_manager</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="custom_tab_list_utils">
-  <span class="name"><a href="utils_custom_tab_list_utils_custom_tab_list_utils/utils_custom_tab_list_utils_custom_tab_list_utils-library.html">utils/custom_tab_list_utils/custom_tab_list_utils</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="read_notice_manager">
-  <span class="name"><a href="utils_read_notice_read_notice_manager/utils_read_notice_read_notice_manager-library.html">utils/read_notice/read_notice_manager</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="recent_search_manager">
-  <span class="name"><a href="utils_recent_search_recent_search_manager/utils_recent_search_recent_search_manager-library.html">utils/recent_search/recent_search_manager</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="inha_design_style_tag_selectors">
-  <span class="name"><a href="utils_selectors_inha_design_style_tag_selectors/utils_selectors_inha_design_style_tag_selectors-library.html">utils/selectors/inha_design_style_tag_selectors</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="major_style_tag_selectors">
-  <span class="name"><a href="utils_selectors_major_style_tag_selectors/utils_selectors_major_style_tag_selectors-library.html">utils/selectors/major_style_tag_selectors</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="oceanography_style_tag_selectors">
-  <span class="name"><a href="utils_selectors_oceanography_style_tag_selectors/utils_selectors_oceanography_style_tag_selectors-library.html">utils/selectors/oceanography_style_tag_selectors</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="search_tag_selectors">
-  <span class="name"><a href="utils_selectors_search_tag_selectors/utils_selectors_search_tag_selectors-library.html">utils/selectors/search_tag_selectors</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="whole_tag_selectors">
-  <span class="name"><a href="utils_selectors_whole_tag_selectors/utils_selectors_whole_tag_selectors-library.html">utils/selectors/whole_tag_selectors</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="shared_prefs_manager">
-  <span class="name"><a href="utils_shared_prefs_shared_prefs_manager/utils_shared_prefs_shared_prefs_manager-library.html">utils/shared_prefs/shared_prefs_manager</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="college_utils">
-  <span class="name"><a href="utils_university_utils_college_utils/utils_university_utils_college_utils-library.html">utils/university_utils/college_utils</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="graduate_school_utils">
-  <span class="name"><a href="utils_university_utils_graduate_school_utils/utils_university_utils_graduate_school_utils-library.html">utils/university_utils/graduate_school_utils</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="major_utils">
-  <span class="name"><a href="utils_university_utils_major_utils/utils_university_utils_major_utils-library.html">utils/university_utils/major_utils</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="themed_action_app_bar">
-  <span class="name"><a href="widgets_app_bars_themed_action_app_bar/widgets_app_bars_themed_action_app_bar-library.html">widgets/app_bars/themed_action_app_bar</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="themed_app_bar">
-  <span class="name"><a href="widgets_app_bars_themed_app_bar/widgets_app_bars_themed_app_bar-library.html">widgets/app_bars/themed_app_bar</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="refresh_button">
-  <span class="name"><a href="widgets_buttons_refresh_button/widgets_buttons_refresh_button-library.html">widgets/buttons/refresh_button</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="rounded_toggle_button">
-  <span class="name"><a href="widgets_buttons_rounded_toggle_button/widgets_buttons_rounded_toggle_button-library.html">widgets/buttons/rounded_toggle_button</a></span> 
+          <dt id="app_snack_bar">
+  <span class="name"><a href="core_presentation_utils_app_snack_bar/">core/presentation/utils/app_snack_bar</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="blocking_dialog">
-  <span class="name"><a href="widgets_dialogs_blocking_dialog/widgets_dialogs_blocking_dialog-library.html">widgets/dialogs/blocking_dialog</a></span> 
+  <span class="name"><a href="core_presentation_utils_blocking_dialog/">core/presentation/utils/blocking_dialog</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="cache_deletion_dialog">
-  <span class="name"><a href="widgets_dialogs_cache_deletion_dialog/widgets_dialogs_cache_deletion_dialog-library.html">widgets/dialogs/cache_deletion_dialog</a></span> 
+          <dt id="blue_loading_indicator_widget">
+  <span class="name"><a href="core_presentation_widgets_blue_loading_indicator_widget/">core/presentation/widgets/blue_loading_indicator_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bold_title_widget">
+  <span class="name"><a href="core_presentation_widgets_bold_title_widget/">core/presentation/widgets/bold_title_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="common_app_bar_widget">
+  <span class="name"><a href="core_presentation_widgets_common_app_bar_widget/">core/presentation/widgets/common_app_bar_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_tile_widget">
+  <span class="name"><a href="core_presentation_widgets_notice_tile_widget/">core/presentation/widgets/notice_tile_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="rounded_toggle_widget">
+  <span class="name"><a href="core_presentation_widgets_rounded_toggle_widget/">core/presentation/widgets/rounded_toggle_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="web_navigator_widget">
+  <span class="name"><a href="core_presentation_widgets_web_navigator_widget/">core/presentation/widgets/web_navigator_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_logger">
+  <span class="name"><a href="core_utils_app_logger/">core/utils/app_logger</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shared_prefs_manager">
+  <span class="name"><a href="core_utils_shared_prefs_manager/">core/utils/shared_prefs_manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="firebase_remote_config_data_source">
+  <span class="name"><a href="features_app_operation_data_datasources_firebase_remote_config_data_source/">features/app_operation/data/datasources/firebase_remote_config_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="login_bloc">
+  <span class="name"><a href="features_auth_presentation_bloc_login_bloc/">features/auth/presentation/bloc/login_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="login_event">
+  <span class="name"><a href="features_auth_presentation_bloc_login_event/">features/auth/presentation/bloc/login_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="login_state">
+  <span class="name"><a href="features_auth_presentation_bloc_login_state/">features/auth/presentation/bloc/login_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="login_page">
+  <span class="name"><a href="features_auth_presentation_pages_login_page/">features/auth/presentation/pages/login_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_local_data_source">
+  <span class="name"><a href="features_bookmark_data_datasources_bookmark_local_data_source/">features/bookmark/data/datasources/bookmark_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_model">
+  <span class="name"><a href="features_bookmark_data_models_bookmark_model/">features/bookmark/data/models/bookmark_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_repository_impl">
+  <span class="name"><a href="features_bookmark_data_repositories_bookmark_repository_impl/">features/bookmark/data/repositories/bookmark_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_entity">
+  <span class="name"><a href="features_bookmark_domain_entities_bookmark_entity/">features/bookmark/domain/entities/bookmark_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_sorting_type">
+  <span class="name"><a href="features_bookmark_domain_entities_bookmark_sorting_type/">features/bookmark/domain/entities/bookmark_sorting_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_failure">
+  <span class="name"><a href="features_bookmark_domain_failures_bookmark_failure/">features/bookmark/domain/failures/bookmark_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_repository">
+  <span class="name"><a href="features_bookmark_domain_repositories_bookmark_repository/">features/bookmark/domain/repositories/bookmark_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="clear_bookmarks_use_case">
+  <span class="name"><a href="features_bookmark_domain_usecases_clear_bookmarks_use_case/">features/bookmark/domain/usecases/clear_bookmarks_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_bookmarks_use_case">
+  <span class="name"><a href="features_bookmark_domain_usecases_get_bookmarks_use_case/">features/bookmark/domain/usecases/get_bookmarks_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="remove_bookmark_use_case">
+  <span class="name"><a href="features_bookmark_domain_usecases_remove_bookmark_use_case/">features/bookmark/domain/usecases/remove_bookmark_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_bloc">
+  <span class="name"><a href="features_bookmark_presentation_bloc_bookmark_bloc/">features/bookmark/presentation/bloc/bookmark_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_event">
+  <span class="name"><a href="features_bookmark_presentation_bloc_bookmark_event/">features/bookmark/presentation/bloc/bookmark_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_state">
+  <span class="name"><a href="features_bookmark_presentation_bloc_bookmark_state/">features/bookmark/presentation/bloc/bookmark_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_page">
+  <span class="name"><a href="features_bookmark_presentation_pages_bookmark_page/">features/bookmark/presentation/pages/bookmark_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bookmark_refresh_header_widget">
+  <span class="name"><a href="features_bookmark_presentation_widgets_bookmark_refresh_header_widget/">features/bookmark/presentation/widgets/bookmark_refresh_header_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_local_data_source">
+  <span class="name"><a href="features_custom_tab_data_datasources_custom_tab_local_data_source/">features/custom_tab/data/datasources/custom_tab_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_repository_impl">
+  <span class="name"><a href="features_custom_tab_data_repositories_custom_tab_repository_impl/">features/custom_tab/data/repositories/custom_tab_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_type">
+  <span class="name"><a href="features_custom_tab_domain_entities_custom_tab_type/">features/custom_tab/domain/entities/custom_tab_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_failure">
+  <span class="name"><a href="features_custom_tab_domain_failures_custom_tab_failure/">features/custom_tab/domain/failures/custom_tab_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_repository">
+  <span class="name"><a href="features_custom_tab_domain_repositories_custom_tab_repository/">features/custom_tab/domain/repositories/custom_tab_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_selected_tabs_use_case">
+  <span class="name"><a href="features_custom_tab_domain_usecases_get_selected_tabs_use_case/">features/custom_tab/domain/usecases/get_selected_tabs_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="save_tabs_use_case">
+  <span class="name"><a href="features_custom_tab_domain_usecases_save_tabs_use_case/">features/custom_tab/domain/usecases/save_tabs_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_bloc">
+  <span class="name"><a href="features_custom_tab_presentation_bloc_custom_tab_bloc/">features/custom_tab/presentation/bloc/custom_tab_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_event">
+  <span class="name"><a href="features_custom_tab_presentation_bloc_custom_tab_event/">features/custom_tab/presentation/bloc/custom_tab_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_state">
+  <span class="name"><a href="features_custom_tab_presentation_bloc_custom_tab_state/">features/custom_tab/presentation/bloc/custom_tab_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_page">
+  <span class="name"><a href="features_custom_tab_presentation_pages_custom_tab_page/">features/custom_tab/presentation/pages/custom_tab_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_custom_tab_list">
+  <span class="name"><a href="features_custom_tab_presentation_widgets_base_custom_tab_list/">features/custom_tab/presentation/widgets/base_custom_tab_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_available_list">
+  <span class="name"><a href="features_custom_tab_presentation_widgets_custom_tab_available_list/">features/custom_tab/presentation/widgets/custom_tab_available_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_preview">
+  <span class="name"><a href="features_custom_tab_presentation_widgets_custom_tab_preview/">features/custom_tab/presentation/widgets/custom_tab_preview</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_save_button">
+  <span class="name"><a href="features_custom_tab_presentation_widgets_custom_tab_save_button/">features/custom_tab/presentation/widgets/custom_tab_save_button</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom_tab_selected_list">
+  <span class="name"><a href="features_custom_tab_presentation_widgets_custom_tab_selected_list/">features/custom_tab/presentation/widgets/custom_tab_selected_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="feed_page">
+  <span class="name"><a href="features_feed_presentation_pages_feed_page/">features/feed/presentation/pages/feed_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="lounge_page">
+  <span class="name"><a href="features_feed_presentation_pages_lounge_page/">features/feed/presentation/pages/lounge_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_initial_notification_message">
+  <span class="name"><a href="features_main_domain_usecases_get_initial_notification_message/">features/main/domain/usecases/get_initial_notification_message</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main_navigation_bloc">
+  <span class="name"><a href="features_main_presentation_bloc_main_navigation_bloc/">features/main/presentation/bloc/main_navigation_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main_navigation_event">
+  <span class="name"><a href="features_main_presentation_bloc_main_navigation_event/">features/main/presentation/bloc/main_navigation_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main_navigation_state">
+  <span class="name"><a href="features_main_presentation_bloc_main_navigation_state/">features/main/presentation/bloc/main_navigation_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main_navigation_page">
+  <span class="name"><a href="features_main_presentation_pages_main_navigation_page/">features/main/presentation/pages/main_navigation_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_local_data_source">
+  <span class="name"><a href="features_more_data_datasources_cache_local_data_source/">features/more/data/datasources/cache_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_local_data_source">
+  <span class="name"><a href="features_more_data_datasources_more_local_data_source/">features/more/data/datasources/more_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_local_data_source">
+  <span class="name"><a href="features_more_data_datasources_oss_license_local_data_source/">features/more/data/datasources/oss_license_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_local_data_source">
+  <span class="name"><a href="features_more_data_datasources_theme_preference_local_data_source/">features/more/data/datasources/theme_preference_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_configuration_model">
+  <span class="name"><a href="features_more_data_models_more_configuration_model/">features/more/data/models/more_configuration_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_category_model">
+  <span class="name"><a href="features_more_data_models_oss_license_category_model/">features/more/data/models/oss_license_category_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_item_model">
+  <span class="name"><a href="features_more_data_models_oss_license_item_model/">features/more/data/models/oss_license_item_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_repository_impl">
+  <span class="name"><a href="features_more_data_repositories_cache_repository_impl/">features/more/data/repositories/cache_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_repository_impl">
+  <span class="name"><a href="features_more_data_repositories_more_repository_impl/">features/more/data/repositories/more_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_repository_impl">
+  <span class="name"><a href="features_more_data_repositories_oss_license_repository_impl/">features/more/data/repositories/oss_license_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_repository_impl">
+  <span class="name"><a href="features_more_data_repositories_theme_preference_repository_impl/">features/more/data/repositories/theme_preference_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_configuration_entity">
+  <span class="name"><a href="features_more_domain_entities_more_configuration_entity/">features/more/domain/entities/more_configuration_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_category_entity">
+  <span class="name"><a href="features_more_domain_entities_oss_license_category_entity/">features/more/domain/entities/oss_license_category_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_item_entity">
+  <span class="name"><a href="features_more_domain_entities_oss_license_item_entity/">features/more/domain/entities/oss_license_item_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_failure">
+  <span class="name"><a href="features_more_domain_failures_cache_failure/">features/more/domain/failures/cache_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_failure">
+  <span class="name"><a href="features_more_domain_failures_more_failure/">features/more/domain/failures/more_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_failure">
+  <span class="name"><a href="features_more_domain_failures_oss_license_failure/">features/more/domain/failures/oss_license_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_failure">
+  <span class="name"><a href="features_more_domain_failures_theme_preference_failure/">features/more/domain/failures/theme_preference_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_repository">
+  <span class="name"><a href="features_more_domain_repositories_cache_repository/">features/more/domain/repositories/cache_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_repository">
+  <span class="name"><a href="features_more_domain_repositories_more_repository/">features/more/domain/repositories/more_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_repository">
+  <span class="name"><a href="features_more_domain_repositories_oss_license_repository/">features/more/domain/repositories/oss_license_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_repository">
+  <span class="name"><a href="features_more_domain_repositories_theme_preference_repository/">features/more/domain/repositories/theme_preference_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_cache_size_use_case">
+  <span class="name"><a href="features_more_domain_usecases_get_cache_size_use_case/">features/more/domain/usecases/get_cache_size_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_oss_licenses_use_case">
+  <span class="name"><a href="features_more_domain_usecases_get_oss_licenses_use_case/">features/more/domain/usecases/get_oss_licenses_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_theme_preference_use_case">
+  <span class="name"><a href="features_more_domain_usecases_get_theme_preference_use_case/">features/more/domain/usecases/get_theme_preference_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_web_urls_use_case">
+  <span class="name"><a href="features_more_domain_usecases_get_web_urls_use_case/">features/more/domain/usecases/get_web_urls_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="set_theme_preference_use_case">
+  <span class="name"><a href="features_more_domain_usecases_set_theme_preference_use_case/">features/more/domain/usecases/set_theme_preference_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_bloc">
+  <span class="name"><a href="features_more_presentation_bloc_cache_bloc/">features/more/presentation/bloc/cache_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_event">
+  <span class="name"><a href="features_more_presentation_bloc_cache_event/">features/more/presentation/bloc/cache_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_state">
+  <span class="name"><a href="features_more_presentation_bloc_cache_state/">features/more/presentation/bloc/cache_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_bloc">
+  <span class="name"><a href="features_more_presentation_bloc_more_bloc/">features/more/presentation/bloc/more_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_event">
+  <span class="name"><a href="features_more_presentation_bloc_more_event/">features/more/presentation/bloc/more_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_state">
+  <span class="name"><a href="features_more_presentation_bloc_more_state/">features/more/presentation/bloc/more_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_bloc">
+  <span class="name"><a href="features_more_presentation_bloc_oss_license_bloc/">features/more/presentation/bloc/oss_license_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_event">
+  <span class="name"><a href="features_more_presentation_bloc_oss_license_event/">features/more/presentation/bloc/oss_license_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_state">
+  <span class="name"><a href="features_more_presentation_bloc_oss_license_state/">features/more/presentation/bloc/oss_license_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_bloc">
+  <span class="name"><a href="features_more_presentation_bloc_theme_preference_bloc/">features/more/presentation/bloc/theme_preference_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_event">
+  <span class="name"><a href="features_more_presentation_bloc_theme_preference_event/">features/more/presentation/bloc/theme_preference_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_state">
+  <span class="name"><a href="features_more_presentation_bloc_theme_preference_state/">features/more/presentation/bloc/theme_preference_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_page">
+  <span class="name"><a href="features_more_presentation_pages_more_page/">features/more/presentation/pages/more_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="oss_license_page">
+  <span class="name"><a href="features_more_presentation_pages_oss_license_page/">features/more/presentation/pages/oss_license_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_deletion_dialog_widget">
+  <span class="name"><a href="features_more_presentation_widgets_cache_deletion_dialog_widget/">features/more/presentation/widgets/cache_deletion_dialog_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cache_deletion_widget">
+  <span class="name"><a href="features_more_presentation_widgets_cache_deletion_widget/">features/more/presentation/widgets/cache_deletion_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_navigation_tile">
+  <span class="name"><a href="features_more_presentation_widgets_more_navigation_tile/">features/more/presentation/widgets/more_navigation_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_non_navigation_tile">
+  <span class="name"><a href="features_more_presentation_widgets_more_non_navigation_tile/">features/more/presentation/widgets/more_non_navigation_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_title_tile">
+  <span class="name"><a href="features_more_presentation_widgets_more_title_tile/">features/more/presentation/widgets/more_title_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="more_web_navigation_tile">
+  <span class="name"><a href="features_more_presentation_widgets_more_web_navigation_tile/">features/more/presentation/widgets/more_web_navigation_tile</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="theme_mode_selection_dialog">
-  <span class="name"><a href="widgets_dialogs_theme_mode_selection_dialog/widgets_dialogs_theme_mode_selection_dialog-library.html">widgets/dialogs/theme_mode_selection_dialog</a></span> 
+  <span class="name"><a href="features_more_presentation_widgets_theme_mode_selection_dialog/">features/more/presentation/widgets/theme_mode_selection_dialog</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme_preference_tile">
+  <span class="name"><a href="features_more_presentation_widgets_theme_preference_tile/">features/more/presentation/widgets/theme_preference_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_local_data_source">
+  <span class="name"><a href="features_notice_data_datasources_home_local_data_source/">features/notice/data/datasources/home_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_remote_data_source">
+  <span class="name"><a href="features_notice_data_datasources_notice_board_remote_data_source/">features/notice/data/datasources/notice_board_remote_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="read_notice_local_data_source">
+  <span class="name"><a href="features_notice_data_datasources_read_notice_local_data_source/">features/notice/data/datasources/read_notice_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_absolute_style_notice_scraper">
+  <span class="name"><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_base_absolute_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="inha_design_style_notice_scraper">
+  <span class="name"><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_inha_design_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/inha_design_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_style_notice_scraper">
+  <span class="name"><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_major_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/major_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="whole_style_notice_scraper">
+  <span class="name"><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_whole_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/whole_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_relative_style_notice_scraper">
+  <span class="name"><a href="features_notice_data_datasources_scrapers_relative_style_scraper_base_relative_style_notice_scraper/">features/notice/data/datasources/scrapers/relative_style_scraper/base_relative_style_notice_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="library_scraper">
+  <span class="name"><a href="features_notice_data_datasources_scrapers_relative_style_scraper_library_scraper/">features/notice/data/datasources/scrapers/relative_style_scraper/library_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_tab_model">
+  <span class="name"><a href="features_notice_data_models_home_tab_model/">features/notice/data/models/home_tab_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_model">
+  <span class="name"><a href="features_notice_data_models_notice_board_model/">features/notice/data/models/notice_board_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_repository_impl">
+  <span class="name"><a href="features_notice_data_repositories_home_repository_impl/">features/notice/data/repositories/home_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_repository_impl">
+  <span class="name"><a href="features_notice_data_repositories_notice_board_repository_impl/">features/notice/data/repositories/notice_board_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="college_type">
+  <span class="name"><a href="features_notice_domain_entities_college_type/">features/notice/domain/entities/college_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="graduate_school_type">
+  <span class="name"><a href="features_notice_domain_entities_graduate_school_type/">features/notice/domain/entities/graduate_school_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_tab_entity">
+  <span class="name"><a href="features_notice_domain_entities_home_tab_entity/">features/notice/domain/entities/home_tab_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_type">
+  <span class="name"><a href="features_notice_domain_entities_major_type/">features/notice/domain/entities/major_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_entity">
+  <span class="name"><a href="features_notice_domain_entities_notice_board_entity/">features/notice/domain/entities/notice_board_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_selectors">
+  <span class="name"><a href="features_notice_domain_entities_notice_selectors/">features/notice/domain/entities/notice_selectors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_failure">
+  <span class="name"><a href="features_notice_domain_failures_home_failure/">features/notice/domain/failures/home_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_failure">
+  <span class="name"><a href="features_notice_domain_failures_notice_board_failure/">features/notice/domain/failures/notice_board_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_repository">
+  <span class="name"><a href="features_notice_domain_repositories_home_repository/">features/notice/domain/repositories/home_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_repository">
+  <span class="name"><a href="features_notice_domain_repositories_notice_board_repository/">features/notice/domain/repositories/notice_board_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_home_tabs_use case">
+  <span class="name"><a href="features_notice_domain_usecases_get_home_tabs_use%20case/">features/notice/domain/usecases/get_home_tabs_use case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_notices_use_case">
+  <span class="name"><a href="features_notice_domain_usecases_get_notices_use_case/">features/notice/domain/usecases/get_notices_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_bloc">
+  <span class="name"><a href="features_notice_presentation_bloc_home_bloc/">features/notice/presentation/bloc/home_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_event">
+  <span class="name"><a href="features_notice_presentation_bloc_home_event/">features/notice/presentation/bloc/home_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_state">
+  <span class="name"><a href="features_notice_presentation_bloc_home_state/">features/notice/presentation/bloc/home_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_bloc">
+  <span class="name"><a href="features_notice_presentation_bloc_notice_board_bloc/">features/notice/presentation/bloc/notice_board_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_event">
+  <span class="name"><a href="features_notice_presentation_bloc_notice_board_event/">features/notice/presentation/bloc/notice_board_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_state">
+  <span class="name"><a href="features_notice_presentation_bloc_notice_board_state/">features/notice/presentation/bloc/notice_board_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="base_notice_board_page">
+  <span class="name"><a href="features_notice_presentation_pages_base_notice_board_page/">features/notice/presentation/pages/base_notice_board_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_page">
+  <span class="name"><a href="features_notice_presentation_pages_home_page/">features/notice/presentation/pages/home_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_board_page">
+  <span class="name"><a href="features_notice_presentation_pages_notice_board_page/">features/notice/presentation/pages/notice_board_page</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="keyword_search_dropdown">
-  <span class="name"><a href="widgets_dropdowns_keyword_search_dropdown/widgets_dropdowns_keyword_search_dropdown-library.html">widgets/dropdowns/keyword_search_dropdown</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="blue_loading_indicator">
-  <span class="name"><a href="widgets_loading_indicators_blue_loading_indicator/widgets_loading_indicators_blue_loading_indicator-library.html">widgets/loading_indicators/blue_loading_indicator</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="bookmark_refresh_header">
-  <span class="name"><a href="widgets_refresh_headers_bookmark_refresh_header/widgets_refresh_headers_bookmark_refresh_header-library.html">widgets/refresh_headers/bookmark_refresh_header</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="notice_refresh_header">
-  <span class="name"><a href="widgets_refresh_headers_notice_refresh_header/widgets_refresh_headers_notice_refresh_header-library.html">widgets/refresh_headers/notice_refresh_header</a></span> 
-
-</dt>
-<dd>
-</dd>
-
-          <dt id="themed_snack_bar">
-  <span class="name"><a href="widgets_snack_bars_themed_snack_bar/widgets_snack_bars_themed_snack_bar-library.html">widgets/snack_bars/themed_snack_bar</a></span> 
+  <span class="name"><a href="features_notice_presentation_widgets_keyword_search_dropdown/">features/notice/presentation/widgets/keyword_search_dropdown</a></span> 
 
 </dt>
 <dd>
 </dd>
 
           <dt id="keyword_search_textfield">
-  <span class="name"><a href="widgets_textfields_keyword_search_textfield/widgets_textfields_keyword_search_textfield-library.html">widgets/textfields/keyword_search_textfield</a></span> 
+  <span class="name"><a href="features_notice_presentation_widgets_keyword_search_textfield/">features/notice/presentation/widgets/keyword_search_textfield</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="bold_title_text">
-  <span class="name"><a href="widgets_texts_bold_title_text/widgets_texts_bold_title_text-library.html">widgets/texts/bold_title_text</a></span> 
+          <dt id="no_search_result_widget">
+  <span class="name"><a href="features_notice_presentation_widgets_no_search_result_widget/">features/notice/presentation/widgets/no_search_result_widget</a></span> 
 
 </dt>
 <dd>
 </dd>
 
-          <dt id="normal_description_text">
-  <span class="name"><a href="widgets_texts_normal_description_text/widgets_texts_normal_description_text-library.html">widgets/texts/normal_description_text</a></span> 
+          <dt id="notice_board_tab_widget">
+  <span class="name"><a href="features_notice_presentation_widgets_notice_board_tab_widget/">features/notice/presentation/widgets/notice_board_tab_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notice_refresh_header">
+  <span class="name"><a href="features_notice_presentation_widgets_notice_refresh_header/">features/notice/presentation/widgets/notice_refresh_header</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="pagination_widget">
+  <span class="name"><a href="features_notice_presentation_widgets_pagination_widget/">features/notice/presentation/widgets/pagination_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="firebase_remote_data_source">
+  <span class="name"><a href="features_notification_data_datasources_firebase_remote_data_source/">features/notification/data/datasources/firebase_remote_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_message_model">
+  <span class="name"><a href="features_notification_data_models_notification_message_model/">features/notification/data/models/notification_message_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_repository_impl">
+  <span class="name"><a href="features_notification_data_repositories_notification_repository_impl/">features/notification/data/repositories/notification_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_message_entity">
+  <span class="name"><a href="features_notification_domain_entities_notification_message_entity/">features/notification/domain/entities/notification_message_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_repository">
+  <span class="name"><a href="features_notification_domain_repositories_notification_repository/">features/notification/domain/repositories/notification_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="request_initial_permission_use_case">
+  <span class="name"><a href="features_notification_domain_usecases_request_initial_permission_use_case/">features/notification/domain/usecases/request_initial_permission_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_local_data_source">
+  <span class="name"><a href="features_notification_setting_data_datasources_notification_setting_local_data_source/">features/notification_setting/data/datasources/notification_setting_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_remote_data_source">
+  <span class="name"><a href="features_notification_setting_data_datasources_notification_setting_remote_data_source/">features/notification_setting/data/datasources/notification_setting_remote_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_repository_impl">
+  <span class="name"><a href="features_notification_setting_data_repositories_notification_setting_repository_impl/">features/notification_setting/data/repositories/notification_setting_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_major_item">
+  <span class="name"><a href="features_notification_setting_domain_entities_notification_major_item/">features/notification_setting/domain/entities/notification_major_item</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_failure">
+  <span class="name"><a href="features_notification_setting_domain_failures_notification_setting_failure/">features/notification_setting/domain/failures/notification_setting_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_repository">
+  <span class="name"><a href="features_notification_setting_domain_repositories_notification_setting_repository/">features/notification_setting/domain/repositories/notification_setting_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_subscription_status_use_case">
+  <span class="name"><a href="features_notification_setting_domain_usecases_get_subscription_status_use_case/">features/notification_setting/domain/usecases/get_subscription_status_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="toggle_subscription_use_case">
+  <span class="name"><a href="features_notification_setting_domain_usecases_toggle_subscription_use_case/">features/notification_setting/domain/usecases/toggle_subscription_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_bloc">
+  <span class="name"><a href="features_notification_setting_presentation_bloc_notification_setting_bloc/">features/notification_setting/presentation/bloc/notification_setting_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_event">
+  <span class="name"><a href="features_notification_setting_presentation_bloc_notification_setting_event/">features/notification_setting/presentation/bloc/notification_setting_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_state">
+  <span class="name"><a href="features_notification_setting_presentation_bloc_notification_setting_state/">features/notification_setting/presentation/bloc/notification_setting_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_setting_page">
+  <span class="name"><a href="features_notification_setting_presentation_pages_notification_setting_page/">features/notification_setting/presentation/pages/notification_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="college_notification_category">
+  <span class="name"><a href="features_notification_setting_presentation_widgets_categories_college_notification_category/">features/notification_setting/presentation/widgets/categories/college_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="education_notification_category">
+  <span class="name"><a href="features_notification_setting_presentation_widgets_categories_education_notification_category/">features/notification_setting/presentation/widgets/categories/education_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="graduate_school_notification_category">
+  <span class="name"><a href="features_notification_setting_presentation_widgets_categories_graduate_school_notification_category/">features/notification_setting/presentation/widgets/categories/graduate_school_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_notification_category">
+  <span class="name"><a href="features_notification_setting_presentation_widgets_categories_major_notification_category/">features/notification_setting/presentation/widgets/categories/major_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="research_notification_category">
+  <span class="name"><a href="features_notification_setting_presentation_widgets_categories_research_notification_category/">features/notification_setting/presentation/widgets/categories/research_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="undergraduate_schedule_notification_category">
+  <span class="name"><a href="features_notification_setting_presentation_widgets_categories_undergraduate_schedule_notification_category/">features/notification_setting/presentation/widgets/categories/undergraduate_schedule_notification_category</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="notification_tile">
+  <span class="name"><a href="features_notification_setting_presentation_widgets_notification_tile/">features/notification_setting/presentation/widgets/notification_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="onboarding_bloc">
+  <span class="name"><a href="features_onboarding_presentation_bloc_onboarding_bloc/">features/onboarding/presentation/bloc/onboarding_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="onboarding_event">
+  <span class="name"><a href="features_onboarding_presentation_bloc_onboarding_event/">features/onboarding/presentation/bloc/onboarding_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="onboarding_state">
+  <span class="name"><a href="features_onboarding_presentation_bloc_onboarding_state/">features/onboarding/presentation/bloc/onboarding_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="onboarding_page">
+  <span class="name"><a href="features_onboarding_presentation_pages_onboarding_page/">features/onboarding/presentation/pages/onboarding_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="post_entity">
+  <span class="name"><a href="features_post_domain_entities_post_entity/">features/post/domain/entities/post_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="post_add_page">
+  <span class="name"><a href="features_post_presentation_pages_post_add_page/">features/post/presentation/pages/post_add_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="post_detail_page">
+  <span class="name"><a href="features_post_presentation_pages_post_detail_page/">features/post/presentation/pages/post_detail_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="team_create_page">
+  <span class="name"><a href="features_recruitment_presentation_pages_team_create_page/">features/recruitment/presentation/pages/team_create_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="team_detail_page">
+  <span class="name"><a href="features_recruitment_presentation_pages_team_detail_page/">features/recruitment/presentation/pages/team_detail_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="team_management_page">
+  <span class="name"><a href="features_recruitment_presentation_pages_team_management_page/">features/recruitment/presentation/pages/team_management_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="team_recruitment_page">
+  <span class="name"><a href="features_recruitment_presentation_pages_team_recruitment_page/">features/recruitment/presentation/pages/team_recruitment_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="recent_search_manager">
+  <span class="name"><a href="features_search_data_datasources_recent_search_manager/">features/search/data/datasources/recent_search_manager</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_local_data_source">
+  <span class="name"><a href="features_search_data_datasources_search_local_data_source/">features/search/data/datasources/search_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_remote_data_source">
+  <span class="name"><a href="features_search_data_datasources_search_remote_data_source/">features/search/data/datasources/search_remote_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_scraper">
+  <span class="name"><a href="features_search_data_datasources_search_scraper/">features/search/data/datasources/search_scraper</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="trending_topic_model">
+  <span class="name"><a href="features_search_data_models_trending_topic_model/">features/search/data/models/trending_topic_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_repository_impl">
+  <span class="name"><a href="features_search_data_repositories_search_repository_impl/">features/search/data/repositories/search_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_selectors">
+  <span class="name"><a href="features_search_domain_entities_search_selectors/">features/search/domain/entities/search_selectors</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="trending_topic_entity">
+  <span class="name"><a href="features_search_domain_entities_trending_topic_entity/">features/search/domain/entities/trending_topic_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_failure">
+  <span class="name"><a href="features_search_domain_failures_search_failure/">features/search/domain/failures/search_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_repository">
+  <span class="name"><a href="features_search_domain_repositories_search_repository/">features/search/domain/repositories/search_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="add_recent_search_word_use_case">
+  <span class="name"><a href="features_search_domain_usecases_add_recent_search_word_use_case/">features/search/domain/usecases/add_recent_search_word_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="clear_recent_search_words_use_case">
+  <span class="name"><a href="features_search_domain_usecases_clear_recent_search_words_use_case/">features/search/domain/usecases/clear_recent_search_words_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_recent_search_words_use_case">
+  <span class="name"><a href="features_search_domain_usecases_get_recent_search_words_use_case/">features/search/domain/usecases/get_recent_search_words_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_trending_topics_use_case">
+  <span class="name"><a href="features_search_domain_usecases_get_trending_topics_use_case/">features/search/domain/usecases/get_trending_topics_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="remove_recent_search_word_use_case">
+  <span class="name"><a href="features_search_domain_usecases_remove_recent_search_word_use_case/">features/search/domain/usecases/remove_recent_search_word_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_bloc">
+  <span class="name"><a href="features_search_presentation_bloc_search_bloc/">features/search/presentation/bloc/search_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_event">
+  <span class="name"><a href="features_search_presentation_bloc_search_event/">features/search/presentation/bloc/search_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_state">
+  <span class="name"><a href="features_search_presentation_bloc_search_state/">features/search/presentation/bloc/search_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_page">
+  <span class="name"><a href="features_search_presentation_pages_search_page/">features/search/presentation/pages/search_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="search_result_page">
+  <span class="name"><a href="features_search_presentation_pages_search_result_page/">features/search/presentation/pages/search_result_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="trending_topics_item_widget">
+  <span class="name"><a href="features_search_presentation_widgets_trending_topics_item_widget/">features/search/presentation/widgets/trending_topics_item_widget</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_local_data_source">
+  <span class="name"><a href="features_university_setting_data_datasources_university_setting_local_data_source/">features/university_setting/data/datasources/university_setting_local_data_source</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_repository_impl">
+  <span class="name"><a href="features_university_setting_data_repositories_university_setting_repository_impl/">features/university_setting/data/repositories/university_setting_repository_impl</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_type">
+  <span class="name"><a href="features_university_setting_domain_entities_university_setting_type/">features/university_setting/domain/entities/university_setting_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_failure">
+  <span class="name"><a href="features_university_setting_domain_failures_university_setting_failure/">features/university_setting/domain/failures/university_setting_failure</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_repository">
+  <span class="name"><a href="features_university_setting_domain_repositories_university_setting_repository/">features/university_setting/domain/repositories/university_setting_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_current_setting_use_case">
+  <span class="name"><a href="features_university_setting_domain_usecases_get_current_setting_use_case/">features/university_setting/domain/usecases/get_current_setting_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="save_major_setting_use_case">
+  <span class="name"><a href="features_university_setting_domain_usecases_save_major_setting_use_case/">features/university_setting/domain/usecases/save_major_setting_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="save_setting_use_case">
+  <span class="name"><a href="features_university_setting_domain_usecases_save_setting_use_case/">features/university_setting/domain/usecases/save_setting_use_case</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_bloc">
+  <span class="name"><a href="features_university_setting_presentation_bloc_university_setting_bloc/">features/university_setting/presentation/bloc/university_setting_bloc</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_event">
+  <span class="name"><a href="features_university_setting_presentation_bloc_university_setting_event/">features/university_setting/presentation/bloc/university_setting_event</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="university_setting_state">
+  <span class="name"><a href="features_university_setting_presentation_bloc_university_setting_state/">features/university_setting/presentation/bloc/university_setting_state</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="college_setting_page">
+  <span class="name"><a href="features_university_setting_presentation_pages_college_setting_page/">features/university_setting/presentation/pages/college_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="graduate_school_setting_page">
+  <span class="name"><a href="features_university_setting_presentation_pages_graduate_school_setting_page/">features/university_setting/presentation/pages/graduate_school_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="major_setting_page">
+  <span class="name"><a href="features_university_setting_presentation_pages_major_setting_page/">features/university_setting/presentation/pages/major_setting_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="setting_header">
+  <span class="name"><a href="features_university_setting_presentation_widgets_setting_header/">features/university_setting/presentation/widgets/setting_header</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="setting_list_tile">
+  <span class="name"><a href="features_university_setting_presentation_widgets_setting_list_tile/">features/university_setting/presentation/widgets/setting_list_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="setting_search_field">
+  <span class="name"><a href="features_university_setting_presentation_widgets_setting_search_field/">features/university_setting/presentation/widgets/setting_search_field</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="injection_container">
+  <span class="name"><a href="injection_container/">injection_container</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/">main</a></span> 
 
 </dt>
 <dd>
@@ -1009,107 +2126,239 @@ For detailed instructions and examples, please refer to the <a href="docs/API_US
     <h5 class="hidden-xs"><span class="package-name">inha_notice</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="core_constants_app_theme_constants/core_constants_app_theme_constants-library.html">core/constants/app_theme_constants</a></li>
-      <li><a href="core_constants_font_constants/core_constants_font_constants-library.html">core/constants/font_constants</a></li>
-      <li><a href="core_constants_identifier_constants/core_constants_identifier_constants-library.html">core/constants/identifier_constants</a></li>
-      <li><a href="core_constants_keyword_search_option_constants/core_constants_keyword_search_option_constants-library.html">core/constants/keyword_search_option_constants</a></li>
-      <li><a href="core_constants_page_constants/core_constants_page_constants-library.html">core/constants/page_constants</a></li>
-      <li><a href="core_constants_status_code_constants/core_constants_status_code_constants-library.html">core/constants/status_code_constants</a></li>
-      <li><a href="core_constants_string_constants/core_constants_string_constants-library.html">core/constants/string_constants</a></li>
-      <li><a href="core_font_fonts/core_font_fonts-library.html">core/font/fonts</a></li>
-      <li><a href="core_keys_college_keys/core_keys_college_keys-library.html">core/keys/college_keys</a></li>
-      <li><a href="core_keys_custom_tab_keys/core_keys_custom_tab_keys-library.html">core/keys/custom_tab_keys</a></li>
-      <li><a href="core_keys_graduate_school_keys/core_keys_graduate_school_keys-library.html">core/keys/graduate_school_keys</a></li>
-      <li><a href="core_keys_major_keys/core_keys_major_keys-library.html">core/keys/major_keys</a></li>
-      <li><a href="core_keys_shared_pref_keys/core_keys_shared_pref_keys-library.html">core/keys/shared_pref_keys</a></li>
-      <li><a href="core_theme_theme/core_theme_theme-library.html">core/theme/theme</a></li>
-      <li><a href="firebase_firebase_options/firebase_firebase_options-library.html">firebase/firebase_options</a></li>
-      <li><a href="firebase_firebase_service/firebase_firebase_service-library.html">firebase/firebase_service</a></li>
-      <li><a href="main/main-library.html">main</a></li>
-      <li><a href="models_pages_model/models_pages_model-library.html">models/pages_model</a></li>
-      <li><a href="screens_bottom_navigation_bookmark_bookmark_page/screens_bottom_navigation_bookmark_bookmark_page-library.html">screens/bottom_navigation/bookmark/bookmark_page</a></li>
-      <li><a href="screens_bottom_navigation_bottom_nav_bar_page/screens_bottom_navigation_bottom_nav_bar_page-library.html">screens/bottom_navigation/bottom_nav_bar_page</a></li>
-      <li><a href="screens_bottom_navigation_home_home_page/screens_bottom_navigation_home_home_page-library.html">screens/bottom_navigation/home/home_page</a></li>
-      <li><a href="screens_bottom_navigation_home_notice_board_tab/screens_bottom_navigation_home_notice_board_tab-library.html">screens/bottom_navigation/home/notice_board_tab</a></li>
-      <li><a href="screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile/screens_bottom_navigation_more_cache_deletetion_cache_deletion_tile-library.html">screens/bottom_navigation/more/cache_deletetion/cache_deletion_tile</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_license_custom_license_text_page/screens_bottom_navigation_more_custom_license_custom_license_text_page-library.html">screens/bottom_navigation/more/custom_license/custom_license_text_page</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_license_custom_licenses_page/screens_bottom_navigation_more_custom_license_custom_licenses_page-library.html">screens/bottom_navigation/more/custom_license/custom_licenses_page</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_base_custom_tab_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/base_custom_tab_list</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_available_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_available_list</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_preview-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_preview</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_save_button-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_save_button</a></li>
-      <li><a href="screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list/screens_bottom_navigation_more_custom_tab_bar_page_custom_tab_bar_page_widgets_custom_tab_selected_list-library.html">screens/bottom_navigation/more/custom_tab_bar_page/custom_tab_bar_page_widgets/custom_tab_selected_list</a></li>
-      <li><a href="screens_bottom_navigation_more_more_page/screens_bottom_navigation_more_more_page-library.html">screens/bottom_navigation/more/more_page</a></li>
-      <li><a href="screens_bottom_navigation_more_more_page_titles_more_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_navigation_tile</a></li>
-      <li><a href="screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_non_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_non_navigation_tile</a></li>
-      <li><a href="screens_bottom_navigation_more_more_page_titles_more_title_tile/screens_bottom_navigation_more_more_page_titles_more_title_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_title_tile</a></li>
-      <li><a href="screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile/screens_bottom_navigation_more_more_page_titles_more_web_navigation_tile-library.html">screens/bottom_navigation/more/more_page_titles/more_web_navigation_tile</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_categories_college_notification_category/screens_bottom_navigation_more_notification_setting_categories_college_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/college_notification_category</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_categories_education_notification_category/screens_bottom_navigation_more_notification_setting_categories_education_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/education_notification_category</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category/screens_bottom_navigation_more_notification_setting_categories_graduate_school_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/graduate_school_notification_category</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_categories_major_notification_category/screens_bottom_navigation_more_notification_setting_categories_major_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/major_notification_category</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_categories_research_notification_category/screens_bottom_navigation_more_notification_setting_categories_research_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/research_notification_category</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category/screens_bottom_navigation_more_notification_setting_categories_undergraduate_schedule_notification_category-library.html">screens/bottom_navigation/more/notification_setting/categories/undergraduate_schedule_notification_category</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_notification_major_item/screens_bottom_navigation_more_notification_setting_notification_major_item-library.html">screens/bottom_navigation/more/notification_setting/notification_major_item</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_notification_setting_page/screens_bottom_navigation_more_notification_setting_notification_setting_page-library.html">screens/bottom_navigation/more/notification_setting/notification_setting_page</a></li>
-      <li><a href="screens_bottom_navigation_more_notification_setting_notification_tile/screens_bottom_navigation_more_notification_setting_notification_tile-library.html">screens/bottom_navigation/more/notification_setting/notification_tile</a></li>
-      <li><a href="screens_bottom_navigation_more_theme_preference_theme_preference_tile/screens_bottom_navigation_more_theme_preference_theme_preference_tile-library.html">screens/bottom_navigation/more/theme_preference/theme_preference_tile</a></li>
-      <li><a href="screens_bottom_navigation_more_university_settings_base_setting_page/screens_bottom_navigation_more_university_settings_base_setting_page-library.html">screens/bottom_navigation/more/university_settings/base_setting_page</a></li>
-      <li><a href="screens_bottom_navigation_more_university_settings_college_setting_page/screens_bottom_navigation_more_university_settings_college_setting_page-library.html">screens/bottom_navigation/more/university_settings/college_setting_page</a></li>
-      <li><a href="screens_bottom_navigation_more_university_settings_graduate_school_setting_page/screens_bottom_navigation_more_university_settings_graduate_school_setting_page-library.html">screens/bottom_navigation/more/university_settings/graduate_school_setting_page</a></li>
-      <li><a href="screens_bottom_navigation_more_university_settings_major_setting_page/screens_bottom_navigation_more_university_settings_major_setting_page-library.html">screens/bottom_navigation/more/university_settings/major_setting_page</a></li>
-      <li><a href="screens_bottom_navigation_search_search_page/screens_bottom_navigation_search_search_page-library.html">screens/bottom_navigation/search/search_page</a></li>
-      <li><a href="screens_bottom_navigation_search_search_result_page/screens_bottom_navigation_search_search_result_page-library.html">screens/bottom_navigation/search/search_result_page</a></li>
-      <li><a href="screens_bottom_navigation_search_topics_item/screens_bottom_navigation_search_topics_item-library.html">screens/bottom_navigation/search/topics_item</a></li>
-      <li><a href="screens_notice_board_absolute_style_notice_board/screens_notice_board_absolute_style_notice_board-library.html">screens/notice_board/absolute_style_notice_board</a></li>
-      <li><a href="screens_notice_board_base_notice_board/screens_notice_board_base_notice_board-library.html">screens/notice_board/base_notice_board</a></li>
-      <li><a href="screens_notice_board_no_search_result/screens_notice_board_no_search_result-library.html">screens/notice_board/no_search_result</a></li>
-      <li><a href="screens_notice_board_notice_list_tile/screens_notice_board_notice_list_tile-library.html">screens/notice_board/notice_list_tile</a></li>
-      <li><a href="screens_notice_board_relative_style_notice_board/screens_notice_board_relative_style_notice_board-library.html">screens/notice_board/relative_style_notice_board</a></li>
-      <li><a href="screens_onboarding_onboarding_screen/screens_onboarding_onboarding_screen-library.html">screens/onboarding/onboarding_screen</a></li>
-      <li><a href="screens_pagination_absolute_style_pagination/screens_pagination_absolute_style_pagination-library.html">screens/pagination/absolute_style_pagination</a></li>
-      <li><a href="screens_pagination_base_pagination/screens_pagination_base_pagination-library.html">screens/pagination/base_pagination</a></li>
-      <li><a href="screens_pagination_relative_style_pagination/screens_pagination_relative_style_pagination-library.html">screens/pagination/relative_style_pagination</a></li>
-      <li><a href="screens_webview_in_app_web_page/screens_webview_in_app_web_page-library.html">screens/webview/in_app_web_page</a></li>
-      <li><a href="screens_webview_web_navigator/screens_webview_web_navigator-library.html">screens/webview/web_navigator</a></li>
-      <li><a href="services_absolute_style_scraper_base_absolute_style_notice_scraper/services_absolute_style_scraper_base_absolute_style_notice_scraper-library.html">services/absolute_style_scraper/base_absolute_style_notice_scraper</a></li>
-      <li><a href="services_absolute_style_scraper_inha_design_style_notice_scraper/services_absolute_style_scraper_inha_design_style_notice_scraper-library.html">services/absolute_style_scraper/inha_design_style_notice_scraper</a></li>
-      <li><a href="services_absolute_style_scraper_major_style_notice_scraper/services_absolute_style_scraper_major_style_notice_scraper-library.html">services/absolute_style_scraper/major_style_notice_scraper</a></li>
-      <li><a href="services_absolute_style_scraper_oceanography_style_notice_scraper/services_absolute_style_scraper_oceanography_style_notice_scraper-library.html">services/absolute_style_scraper/oceanography_style_notice_scraper</a></li>
-      <li><a href="services_absolute_style_scraper_whole_style_notice_scraper/services_absolute_style_scraper_whole_style_notice_scraper-library.html">services/absolute_style_scraper/whole_style_notice_scraper</a></li>
-      <li><a href="services_relative_style_scraper_base_relative_style_notice_scraper/services_relative_style_scraper_base_relative_style_notice_scraper-library.html">services/relative_style_scraper/base_relative_style_notice_scraper</a></li>
-      <li><a href="services_relative_style_scraper_library_scraper/services_relative_style_scraper_library_scraper-library.html">services/relative_style_scraper/library_scraper</a></li>
-      <li><a href="services_search_search_scraper/services_search_search_scraper-library.html">services/search/search_scraper</a></li>
-      <li><a href="services_trending_topics_trending_topics_api/services_trending_topics_trending_topics_api-library.html">services/trending_topics/trending_topics_api</a></li>
-      <li><a href="utils_bookmark_bookmark_manager/utils_bookmark_bookmark_manager-library.html">utils/bookmark/bookmark_manager</a></li>
-      <li><a href="utils_custom_tab_list_utils_custom_tab_list_utils/utils_custom_tab_list_utils_custom_tab_list_utils-library.html">utils/custom_tab_list_utils/custom_tab_list_utils</a></li>
-      <li><a href="utils_read_notice_read_notice_manager/utils_read_notice_read_notice_manager-library.html">utils/read_notice/read_notice_manager</a></li>
-      <li><a href="utils_recent_search_recent_search_manager/utils_recent_search_recent_search_manager-library.html">utils/recent_search/recent_search_manager</a></li>
-      <li><a href="utils_selectors_inha_design_style_tag_selectors/utils_selectors_inha_design_style_tag_selectors-library.html">utils/selectors/inha_design_style_tag_selectors</a></li>
-      <li><a href="utils_selectors_major_style_tag_selectors/utils_selectors_major_style_tag_selectors-library.html">utils/selectors/major_style_tag_selectors</a></li>
-      <li><a href="utils_selectors_oceanography_style_tag_selectors/utils_selectors_oceanography_style_tag_selectors-library.html">utils/selectors/oceanography_style_tag_selectors</a></li>
-      <li><a href="utils_selectors_search_tag_selectors/utils_selectors_search_tag_selectors-library.html">utils/selectors/search_tag_selectors</a></li>
-      <li><a href="utils_selectors_whole_tag_selectors/utils_selectors_whole_tag_selectors-library.html">utils/selectors/whole_tag_selectors</a></li>
-      <li><a href="utils_shared_prefs_shared_prefs_manager/utils_shared_prefs_shared_prefs_manager-library.html">utils/shared_prefs/shared_prefs_manager</a></li>
-      <li><a href="utils_university_utils_college_utils/utils_university_utils_college_utils-library.html">utils/university_utils/college_utils</a></li>
-      <li><a href="utils_university_utils_graduate_school_utils/utils_university_utils_graduate_school_utils-library.html">utils/university_utils/graduate_school_utils</a></li>
-      <li><a href="utils_university_utils_major_utils/utils_university_utils_major_utils-library.html">utils/university_utils/major_utils</a></li>
-      <li><a href="widgets_app_bars_themed_action_app_bar/widgets_app_bars_themed_action_app_bar-library.html">widgets/app_bars/themed_action_app_bar</a></li>
-      <li><a href="widgets_app_bars_themed_app_bar/widgets_app_bars_themed_app_bar-library.html">widgets/app_bars/themed_app_bar</a></li>
-      <li><a href="widgets_buttons_refresh_button/widgets_buttons_refresh_button-library.html">widgets/buttons/refresh_button</a></li>
-      <li><a href="widgets_buttons_rounded_toggle_button/widgets_buttons_rounded_toggle_button-library.html">widgets/buttons/rounded_toggle_button</a></li>
-      <li><a href="widgets_dialogs_blocking_dialog/widgets_dialogs_blocking_dialog-library.html">widgets/dialogs/blocking_dialog</a></li>
-      <li><a href="widgets_dialogs_cache_deletion_dialog/widgets_dialogs_cache_deletion_dialog-library.html">widgets/dialogs/cache_deletion_dialog</a></li>
-      <li><a href="widgets_dialogs_theme_mode_selection_dialog/widgets_dialogs_theme_mode_selection_dialog-library.html">widgets/dialogs/theme_mode_selection_dialog</a></li>
-      <li><a href="widgets_dropdowns_keyword_search_dropdown/widgets_dropdowns_keyword_search_dropdown-library.html">widgets/dropdowns/keyword_search_dropdown</a></li>
-      <li><a href="widgets_loading_indicators_blue_loading_indicator/widgets_loading_indicators_blue_loading_indicator-library.html">widgets/loading_indicators/blue_loading_indicator</a></li>
-      <li><a href="widgets_refresh_headers_bookmark_refresh_header/widgets_refresh_headers_bookmark_refresh_header-library.html">widgets/refresh_headers/bookmark_refresh_header</a></li>
-      <li><a href="widgets_refresh_headers_notice_refresh_header/widgets_refresh_headers_notice_refresh_header-library.html">widgets/refresh_headers/notice_refresh_header</a></li>
-      <li><a href="widgets_snack_bars_themed_snack_bar/widgets_snack_bars_themed_snack_bar-library.html">widgets/snack_bars/themed_snack_bar</a></li>
-      <li><a href="widgets_textfields_keyword_search_textfield/widgets_textfields_keyword_search_textfield-library.html">widgets/textfields/keyword_search_textfield</a></li>
-      <li><a href="widgets_texts_bold_title_text/widgets_texts_bold_title_text-library.html">widgets/texts/bold_title_text</a></li>
-      <li><a href="widgets_texts_normal_description_text/widgets_texts_normal_description_text-library.html">widgets/texts/normal_description_text</a></li>
+      <li><a href="core_config_app_bloc_observer/">core/config/app_bloc_observer</a></li>
+      <li><a href="core_config_app_font/">core/config/app_font</a></li>
+      <li><a href="core_config_app_theme/">core/config/app_theme</a></li>
+      <li><a href="core_config_app_theme_type/">core/config/app_theme_type</a></li>
+      <li><a href="core_config_firebase_options/">core/config/firebase_options</a></li>
+      <li><a href="core_constants_identifier_constants/">core/constants/identifier_constants</a></li>
+      <li><a href="core_constants_keyword_search_option_constants/">core/constants/keyword_search_option_constants</a></li>
+      <li><a href="core_constants_page_constants/">core/constants/page_constants</a></li>
+      <li><a href="core_constants_string_constants/">core/constants/string_constants</a></li>
+      <li><a href="core_error_exceptions/">core/error/exceptions</a></li>
+      <li><a href="core_error_failures/">core/error/failures</a></li>
+      <li><a href="core_keys_shared_pref_keys/">core/keys/shared_pref_keys</a></li>
+      <li><a href="core_presentation_models_notice_tile_model/">core/presentation/models/notice_tile_model</a></li>
+      <li><a href="core_presentation_models_pages_model/">core/presentation/models/pages_model</a></li>
+      <li><a href="core_presentation_pages_in_app_web_page/">core/presentation/pages/in_app_web_page</a></li>
+      <li><a href="core_presentation_utils_app_snack_bar/">core/presentation/utils/app_snack_bar</a></li>
+      <li><a href="core_presentation_utils_blocking_dialog/">core/presentation/utils/blocking_dialog</a></li>
+      <li><a href="core_presentation_widgets_blue_loading_indicator_widget/">core/presentation/widgets/blue_loading_indicator_widget</a></li>
+      <li><a href="core_presentation_widgets_bold_title_widget/">core/presentation/widgets/bold_title_widget</a></li>
+      <li><a href="core_presentation_widgets_common_app_bar_widget/">core/presentation/widgets/common_app_bar_widget</a></li>
+      <li><a href="core_presentation_widgets_notice_tile_widget/">core/presentation/widgets/notice_tile_widget</a></li>
+      <li><a href="core_presentation_widgets_rounded_toggle_widget/">core/presentation/widgets/rounded_toggle_widget</a></li>
+      <li><a href="core_presentation_widgets_web_navigator_widget/">core/presentation/widgets/web_navigator_widget</a></li>
+      <li><a href="core_utils_app_logger/">core/utils/app_logger</a></li>
+      <li><a href="core_utils_shared_prefs_manager/">core/utils/shared_prefs_manager</a></li>
+      <li><a href="features_app_operation_data_datasources_firebase_remote_config_data_source/">features/app_operation/data/datasources/firebase_remote_config_data_source</a></li>
+      <li><a href="features_auth_presentation_bloc_login_bloc/">features/auth/presentation/bloc/login_bloc</a></li>
+      <li><a href="features_auth_presentation_bloc_login_event/">features/auth/presentation/bloc/login_event</a></li>
+      <li><a href="features_auth_presentation_bloc_login_state/">features/auth/presentation/bloc/login_state</a></li>
+      <li><a href="features_auth_presentation_pages_login_page/">features/auth/presentation/pages/login_page</a></li>
+      <li><a href="features_bookmark_data_datasources_bookmark_local_data_source/">features/bookmark/data/datasources/bookmark_local_data_source</a></li>
+      <li><a href="features_bookmark_data_models_bookmark_model/">features/bookmark/data/models/bookmark_model</a></li>
+      <li><a href="features_bookmark_data_repositories_bookmark_repository_impl/">features/bookmark/data/repositories/bookmark_repository_impl</a></li>
+      <li><a href="features_bookmark_domain_entities_bookmark_entity/">features/bookmark/domain/entities/bookmark_entity</a></li>
+      <li><a href="features_bookmark_domain_entities_bookmark_sorting_type/">features/bookmark/domain/entities/bookmark_sorting_type</a></li>
+      <li><a href="features_bookmark_domain_failures_bookmark_failure/">features/bookmark/domain/failures/bookmark_failure</a></li>
+      <li><a href="features_bookmark_domain_repositories_bookmark_repository/">features/bookmark/domain/repositories/bookmark_repository</a></li>
+      <li><a href="features_bookmark_domain_usecases_clear_bookmarks_use_case/">features/bookmark/domain/usecases/clear_bookmarks_use_case</a></li>
+      <li><a href="features_bookmark_domain_usecases_get_bookmarks_use_case/">features/bookmark/domain/usecases/get_bookmarks_use_case</a></li>
+      <li><a href="features_bookmark_domain_usecases_remove_bookmark_use_case/">features/bookmark/domain/usecases/remove_bookmark_use_case</a></li>
+      <li><a href="features_bookmark_presentation_bloc_bookmark_bloc/">features/bookmark/presentation/bloc/bookmark_bloc</a></li>
+      <li><a href="features_bookmark_presentation_bloc_bookmark_event/">features/bookmark/presentation/bloc/bookmark_event</a></li>
+      <li><a href="features_bookmark_presentation_bloc_bookmark_state/">features/bookmark/presentation/bloc/bookmark_state</a></li>
+      <li><a href="features_bookmark_presentation_pages_bookmark_page/">features/bookmark/presentation/pages/bookmark_page</a></li>
+      <li><a href="features_bookmark_presentation_widgets_bookmark_refresh_header_widget/">features/bookmark/presentation/widgets/bookmark_refresh_header_widget</a></li>
+      <li><a href="features_custom_tab_data_datasources_custom_tab_local_data_source/">features/custom_tab/data/datasources/custom_tab_local_data_source</a></li>
+      <li><a href="features_custom_tab_data_repositories_custom_tab_repository_impl/">features/custom_tab/data/repositories/custom_tab_repository_impl</a></li>
+      <li><a href="features_custom_tab_domain_entities_custom_tab_type/">features/custom_tab/domain/entities/custom_tab_type</a></li>
+      <li><a href="features_custom_tab_domain_failures_custom_tab_failure/">features/custom_tab/domain/failures/custom_tab_failure</a></li>
+      <li><a href="features_custom_tab_domain_repositories_custom_tab_repository/">features/custom_tab/domain/repositories/custom_tab_repository</a></li>
+      <li><a href="features_custom_tab_domain_usecases_get_selected_tabs_use_case/">features/custom_tab/domain/usecases/get_selected_tabs_use_case</a></li>
+      <li><a href="features_custom_tab_domain_usecases_save_tabs_use_case/">features/custom_tab/domain/usecases/save_tabs_use_case</a></li>
+      <li><a href="features_custom_tab_presentation_bloc_custom_tab_bloc/">features/custom_tab/presentation/bloc/custom_tab_bloc</a></li>
+      <li><a href="features_custom_tab_presentation_bloc_custom_tab_event/">features/custom_tab/presentation/bloc/custom_tab_event</a></li>
+      <li><a href="features_custom_tab_presentation_bloc_custom_tab_state/">features/custom_tab/presentation/bloc/custom_tab_state</a></li>
+      <li><a href="features_custom_tab_presentation_pages_custom_tab_page/">features/custom_tab/presentation/pages/custom_tab_page</a></li>
+      <li><a href="features_custom_tab_presentation_widgets_base_custom_tab_list/">features/custom_tab/presentation/widgets/base_custom_tab_list</a></li>
+      <li><a href="features_custom_tab_presentation_widgets_custom_tab_available_list/">features/custom_tab/presentation/widgets/custom_tab_available_list</a></li>
+      <li><a href="features_custom_tab_presentation_widgets_custom_tab_preview/">features/custom_tab/presentation/widgets/custom_tab_preview</a></li>
+      <li><a href="features_custom_tab_presentation_widgets_custom_tab_save_button/">features/custom_tab/presentation/widgets/custom_tab_save_button</a></li>
+      <li><a href="features_custom_tab_presentation_widgets_custom_tab_selected_list/">features/custom_tab/presentation/widgets/custom_tab_selected_list</a></li>
+      <li><a href="features_feed_presentation_pages_feed_page/">features/feed/presentation/pages/feed_page</a></li>
+      <li><a href="features_feed_presentation_pages_lounge_page/">features/feed/presentation/pages/lounge_page</a></li>
+      <li><a href="features_main_domain_usecases_get_initial_notification_message/">features/main/domain/usecases/get_initial_notification_message</a></li>
+      <li><a href="features_main_presentation_bloc_main_navigation_bloc/">features/main/presentation/bloc/main_navigation_bloc</a></li>
+      <li><a href="features_main_presentation_bloc_main_navigation_event/">features/main/presentation/bloc/main_navigation_event</a></li>
+      <li><a href="features_main_presentation_bloc_main_navigation_state/">features/main/presentation/bloc/main_navigation_state</a></li>
+      <li><a href="features_main_presentation_pages_main_navigation_page/">features/main/presentation/pages/main_navigation_page</a></li>
+      <li><a href="features_more_data_datasources_cache_local_data_source/">features/more/data/datasources/cache_local_data_source</a></li>
+      <li><a href="features_more_data_datasources_more_local_data_source/">features/more/data/datasources/more_local_data_source</a></li>
+      <li><a href="features_more_data_datasources_oss_license_local_data_source/">features/more/data/datasources/oss_license_local_data_source</a></li>
+      <li><a href="features_more_data_datasources_theme_preference_local_data_source/">features/more/data/datasources/theme_preference_local_data_source</a></li>
+      <li><a href="features_more_data_models_more_configuration_model/">features/more/data/models/more_configuration_model</a></li>
+      <li><a href="features_more_data_models_oss_license_category_model/">features/more/data/models/oss_license_category_model</a></li>
+      <li><a href="features_more_data_models_oss_license_item_model/">features/more/data/models/oss_license_item_model</a></li>
+      <li><a href="features_more_data_repositories_cache_repository_impl/">features/more/data/repositories/cache_repository_impl</a></li>
+      <li><a href="features_more_data_repositories_more_repository_impl/">features/more/data/repositories/more_repository_impl</a></li>
+      <li><a href="features_more_data_repositories_oss_license_repository_impl/">features/more/data/repositories/oss_license_repository_impl</a></li>
+      <li><a href="features_more_data_repositories_theme_preference_repository_impl/">features/more/data/repositories/theme_preference_repository_impl</a></li>
+      <li><a href="features_more_domain_entities_more_configuration_entity/">features/more/domain/entities/more_configuration_entity</a></li>
+      <li><a href="features_more_domain_entities_oss_license_category_entity/">features/more/domain/entities/oss_license_category_entity</a></li>
+      <li><a href="features_more_domain_entities_oss_license_item_entity/">features/more/domain/entities/oss_license_item_entity</a></li>
+      <li><a href="features_more_domain_failures_cache_failure/">features/more/domain/failures/cache_failure</a></li>
+      <li><a href="features_more_domain_failures_more_failure/">features/more/domain/failures/more_failure</a></li>
+      <li><a href="features_more_domain_failures_oss_license_failure/">features/more/domain/failures/oss_license_failure</a></li>
+      <li><a href="features_more_domain_failures_theme_preference_failure/">features/more/domain/failures/theme_preference_failure</a></li>
+      <li><a href="features_more_domain_repositories_cache_repository/">features/more/domain/repositories/cache_repository</a></li>
+      <li><a href="features_more_domain_repositories_more_repository/">features/more/domain/repositories/more_repository</a></li>
+      <li><a href="features_more_domain_repositories_oss_license_repository/">features/more/domain/repositories/oss_license_repository</a></li>
+      <li><a href="features_more_domain_repositories_theme_preference_repository/">features/more/domain/repositories/theme_preference_repository</a></li>
+      <li><a href="features_more_domain_usecases_get_cache_size_use_case/">features/more/domain/usecases/get_cache_size_use_case</a></li>
+      <li><a href="features_more_domain_usecases_get_oss_licenses_use_case/">features/more/domain/usecases/get_oss_licenses_use_case</a></li>
+      <li><a href="features_more_domain_usecases_get_theme_preference_use_case/">features/more/domain/usecases/get_theme_preference_use_case</a></li>
+      <li><a href="features_more_domain_usecases_get_web_urls_use_case/">features/more/domain/usecases/get_web_urls_use_case</a></li>
+      <li><a href="features_more_domain_usecases_set_theme_preference_use_case/">features/more/domain/usecases/set_theme_preference_use_case</a></li>
+      <li><a href="features_more_presentation_bloc_cache_bloc/">features/more/presentation/bloc/cache_bloc</a></li>
+      <li><a href="features_more_presentation_bloc_cache_event/">features/more/presentation/bloc/cache_event</a></li>
+      <li><a href="features_more_presentation_bloc_cache_state/">features/more/presentation/bloc/cache_state</a></li>
+      <li><a href="features_more_presentation_bloc_more_bloc/">features/more/presentation/bloc/more_bloc</a></li>
+      <li><a href="features_more_presentation_bloc_more_event/">features/more/presentation/bloc/more_event</a></li>
+      <li><a href="features_more_presentation_bloc_more_state/">features/more/presentation/bloc/more_state</a></li>
+      <li><a href="features_more_presentation_bloc_oss_license_bloc/">features/more/presentation/bloc/oss_license_bloc</a></li>
+      <li><a href="features_more_presentation_bloc_oss_license_event/">features/more/presentation/bloc/oss_license_event</a></li>
+      <li><a href="features_more_presentation_bloc_oss_license_state/">features/more/presentation/bloc/oss_license_state</a></li>
+      <li><a href="features_more_presentation_bloc_theme_preference_bloc/">features/more/presentation/bloc/theme_preference_bloc</a></li>
+      <li><a href="features_more_presentation_bloc_theme_preference_event/">features/more/presentation/bloc/theme_preference_event</a></li>
+      <li><a href="features_more_presentation_bloc_theme_preference_state/">features/more/presentation/bloc/theme_preference_state</a></li>
+      <li><a href="features_more_presentation_pages_more_page/">features/more/presentation/pages/more_page</a></li>
+      <li><a href="features_more_presentation_pages_oss_license_page/">features/more/presentation/pages/oss_license_page</a></li>
+      <li><a href="features_more_presentation_widgets_cache_deletion_dialog_widget/">features/more/presentation/widgets/cache_deletion_dialog_widget</a></li>
+      <li><a href="features_more_presentation_widgets_cache_deletion_widget/">features/more/presentation/widgets/cache_deletion_widget</a></li>
+      <li><a href="features_more_presentation_widgets_more_navigation_tile/">features/more/presentation/widgets/more_navigation_tile</a></li>
+      <li><a href="features_more_presentation_widgets_more_non_navigation_tile/">features/more/presentation/widgets/more_non_navigation_tile</a></li>
+      <li><a href="features_more_presentation_widgets_more_title_tile/">features/more/presentation/widgets/more_title_tile</a></li>
+      <li><a href="features_more_presentation_widgets_more_web_navigation_tile/">features/more/presentation/widgets/more_web_navigation_tile</a></li>
+      <li><a href="features_more_presentation_widgets_theme_mode_selection_dialog/">features/more/presentation/widgets/theme_mode_selection_dialog</a></li>
+      <li><a href="features_more_presentation_widgets_theme_preference_tile/">features/more/presentation/widgets/theme_preference_tile</a></li>
+      <li><a href="features_notice_data_datasources_home_local_data_source/">features/notice/data/datasources/home_local_data_source</a></li>
+      <li><a href="features_notice_data_datasources_notice_board_remote_data_source/">features/notice/data/datasources/notice_board_remote_data_source</a></li>
+      <li><a href="features_notice_data_datasources_read_notice_local_data_source/">features/notice/data/datasources/read_notice_local_data_source</a></li>
+      <li><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_base_absolute_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper</a></li>
+      <li><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_inha_design_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/inha_design_style_notice_scraper</a></li>
+      <li><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_major_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/major_style_notice_scraper</a></li>
+      <li><a href="features_notice_data_datasources_scrapers_absolute_style_scraper_whole_style_notice_scraper/">features/notice/data/datasources/scrapers/absolute_style_scraper/whole_style_notice_scraper</a></li>
+      <li><a href="features_notice_data_datasources_scrapers_relative_style_scraper_base_relative_style_notice_scraper/">features/notice/data/datasources/scrapers/relative_style_scraper/base_relative_style_notice_scraper</a></li>
+      <li><a href="features_notice_data_datasources_scrapers_relative_style_scraper_library_scraper/">features/notice/data/datasources/scrapers/relative_style_scraper/library_scraper</a></li>
+      <li><a href="features_notice_data_models_home_tab_model/">features/notice/data/models/home_tab_model</a></li>
+      <li><a href="features_notice_data_models_notice_board_model/">features/notice/data/models/notice_board_model</a></li>
+      <li><a href="features_notice_data_repositories_home_repository_impl/">features/notice/data/repositories/home_repository_impl</a></li>
+      <li><a href="features_notice_data_repositories_notice_board_repository_impl/">features/notice/data/repositories/notice_board_repository_impl</a></li>
+      <li><a href="features_notice_domain_entities_college_type/">features/notice/domain/entities/college_type</a></li>
+      <li><a href="features_notice_domain_entities_graduate_school_type/">features/notice/domain/entities/graduate_school_type</a></li>
+      <li><a href="features_notice_domain_entities_home_tab_entity/">features/notice/domain/entities/home_tab_entity</a></li>
+      <li><a href="features_notice_domain_entities_major_type/">features/notice/domain/entities/major_type</a></li>
+      <li><a href="features_notice_domain_entities_notice_board_entity/">features/notice/domain/entities/notice_board_entity</a></li>
+      <li><a href="features_notice_domain_entities_notice_selectors/">features/notice/domain/entities/notice_selectors</a></li>
+      <li><a href="features_notice_domain_failures_home_failure/">features/notice/domain/failures/home_failure</a></li>
+      <li><a href="features_notice_domain_failures_notice_board_failure/">features/notice/domain/failures/notice_board_failure</a></li>
+      <li><a href="features_notice_domain_repositories_home_repository/">features/notice/domain/repositories/home_repository</a></li>
+      <li><a href="features_notice_domain_repositories_notice_board_repository/">features/notice/domain/repositories/notice_board_repository</a></li>
+      <li><a href="features_notice_domain_usecases_get_home_tabs_use%20case/">features/notice/domain/usecases/get_home_tabs_use case</a></li>
+      <li><a href="features_notice_domain_usecases_get_notices_use_case/">features/notice/domain/usecases/get_notices_use_case</a></li>
+      <li><a href="features_notice_presentation_bloc_home_bloc/">features/notice/presentation/bloc/home_bloc</a></li>
+      <li><a href="features_notice_presentation_bloc_home_event/">features/notice/presentation/bloc/home_event</a></li>
+      <li><a href="features_notice_presentation_bloc_home_state/">features/notice/presentation/bloc/home_state</a></li>
+      <li><a href="features_notice_presentation_bloc_notice_board_bloc/">features/notice/presentation/bloc/notice_board_bloc</a></li>
+      <li><a href="features_notice_presentation_bloc_notice_board_event/">features/notice/presentation/bloc/notice_board_event</a></li>
+      <li><a href="features_notice_presentation_bloc_notice_board_state/">features/notice/presentation/bloc/notice_board_state</a></li>
+      <li><a href="features_notice_presentation_pages_base_notice_board_page/">features/notice/presentation/pages/base_notice_board_page</a></li>
+      <li><a href="features_notice_presentation_pages_home_page/">features/notice/presentation/pages/home_page</a></li>
+      <li><a href="features_notice_presentation_pages_notice_board_page/">features/notice/presentation/pages/notice_board_page</a></li>
+      <li><a href="features_notice_presentation_widgets_keyword_search_dropdown/">features/notice/presentation/widgets/keyword_search_dropdown</a></li>
+      <li><a href="features_notice_presentation_widgets_keyword_search_textfield/">features/notice/presentation/widgets/keyword_search_textfield</a></li>
+      <li><a href="features_notice_presentation_widgets_no_search_result_widget/">features/notice/presentation/widgets/no_search_result_widget</a></li>
+      <li><a href="features_notice_presentation_widgets_notice_board_tab_widget/">features/notice/presentation/widgets/notice_board_tab_widget</a></li>
+      <li><a href="features_notice_presentation_widgets_notice_refresh_header/">features/notice/presentation/widgets/notice_refresh_header</a></li>
+      <li><a href="features_notice_presentation_widgets_pagination_widget/">features/notice/presentation/widgets/pagination_widget</a></li>
+      <li><a href="features_notification_data_datasources_firebase_remote_data_source/">features/notification/data/datasources/firebase_remote_data_source</a></li>
+      <li><a href="features_notification_data_models_notification_message_model/">features/notification/data/models/notification_message_model</a></li>
+      <li><a href="features_notification_data_repositories_notification_repository_impl/">features/notification/data/repositories/notification_repository_impl</a></li>
+      <li><a href="features_notification_domain_entities_notification_message_entity/">features/notification/domain/entities/notification_message_entity</a></li>
+      <li><a href="features_notification_domain_repositories_notification_repository/">features/notification/domain/repositories/notification_repository</a></li>
+      <li><a href="features_notification_domain_usecases_request_initial_permission_use_case/">features/notification/domain/usecases/request_initial_permission_use_case</a></li>
+      <li><a href="features_notification_setting_data_datasources_notification_setting_local_data_source/">features/notification_setting/data/datasources/notification_setting_local_data_source</a></li>
+      <li><a href="features_notification_setting_data_datasources_notification_setting_remote_data_source/">features/notification_setting/data/datasources/notification_setting_remote_data_source</a></li>
+      <li><a href="features_notification_setting_data_repositories_notification_setting_repository_impl/">features/notification_setting/data/repositories/notification_setting_repository_impl</a></li>
+      <li><a href="features_notification_setting_domain_entities_notification_major_item/">features/notification_setting/domain/entities/notification_major_item</a></li>
+      <li><a href="features_notification_setting_domain_failures_notification_setting_failure/">features/notification_setting/domain/failures/notification_setting_failure</a></li>
+      <li><a href="features_notification_setting_domain_repositories_notification_setting_repository/">features/notification_setting/domain/repositories/notification_setting_repository</a></li>
+      <li><a href="features_notification_setting_domain_usecases_get_subscription_status_use_case/">features/notification_setting/domain/usecases/get_subscription_status_use_case</a></li>
+      <li><a href="features_notification_setting_domain_usecases_toggle_subscription_use_case/">features/notification_setting/domain/usecases/toggle_subscription_use_case</a></li>
+      <li><a href="features_notification_setting_presentation_bloc_notification_setting_bloc/">features/notification_setting/presentation/bloc/notification_setting_bloc</a></li>
+      <li><a href="features_notification_setting_presentation_bloc_notification_setting_event/">features/notification_setting/presentation/bloc/notification_setting_event</a></li>
+      <li><a href="features_notification_setting_presentation_bloc_notification_setting_state/">features/notification_setting/presentation/bloc/notification_setting_state</a></li>
+      <li><a href="features_notification_setting_presentation_pages_notification_setting_page/">features/notification_setting/presentation/pages/notification_setting_page</a></li>
+      <li><a href="features_notification_setting_presentation_widgets_categories_college_notification_category/">features/notification_setting/presentation/widgets/categories/college_notification_category</a></li>
+      <li><a href="features_notification_setting_presentation_widgets_categories_education_notification_category/">features/notification_setting/presentation/widgets/categories/education_notification_category</a></li>
+      <li><a href="features_notification_setting_presentation_widgets_categories_graduate_school_notification_category/">features/notification_setting/presentation/widgets/categories/graduate_school_notification_category</a></li>
+      <li><a href="features_notification_setting_presentation_widgets_categories_major_notification_category/">features/notification_setting/presentation/widgets/categories/major_notification_category</a></li>
+      <li><a href="features_notification_setting_presentation_widgets_categories_research_notification_category/">features/notification_setting/presentation/widgets/categories/research_notification_category</a></li>
+      <li><a href="features_notification_setting_presentation_widgets_categories_undergraduate_schedule_notification_category/">features/notification_setting/presentation/widgets/categories/undergraduate_schedule_notification_category</a></li>
+      <li><a href="features_notification_setting_presentation_widgets_notification_tile/">features/notification_setting/presentation/widgets/notification_tile</a></li>
+      <li><a href="features_onboarding_presentation_bloc_onboarding_bloc/">features/onboarding/presentation/bloc/onboarding_bloc</a></li>
+      <li><a href="features_onboarding_presentation_bloc_onboarding_event/">features/onboarding/presentation/bloc/onboarding_event</a></li>
+      <li><a href="features_onboarding_presentation_bloc_onboarding_state/">features/onboarding/presentation/bloc/onboarding_state</a></li>
+      <li><a href="features_onboarding_presentation_pages_onboarding_page/">features/onboarding/presentation/pages/onboarding_page</a></li>
+      <li><a href="features_post_domain_entities_post_entity/">features/post/domain/entities/post_entity</a></li>
+      <li><a href="features_post_presentation_pages_post_add_page/">features/post/presentation/pages/post_add_page</a></li>
+      <li><a href="features_post_presentation_pages_post_detail_page/">features/post/presentation/pages/post_detail_page</a></li>
+      <li><a href="features_recruitment_presentation_pages_team_create_page/">features/recruitment/presentation/pages/team_create_page</a></li>
+      <li><a href="features_recruitment_presentation_pages_team_detail_page/">features/recruitment/presentation/pages/team_detail_page</a></li>
+      <li><a href="features_recruitment_presentation_pages_team_management_page/">features/recruitment/presentation/pages/team_management_page</a></li>
+      <li><a href="features_recruitment_presentation_pages_team_recruitment_page/">features/recruitment/presentation/pages/team_recruitment_page</a></li>
+      <li><a href="features_search_data_datasources_recent_search_manager/">features/search/data/datasources/recent_search_manager</a></li>
+      <li><a href="features_search_data_datasources_search_local_data_source/">features/search/data/datasources/search_local_data_source</a></li>
+      <li><a href="features_search_data_datasources_search_remote_data_source/">features/search/data/datasources/search_remote_data_source</a></li>
+      <li><a href="features_search_data_datasources_search_scraper/">features/search/data/datasources/search_scraper</a></li>
+      <li><a href="features_search_data_models_trending_topic_model/">features/search/data/models/trending_topic_model</a></li>
+      <li><a href="features_search_data_repositories_search_repository_impl/">features/search/data/repositories/search_repository_impl</a></li>
+      <li><a href="features_search_domain_entities_search_selectors/">features/search/domain/entities/search_selectors</a></li>
+      <li><a href="features_search_domain_entities_trending_topic_entity/">features/search/domain/entities/trending_topic_entity</a></li>
+      <li><a href="features_search_domain_failures_search_failure/">features/search/domain/failures/search_failure</a></li>
+      <li><a href="features_search_domain_repositories_search_repository/">features/search/domain/repositories/search_repository</a></li>
+      <li><a href="features_search_domain_usecases_add_recent_search_word_use_case/">features/search/domain/usecases/add_recent_search_word_use_case</a></li>
+      <li><a href="features_search_domain_usecases_clear_recent_search_words_use_case/">features/search/domain/usecases/clear_recent_search_words_use_case</a></li>
+      <li><a href="features_search_domain_usecases_get_recent_search_words_use_case/">features/search/domain/usecases/get_recent_search_words_use_case</a></li>
+      <li><a href="features_search_domain_usecases_get_trending_topics_use_case/">features/search/domain/usecases/get_trending_topics_use_case</a></li>
+      <li><a href="features_search_domain_usecases_remove_recent_search_word_use_case/">features/search/domain/usecases/remove_recent_search_word_use_case</a></li>
+      <li><a href="features_search_presentation_bloc_search_bloc/">features/search/presentation/bloc/search_bloc</a></li>
+      <li><a href="features_search_presentation_bloc_search_event/">features/search/presentation/bloc/search_event</a></li>
+      <li><a href="features_search_presentation_bloc_search_state/">features/search/presentation/bloc/search_state</a></li>
+      <li><a href="features_search_presentation_pages_search_page/">features/search/presentation/pages/search_page</a></li>
+      <li><a href="features_search_presentation_pages_search_result_page/">features/search/presentation/pages/search_result_page</a></li>
+      <li><a href="features_search_presentation_widgets_trending_topics_item_widget/">features/search/presentation/widgets/trending_topics_item_widget</a></li>
+      <li><a href="features_university_setting_data_datasources_university_setting_local_data_source/">features/university_setting/data/datasources/university_setting_local_data_source</a></li>
+      <li><a href="features_university_setting_data_repositories_university_setting_repository_impl/">features/university_setting/data/repositories/university_setting_repository_impl</a></li>
+      <li><a href="features_university_setting_domain_entities_university_setting_type/">features/university_setting/domain/entities/university_setting_type</a></li>
+      <li><a href="features_university_setting_domain_failures_university_setting_failure/">features/university_setting/domain/failures/university_setting_failure</a></li>
+      <li><a href="features_university_setting_domain_repositories_university_setting_repository/">features/university_setting/domain/repositories/university_setting_repository</a></li>
+      <li><a href="features_university_setting_domain_usecases_get_current_setting_use_case/">features/university_setting/domain/usecases/get_current_setting_use_case</a></li>
+      <li><a href="features_university_setting_domain_usecases_save_major_setting_use_case/">features/university_setting/domain/usecases/save_major_setting_use_case</a></li>
+      <li><a href="features_university_setting_domain_usecases_save_setting_use_case/">features/university_setting/domain/usecases/save_setting_use_case</a></li>
+      <li><a href="features_university_setting_presentation_bloc_university_setting_bloc/">features/university_setting/presentation/bloc/university_setting_bloc</a></li>
+      <li><a href="features_university_setting_presentation_bloc_university_setting_event/">features/university_setting/presentation/bloc/university_setting_event</a></li>
+      <li><a href="features_university_setting_presentation_bloc_university_setting_state/">features/university_setting/presentation/bloc/university_setting_state</a></li>
+      <li><a href="features_university_setting_presentation_pages_college_setting_page/">features/university_setting/presentation/pages/college_setting_page</a></li>
+      <li><a href="features_university_setting_presentation_pages_graduate_school_setting_page/">features/university_setting/presentation/pages/graduate_school_setting_page</a></li>
+      <li><a href="features_university_setting_presentation_pages_major_setting_page/">features/university_setting/presentation/pages/major_setting_page</a></li>
+      <li><a href="features_university_setting_presentation_widgets_setting_header/">features/university_setting/presentation/widgets/setting_header</a></li>
+      <li><a href="features_university_setting_presentation_widgets_setting_list_tile/">features/university_setting/presentation/widgets/setting_list_tile</a></li>
+      <li><a href="features_university_setting_presentation_widgets_setting_search_field/">features/university_setting/presentation/widgets/setting_search_field</a></li>
+      <li><a href="injection_container/">injection_container</a></li>
+      <li><a href="main/">main</a></li>
 </ol>
 
   </div>

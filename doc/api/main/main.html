@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">inha_notice</a></li>
-    <li><a href="../main/main-library.html">main.dart</a></li>
+    <li><a href="../main/">main.dart</a></li>
     <li class="self-crumb">main function</li>
   </ol>
   <div class="self-name">main</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div
@@ -71,10 +68,29 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
 
-  await _initializeApp();
-  &#47;&#47; FCM 초기화는 백그라운드에서 진행
-  await _initializeFirebase();
+  await di.init();
+
+  await dotenv.load(fileName: &#39;.env&#39;);
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  try {
+    await Future.wait([
+      di.sl&lt;BookmarkLocalDataSource&gt;().initialize(),
+      di.sl&lt;SharedPrefsManager&gt;().initialize(),
+      di.sl&lt;FirebaseRemoteDataSource&gt;().initialize(),
+      ReadNoticeLocalDataSource.initialize(),
+      RecentSearchManager.initialize(),
+    ]);
+  } catch (e, stackTrace) {
+    AppLogger.e(&#39;앱 초기화 작업 중 일부 실패: $e&#39;);
+    AppLogger.e(&#39;$stackTrace&#39;);
+  }
+
   &#47;&#47; 테마 설정 불러오기
   await _initializeThemeSetting();
 
@@ -93,7 +109,7 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">inha_notice</a></li>
-    <li><a href="../main/main-library.html">main</a></li>
+    <li><a href="../main/">main</a></li>
     <li class="self-crumb">main function</li>
 </ol>
 
