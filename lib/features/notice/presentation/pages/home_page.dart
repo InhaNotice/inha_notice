@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2025-2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-19
+ * Latest Updated Date: 2026-02-12
  */
 
 import 'package:flutter/material.dart';
@@ -17,8 +17,8 @@ import 'package:inha_notice/features/notice/presentation/bloc/home_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_state.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/notice_board_tab_widget.dart';
+import 'package:inha_notice/features/notification_setting/presentation/pages/notification_setting_page.dart';
 import 'package:inha_notice/injection_container.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_setting_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

@@ -1,14 +1,16 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2025-2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-18
+ * Latest Updated Date: 2026-02-12
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/config/app_font.dart';
+import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
@@ -20,7 +22,6 @@ import 'package:inha_notice/features/notice/presentation/pages/base_notice_board
 import 'package:inha_notice/features/notice/presentation/widgets/no_search_result_widget.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/notice_refresh_header.dart';
 import 'package:inha_notice/features/search/data/datasources/search_scraper.dart';
-import 'package:inha_notice/screens/pagination/relative_style_pagination.dart';
 import 'package:logger/logger.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -202,5 +203,97 @@ class _LibraryNoticeBoardState
         loadNotices: loadNotices,
       ),
     );
+  }
+}
+
+/// **BasePagination**
+/// 이 클래스는 페이지네이션을 정의하는 추상 클래스입니다.
+abstract class BasePagination extends StatelessWidget {
+  final Pages pages;
+  final int currentPage;
+  final Function(int, [String?, String?]) loadNotices;
+
+  const BasePagination({
+    super.key,
+    required this.pages,
+    required this.currentPage,
+    required this.loadNotices,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (pages['pageMetas'].isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final pageButtonBackgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    final selectedPageButtonTextColor =
+        Theme.of(context).selectedPageButtonTextColor;
+    final unSelectedPageButtonTextColor =
+        Theme.of(context).unSelectedPageButtonTextColor;
+
+    return Container(
+      color: pageButtonBackgroundColor,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: pages['pageMetas'].map<Widget>((pageMeta) {
+            final String? searchColumn = pages['searchOptions']['searchColumn'];
+            final String? searchWord = pages['searchOptions']['searchWord'];
+            final int pageNumber = pageMeta['page'];
+            final bool isCurrentPage = (pageNumber == currentPage);
+            final int relativePage = getRelativePage(pageMeta);
+
+            return TextButton(
+              style: TextButton.styleFrom(
+                splashFactory: NoSplash.splashFactory,
+                foregroundColor: Colors.transparent,
+                shape: const RoundedRectangleBorder(),
+              ),
+              onPressed: isCurrentPage
+                  ? null
+                  : () => loadNotices(relativePage, searchColumn, searchWord),
+              child: Text(
+                pageNumber.toString(),
+                style: TextStyle(
+                  fontFamily: AppFont.pretendard.family,
+                  fontSize: 14,
+                  fontWeight:
+                      isCurrentPage ? FontWeight.bold : FontWeight.normal,
+                  color: isCurrentPage
+                      ? selectedPageButtonTextColor
+                      : unSelectedPageButtonTextColor,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+  /// **각 서브 클래스에서 페이지 계산 방식이 다르므로 오버라이딩 필수**
+  int getRelativePage(Map<String, dynamic> pageMeta);
+}
+
+/// **RelativeStylePagination**
+/// 이 클래스는 상댓값으로 정해지는 페이지네이션을 정의하는 클래스입니다.
+class RelativeStylePagination extends BasePagination {
+  final String pageType;
+
+  const RelativeStylePagination({
+    super.key,
+    required this.pageType,
+    required super.pages,
+    required super.currentPage,
+    required super.loadNotices,
+  });
+
+  @override
+  int getRelativePage(Map<String, dynamic> pageMeta) {
+    return (pageType == 'LIBRARY')
+        ? pageMeta['offset']
+        : pageMeta['startCount'];
   }
 }

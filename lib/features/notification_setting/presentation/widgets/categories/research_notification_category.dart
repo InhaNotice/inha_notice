@@ -1,29 +1,22 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2025 INGONG
+ * Copyright (c) 2025-2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-01-17
+ * Latest Updated Date: 2026-02-12
  */
 
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/widgets/bold_title_widget.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/notification_setting/notification_tile.dart';
+import 'package:inha_notice/features/notification_setting/presentation/widgets/notification_tile.dart';
 
-class ResearchNotificationCategory extends StatefulWidget {
+class ResearchNotificationCategory extends StatelessWidget {
   const ResearchNotificationCategory({super.key});
 
-  @override
-  State<ResearchNotificationCategory> createState() =>
-      _ResearchNotificationCategoryState();
-}
-
-class _ResearchNotificationCategoryState
-    extends State<ResearchNotificationCategory> {
   @override
   Widget build(BuildContext context) {
     return Padding(
