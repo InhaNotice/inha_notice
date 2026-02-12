@@ -164,7 +164,7 @@ class _MorePageView extends StatelessWidget {
                 child: Divider(
                     color: Theme.of(context).dividerColor, thickness: 2.0)),
             const MoreTitleTile(
-                text: 'Copyright (c) 2025 INGONG', fontSize: 12),
+                text: 'Copyright (c) 2025-2026 INGONG', fontSize: 12),
           ],
         ),
       ),
