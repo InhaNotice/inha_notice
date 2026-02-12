@@ -9,6 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 
 class BlockingDialog {
   BlockingDialog._();
@@ -21,11 +22,7 @@ class BlockingDialog {
       builder: (context) {
         return Dialog(
           backgroundColor: Colors.transparent,
-          child: Center(
-            child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
+          child: Center(child: BlueLoadingIndicatorWidget()),
         );
       },
     );
