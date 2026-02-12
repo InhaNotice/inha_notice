@@ -13,7 +13,6 @@ import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/constants/string_constants.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
-import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
@@ -160,7 +159,7 @@ class _LibraryNoticeBoardState
       child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: isLoading
-            ? const Center(child: BlueLoadingIndicatorWidget())
+            ? const Center(child: CircularProgressIndicator())
             : notices['general'].isEmpty
                 ? NoSearchResult()
                 : SmartRefresher(
