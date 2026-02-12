@@ -6,6 +6,7 @@ build/
 # iOS 관련 파일
 ios/Pods/
 ios/Runner/GoogleService-Info.plist
+GoogleService-Info.plist
 ios/Flutter/App.framework
 ios/Flutter/Flutter.framework
 
@@ -31,6 +32,12 @@ README.md
 
 # 환경변수
 .env
+key.jks
 key.properties
 **/*.keystore
 **/*.jks
+
+lib/features/auth/
+lib/features/feed/
+lib/features/post/
+lib/features/recruitment/

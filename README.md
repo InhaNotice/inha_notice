@@ -64,76 +64,157 @@ subscribe only to the notices that matter to them.
 - **Notion**: [Click](https://inha-notice.notion.site/)
 - **iOS** (iPhone, iPad,
   Mac): [Download on the App Store](https://apps.apple.com/app/인하공지/id6740850198)
-- **Android
-  **: [Download on Google Play](https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&pcampaignid=web_share)
+- **Android**: [Download on Google Play](https://play.google.com/store/apps/details?id=com.logicallawbio.inha_notice&pcampaignid=web_share)
 
 ## 📂 Project structure
 
 ```bash
 inha_notice
-├─ android # Android build files and configuration
-├─ ios # iOS build files and configuration
-│ 
+├─ android                          # Android build files and configuration
+├─ ios                              # iOS build files and configuration
+│
 ├─ lib/
-│  ├─ main.dart # App entry point
-│  ├─ core/ # Core settings and resources
-│  │  ├─ constants/
-│  │  ├─ font/ 
-│  │  ├─ keys/
-│  │  └─ theme/
-│  ├─ firebase/ # Firebase 
-│  ├─ models/ # Data model definitions
-│  ├─ screens/ # App screens (pages)
-│  │  ├─ bottom_navigation/ # Bottom navigation bar (Home, Search, Bookmark, More)
-│  │  │  ├─ bookmark/ # Bookmark (saved notice) page
-│  │  │  ├─ home/ # Home page (aggregated notices)
-│  │  │  ├─ more/ # More (settings and utilities) page
-│  │  │  │  ├─ more_page.dart # Main 'More' page
-│  │  │  │  ├─ cache_deletetion/ # Cache deletion feature widget
-│  │  │  │  ├─ custom_license/ # License page
-│  │  │  │  ├─ custom_tab_bar_page/ # 'My Tabs' setup page
-│  │  │  │  │  ├─ custom_tab_bar_page.dart
-│  │  │  │  │  └─ custom_tab_bar_page_widgets/
-│  │  │  │  ├─ more_page_titles/ # Menu item widgets for 'More' page
-│  │  │  │  │  ├─ more_navigation_tile.dart
-│  │  │  │  │  ├─ more_non_navigation_tile.dart
-│  │  │  │  │  ├─ more_title_tile.dart
-│  │  │  │  │  └─ more_web_navigation_tile.dart
-│  │  │  │  ├─ notification_setting/ # Notice topic notification settings
-│  │  │  │  │  ├─ categories/ # (Major, College, Graduate School, Research/Academic Support, Academic Notices)
-│  │  │  │  │  ├─ notification_major_item.dart
-│  │  │  │  │  ├─ notification_setting_page.dart
-│  │  │  │  │  └─ notification_tile.dart
-│  │  │  │  ├─ theme_preference/ # Theme settings (Light/Dark)
-│  │  │  │  └─ university_settings/ # User's department settings
-│  │  │  └─ search/ # Search page
-│  │  ├─ notice_board/ # Notice board
-│  │  ├─ onboarding/ # Onboarding page
-│  │  ├─ pagination/ # Page navigation button definitions
-│  │  └─ webview/ # WebView screen
-│  ├─ services/ # Scraping and API services
-│  │  ├─ absolute_style_scraper/ 
-│  │  ├─ relative_style_scraper/
-│  │  ├─ search/
-│  │  └─ trending_topics/
-│  ├─ utils/ 
-│  │  ├─ bookmark/ # Bookmark related logic (save, delete)
-│  │  ├─ custom_tab_list_utils/ # 'My Tabs' list management utility
-│  │  ├─ read_notice/ # Notice read status logic
-│  │  ├─ recent_search/ # Recent search query logic
-│  │  ├─ selectors/ # HTML element selector utility (scraping helper)
-│  │  ├─ shared_prefs/ # Shared Preferences management helper
-│  │  └─ university_utils/ # Department/university information utility
-│  └─ widgets/ 
-│     ├─ app_bars/ # Custom App Bar widgets
-│     ├─ buttons/ # Custom Button widgets
-│     ├─ dialogs/ # Custom Dialog widgets
-│     ├─ dropdowns/ # Custom Dropdown widgets
-│     ├─ loading_indicators/ # Loading indicator widgets
-│     ├─ refresh_headers/ # 'Pull-to-refresh' header widgets
-│     ├─ snack_bars/ # Snackbar widgets
-│     ├─ textfields/ # Custom Text Field widgets
-│     └─ texts/ # Custom Text style widgets
+│  ├─ main.dart                     # App entry point
+│  ├─ injection_container.dart      # Dependency injection (GetIt) setup
+│  │
+│  ├─ core/                         # Shared core modules
+│  │  ├─ config/                    # App-wide configurations (theme, font, Firebase, BLoC observer)
+│  │  ├─ constants/                 # String, page, identifier constants
+│  │  ├─ error/                     # Common exceptions and failures
+│  │  ├─ keys/                      # SharedPreferences key definitions
+│  │  ├─ utils/                     # Shared utilities (logger, SharedPrefs manager)
+│  │  └─ presentation/              # Shared presentation layer
+│  │     ├─ models/                 # Shared models (NoticeTileModel, Pages)
+│  │     ├─ pages/                  # Shared pages (InAppWebPage)
+│  │     ├─ utils/                  # UI utilities (SnackBar, BlockingDialog)
+│  │     └─ widgets/                # Reusable widgets (AppBar, NoticeTile, Toggle, etc.)
+│  │
+│  └─ features/                     # Feature modules (Clean Architecture + BLoC)
+│     │
+│     ├─ notice/                    # Notice board feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Remote data source & scrapers
+│     │  │  │  └─ scrapers/         # Absolute/Relative style notice scrapers
+│     │  │  ├─ models/              # Data models (HomeTabModel, NoticeBoardModel)
+│     │  │  └─ repositories/        # Repository implementations
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # Entities (MajorType, CollegeType, NoticeSelectors, etc.)
+│     │  │  ├─ failures/            # Feature-specific failures (Freezed)
+│     │  │  ├─ repositories/        # Repository interfaces
+│     │  │  └─ usecases/            # Use cases (GetNotices, GetHomeTabs)
+│     │  └─ presentation/
+│     │     ├─ bloc/                # HomeBloc, NoticeBoardBloc
+│     │     ├─ pages/               # HomePage, NoticeBoardPage
+│     │     └─ widgets/             # Pagination, KeywordSearch, RefreshHeader, etc.
+│     │
+│     ├─ search/                    # Search feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Search scraper, recent search, remote/local sources
+│     │  │  ├─ models/              # TrendingTopicModel
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # SearchSelectors, TrendingTopicEntity
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetTrendingTopics, RecentSearchWords, etc.
+│     │  └─ presentation/
+│     │     ├─ bloc/                # SearchBloc
+│     │     ├─ pages/               # SearchPage, SearchResultPage
+│     │     └─ widgets/             # TrendingTopicsItem
+│     │
+│     ├─ bookmark/                  # Bookmark feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # SQLite-based local data source
+│     │  │  ├─ models/              # BookmarkModel
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # BookmarkEntity, BookmarkSortingType
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetBookmarks, RemoveBookmark, ClearBookmarks
+│     │  └─ presentation/
+│     │     ├─ bloc/                # BookmarkBloc
+│     │     ├─ pages/               # BookmarkPage
+│     │     └─ widgets/             # BookmarkRefreshHeader
+│     │
+│     ├─ more/                      # More (settings & utilities) feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Cache, theme, OSS license, more local data sources
+│     │  │  ├─ models/              # MoreConfiguration, OssLicense models
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # MoreConfiguration, OssLicense entities
+│     │  │  ├─ failures/            # Cache, More, OssLicense, ThemePreference failures
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetCacheSize, GetOssLicenses, ThemePreference, etc.
+│     │  └─ presentation/
+│     │     ├─ bloc/                # CacheBloc, MoreBloc, OssLicenseBloc, ThemePreferenceBloc
+│     │     ├─ pages/               # MorePage, OssLicensePage
+│     │     └─ widgets/             # Tiles, dialogs, theme selection
+│     │
+│     ├─ custom_tab/                # Custom tab feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Local data source
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # CustomTabType
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetSelectedTabs, SaveTabs
+│     │  └─ presentation/
+│     │     ├─ bloc/                # CustomTabBloc
+│     │     ├─ pages/               # CustomTabPage
+│     │     └─ widgets/             # AvailableList, SelectedList, Preview, SaveButton
+│     │
+│     ├─ notification/              # Firebase notification feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # FirebaseRemoteDataSource
+│     │  │  ├─ models/              # NotificationMessageModel
+│     │  │  └─ repositories/
+│     │  └─ domain/
+│     │     ├─ entities/            # NotificationMessageEntity
+│     │     ├─ repositories/
+│     │     └─ usecases/            # RequestInitialPermission
+│     │
+│     ├─ notification_setting/      # Notification subscription settings feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Local & remote data sources
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # NotificationMajorItem
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetSubscriptionStatus, ToggleSubscription
+│     │  └─ presentation/
+│     │     ├─ bloc/                # NotificationSettingBloc
+│     │     ├─ pages/               # NotificationSettingPage
+│     │     └─ widgets/             # NotificationTile, category widgets
+│     │
+│     ├─ university_setting/        # University/department settings feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Local data source
+│     │  │  └─ repositories/
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # UniversitySettingType
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetCurrentSetting, SaveSetting, SaveMajorSetting
+│     │  └─ presentation/
+│     │     ├─ bloc/                # UniversitySettingBloc
+│     │     ├─ pages/               # CollegeSetting, GraduateSchoolSetting, MajorSetting pages
+│     │     └─ widgets/             # SettingHeader, SettingListTile, SettingSearchField
+│     │
+│     ├─ main/                      # Main navigation feature
+│     │  ├─ domain/
+│     │  │  └─ usecases/            # GetInitialNotificationMessage
+│     │  └─ presentation/
+│     │     ├─ bloc/                # MainNavigationBloc
+│     │     └─ pages/               # MainNavigationPage (bottom navigation)
+│     │
+│     └─ onboarding/                # Onboarding feature
+│        └─ presentation/
+│           ├─ bloc/                # OnboardingBloc
+│           └─ pages/               # OnboardingPage
 ```
 
 ## 🚀 Start

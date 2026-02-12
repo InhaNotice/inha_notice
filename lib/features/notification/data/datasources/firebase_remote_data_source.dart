@@ -1,0 +1,272 @@
+/*
+ * This is file of the project inha_notice
+ * Licensed under the Apache License 2.0.
+ * Copyright (c) 2025-2026 INGONG
+ * For full license text, see the LICENSE file in the root directory or at
+ * http://www.apache.org/licenses/
+ * Author: Junho Kim
+ * Latest Updated Date: 2026-02-12
+ */
+
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:inha_notice/core/keys/shared_pref_keys.dart';
+import 'package:inha_notice/core/presentation/widgets/web_navigator_widget.dart';
+import 'package:inha_notice/core/utils/app_logger.dart';
+import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
+import 'package:inha_notice/features/notification/data/models/notification_message_model.dart';
+import 'package:inha_notice/main.dart';
+
+class FirebaseRemoteDataSource {
+  final FirebaseMessaging _messaging;
+  final FlutterLocalNotificationsPlugin _localNotifications;
+  final SharedPrefsManager _prefsManager;
+
+  FirebaseRemoteDataSource({
+    required FirebaseMessaging messaging,
+    required FlutterLocalNotificationsPlugin localNotifications,
+    required SharedPrefsManager prefsManager,
+  })  : _messaging = messaging,
+        _localNotifications = localNotifications,
+        _prefsManager = prefsManager;
+
+  /// **캐싱된 구독된 토픽 목록 가져오기**
+  Set<String> get _subscribedTopics =>
+      _prefsManager.getValue<Set<String>>(SharedPrefKeys.kSubscribedTopics) ??
+      <String>{};
+
+  /// **Firebase 초기화 및 설정**
+  /// 순서 보장: 알림 권한 요청 -> 'all-users' 구독 -> 플랫폼별 설정 -> FCM 토큰 출력
+  Future<void> initialize() async {
+    /// Android: 반드시 권한 요청이 _setupAndroidSettings보다 선행되어야 함
+    /// iOS: 온보딩 파일에서 백그라운드로 처리(MacOS 호환성 때문)
+    if (Platform.isAndroid) {
+      await requestPermission();
+    }
+    // 'all-users' 토픽 구독
+    await _subscribeToAppAnnouncements();
+
+    // FCM 리스너 설정
+    _setupMessageListeners();
+
+    if (Platform.isIOS) {
+      await _setupIOSSettings();
+    } else if (Platform.isAndroid) {
+      await _setupAndroidSettings();
+    }
+
+    _logDeviceToken(); // 디바이스 토큰 로그 출력
+  }
+
+  /// **FCM 리스너 설정**
+  void _setupMessageListeners() {
+    FirebaseMessaging.onMessage.listen(_showForegroundNotification);
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleNotificationOpenedApp);
+
+    if (Platform.isAndroid) {
+      FirebaseMessaging.onBackgroundMessage(_backgroundMessageHandler);
+    }
+  }
+
+  /// **알림 권한 요청**
+  Future<void> requestPermission() async {
+    await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+
+  /// 푸시알림 메시지가 있다면 공지 링크를 읽어와 반환한다.
+  Future<NoticeNotificationModel> getNotificationMessage() async {
+    final RemoteMessage? remoteMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    return NoticeNotificationModel(
+        id: remoteMessage?.data['id'], link: remoteMessage?.data['link']);
+  }
+
+  /// **iOS 설정 초기화**
+  Future<void> _setupIOSSettings() async {
+    await _configureForegroundPresentationOptions();
+  }
+
+  /// **iOS Foreground 알림 표시 설정**
+  Future<void> _configureForegroundPresentationOptions() async {
+    await _messaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+
+  /// **Android 설정 초기화**
+  Future<void> _setupAndroidSettings() async {
+    const androidSettings =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
+    final initializationSettings =
+        InitializationSettings(android: androidSettings);
+
+    await _localNotifications.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        if (response.payload != null) {
+          _navigateToNotification(
+              RemoteMessage(data: {"link": response.payload!}), true);
+        }
+      },
+    );
+
+    await _localNotifications
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(const AndroidNotificationChannel(
+          'high_importance_channel', // Android 채널명
+          'high_importance_notification',
+          importance: Importance.max,
+        ));
+  }
+
+  /// **디바이스 FCM 토큰 로그 출력**
+  Future<void> _logDeviceToken() async {
+    String? fcmToken = await _messaging.getToken();
+    if (fcmToken != null) {
+      AppLogger.d('✅ FCM Token created successfully: $fcmToken');
+    } else {
+      AppLogger.w('⚠️ FCM Token not available.');
+    }
+  }
+
+  /// **'all-users' 토픽(앱 공지사항) 구독 (최초 1회)**
+  Future<void> _subscribeToAppAnnouncements() async {
+    bool isSubscribedUsers =
+        _prefsManager.getValue<bool>(SharedPrefKeys.kIsSubscribedToAllUsers) ??
+            false;
+
+    if (!isSubscribedUsers) {
+      try {
+        await _messaging.subscribeToTopic(SharedPrefKeys.kAllUsers);
+        await _prefsManager.setValue<bool>(
+            SharedPrefKeys.kIsSubscribedToAllUsers, true);
+        AppLogger.d(
+            "✅ Successfully subscribed to '${SharedPrefKeys.kAllUsers}' topic");
+      } catch (e) {
+        AppLogger.e(
+            "🚨 Error subscribing to '${SharedPrefKeys.kAllUsers}' topic: $e");
+      }
+    }
+  }
+
+  /// **개별 토픽 구독 (캐싱 활용)**
+  Future<void> subscribeToTopic(String topic) async {
+    if (_isSubscribedToTopic(topic)) {
+      AppLogger.d("⚡ Already subscribed to '$topic' topic");
+      return;
+    }
+    try {
+      await _messaging.subscribeToTopic(topic);
+      _addSubscribedTopic(topic);
+      AppLogger.d("✅ Successfully subscribed to '$topic' topic");
+    } catch (e) {
+      AppLogger.e("🚨 Error subscribing to '$topic' topic: $e");
+    }
+  }
+
+  /// **개별 토픽 구독 해제 (캐싱 활용)**
+  Future<void> unsubscribeFromTopic(String topic) async {
+    if (!_isSubscribedToTopic(topic)) {
+      AppLogger.d("⚡ Not subscribed to '$topic' topic");
+      return;
+    }
+    try {
+      await _messaging.unsubscribeFromTopic(topic);
+      _removeSubscribedTopic(topic);
+      AppLogger.d("🔄 Unsubscribed from topic: '$topic'");
+    } catch (e) {
+      AppLogger.e("🚨 Error unsubscribing from '$topic' topic: $e");
+    }
+  }
+
+  /// **현재 토픽 구독 여부 확인(로컬에 저장된 리스트를 통해 확인)**
+  bool _isSubscribedToTopic(String topic) {
+    return _subscribedTopics.contains(topic);
+  }
+
+  /// **구독 리스트 추가(내부 확인용)**
+  void _addSubscribedTopic(String topic) {
+    _subscribedTopics.add(topic);
+    _prefsManager.setValue<Set<String>>(
+        SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
+  }
+
+  /// **구독 리스트 제거(내부 확인용)**
+  void _removeSubscribedTopic(String topic) {
+    _subscribedTopics.remove(topic);
+    _prefsManager.setValue<Set<String>>(
+        SharedPrefKeys.kSubscribedTopics, _subscribedTopics);
+  }
+
+  /// **푸시 알림 클릭 시 WebPage로 이동**
+  void _handleNotificationOpenedApp(RemoteMessage message) {
+    _navigateToNotification(message, true);
+  }
+
+  /// **알림 메시지 처리 함수**
+  void _navigateToNotification(RemoteMessage message, bool isRunning) {
+    if (!message.data.containsKey('link')) return;
+
+    String link = message.data['link'];
+
+    // 읽은 공지로 추가 (백그라운드 진행)
+    if (message.data.containsKey('id')) {
+      ReadNoticeLocalDataSource.addReadNotice(message.data['id']);
+    }
+
+    // 앱이 실행 중일 때 푸시알림으로 웹페이지 이동을 핸들링
+    if (isRunning) {
+      WebNavigatorWidget.navigate(
+        context: navigatorKey.currentContext!,
+        url: link,
+      );
+    }
+  }
+
+  /// **백그라운드 메시지 핸들러**
+  static Future<void> _backgroundMessageHandler(RemoteMessage message) async {
+    await Firebase.initializeApp();
+  }
+
+  /// **포그라운드 메시지 핸들러**
+  void _showForegroundNotification(RemoteMessage message) async {
+    if (message.notification == null) return;
+
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+
+    // Android 환경에서만 설정
+    if (notification != null && android != null) {
+      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        'high_importance_channel', // firebase_service.dart에 설정한 채널 ID와 동일해야 함
+        'High Importance Notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+      );
+
+      const NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+
+      await _localNotifications.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        platformChannelSpecifics,
+        payload: message.data['link'],
+      );
+    }
+  }
+}
