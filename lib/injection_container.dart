@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2026 INGONG
+ * Copyright (c) 2025-2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-11
+ * Latest Updated Date: 2026-02-12
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -75,6 +75,13 @@ import 'features/search/domain/usecases/get_recent_search_words_use_case.dart';
 import 'features/search/domain/usecases/get_trending_topics_use_case.dart';
 import 'features/search/domain/usecases/remove_recent_search_word_use_case.dart';
 import 'features/search/presentation/bloc/search_bloc.dart';
+import 'features/university_setting/data/datasources/university_setting_local_data_source.dart';
+import 'features/university_setting/data/repositories/university_setting_repository_impl.dart';
+import 'features/university_setting/domain/repositories/university_setting_repository.dart';
+import 'features/university_setting/domain/usecases/get_current_setting_use_case.dart';
+import 'features/university_setting/domain/usecases/save_major_setting_use_case.dart';
+import 'features/university_setting/domain/usecases/save_setting_use_case.dart';
+import 'features/university_setting/presentation/bloc/university_setting_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -114,6 +121,11 @@ Future<void> init() async {
         getSelectedTabsUseCase: sl(),
         saveTabsUseCase: sl(),
       ));
+  sl.registerFactory(() => UniversitySettingBloc(
+        getCurrentSettingUseCase: sl(),
+        saveSettingUseCase: sl(),
+        saveMajorSettingUseCase: sl(),
+      ));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
@@ -140,6 +152,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SetThemePreferenceUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetSelectedTabsUseCase(repository: sl()));
   sl.registerLazySingleton(() => SaveTabsUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetCurrentSettingUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SaveSettingUseCase(repository: sl()));
+  sl.registerLazySingleton(() => SaveMajorSettingUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -174,6 +189,9 @@ Future<void> init() async {
       () => ThemePreferenceRepositoryImpl(localDataSource: sl()));
   sl.registerLazySingleton<CustomTabRepository>(
     () => CustomTabRepositoryImpl(localDataSource: sl()),
+  );
+  sl.registerLazySingleton<UniversitySettingRepository>(
+    () => UniversitySettingRepositoryImpl(localDataSource: sl()),
   );
 
   // Datasources
@@ -212,6 +230,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<CustomTabLocalDataSource>(
     () => CustomTabLocalDataSourceImpl(prefsManager: sl()),
+  );
+  sl.registerLazySingleton<UniversitySettingLocalDataSource>(
+    () => UniversitySettingLocalDataSourceImpl(prefsManager: sl()),
   );
 
   // External

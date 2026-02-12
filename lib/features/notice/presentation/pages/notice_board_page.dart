@@ -1,11 +1,11 @@
 /*
  * This is file of the project inha_notice
  * Licensed under the Apache License 2.0.
- * Copyright (c) 2026 INGONG
+ * Copyright (c) 2025-2026 INGONG
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-11
+ * Latest Updated Date: 2026-02-12
  */
 
 import 'package:flutter/material.dart';
@@ -30,10 +30,10 @@ import 'package:inha_notice/features/notice/presentation/widgets/keyword_search_
 import 'package:inha_notice/features/notice/presentation/widgets/no_search_result_widget.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/notice_refresh_header.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/pagination_widget.dart';
+import 'package:inha_notice/features/university_setting/presentation/pages/college_setting_page.dart';
+import 'package:inha_notice/features/university_setting/presentation/pages/graduate_school_setting_page.dart';
+import 'package:inha_notice/features/university_setting/presentation/pages/major_setting_page.dart';
 import 'package:inha_notice/injection_container.dart' as di;
-import 'package:inha_notice/screens/bottom_navigation/more/university_settings/college_setting_page.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/university_settings/graduate_school_setting_page.dart';
-import 'package:inha_notice/screens/bottom_navigation/more/university_settings/major_setting_page.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **NoticeBoardPage**
