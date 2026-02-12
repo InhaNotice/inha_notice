@@ -65,6 +65,13 @@ import 'features/notice/domain/usecases/get_notices_use_case.dart';
 import 'features/notice/presentation/bloc/home_bloc.dart';
 import 'features/notice/presentation/bloc/notice_board_bloc.dart';
 import 'features/notification/data/datasources/firebase_remote_data_source.dart';
+import 'features/notification_setting/data/datasources/notification_setting_local_data_source.dart';
+import 'features/notification_setting/data/datasources/notification_setting_remote_data_source.dart';
+import 'features/notification_setting/data/repositories/notification_setting_repository_impl.dart';
+import 'features/notification_setting/domain/repositories/notification_setting_repository.dart';
+import 'features/notification_setting/domain/usecases/get_subscription_status_use_case.dart';
+import 'features/notification_setting/domain/usecases/toggle_subscription_use_case.dart';
+import 'features/notification_setting/presentation/bloc/notification_setting_bloc.dart';
 import 'features/search/data/datasources/search_local_data_source.dart';
 import 'features/search/data/datasources/search_remote_data_source.dart';
 import 'features/search/data/repositories/search_repository_impl.dart';
@@ -126,6 +133,10 @@ Future<void> init() async {
         saveSettingUseCase: sl(),
         saveMajorSettingUseCase: sl(),
       ));
+  sl.registerFactory(() => NotificationSettingBloc(
+        getSubscriptionStatusUseCase: sl(),
+        toggleSubscriptionUseCase: sl(),
+      ));
 
   // UseCase
   sl.registerLazySingleton(() => GetHomeTabsUseCase(sl()));
@@ -155,6 +166,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetCurrentSettingUseCase(repository: sl()));
   sl.registerLazySingleton(() => SaveSettingUseCase(repository: sl()));
   sl.registerLazySingleton(() => SaveMajorSettingUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => GetSubscriptionStatusUseCase(repository: sl()));
+  sl.registerLazySingleton(() => ToggleSubscriptionUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -192,6 +206,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<UniversitySettingRepository>(
     () => UniversitySettingRepositoryImpl(localDataSource: sl()),
+  );
+  sl.registerLazySingleton<NotificationSettingRepository>(
+    () => NotificationSettingRepositoryImpl(
+      localDataSource: sl(),
+      remoteDataSource: sl(),
+    ),
   );
 
   // Datasources
@@ -233,6 +253,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<UniversitySettingLocalDataSource>(
     () => UniversitySettingLocalDataSourceImpl(prefsManager: sl()),
+  );
+  sl.registerLazySingleton<NotificationSettingLocalDataSource>(
+    () => NotificationSettingLocalDataSourceImpl(prefsManager: sl()),
+  );
+  sl.registerLazySingleton<NotificationSettingRemoteDataSource>(
+    () => NotificationSettingRemoteDataSourceImpl(firebaseDataSource: sl()),
   );
 
   // External
