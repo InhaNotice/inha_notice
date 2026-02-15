@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-15
  */
 
 import 'dart:async';
@@ -135,6 +135,7 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
                 onPressed: () {
                   if (isEmpty) {
                     AppSnackBar.warn(context, '삭제할 북마크가 없어요.');
+                    return;
                   }
                   context.read<BookmarkBloc>().add(ClearBookmarksEvent());
                   AppSnackBar.success(context, '모두 삭제했어요!');
