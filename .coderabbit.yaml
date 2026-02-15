@@ -1,0 +1,244 @@
+language: "ko-KR"  # 모든 리뷰 댓글을 한국어로 작성
+
+reviews:
+  profile: "assertive"  # chill → assertive (더 적극적인 리뷰)
+  request_changes_workflow: true  # false → true (변경 요청 활성화)
+  high_level_summary: true
+  poem: false
+
+  # 🎯 시퀀스 다이어그램 및 시각화 활성화
+  sequence_diagrams: true  # 시퀀스 다이어그램 생성
+  auto_title_update: true  # PR 제목 자동 개선
+
+  auto_review:
+    enabled: true
+    ignore_title_keywords:
+      - "WIP"
+      - "Draft"
+      - "[Draft]"
+      - "🚧"  # Work in Progress 이모지
+
+    # Flutter/Dart 프로젝트 전용 설정
+    drafts: false  # Draft PR은 리뷰 제외
+    base_branches:
+      - "main"
+      - "develop"
+
+  # Flutter 프로젝트용 경로 필터
+  path_filters:
+    # 제외: 빌드 및 자동 생성 파일
+    - "!build/**"
+    - "!**/*.g.dart"           # build_runner 생성
+    - "!**/*.freezed.dart"     # freezed 생성
+    - "!**/*.mocks.dart"       # mockito 생성
+    - "!**/.dart_tool/**"
+    - "!**/generated/**"
+
+    # 제외: 패키지 관리
+    - "!pubspec.lock"
+    - "!.flutter-plugins"
+    - "!.flutter-plugins-dependencies"
+
+    # 제외: 테스트 픽스처 및 리소스
+    - "!test/fixtures/**"
+    - "!assets/**"
+    - "!fonts/**"
+
+    # 제외: 문서 및 설정
+    - "!*.md"  # 마크다운 문서
+    - "!.vscode/**"
+    - "!.idea/**"
+
+    # 포함: 리뷰 대상 (명시적)
+    - "lib/**/*.dart"          # 모든 Dart 소스 코드
+    - "test/**/*.dart"         # 테스트 코드
+    - "pubspec.yaml"           # 의존성 변경 감지
+
+  tools:
+    # AST 기반 코드 분석 (구조 파악)
+    ast-grep:
+      enabled: true
+
+    # GitHub Checks 통합
+    github-checks:
+      enabled: true
+      timeout_ms: 90000  # 90초 타임아웃 (Flutter 빌드 고려)
+
+    # 🔍 추가 도구 활성화
+    markdownlint:
+      enabled: false  # 문서는 리뷰 제외
+
+    languagetool:
+      enabled: false  # 문법 검사 비활성화 (코드 중심)
+
+  # 🎨 시각화 옵션 상세 설정
+  diagrams:
+    # 시퀀스 다이어그램 (BLoC 이벤트 흐름)
+    sequence:
+      enabled: true
+      auto_generate: true
+      format: "mermaid"  # Mermaid.js 형식
+      include_async: true  # async/await 흐름 포함
+      show_return_values: true
+
+    # 클래스 다이어그램 (Clean Architecture 레이어)
+    class:
+      enabled: true
+      auto_generate: true
+      show_inheritance: true
+      show_dependencies: true
+
+    # 플로우 차트 (비즈니스 로직)
+    flowchart:
+      enabled: true
+      auto_generate: false  # 복잡한 경우만 수동 요청
+
+    # 아키텍처 다이어그램 (레이어 의존성)
+    architecture:
+      enabled: true
+      show_layers: true  # Domain/Data/Presentation 레이어 시각화
+
+# 🧠 커스텀 리뷰 프롬프트
+review_language: "ko-KR"  # 리뷰 언어 강제 (한국어)
+
+knowledge_base:
+  - path: "guidelines.md"
+    description: "Clean Architecture + BLoC 패턴 가이드라인"
+  - path: "README.md"
+    description: "프로젝트 개요 및 구조"
+
+# 🎯 리뷰 규칙 (Clean Architecture + BLoC)
+custom_instructions: |
+  **모든 리뷰 댓글은 반드시 한국어로 작성합니다. (All review comments MUST be in Korean)**
+
+  ## Primary Review Focus
+
+  ### 1. Architecture Compliance (guidelines.md 기반)
+
+  **레이어 구조 검증:**
+  - ✅ Domain: entities/, failures/, repositories/, usecases/
+  - ✅ Data: datasources/, models/, repositories/
+  - ✅ Presentation: bloc/, pages/, widgets/
+  - ❌ 의존성 방향 위반 체크 (Presentation → Domain ← Data)
+  - 🎨 **시퀀스 다이어그램 생성**: BLoC 이벤트 → UseCase → Repository 흐름
+
+  **BLoC 패턴:**
+  - ✅ Event/State는 Equatable 상속
+  - ✅ BLoC은 UseCase만 의존 (Repository 직접 참조 금지)
+  - ✅ State: Initial/Loading/Loaded/Error 4단계
+  - 🎨 **시퀀스 다이어그램**: 사용자 액션 → Event → BLoC → State → UI
+
+  **에러 처리:**
+  - ✅ Either<Failure, Entity> 반환
+  - ✅ Freezed sealed class Failures
+  - ❌ try-catch는 Repository Impl에만
+
+  ### 2. Security & Best Practices
+
+  **보안:**
+  - ❌ CRITICAL: 하드코딩된 API 키/토큰/비밀번호
+  - ✅ flutter_dotenv 사용 권장
+
+  **Flutter 베스트 프랙티스:**
+  - ❌ StatefulWidget에서 비즈니스 로직 (→ BLoC 사용)
+  - ❌ BuildContext 사용 후 async gap (→ mounted 체크)
+  - ❌ 누락된 dispose (Controller/Stream)
+  - ✅ const 생성자 사용
+
+  ### 3. Visualization Requests
+
+  **자동 생성:**
+  - 🎨 BLoC 이벤트 핸들러 변경 → 시퀀스 다이어그램
+  - 🎨 새 UseCase 추가 → 클래스 다이어그램 (Domain 레이어)
+  - 🎨 Repository 변경 → 아키텍처 다이어그램 (레이어 간 의존성)
+
+  **수동 요청 (복잡한 경우):**
+  - 댓글로 "@coderabbitai generate sequence diagram for [feature]"
+  - 댓글로 "@coderabbitai show class diagram for [layer]"
+
+  ### 4. Review Output Format
+
+  For architectural changes:
+  1. 📊 **Sequence Diagram** (Mermaid.js)
+  2. 🏗️ **Architecture Impact** (레이어 영향도)
+  3. ✅ **Compliance Check** (guidelines.md 준수 여부)
+  4. 💡 **Suggestions** (개선 제안)
+
+  Example:
+  ```mermaid
+  sequenceDiagram
+      participant UI as LoginPage
+      participant Bloc as AuthBloc
+      participant UseCase as LoginUseCase
+      participant Repo as AuthRepository
+      participant DS as AuthRemoteDataSource
+
+      UI->>Bloc: LoginRequestedEvent
+      Bloc->>UseCase: call(email, password)
+      UseCase->>Repo: login(email, password)
+      Repo->>DS: loginWithCredentials()
+      DS-->>Repo: AuthTokenModel
+      Repo-->>UseCase: Right(AuthTokenEntity)
+      UseCase-->>Bloc: Right(AuthTokenEntity)
+      Bloc->>Bloc: emit(AuthLoginSuccess)
+      Bloc-->>UI: AuthLoginSuccess state
+  ```
+
+# 🤖 Chat 설정
+chat:
+  auto_reply: true
+
+  # 채팅 명령어 (시각화)
+  commands:
+    - name: "diagram"
+      description: "현재 PR의 시퀀스 다이어그램 생성"
+      enabled: true
+    - name: "architecture"
+      description: "레이어 의존성 다이어그램 생성"
+      enabled: true
+    - name: "explain"
+      description: "복잡한 로직 설명 (다이어그램 포함)"
+      enabled: true
+
+# 🎯 성능 최적화
+performance:
+  # 대용량 PR 처리
+  max_files: 100
+  max_lines_per_file: 1000
+
+  # 병렬 처리
+  concurrency: 4
+
+  # 캐싱
+  cache_enabled: true
+
+# 📝 PR 요약 템플릿
+summary_template: |
+  ## 📊 변경 사항 요약
+
+  ### 🏗️ 아키텍처
+  - Domain 레이어: [변경 사항]
+  - Data 레이어: [변경 사항]
+  - Presentation 레이어: [변경 사항]
+
+  ### 🎨 시각화
+  [자동 생성된 다이어그램]
+
+  ### ✅ Guidelines 준수 체크
+  - [ ] 의존성 방향 준수
+  - [ ] BLoC 패턴 준수
+  - [ ] Either 모나드 사용
+  - [ ] 보안 이슈 없음
+
+  ### 💡 주요 개선 제안
+  [상위 3개 제안]
+
+# 🚨 알림 설정
+notifications:
+  # 중요 이슈만 알림
+  critical_only: false
+
+  # 알림 채널
+  channels:
+    - github_comments
+    - github_reviews
