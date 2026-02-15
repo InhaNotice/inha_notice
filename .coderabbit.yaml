@@ -1,0 +1,83 @@
+language: "ko-KR"  # 모든 리뷰 댓글을 한국어로 작성
+
+reviews:
+  profile: "assertive"  # chill → assertive (더 적극적인 리뷰)
+  request_changes_workflow: true  # false → true (변경 요청 활성화)
+  high_level_summary: true
+  poem: false
+
+  # 🎯 시퀀스 다이어그램 및 시각화 활성화
+  sequence_diagrams: true  # 시퀀스 다이어그램 생성
+  auto_title_placeholder: "@coderabbitai"  # PR 제목에 이 키워드가 있으면 자동 생성
+
+  auto_review:
+    enabled: true
+    ignore_title_keywords:
+      - "WIP"
+      - "Draft"
+      - "[Draft]"
+      - "🚧"  # Work in Progress 이모지
+
+    # Flutter/Dart 프로젝트 전용 설정
+    drafts: false  # Draft PR은 리뷰 제외
+    base_branches:
+      - "main"
+      - "develop"
+
+  # Flutter 프로젝트용 경로 필터
+  path_filters:
+    # 제외: 빌드 및 자동 생성 파일
+    - "!build/**"
+    - "!**/*.g.dart"           # build_runner 생성
+    - "!**/*.freezed.dart"     # freezed 생성
+    - "!**/*.mocks.dart"       # mockito 생성
+    - "!**/.dart_tool/**"
+    - "!**/generated/**"
+
+    # 제외: 패키지 관리
+    - "!pubspec.lock"
+    - "!.flutter-plugins"
+    - "!.flutter-plugins-dependencies"
+
+    # 제외: 테스트 픽스처 및 리소스
+    - "!test/fixtures/**"
+    - "!assets/**"
+    - "!fonts/**"
+
+    # 제외: 문서 및 설정
+    - "!*.md"  # 마크다운 문서
+    - "!.vscode/**"
+    - "!.idea/**"
+
+    # 포함: 리뷰 대상 (명시적)
+    - "lib/**/*.dart"          # 모든 Dart 소스 코드
+    - "test/**/*.dart"         # 테스트 코드
+    - "pubspec.yaml"           # 의존성 변경 감지
+
+  tools:
+    # AST 기반 코드 분석 (구조 파악)
+    ast-grep:
+      essential_rules: true
+
+    # GitHub Checks 통합
+    github-checks:
+      enabled: true
+      timeout_ms: 90000  # 90초 타임아웃 (Flutter 빌드 고려)
+
+    # 🔍 추가 도구 활성화
+    markdownlint:
+      enabled: false  # 문서는 리뷰 제외
+
+    languagetool:
+      enabled: false  # 문법 검사 비활성화 (코드 중심)
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "guidelines.md"
+      - "README.md"
+
+# 🤖 Chat 설정
+chat:
+  auto_reply: true
