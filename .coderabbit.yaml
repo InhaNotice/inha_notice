@@ -57,7 +57,7 @@ reviews:
   tools:
     # AST 기반 코드 분석 (구조 파악)
     ast-grep:
-      enabled: true
+      essential_rules: true
 
     # GitHub Checks 통합
     github-checks:
