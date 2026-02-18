@@ -5,20 +5,18 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-18
  */
 
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
-import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/inha_design_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/major_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/whole_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/relative_style_scraper/base_relative_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/relative_style_scraper/library_scraper.dart';
 import 'package:inha_notice/features/notice/data/models/notice_board_model.dart';
-import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
 
 /// **NoticeBoardRemoteDataSource**
 /// 공지사항 게시판 원격 데이터 소스 인터페이스입니다.
@@ -77,11 +75,6 @@ class NoticeBoardRemoteDataSourceImpl implements NoticeBoardRemoteDataSource {
         noticeType != CustomTabType.swUniv.noticeType ||
         noticeType == CustomTabType.inhaHussUniv.noticeType) {
       return MajorStyleNoticeScraper(noticeType);
-    }
-
-    // (예외) 디자인융합학과
-    if (noticeType == MajorType.inhaDesign.key) {
-      return InhaDesignStyleNoticeScraper(noticeType);
     }
 
     // (나머지) 학과, 단과대, 대학원

@@ -5,18 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-18
  */
 
 abstract class NoticeSelectors {
-  /// 1. 표준 스타일의 선택자
   /// - 인하대 공식 홈페이지 (전체공지[학사], 장학, 모집/채용)
   /// - 학과 스타일(MajorStyle) 게시판
   static const standard = _StandardSelectors();
-
-  /// 2. 블로그형 스타일의 공지사항 선택자
-  /// - 인하대 디자인융합학과
-  static const blog = _BlogSelectors();
 }
 
 class _StandardSelectors {
@@ -84,24 +79,4 @@ class _StandardPagination {
 
   /// 마지막 페이지 버튼
   final String lastPageParams = 'a._last';
-}
-
-/// 블로그형 스타일의 공지사항 선택자
-class _BlogSelectors {
-  const _BlogSelectors();
-
-  /// 게시판 컨테이너
-  final String container = '#wsite-content';
-
-  /// 개별 포스트
-  final String post = '.blog-post';
-
-  /// 제목
-  final String title = '.blog-title';
-
-  /// 제목 링크
-  final String titleLink = 'a.blog-title-link';
-
-  /// 날짜
-  final String date = '.date-text';
 }
