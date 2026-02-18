@@ -86,12 +86,13 @@ enum MajorType {
   theaterFilm(key: 'THEATREFILM', name: '연극영화학과', college: '예술체육대학'),
   fashionDesign(key: 'FASHION', name: '의류디자인학과', college: '예술체육대학'),
 
-  // [바이오시스템융합학부] (4개)
+  // [바이오시스템융합학부] (5개)
   bioEngineering(key: 'BIO', name: '생명공학과', college: '바이오시스템융합학부'),
   lifeScience(key: 'BIOLOGY', name: '생명과학과', college: '바이오시스템융합학부'),
   bioPharmEngineering(key: 'BIOPHARM', name: '바이오제약공학과', college: '바이오시스템융합학부'),
   advancedBioMedicine(
       key: 'BIOMEDICAL', name: '첨단바이오의약학과', college: '바이오시스템융합학부'),
+  foodScience(key: 'FOODSCIENCE', name: '바이오식품공학과', college: '바이오시스템융합학부'),
 
   // [국제학부] (3개)
   ibtDepartment(key: 'SGCSA', name: 'IBT학과', college: '국제학부'),
