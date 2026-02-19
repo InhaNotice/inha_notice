@@ -5,14 +5,14 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
-import 'package:inha_notice/features/search/data/datasources/recent_search_manager.dart';
+import 'package:inha_notice/features/search/data/datasources/recent_search_local_data_source.dart';
 
-/// 최근 검색어(SharedPreferences)를 담당
-/// static 메서드인 RecentSearchManager를 감싸서 주입 가능하게 만듦
 abstract class SearchLocalDataSource {
+  Future<void> initialize();
+
   List<String> getRecentSearchWords();
 
   Future<void> addRecentSearchWord(String query);
@@ -23,23 +23,32 @@ abstract class SearchLocalDataSource {
 }
 
 class SearchLocalDataSourceImpl implements SearchLocalDataSource {
+  final RecentSearchLocalDataSource recentSearchManager;
+
+  SearchLocalDataSourceImpl({required this.recentSearchManager});
+
+  @override
+  Future<void> initialize() async {
+    await recentSearchManager.initialize();
+  }
+
   @override
   List<String> getRecentSearchWords() {
-    return RecentSearchManager.getRecentSearchTopics();
+    return recentSearchManager.getRecentSearchTopics();
   }
 
   @override
   Future<void> addRecentSearchWord(String query) async {
-    await RecentSearchManager.addRecentSearch(query);
+    await recentSearchManager.addRecentSearch(query);
   }
 
   @override
   Future<void> removeRecentSearchWord(String query) async {
-    await RecentSearchManager.removeRecentSearch(query);
+    await recentSearchManager.removeRecentSearch(query);
   }
 
   @override
   Future<void> clearRecentSearchWords() async {
-    await RecentSearchManager.clearSearchHistory();
+    await recentSearchManager.clearSearchHistory();
   }
 }

@@ -74,6 +74,7 @@ import 'features/notification_setting/domain/repositories/notification_setting_r
 import 'features/notification_setting/domain/usecases/get_subscription_status_use_case.dart';
 import 'features/notification_setting/domain/usecases/toggle_subscription_use_case.dart';
 import 'features/notification_setting/presentation/bloc/notification_setting_bloc.dart';
+import 'features/search/data/datasources/recent_search_local_data_source.dart';
 import 'features/search/data/datasources/search_local_data_source.dart';
 import 'features/search/data/datasources/search_remote_data_source.dart';
 import 'features/search/data/repositories/search_repository_impl.dart';
@@ -242,8 +243,11 @@ Future<void> init() async {
       prefsManager: sl(),
     ),
   );
+  sl.registerLazySingleton<RecentSearchLocalDataSource>(
+    () => RecentSearchLocalDataSourceImpl(),
+  );
   sl.registerLazySingleton<SearchLocalDataSource>(
-    () => SearchLocalDataSourceImpl(),
+    () => SearchLocalDataSourceImpl(recentSearchManager: sl()),
   );
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(),
