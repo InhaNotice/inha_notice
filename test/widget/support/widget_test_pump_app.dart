@@ -16,13 +16,14 @@ Future<void> pumpInhaApp(
   WidgetTester tester, {
   required Widget child,
   ThemeMode themeMode = ThemeMode.light,
+  bool wrapWithScaffold = true,
 }) async {
   await tester.pumpWidget(
     MaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: themeMode,
-      home: Scaffold(body: child),
+      home: wrapWithScaffold ? Scaffold(body: child) : child,
     ),
   );
 
