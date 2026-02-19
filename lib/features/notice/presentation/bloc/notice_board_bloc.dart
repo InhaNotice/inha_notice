@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'package:dartz/dartz.dart';
@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/constants/page_constants.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
+import 'package:inha_notice/features/custom_tab/domain/usecases/get_user_setting_value_by_notice_type_use_case.dart';
 import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notice/domain/entities/notice_board_entity.dart';
 import 'package:inha_notice/features/notice/domain/failures/notice_board_failure.dart';
@@ -23,6 +24,8 @@ import 'package:inha_notice/features/notice/presentation/bloc/notice_board_state
 class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
   final GetAbsoluteNoticesUseCase getAbsoluteNoticesUseCase;
   final GetRelativeNoticesUseCase getRelativeNoticesUseCase;
+  final GetUserSettingValueByNoticeTypeUseCase
+      getUserSettingValueByNoticeTypeUseCase;
 
   late String _noticeType;
   bool _isRelativeStyle = false;
@@ -33,6 +36,7 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
   NoticeBoardBloc({
     required this.getAbsoluteNoticesUseCase,
     required this.getRelativeNoticesUseCase,
+    required this.getUserSettingValueByNoticeTypeUseCase,
   }) : super(NoticeBoardInitial()) {
     on<LoadNoticeBoardEvent>(_onLoadNoticeBoard);
     on<LoadPageEvent>(_onLoadPage);
@@ -54,7 +58,7 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
     // 유저 설정이 필요한 타입인지 확인
     if (CustomTabType.isUserSettingTypeOf(event.noticeType)) {
       final String? userSettingKey =
-          CustomTabType.loadUserSettingKey(event.noticeType);
+          getUserSettingValueByNoticeTypeUseCase(event.noticeType);
       if (userSettingKey == null) {
         final String? displayName =
             CustomTabType.kTabMappingOnValue[event.noticeType];

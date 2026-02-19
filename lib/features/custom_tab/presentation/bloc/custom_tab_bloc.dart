@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_policy.dart';
 import 'package:inha_notice/features/custom_tab/domain/usecases/get_selected_tabs_use_case.dart';
 import 'package:inha_notice/features/custom_tab/domain/usecases/save_tabs_use_case.dart';
 
@@ -95,13 +95,13 @@ class CustomTabBloc extends Bloc<CustomTabEvent, CustomTabState> {
   }
 
   CustomTabLoaded _buildLoadedState(List<String> selectedTabs) {
-    final allTabs = {
-      ...CustomTabType.kAdditionalTabs,
-      ...CustomTabType.kDefaultTabs,
+    final List<String> allTabs = {
+      ...CustomTabPolicy.kAdditionalTabs,
+      ...CustomTabPolicy.kDefaultTabs,
     }.toList();
-    final availableTabs =
+    final List<String> availableTabs =
         allTabs.where((tab) => !selectedTabs.contains(tab)).toList();
-    final hasChanges = !listEquals(selectedTabs, _initialTabs);
+    final bool hasChanges = !listEquals(selectedTabs, _initialTabs);
 
     return CustomTabLoaded(
       selectedTabs: selectedTabs,

@@ -5,12 +5,12 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
-import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_policy.dart';
 
 abstract class CustomTabLocalDataSource {
   List<String> getSelectedTabs();
@@ -27,7 +27,7 @@ class CustomTabLocalDataSourceImpl implements CustomTabLocalDataSource {
     final List<String>? savedTabs =
         prefsManager.getValue<List<String>>(SharedPrefKeys.kCustomTabList);
     if (savedTabs == null || savedTabs.isEmpty) {
-      return List.from(CustomTabType.kDefaultTabs);
+      return List.from(CustomTabPolicy.kDefaultTabs);
     }
     return List.from(savedTabs);
   }

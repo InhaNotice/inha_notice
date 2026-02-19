@@ -5,13 +5,10 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
-import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
-import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
-import 'package:inha_notice/injection_container.dart' as di;
 
 /// 커스텀 탭의 종류를 정의하는 enum이다.
 ///
@@ -59,32 +56,6 @@ enum CustomTabType {
         _ => null,
       };
 
-  // ---------------------------------------------------------------------------
-  // Static: 기본/추가 탭 목록
-  // ---------------------------------------------------------------------------
-
-  static const List<String> kDefaultTabs = [
-    '학사',
-    '학과',
-    '장학',
-    '모집/채용',
-    '정석',
-    '국제처',
-    'SW중심대학사업단',
-  ];
-
-  static const List<String> kAdditionalTabs = [
-    '학과2',
-    '학과3',
-    '단과대',
-    '대학원',
-    '기후위기대응사업단',
-  ];
-
-  // ---------------------------------------------------------------------------
-  // Static: 매핑 (기존 API 호환)
-  // ---------------------------------------------------------------------------
-
   /// 한글 키 → 영문 noticeType 매핑
   static final Map<String, String> kTabMappingOnKey = {
     for (final tab in values) tab.key: tab.noticeType,
@@ -94,10 +65,6 @@ enum CustomTabType {
   static final Map<String, String> kTabMappingOnValue = {
     for (final tab in values) tab.noticeType: tab.key,
   };
-
-  // ---------------------------------------------------------------------------
-  // Static: 문자열 기반 조회 (기존 API 호환)
-  // ---------------------------------------------------------------------------
 
   /// 한글 키로 enum을 찾는다.
   static CustomTabType? fromKey(String key) => _keyMap[key];
@@ -125,24 +92,4 @@ enum CustomTabType {
   /// 영문 noticeType 기준으로 학과 타입인지 판단한다.
   static bool isMajorTypeOf(String noticeType) =>
       fromNoticeType(noticeType)?.isMajorType ?? false;
-
-  /// 유저 설정 값이 있는 경우, 유저 설정 값을 불러온다.
-  /// noticeType이 유저 설정 값이 없는 경우, null을 리턴한다.
-  static String? loadUserSettingKey(String noticeType) {
-    final tab = fromNoticeType(noticeType);
-    if (tab == null) return null;
-    final prefKey = tab.userSettingPrefKey;
-    if (prefKey == null) return null;
-    final SharedPrefsManager prefs = di.sl<SharedPrefsManager>();
-    return prefs.getValue<String>(prefKey);
-  }
-
-  /// 주어진 학과 키 ([majorKey])에 대응하는 UI 표시용 국문 학과명을 반환한다.
-  static String getMajorDisplayName(String majorKey) {
-    final String? activeMajorName = MajorType.majorMappingOnValue[majorKey];
-    if (activeMajorName != null) {
-      return activeMajorName;
-    }
-    return MajorType.getUnsupportedMajorKoreanName(majorKey) ?? '미지원 학과';
-  }
 }

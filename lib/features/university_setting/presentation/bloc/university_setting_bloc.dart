@@ -5,11 +5,11 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
+import 'package:inha_notice/features/custom_tab/domain/usecases/get_major_display_name_use_case.dart';
 import 'package:inha_notice/features/notice/domain/entities/college_type.dart';
 import 'package:inha_notice/features/notice/domain/entities/graduate_school_type.dart';
 import 'package:inha_notice/features/notice/domain/entities/major_type.dart';
@@ -26,11 +26,13 @@ class UniversitySettingBloc
   final GetCurrentSettingUseCase getCurrentSettingUseCase;
   final SaveSettingUseCase saveSettingUseCase;
   final SaveMajorSettingUseCase saveMajorSettingUseCase;
+  final GetMajorDisplayNameUseCase getMajorDisplayNameUseCase;
 
   UniversitySettingBloc({
     required this.getCurrentSettingUseCase,
     required this.saveSettingUseCase,
     required this.saveMajorSettingUseCase,
+    required this.getMajorDisplayNameUseCase,
   }) : super(UniversitySettingInitial()) {
     on<LoadSettingEvent>(_onLoadSetting);
     on<FilterItemsEvent>(_onFilterItems);
@@ -62,7 +64,7 @@ class UniversitySettingBloc
       String prefKey, String? majorKeyType) {
     String? displayName;
     if (savedKey != null) {
-      displayName = CustomTabType.getMajorDisplayName(savedKey);
+      displayName = getMajorDisplayNameUseCase(savedKey);
     }
     final groups = MajorType.majorGroups;
     emit(UniversitySettingLoaded(

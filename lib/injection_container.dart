@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -40,7 +40,9 @@ import 'features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'features/custom_tab/data/datasources/custom_tab_local_data_source.dart';
 import 'features/custom_tab/data/repositories/custom_tab_repository_impl.dart';
 import 'features/custom_tab/domain/repositories/custom_tab_repository.dart';
+import 'features/custom_tab/domain/usecases/get_major_display_name_use_case.dart';
 import 'features/custom_tab/domain/usecases/get_selected_tabs_use_case.dart';
+import 'features/custom_tab/domain/usecases/get_user_setting_value_by_notice_type_use_case.dart';
 import 'features/custom_tab/domain/usecases/save_tabs_use_case.dart';
 import 'features/custom_tab/presentation/bloc/custom_tab_bloc.dart';
 import 'features/main/domain/usecases/get_initial_notification_message.dart';
@@ -119,6 +121,7 @@ Future<void> init() async {
   sl.registerFactory(() => NoticeBoardBloc(
         getAbsoluteNoticesUseCase: sl(),
         getRelativeNoticesUseCase: sl(),
+        getUserSettingValueByNoticeTypeUseCase: sl(),
       ));
   sl.registerFactory(
       () => MainNavigationBloc(getInitialNotificationMessage: sl()));
@@ -132,6 +135,7 @@ Future<void> init() async {
         getCurrentSettingUseCase: sl(),
         saveSettingUseCase: sl(),
         saveMajorSettingUseCase: sl(),
+        getMajorDisplayNameUseCase: sl(),
       ));
   sl.registerFactory(() => NotificationSettingBloc(
         getSubscriptionStatusUseCase: sl(),
@@ -169,6 +173,9 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => GetSubscriptionStatusUseCase(repository: sl()));
   sl.registerLazySingleton(() => ToggleSubscriptionUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => GetUserSettingValueByNoticeTypeUseCase(sharedPrefsManager: sl()));
+  sl.registerLazySingleton(() => GetMajorDisplayNameUseCase());
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -216,7 +223,11 @@ Future<void> init() async {
 
   // Datasources
   sl.registerLazySingleton<HomeLocalDataSource>(
-    () => HomeLocalDataSourceImpl(sl()),
+    () => HomeLocalDataSourceImpl(
+      sl(),
+      getUserSettingValueByNoticeTypeUseCase: sl(),
+      getMajorDisplayNameUseCase: sl(),
+    ),
   );
   sl.registerLazySingleton<NoticeBoardRemoteDataSource>(
     () => NoticeBoardRemoteDataSourceImpl(),
