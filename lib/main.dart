@@ -21,10 +21,10 @@ import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/features/onboarding/presentation/pages/onboarding_page.dart';
-import 'package:inha_notice/features/search/data/datasources/recent_search_manager.dart';
 
 import 'core/config/app_bloc_observer.dart';
 import 'features/bookmark/data/datasources/bookmark_local_data_source.dart';
+import 'features/search/data/datasources/search_local_data_source.dart';
 import 'injection_container.dart' as di;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -49,7 +49,7 @@ Future<void> main() async {
       di.sl<SharedPrefsManager>().initialize(),
       di.sl<FirebaseRemoteDataSource>().initialize(),
       ReadNoticeLocalDataSource.initialize(),
-      RecentSearchManager.initialize(),
+      di.sl<SearchLocalDataSource>().initialize(),
     ]);
   } catch (e, stackTrace) {
     AppLogger.e('앱 초기화 작업 중 일부 실패: $e');

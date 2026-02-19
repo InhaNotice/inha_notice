@@ -42,9 +42,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   flutter_lints: ^6.0.0
   build_runner: ^2.10.4
   freezed: ^3.2.3
+  sqflite_common_ffi: ^2.3.4+4
 
 flutter:
   uses-material-design: true

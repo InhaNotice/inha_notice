@@ -5,12 +5,15 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_policy.dart';
 import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
+import 'package:inha_notice/features/custom_tab/domain/usecases/get_major_display_name_use_case.dart';
+import 'package:inha_notice/features/custom_tab/domain/usecases/get_user_setting_value_by_notice_type_use_case.dart';
 import 'package:inha_notice/features/notice/data/models/home_tab_model.dart';
 
 abstract class HomeLocalDataSource {
@@ -19,9 +22,15 @@ abstract class HomeLocalDataSource {
 
 class HomeLocalDataSourceImpl implements HomeLocalDataSource {
   final SharedPrefsManager sharedPrefsManager;
+  final GetUserSettingValueByNoticeTypeUseCase
+      getUserSettingValueByNoticeTypeUseCase;
+  final GetMajorDisplayNameUseCase getMajorDisplayNameUseCase;
 
-  HomeLocalDataSourceImpl(this.sharedPrefsManager);
-
+  HomeLocalDataSourceImpl(
+    this.sharedPrefsManager, {
+    required this.getUserSettingValueByNoticeTypeUseCase,
+    required this.getMajorDisplayNameUseCase,
+  });
   @override
   Future<List<HomeTabModel>> fetchHomeTabs() async {
     try {
@@ -31,7 +40,7 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
 
       late List<String> selectedTabs;
       if (savedTabs == null || savedTabs.isEmpty) {
-        selectedTabs = CustomTabType.kDefaultTabs;
+        selectedTabs = CustomTabPolicy.kDefaultTabs;
       } else {
         selectedTabs = List.from(savedTabs);
       }
@@ -55,10 +64,10 @@ class HomeLocalDataSourceImpl implements HomeLocalDataSource {
     if (!CustomTabType.isMajorTypeOf(noticeType)) {
       return CustomTabType.kTabMappingOnValue[noticeType]!;
     }
-    final userSettingKey = CustomTabType.loadUserSettingKey(noticeType);
+    final userSettingKey = getUserSettingValueByNoticeTypeUseCase(noticeType);
     if (userSettingKey == null) {
       return CustomTabType.kTabMappingOnValue[noticeType]!;
     }
-    return CustomTabType.getMajorDisplayName(userSettingKey);
+    return getMajorDisplayNameUseCase(userSettingKey);
   }
 }

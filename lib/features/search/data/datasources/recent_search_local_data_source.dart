@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'dart:async';
@@ -15,17 +15,37 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class RecentSearchManager {
-  static const String tableName = 'recent_search_topics';
-  static Database? _database;
-  static const int _maxHistoryCount = 10;
-  static final Logger logger = Logger();
+abstract class RecentSearchLocalDataSource {
+  Future<void> initialize();
+  List<String> getRecentSearchTopics();
+  Future<void> addRecentSearch(String query);
+  Future<void> removeRecentSearch(String query);
+  Future<void> clearSearchHistory();
+  bool isCachedSearchHistory();
+}
 
-  // 최근 검색어 캐시
-  static List<String> _cachedSearchHistory = [];
+class RecentSearchLocalDataSourceImpl implements RecentSearchLocalDataSource {
+  static const String tableName = 'recent_search_topics';
+  static const int _maxHistoryCount = 10;
+
+  final Logger logger;
+
+  Database? _database;
+  List<String> _cachedSearchHistory = [];
+  Future<void>? _initializeFuture;
+
+  RecentSearchLocalDataSourceImpl({Logger? logger})
+      : logger = logger ?? Logger();
 
   /// **SQLite 초기화 + 캐시 로드**
-  static Future<void> initialize() async {
+  @override
+  Future<void> initialize() async {
+    if (_database != null) return;
+    _initializeFuture ??= _initializeDatabase();
+    await _initializeFuture;
+  }
+
+  Future<void> _initializeDatabase() async {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final path = join(directory.path, '$tableName.db');
@@ -51,7 +71,7 @@ class RecentSearchManager {
   }
 
   /// **데이터베이스 가져오기**
-  static Future<Database> _getDatabase() async {
+  Future<Database> _getDatabase() async {
     if (_database == null) {
       await initialize();
     }
@@ -59,7 +79,7 @@ class RecentSearchManager {
   }
 
   /// **DB에서 최근 검색어 불러와 캐싱 (최신순)**
-  static Future<void> _loadCachedRecentSearchTopics() async {
+  Future<void> _loadCachedRecentSearchTopics() async {
     try {
       final db = await _getDatabase();
       final result = await db.query(
@@ -76,12 +96,14 @@ class RecentSearchManager {
   }
 
   /// **모든 최근 검색어 가져오기 (최신순)**
-  static List<String> getRecentSearchTopics() {
+  @override
+  List<String> getRecentSearchTopics() {
     return List.from(_cachedSearchHistory); // 불변 리스트 반환
   }
 
   /// **검색어 추가 (최신순 유지)**
-  static Future<void> addRecentSearch(String query) async {
+  @override
+  Future<void> addRecentSearch(String query) async {
     try {
       final db = await _getDatabase();
 
@@ -105,7 +127,7 @@ class RecentSearchManager {
   }
 
   /// **가장 오래된 검색어 삭제**
-  static Future<void> _removeOldestSearch() async {
+  Future<void> _removeOldestSearch() async {
     try {
       final db = await _getDatabase();
       final result = await db.query(
@@ -126,7 +148,8 @@ class RecentSearchManager {
   }
 
   /// **최근 검색어 제거**
-  static Future<void> removeRecentSearch(String query) async {
+  @override
+  Future<void> removeRecentSearch(String query) async {
     try {
       final db = await _getDatabase();
       await db.delete(
@@ -143,7 +166,8 @@ class RecentSearchManager {
   }
 
   /// **검색 기록 전체 삭제**
-  static Future<void> clearSearchHistory() async {
+  @override
+  Future<void> clearSearchHistory() async {
     try {
       final db = await _getDatabase();
       await db.delete(tableName);
@@ -155,7 +179,8 @@ class RecentSearchManager {
   }
 
   /// **최근검색어 존재여부**
-  static bool isCachedSearchHistory() {
+  @override
+  bool isCachedSearchHistory() {
     return _cachedSearchHistory.isNotEmpty;
   }
 }

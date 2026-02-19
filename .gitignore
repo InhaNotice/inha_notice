@@ -2,6 +2,7 @@
 build/
 .flutter/
 .dart_tool/
+coverage/
 
 # iOS 관련 파일
 ios/Pods/
