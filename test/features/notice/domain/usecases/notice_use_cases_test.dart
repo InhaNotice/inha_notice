@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-19
+ * Latest Updated Date: 2026-02-20
  */
 
 import 'package:dartz/dartz.dart';
@@ -16,7 +16,7 @@ import 'package:inha_notice/features/notice/domain/entities/notice_board_entity.
 import 'package:inha_notice/features/notice/domain/failures/notice_board_failure.dart';
 import 'package:inha_notice/features/notice/domain/repositories/home_repository.dart';
 import 'package:inha_notice/features/notice/domain/repositories/notice_board_repository.dart';
-import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_use case.dart';
+import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_use_case.dart';
 import 'package:inha_notice/features/notice/domain/usecases/get_notices_use_case.dart';
 
 class _FakeNoticeBoardRepository implements NoticeBoardRepository {

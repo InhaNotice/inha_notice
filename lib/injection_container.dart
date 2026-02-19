@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-19
+ * Latest Updated Date: 2026-02-20
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -62,7 +62,7 @@ import 'features/notice/data/repositories/home_repository_impl.dart';
 import 'features/notice/data/repositories/notice_board_repository_impl.dart';
 import 'features/notice/domain/repositories/home_repository.dart';
 import 'features/notice/domain/repositories/notice_board_repository.dart';
-import 'features/notice/domain/usecases/get_home_tabs_use case.dart';
+import 'features/notice/domain/usecases/get_home_tabs_use_case.dart';
 import 'features/notice/domain/usecases/get_notices_use_case.dart';
 import 'features/notice/presentation/bloc/home_bloc.dart';
 import 'features/notice/presentation/bloc/notice_board_bloc.dart';

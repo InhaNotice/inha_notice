@@ -1,3 +1,13 @@
+/*
+ * This is file of the project inha_notice
+ * Licensed under the Apache License 2.0.
+ * Copyright (c) 2025-2026 INGONG
+ * For full license text, see the LICENSE file in the root directory or at
+ * http://www.apache.org/licenses/
+ * Author: Junho Kim
+ * Latest Updated Date: 2026-02-20
+ */
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,7 +45,7 @@ import 'package:inha_notice/features/notice/domain/failures/home_failure.dart';
 import 'package:inha_notice/features/notice/domain/failures/notice_board_failure.dart';
 import 'package:inha_notice/features/notice/domain/repositories/home_repository.dart';
 import 'package:inha_notice/features/notice/domain/repositories/notice_board_repository.dart';
-import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_use case.dart';
+import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_use_case.dart';
 import 'package:inha_notice/features/notice/domain/usecases/get_notices_use_case.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_bloc.dart';
@@ -197,7 +207,8 @@ class _FakeSearchRepository implements SearchRepository {
   }
 
   @override
-  Future<Either<SearchFailure, void>> removeRecentSearchWord(String query) async {
+  Future<Either<SearchFailure, void>> removeRecentSearchWord(
+      String query) async {
     recentWords.remove(query);
     return const Right(null);
   }
@@ -378,8 +389,8 @@ Future<void> _registerTestDependencies({
 
   di.sl.registerFactory<NotificationSettingBloc>(
     () => NotificationSettingBloc(
-      getSubscriptionStatusUseCase:
-          GetSubscriptionStatusUseCase(repository: notificationSettingRepository),
+      getSubscriptionStatusUseCase: GetSubscriptionStatusUseCase(
+          repository: notificationSettingRepository),
       toggleSubscriptionUseCase:
           ToggleSubscriptionUseCase(repository: notificationSettingRepository),
     ),
@@ -511,7 +522,8 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
 
-      expect(universityRepository.currentValues[SharedPrefKeys.kMajorKey], 'CSE');
+      expect(
+          universityRepository.currentValues[SharedPrefKeys.kMajorKey], 'CSE');
     });
   });
 }

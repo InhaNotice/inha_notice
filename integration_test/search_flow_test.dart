@@ -26,7 +26,7 @@ import 'package:inha_notice/features/notice/domain/failures/home_failure.dart';
 import 'package:inha_notice/features/notice/domain/failures/notice_board_failure.dart';
 import 'package:inha_notice/features/notice/domain/repositories/home_repository.dart';
 import 'package:inha_notice/features/notice/domain/repositories/notice_board_repository.dart';
-import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_use case.dart';
+import 'package:inha_notice/features/notice/domain/usecases/get_home_tabs_use_case.dart';
 import 'package:inha_notice/features/notice/domain/usecases/get_notices_use_case.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/home_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_bloc.dart';
