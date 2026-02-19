@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-19
  */
 
 import 'dart:io';
@@ -17,7 +17,7 @@ import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
 import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
-import 'package:inha_notice/features/search/data/datasources/recent_search_manager.dart';
+import 'package:inha_notice/features/search/data/datasources/search_local_data_source.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 
 class CacheDeletionDialogWidget extends StatefulWidget {
@@ -37,7 +37,7 @@ class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
       await Future.wait([
         di.sl<BookmarkLocalDataSource>().clearBookmarks(),
         ReadNoticeLocalDataSource.clearAllReadNotices(),
-        RecentSearchManager.clearSearchHistory()
+        di.sl<SearchLocalDataSource>().clearRecentSearchWords(),
       ]);
 
       if (mounted) {

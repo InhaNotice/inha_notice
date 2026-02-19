@@ -5,11 +5,9 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-18
+ * Latest Updated Date: 2026-02-19
  */
 
-import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
-import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/custom_tab/domain/entities/custom_tab_type.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/base_absolute_style_notice_scraper.dart';
 import 'package:inha_notice/features/notice/data/datasources/scrapers/absolute_style_scraper/major_style_notice_scraper.dart';
@@ -34,9 +32,25 @@ abstract class NoticeBoardRemoteDataSource {
   });
 }
 
+typedef AbsoluteScraperFactory = BaseAbsoluteStyleNoticeScraper Function(
+    String noticeType);
+typedef RelativeScraperFactory = BaseRelativeStyleNoticeScraper Function(
+    String noticeType);
+
 /// **NoticeBoardRemoteDataSourceImpl**
 /// 스크래퍼를 래핑하여 공지사항을 가져오는 구현체입니다.
 class NoticeBoardRemoteDataSourceImpl implements NoticeBoardRemoteDataSource {
+  final AbsoluteScraperFactory _absoluteScraperFactory;
+  final RelativeScraperFactory _relativeScraperFactory;
+
+  NoticeBoardRemoteDataSourceImpl({
+    AbsoluteScraperFactory? absoluteScraperFactory,
+    RelativeScraperFactory? relativeScraperFactory,
+  })  : _absoluteScraperFactory =
+            absoluteScraperFactory ?? _defaultAbsoluteScraperFactory,
+        _relativeScraperFactory =
+            relativeScraperFactory ?? _defaultRelativeScraperFactory;
+
   @override
   Future<NoticeBoardModel> fetchAbsoluteNotices({
     required String noticeType,
@@ -45,10 +59,10 @@ class NoticeBoardRemoteDataSourceImpl implements NoticeBoardRemoteDataSource {
     String? searchWord,
   }) async {
     final BaseAbsoluteStyleNoticeScraper scraper =
-        _createAbsoluteScraper(noticeType);
+        _absoluteScraperFactory(noticeType);
     final Map<String, dynamic> result =
         await scraper.fetchNotices(page, noticeType, searchColumn, searchWord);
-    return _convertToModel(result);
+    return NoticeBoardModel.fromRaw(result);
   }
 
   @override
@@ -57,12 +71,13 @@ class NoticeBoardRemoteDataSourceImpl implements NoticeBoardRemoteDataSource {
     required int offset,
   }) async {
     final BaseRelativeStyleNoticeScraper scraper =
-        _createRelativeScraper(noticeType);
+        _relativeScraperFactory(noticeType);
     final Map<String, dynamic> result = await scraper.fetchNotices(offset);
-    return _convertToModel(result);
+    return NoticeBoardModel.fromRaw(result);
   }
 
-  BaseAbsoluteStyleNoticeScraper _createAbsoluteScraper(String noticeType) {
+  static BaseAbsoluteStyleNoticeScraper _defaultAbsoluteScraperFactory(
+      String noticeType) {
     // 학사, 장학, 모집/채용
     if (noticeType == CustomTabType.whole.noticeType ||
         noticeType == CustomTabType.scholarship.noticeType ||
@@ -81,29 +96,11 @@ class NoticeBoardRemoteDataSourceImpl implements NoticeBoardRemoteDataSource {
     return MajorStyleNoticeScraper(noticeType);
   }
 
-  BaseRelativeStyleNoticeScraper _createRelativeScraper(String noticeType) {
+  static BaseRelativeStyleNoticeScraper _defaultRelativeScraperFactory(
+      String noticeType) {
     if (noticeType == CustomTabType.library.noticeType) {
       return LibraryScraper();
     }
     throw Exception('Unsupported relative style notice type: $noticeType');
-  }
-
-  NoticeBoardModel _convertToModel(Map<String, dynamic> raw) {
-    final List<dynamic> rawHeadline = raw['headline'] ?? [];
-    final List<dynamic> rawGeneral = raw['general'] ?? [];
-    final Pages pages = raw['pages'] ?? createPages();
-
-    final List<NoticeTileModel> headlineNotices = rawHeadline
-        .map((e) => NoticeTileModel.fromMap(e as Map<String, dynamic>))
-        .toList();
-    final List<NoticeTileModel> generalNotices = rawGeneral
-        .map((e) => NoticeTileModel.fromMap(e as Map<String, dynamic>))
-        .toList();
-
-    return NoticeBoardModel(
-      headlineNotices: headlineNotices,
-      generalNotices: generalNotices,
-      pages: pages,
-    );
   }
 }
