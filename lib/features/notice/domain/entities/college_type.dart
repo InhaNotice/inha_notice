@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-18
  */
 
 enum CollegeType {
@@ -20,7 +20,8 @@ enum CollegeType {
   ssCollege(key: 'SSCOLLEGE', name: '사회과학대학'),
   haCollege(key: 'HACOLLEGE', name: '문과대학'),
   artSports(key: 'ARTSPORTS', name: '예술체육대학'),
-  swcc(key: 'SWCC', name: '소프트웨어융합대학');
+  swcc(key: 'SWCC', name: '소프트웨어융합대학'),
+  biosyst(key: 'BIOSYST', name: '바이오시스템융합학부');
 
   final String key;
   final String name;

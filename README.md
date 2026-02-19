@@ -38,7 +38,7 @@ Inha Notice collects and provides announcements from a wide range of university 
 
 - **Departments** (70+ across Engineering, Natural Sciences, Business, Education, Social Sciences,
   Humanities, Medicine, Arts & Sports, Life Sciences, and interdisciplinary programs)
-- **Colleges** (9 colleges)
+- **Colleges** (10 colleges)
 - **Graduate Schools** (10 schools, including Law, Public Policy, Education, and more)
 - **University-wide Notices** (e.g., Academic Affairs, Scholarships, Recruitment, International
   Affairs, Library)
