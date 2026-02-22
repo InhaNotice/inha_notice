@@ -77,14 +77,19 @@ import 'features/notification_setting/presentation/bloc/notification_setting_blo
 import 'features/search/data/datasources/recent_search_local_data_source.dart';
 import 'features/search/data/datasources/search_local_data_source.dart';
 import 'features/search/data/datasources/search_remote_data_source.dart';
+import 'features/search/data/datasources/search_scraper.dart';
 import 'features/search/data/repositories/search_repository_impl.dart';
+import 'features/search/data/repositories/search_result_repository_impl.dart';
 import 'features/search/domain/repositories/search_repository.dart';
+import 'features/search/domain/repositories/search_result_repository.dart';
 import 'features/search/domain/usecases/add_recent_search_word_use_case.dart';
 import 'features/search/domain/usecases/clear_recent_search_words_use_case.dart';
 import 'features/search/domain/usecases/get_recent_search_words_use_case.dart';
 import 'features/search/domain/usecases/get_trending_topics_use_case.dart';
 import 'features/search/domain/usecases/remove_recent_search_word_use_case.dart';
+import 'features/search/domain/usecases/search_notices_use_case.dart';
 import 'features/search/presentation/bloc/search_bloc.dart';
+import 'features/search/presentation/bloc/search_result_bloc.dart';
 import 'features/university_setting/data/datasources/university_setting_local_data_source.dart';
 import 'features/university_setting/data/repositories/university_setting_repository_impl.dart';
 import 'features/university_setting/domain/repositories/university_setting_repository.dart';
@@ -122,6 +127,7 @@ Future<void> init() async {
         removeRecentSearchWord: sl(),
         clearRecentSearchWords: sl(),
       ));
+  sl.registerFactory(() => SearchResultBloc(searchNoticesUseCase: sl()));
   sl.registerFactory(() => OnboardingBloc(requestPermissionUseCase: sl()));
   sl.registerFactory(() => MoreBloc(getWebUrlsUseCase: sl()));
   sl.registerFactory(() => CacheBloc(getCacheSizeUseCase: sl()));
@@ -189,6 +195,7 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => GetUserSettingValueByNoticeTypeUseCase(sharedPrefsManager: sl()));
   sl.registerLazySingleton(() => GetMajorDisplayNameUseCase());
+  sl.registerLazySingleton(() => SearchNoticesUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -208,6 +215,9 @@ Future<void> init() async {
       remoteDataSource: sl(),
       localDataSource: sl(),
     ),
+  );
+  sl.registerLazySingleton<SearchResultRepository>(
+    () => SearchResultRepositoryImpl(dataSource: sl()),
   );
   sl.registerLazySingleton<NotificationRepository>(
       () => NotificationRepositoryImpl(remoteDataSource: sl()));
@@ -265,6 +275,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<SearchDataSource>(
+    () => SearchScraper(),
   );
   sl.registerLazySingleton<MoreLocalDataSource>(
     () => MoreLocalDataSourceImpl(),
