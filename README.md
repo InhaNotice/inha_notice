@@ -109,16 +109,16 @@ inha_notice
 │     │
 │     ├─ search/                    # Search feature
 │     │  ├─ data/
-│     │  │  ├─ datasources/         # Search scraper, recent search, remote/local sources
+│     │  │  ├─ datasources/         # SearchScraper, RecentSearch, Search remote/local sources
 │     │  │  ├─ models/              # TrendingTopicModel
-│     │  │  └─ repositories/
+│     │  │  └─ repositories/        # SearchRepositoryImpl, SearchResultRepositoryImpl
 │     │  ├─ domain/
-│     │  │  ├─ entities/            # SearchSelectors, TrendingTopicEntity
-│     │  │  ├─ failures/
-│     │  │  ├─ repositories/
-│     │  │  └─ usecases/            # GetTrendingTopics, RecentSearchWords, etc.
+│     │  │  ├─ entities/            # SearchSelectors, TrendingTopicEntity, SearchResultEntity
+│     │  │  ├─ failures/            # SearchFailure, SearchResultFailure (Freezed)
+│     │  │  ├─ repositories/        # SearchRepository, SearchResultRepository
+│     │  │  └─ usecases/            # GetTrendingTopics, RecentSearchWords, SearchNotices
 │     │  └─ presentation/
-│     │     ├─ bloc/                # SearchBloc
+│     │     ├─ bloc/                # SearchBloc, SearchResultBloc
 │     │     ├─ pages/               # SearchPage, SearchResultPage
 │     │     └─ widgets/             # TrendingTopicsItem
 │     │
@@ -212,9 +212,23 @@ inha_notice
 │     │     └─ pages/               # MainNavigationPage (bottom navigation)
 │     │
 │     └─ onboarding/                # Onboarding feature
-│        └─ presentation/
-│           ├─ bloc/                # OnboardingBloc
-│           └─ pages/               # OnboardingPage
+│     │  └─ presentation/
+│     │     ├─ bloc/                # OnboardingBloc
+│     │     └─ pages/               # OnboardingPage
+│     │
+│     └─ user_preference/           # UserPreference feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # UserPreferenceLocalDataSource
+│     │  │  └─ repositories/        # UserPreferenceRepositoryImpl
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # BookmarkDefaultSortType, NoticeBoardDefaultType, SearchResultDefaultSortType, UserPreferenceEntity
+│     │  │  ├─ failures/            
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetUserPreferenceUseCase, UpdateUserPreferenceUseCase
+│     │  └─ presentation/
+│     │     ├─ bloc/                # UserPreferenceBloc
+│     │     ├─ pages/               # UserPreferencePage
+│     │     └─ widgets/             # BookmarkSortPreferenceTile, NoticeBoardPreferenceTile, SearchResultSortPreferenceTile
 ```
 
 ## 🚀 Start

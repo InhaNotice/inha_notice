@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -16,9 +16,15 @@ import 'package:inha_notice/core/constants/identifier_constants.dart';
 import 'package:inha_notice/core/presentation/models/pages_model.dart';
 import 'package:inha_notice/features/search/domain/entities/search_selectors.dart';
 
-/// **SearchSraper**
-/// 이 클래스는 사용자의 입력에 따른 검색 크롤링을 정의하는 클래스입니다.
-class SearchScraper {
+abstract class SearchDataSource {
+  Future<Map<String, dynamic>> fetchNotices(
+    String query,
+    int startCount,
+    String sortedType,
+  );
+}
+
+class SearchScraper implements SearchDataSource {
   late String baseUrl;
   late String collectionType;
 
@@ -27,12 +33,10 @@ class SearchScraper {
     collectionType = dotenv.get('COLLECTION');
   }
 
-  /// **사용자 입력에 따른 공지사항을 크롤링**
-  /// 파라미터: query(사용자 입력), startCount(페이지), sortedType(정렬 옵션)
+  @override
   Future<Map<String, dynamic>> fetchNotices(
       String query, int startCount, String sortedType) async {
     try {
-      // 크롤링 진행
       final String connectUrl =
           '$baseUrl?query=$query&collection=$collectionType&startCount=$startCount&sort=$sortedType';
       final response = await http.get(Uri.parse(connectUrl));
@@ -40,10 +44,8 @@ class SearchScraper {
       if (response.statusCode == StatusCode.OK) {
         final document = html_parser.parse(response.body);
 
-        // 검색된 공지사항 가져오기
         final searchedNotices = fetchSearchedNotices(document);
 
-        // 페이지 번호 가져오기
         final pages = fetchPages(document);
 
         return {
@@ -105,7 +107,6 @@ class SearchScraper {
     return results;
   }
 
-  /// **응답 객체를 통해 마지막 페이지 분석 후 페이지네이션 리턴**
   Pages fetchPages(dynamic document,
       [String? searchColumn, String? searchWord]) {
     final Pages results = createPages(searchColumn, searchWord);

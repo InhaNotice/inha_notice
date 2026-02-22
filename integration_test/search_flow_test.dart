@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-20
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:dartz/dartz.dart';
@@ -41,11 +41,37 @@ import 'package:inha_notice/features/search/domain/usecases/get_recent_search_wo
 import 'package:inha_notice/features/search/domain/usecases/get_trending_topics_use_case.dart';
 import 'package:inha_notice/features/search/domain/usecases/remove_recent_search_word_use_case.dart';
 import 'package:inha_notice/features/search/presentation/bloc/search_bloc.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
+import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
+import 'package:inha_notice/features/user_preference/domain/repositories/user_preference_repository.dart';
+import 'package:inha_notice/features/user_preference/domain/usecases/get_user_preference_use_case.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 import 'package:integration_test/integration_test.dart';
 
 class _FakeSharedPrefsManager extends SharedPrefsManager {
   _FakeSharedPrefsManager() : super(null);
+
+  @override
+  Future<void> initialize() async {
+    // Fake implementation - no-op
+  }
+
+  @override
+  Future<void> loadPreferences() async {
+    // Fake implementation - no-op
+  }
+
+  @override
+  Future<void> setMajorPreference(
+    String? currentMajorKey,
+    String newMajorKey,
+    String majorKeyType,
+  ) async {
+    // Fake implementation - no-op
+  }
 }
 
 class _FakeBookmarkLocalDataSource implements BookmarkLocalDataSource {
@@ -164,6 +190,35 @@ class _FakeSearchRepository implements SearchRepository {
   }
 }
 
+class _FakeUserPreferencesRepository implements UserPreferenceRepository {
+  Either<UserPreferenceFailure, UserPreferenceEntity> getResult = const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+  Either<UserPreferenceFailure, UserPreferenceEntity> updateResult =
+      const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+
+  @override
+  Either<UserPreferenceFailure, UserPreferenceEntity> getUserPreferences() {
+    return getResult;
+  }
+
+  @override
+  Future<Either<UserPreferenceFailure, UserPreferenceEntity>>
+      updateUserPreferences(UserPreferenceEntity preferences) async {
+    return updateResult;
+  }
+}
+
 class _FakeNotificationRepository implements NotificationRepository {
   @override
   Future<NotificationMessageEntity> getNotificationMessage() async {
@@ -182,6 +237,7 @@ Future<void> _registerDependencies() async {
   final noticeRepository = _FakeNoticeBoardRepository();
   final searchRepository = _FakeSearchRepository();
   final notificationRepository = _FakeNotificationRepository();
+  final userPreferencesRepository = _FakeUserPreferencesRepository();
 
   di.sl.registerLazySingleton<SharedPrefsManager>(() => prefs);
   di.sl.registerLazySingleton<BookmarkLocalDataSource>(
@@ -206,6 +262,8 @@ Future<void> _registerDependencies() async {
           GetRelativeNoticesUseCase(repository: noticeRepository),
       getUserSettingValueByNoticeTypeUseCase:
           GetUserSettingValueByNoticeTypeUseCase(sharedPrefsManager: prefs),
+      getUserPreferencesUseCase:
+          GetUserPreferenceUseCase(repository: userPreferencesRepository),
     ),
   );
   di.sl.registerFactory<SearchBloc>(

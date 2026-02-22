@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-19
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:dartz/dartz.dart';
@@ -20,12 +20,15 @@ import 'package:inha_notice/features/notice/domain/failures/notice_board_failure
 import 'package:inha_notice/features/notice/domain/usecases/get_notices_use_case.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_state.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/usecases/get_user_preference_use_case.dart';
 
 class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
   final GetAbsoluteNoticesUseCase getAbsoluteNoticesUseCase;
   final GetRelativeNoticesUseCase getRelativeNoticesUseCase;
   final GetUserSettingValueByNoticeTypeUseCase
       getUserSettingValueByNoticeTypeUseCase;
+  final GetUserPreferenceUseCase getUserPreferencesUseCase;
 
   late String _noticeType;
   bool _isRelativeStyle = false;
@@ -37,6 +40,7 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
     required this.getAbsoluteNoticesUseCase,
     required this.getRelativeNoticesUseCase,
     required this.getUserSettingValueByNoticeTypeUseCase,
+    required this.getUserPreferencesUseCase,
   }) : super(NoticeBoardInitial()) {
     on<LoadNoticeBoardEvent>(_onLoadNoticeBoard);
     on<LoadPageEvent>(_onLoadPage);
@@ -188,12 +192,21 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
         }
         _currentPages = pages;
 
+        final bool isDefaultNoticeSortingHeadline =
+            getUserPreferencesUseCase().fold(
+          (_) => false,
+          (preferences) =>
+              preferences.noticeBoardDefault == NoticeBoardDefaultType.headline,
+        );
+        final bool isHeadlineSelected =
+            entity.headlineNotices.isNotEmpty && isDefaultNoticeSortingHeadline;
+
         emit(NoticeBoardLoaded(
           headlineNotices: entity.headlineNotices,
           generalNotices: entity.generalNotices,
           pages: pages,
           currentPage: page,
-          isHeadlineSelected: false,
+          isHeadlineSelected: isHeadlineSelected,
           isKeywordSearchable: _isKeywordSearchable,
           isRefreshing: false,
         ));
@@ -223,12 +236,22 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
         _currentPages = pages;
 
         final int currentPage = (offset ~/ 10) + 1;
+
+        final bool isDefaultNoticeSortingHeadline =
+            getUserPreferencesUseCase().fold(
+          (_) => false,
+          (preferences) =>
+              preferences.noticeBoardDefault == NoticeBoardDefaultType.headline,
+        );
+        final bool isHeadlineSelected =
+            entity.headlineNotices.isNotEmpty && isDefaultNoticeSortingHeadline;
+
         emit(NoticeBoardLoaded(
           headlineNotices: entity.headlineNotices,
           generalNotices: entity.generalNotices,
           pages: pages,
           currentPage: currentPage,
-          isHeadlineSelected: false,
+          isHeadlineSelected: isHeadlineSelected,
           isKeywordSearchable: false,
           isRefreshing: false,
         ));

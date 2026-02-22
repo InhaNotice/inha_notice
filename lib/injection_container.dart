@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-20
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -77,14 +77,19 @@ import 'features/notification_setting/presentation/bloc/notification_setting_blo
 import 'features/search/data/datasources/recent_search_local_data_source.dart';
 import 'features/search/data/datasources/search_local_data_source.dart';
 import 'features/search/data/datasources/search_remote_data_source.dart';
+import 'features/search/data/datasources/search_scraper.dart';
 import 'features/search/data/repositories/search_repository_impl.dart';
+import 'features/search/data/repositories/search_result_repository_impl.dart';
 import 'features/search/domain/repositories/search_repository.dart';
+import 'features/search/domain/repositories/search_result_repository.dart';
 import 'features/search/domain/usecases/add_recent_search_word_use_case.dart';
 import 'features/search/domain/usecases/clear_recent_search_words_use_case.dart';
 import 'features/search/domain/usecases/get_recent_search_words_use_case.dart';
 import 'features/search/domain/usecases/get_trending_topics_use_case.dart';
 import 'features/search/domain/usecases/remove_recent_search_word_use_case.dart';
+import 'features/search/domain/usecases/search_notices_use_case.dart';
 import 'features/search/presentation/bloc/search_bloc.dart';
+import 'features/search/presentation/bloc/search_result_bloc.dart';
 import 'features/university_setting/data/datasources/university_setting_local_data_source.dart';
 import 'features/university_setting/data/repositories/university_setting_repository_impl.dart';
 import 'features/university_setting/domain/repositories/university_setting_repository.dart';
@@ -92,6 +97,12 @@ import 'features/university_setting/domain/usecases/get_current_setting_use_case
 import 'features/university_setting/domain/usecases/save_major_setting_use_case.dart';
 import 'features/university_setting/domain/usecases/save_setting_use_case.dart';
 import 'features/university_setting/presentation/bloc/university_setting_bloc.dart';
+import 'features/user_preference/data/datasources/user_preference_local_data_source.dart';
+import 'features/user_preference/data/repositories/user_preference_repository_impl.dart';
+import 'features/user_preference/domain/repositories/user_preference_repository.dart';
+import 'features/user_preference/domain/usecases/get_user_preference_use_case.dart';
+import 'features/user_preference/domain/usecases/update_user_preference_use_case.dart';
+import 'features/user_preference/presentation/bloc/user_preference_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -104,7 +115,8 @@ Future<void> init() async {
     () => BookmarkBloc(
         getBookmarksUseCase: sl(),
         clearBookmarksUseCase: sl(),
-        removeBookmarkUseCase: sl()),
+        removeBookmarkUseCase: sl(),
+        userPreferencesDataSource: sl()),
   );
   sl.registerFactory(() => SearchBloc(
         // 인기 검색어
@@ -115,6 +127,7 @@ Future<void> init() async {
         removeRecentSearchWord: sl(),
         clearRecentSearchWords: sl(),
       ));
+  sl.registerFactory(() => SearchResultBloc(searchNoticesUseCase: sl()));
   sl.registerFactory(() => OnboardingBloc(requestPermissionUseCase: sl()));
   sl.registerFactory(() => MoreBloc(getWebUrlsUseCase: sl()));
   sl.registerFactory(() => CacheBloc(getCacheSizeUseCase: sl()));
@@ -123,11 +136,14 @@ Future<void> init() async {
         getAbsoluteNoticesUseCase: sl(),
         getRelativeNoticesUseCase: sl(),
         getUserSettingValueByNoticeTypeUseCase: sl(),
+        getUserPreferencesUseCase: sl(),
       ));
   sl.registerFactory(
       () => MainNavigationBloc(getInitialNotificationMessage: sl()));
   sl.registerFactory(() => ThemePreferenceBloc(
       getThemePreferenceUseCase: sl(), setThemePreferenceUseCase: sl()));
+  sl.registerFactory(() => UserPreferenceBloc(
+      getUserPreferencesUseCase: sl(), updateUserPreferencesUseCase: sl()));
   sl.registerFactory(() => CustomTabBloc(
         getSelectedTabsUseCase: sl(),
         saveTabsUseCase: sl(),
@@ -166,6 +182,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetOssLicensesUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetThemePreferenceUseCase(repository: sl()));
   sl.registerLazySingleton(() => SetThemePreferenceUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetUserPreferenceUseCase(repository: sl()));
+  sl.registerLazySingleton(() => UpdateUserPreferenceUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetSelectedTabsUseCase(repository: sl()));
   sl.registerLazySingleton(() => SaveTabsUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetCurrentSettingUseCase(repository: sl()));
@@ -177,6 +195,7 @@ Future<void> init() async {
   sl.registerLazySingleton(
       () => GetUserSettingValueByNoticeTypeUseCase(sharedPrefsManager: sl()));
   sl.registerLazySingleton(() => GetMajorDisplayNameUseCase());
+  sl.registerLazySingleton(() => SearchNoticesUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -197,6 +216,9 @@ Future<void> init() async {
       localDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<SearchResultRepository>(
+    () => SearchResultRepositoryImpl(dataSource: sl()),
+  );
   sl.registerLazySingleton<NotificationRepository>(
       () => NotificationRepositoryImpl(remoteDataSource: sl()));
   sl.registerLazySingleton<MoreRepository>(
@@ -209,6 +231,8 @@ Future<void> init() async {
       () => OssLicenseRepositoryImpl(localDataSource: sl()));
   sl.registerLazySingleton<ThemePreferenceRepository>(
       () => ThemePreferenceRepositoryImpl(localDataSource: sl()));
+  sl.registerLazySingleton<UserPreferenceRepository>(
+      () => UserPreferenceRepositoryImpl(localDataSource: sl()));
   sl.registerLazySingleton<CustomTabRepository>(
     () => CustomTabRepositoryImpl(localDataSource: sl()),
   );
@@ -252,6 +276,9 @@ Future<void> init() async {
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(),
   );
+  sl.registerLazySingleton<SearchDataSource>(
+    () => SearchScraper(),
+  );
   sl.registerLazySingleton<MoreLocalDataSource>(
     () => MoreLocalDataSourceImpl(),
   );
@@ -262,6 +289,9 @@ Future<void> init() async {
       () => OssLicenseLocalDataSourceImpl());
   sl.registerLazySingleton<ThemePreferenceLocalDataSource>(
     () => ThemePreferenceLocalDataSourceImpl(sharedPrefsManager: sl()),
+  );
+  sl.registerLazySingleton<UserPreferenceLocalDataSource>(
+    () => UserPreferenceLocalDataSourceImpl(sharedPrefsManager: sl()),
   );
   sl.registerLazySingleton<CustomTabLocalDataSource>(
     () => CustomTabLocalDataSourceImpl(prefsManager: sl()),

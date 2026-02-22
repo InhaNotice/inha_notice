@@ -1,3 +1,13 @@
+/*
+ * This is file of the project inha_notice
+ * Licensed under the Apache License 2.0.
+ * Copyright (c) 2025-2026 INGONG
+ * For full license text, see the LICENSE file in the root directory or at
+ * http://www.apache.org/licenses/
+ * Author: Junho Kim
+ * Latest Updated Date: 2026-02-22
+ */
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
@@ -11,6 +21,26 @@ import 'package:inha_notice/features/bookmark/domain/usecases/remove_bookmark_us
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_event.dart';
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_state.dart';
+import 'package:inha_notice/features/user_preference/data/datasources/user_preference_local_data_source.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
+
+class _FakeUserPreferencesLocalDataSource
+    implements UserPreferenceLocalDataSource {
+  @override
+  UserPreferenceEntity getUserPreferences() {
+    return const UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    );
+  }
+
+  @override
+  Future<void> saveUserPreferences(UserPreferenceEntity preferences) async {}
+}
 
 class _FakeBookmarkRepository implements BookmarkRepository {
   Either<BookmarkFailure, BookmarkEntity> getBookmarksResult =
@@ -61,6 +91,7 @@ void main() {
         getBookmarksUseCase: GetBookmarksUseCase(repository: repository),
         clearBookmarksUseCase: ClearBookmarksUseCase(repository: repository),
         removeBookmarkUseCase: RemoveBookmarkUseCase(repository: repository),
+        userPreferencesDataSource: _FakeUserPreferencesLocalDataSource(),
       );
     });
 
