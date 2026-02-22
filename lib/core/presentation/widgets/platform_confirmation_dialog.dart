@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-19
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'dart:io';
@@ -14,53 +14,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
-import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
-import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
-import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
-import 'package:inha_notice/features/search/data/datasources/search_local_data_source.dart';
-import 'package:inha_notice/injection_container.dart' as di;
 
-class CacheDeletionDialogWidget extends StatefulWidget {
-  const CacheDeletionDialogWidget({
-    super.key,
-  });
-
-  @override
-  State<CacheDeletionDialogWidget> createState() =>
-      _CacheDeletionDialogWidgetState();
-}
-
-class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
-  /// **모든 캐시를 삭제**
-  Future<void> _deleteAllCaches() async {
-    try {
-      await Future.wait([
-        di.sl<BookmarkLocalDataSource>().clearBookmarks(),
-        ReadNoticeLocalDataSource.clearAllReadNotices(),
-        di.sl<SearchLocalDataSource>().clearRecentSearchWords(),
-      ]);
-
-      if (mounted) {
-        AppSnackBar.success(context, '모두 삭제되었어요!');
-      }
-    } catch (e) {
-      if (mounted) {
-        AppSnackBar.error(context, '실패하였어요. 다시 시도해보세요.');
-      }
-    } finally {
-      if (mounted) {
-        Navigator.pop(context);
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // iOS 환경
-    if (Platform.isIOS) {
-      return CupertinoAlertDialog(
+/// 플랫폼별 확인 다이얼로그를 표시하는 공통 위젯
+///
+/// iOS에서는 [CupertinoAlertDialog]를, Android에서는 [AlertDialog]를 사용한다.
+void showPlatformConfirmationDialog({
+  required BuildContext context,
+  required String title,
+  required String content,
+  String confirmText = '확인',
+  String cancelText = '취소',
+  bool isDestructive = false,
+  VoidCallback? onConfirm,
+  VoidCallback? onCancel,
+}) {
+  // iOS 환경
+  if (Platform.isIOS) {
+    showCupertinoDialog(
+      context: context,
+      builder: (dialogContext) => CupertinoAlertDialog(
         title: Text(
-          '캐시 삭제',
+          title,
           style: TextStyle(
             fontFamily: AppFont.pretendard.family,
             fontSize: 16,
@@ -75,7 +49,7 @@ class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
           children: [
             const SizedBox(height: 8),
             Text(
-              '읽은 공지, 북마크, 검색 기록이\n모두 깔끔하게 정리돼요!',
+              content,
               softWrap: true,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
@@ -90,12 +64,11 @@ class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
         actions: [
           CupertinoDialogAction(
             onPressed: () {
-              if (mounted) {
-                Navigator.pop(context);
-              }
+              Navigator.of(dialogContext).pop();
+              onCancel?.call();
             },
             child: Text(
-              '취소',
+              cancelText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -105,25 +78,34 @@ class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
             ),
           ),
           CupertinoDialogAction(
-            onPressed: () => _deleteAllCaches(),
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              onConfirm?.call();
+            },
+            isDestructiveAction: isDestructive,
             child: Text(
-              '삭제',
+              confirmText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Theme.of(context).dialogDeleteTextColor,
+                color: isDestructive
+                    ? Theme.of(context).dialogDeleteTextColor
+                    : Theme.of(context).dialogTextColor,
               ),
             ),
           ),
         ],
-      );
-    } else {
-      // Android 환경
-      return AlertDialog(
+      ),
+    );
+  } else {
+    // Android 환경
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          '캐시 삭제',
+          title,
           style: TextStyle(
             fontFamily: AppFont.pretendard.family,
             fontSize: 20,
@@ -133,7 +115,7 @@ class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
           ),
         ),
         content: Text(
-          '읽은 공지, 북마크, 검색 기록이\n모두 깔끔하게 정리돼요!',
+          content,
           softWrap: true,
           style: TextStyle(
             fontFamily: AppFont.pretendard.family,
@@ -146,12 +128,11 @@ class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
         actions: [
           TextButton(
             onPressed: () {
-              if (mounted) {
-                Navigator.pop(context);
-              }
+              Navigator.of(dialogContext).pop();
+              onCancel?.call();
             },
             child: Text(
-              '취소',
+              cancelText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -161,19 +142,24 @@ class _CacheDeletionDialogWidgetState extends State<CacheDeletionDialogWidget> {
             ),
           ),
           TextButton(
-            onPressed: () => _deleteAllCaches(),
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              onConfirm?.call();
+            },
             child: Text(
-              '삭제',
+              confirmText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Theme.of(context).dialogDeleteTextColor,
+                color: isDestructive
+                    ? Theme.of(context).dialogDeleteTextColor
+                    : Theme.of(context).dialogTextColor,
               ),
             ),
           ),
         ],
-      );
-    }
+      ),
+    );
   }
 }

@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:flutter/material.dart';
@@ -48,7 +48,9 @@ class _InAppWebPageState extends State<InAppWebPage> {
 
   /// **현재 페이지 공유하기**
   Future<void> _shareUrl(String url) async {
-    await Share.share(url);
+    await SharePlus.instance.share(
+      ShareParams(text: url),
+    );
   }
 
   /// **데스크탑/모바일 모드 전환 로직**

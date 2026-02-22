@@ -5,14 +5,13 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart'; // 로딩 위젯 가정
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
-import 'package:inha_notice/features/custom_tab/presentation/pages/custom_tab_page.dart';
 import 'package:inha_notice/features/more/domain/entities/more_configuration_entity.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_event.dart';
@@ -25,6 +24,7 @@ import 'package:inha_notice/features/more/presentation/widgets/more_title_tile.d
 import 'package:inha_notice/features/more/presentation/widgets/more_web_navigation_tile.dart';
 import 'package:inha_notice/features/more/presentation/widgets/theme_preference_tile.dart';
 import 'package:inha_notice/features/notification_setting/presentation/pages/notification_setting_page.dart';
+import 'package:inha_notice/features/user_preference/presentation/pages/user_preference_page.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 
 class MorePage extends StatelessWidget {
@@ -77,18 +77,6 @@ class _MorePageView extends StatelessWidget {
           children: [
             const MoreTitleTile(text: '공지사항', fontSize: 16),
             MoreNavigationTile(
-              title: '나만의 탭 설정',
-              icon: Icons.tab_outlined,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CustomTabPage(),
-                  ),
-                );
-              },
-            ),
-            MoreNavigationTile(
                 title: '알림 설정',
                 icon: Icons.notifications_outlined,
                 onTap: () {
@@ -132,9 +120,21 @@ class _MorePageView extends StatelessWidget {
                     color: Theme.of(context).dividerColor, thickness: 2.0)),
             const MoreTitleTile(text: '앱 설정', fontSize: 16),
             MoreNonNavigationTile(
-                title: '앱 버전',
+                title: '버전',
                 description: entity.appVersion,
                 icon: Icons.rocket_launch_outlined),
+            MoreNavigationTile(
+              title: '개인화 설정',
+              icon: Icons.tune_outlined,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserPreferencePage(),
+                  ),
+                );
+              },
+            ),
             const ThemePreferenceTile(
               title: '테마',
               icon: Icons.palette_outlined,
