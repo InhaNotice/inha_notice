@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-22
+ * Latest Updated Date: 2026-02-23
  */
 
 import 'package:dartz/dartz.dart';
@@ -192,14 +192,8 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
         }
         _currentPages = pages;
 
-        final bool isDefaultNoticeSortingHeadline =
-            getUserPreferencesUseCase().fold(
-          (_) => false,
-          (preferences) =>
-              preferences.noticeBoardDefault == NoticeBoardDefaultType.headline,
-        );
         final bool isHeadlineSelected =
-            entity.headlineNotices.isNotEmpty && isDefaultNoticeSortingHeadline;
+            _resolveHeadlineSelected(entity.headlineNotices.isNotEmpty);
 
         emit(NoticeBoardLoaded(
           headlineNotices: entity.headlineNotices,
@@ -237,14 +231,8 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
 
         final int currentPage = (offset ~/ 10) + 1;
 
-        final bool isDefaultNoticeSortingHeadline =
-            getUserPreferencesUseCase().fold(
-          (_) => false,
-          (preferences) =>
-              preferences.noticeBoardDefault == NoticeBoardDefaultType.headline,
-        );
         final bool isHeadlineSelected =
-            entity.headlineNotices.isNotEmpty && isDefaultNoticeSortingHeadline;
+            _resolveHeadlineSelected(entity.headlineNotices.isNotEmpty);
 
         emit(NoticeBoardLoaded(
           headlineNotices: entity.headlineNotices,
@@ -257,6 +245,22 @@ class NoticeBoardBloc extends Bloc<NoticeBoardEvent, NoticeBoardState> {
         ));
       },
     );
+  }
+
+  /// 현재 state가 NoticeBoardLoaded이면 사용자의 선택을 유지하고,
+  /// 초기 로드 시에만 UserPreference를 참조합니다.
+  bool _resolveHeadlineSelected(bool hasHeadlineNotices) {
+    if (state is NoticeBoardLoaded) {
+      return (state as NoticeBoardLoaded).isHeadlineSelected;
+    }
+
+    final bool isDefaultNoticeSortingHeadline =
+        getUserPreferencesUseCase().fold(
+      (_) => false,
+      (preferences) =>
+          preferences.noticeBoardDefault == NoticeBoardDefaultType.headline,
+    );
+    return hasHeadlineNotices && isDefaultNoticeSortingHeadline;
   }
 
   bool _checkKeywordSearchable(String noticeType) {
