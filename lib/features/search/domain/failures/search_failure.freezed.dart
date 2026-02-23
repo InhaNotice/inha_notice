@@ -49,6 +49,7 @@ extension SearchFailurePatterns on SearchFailure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_LocalDatabase value)? localDatabase,
     TResult Function(_Server value)? server,
+    TResult Function(_FetchResults value)? fetchResults,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -57,6 +58,8 @@ extension SearchFailurePatterns on SearchFailure {
         return localDatabase(_that);
       case _Server() when server != null:
         return server(_that);
+      case _FetchResults() when fetchResults != null:
+        return fetchResults(_that);
       case _:
         return orElse();
     }
@@ -79,6 +82,7 @@ extension SearchFailurePatterns on SearchFailure {
   TResult map<TResult extends Object?>({
     required TResult Function(_LocalDatabase value) localDatabase,
     required TResult Function(_Server value) server,
+    required TResult Function(_FetchResults value) fetchResults,
   }) {
     final _that = this;
     switch (_that) {
@@ -86,6 +90,8 @@ extension SearchFailurePatterns on SearchFailure {
         return localDatabase(_that);
       case _Server():
         return server(_that);
+      case _FetchResults():
+        return fetchResults(_that);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -107,6 +113,7 @@ extension SearchFailurePatterns on SearchFailure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_LocalDatabase value)? localDatabase,
     TResult? Function(_Server value)? server,
+    TResult? Function(_FetchResults value)? fetchResults,
   }) {
     final _that = this;
     switch (_that) {
@@ -114,6 +121,8 @@ extension SearchFailurePatterns on SearchFailure {
         return localDatabase(_that);
       case _Server() when server != null:
         return server(_that);
+      case _FetchResults() when fetchResults != null:
+        return fetchResults(_that);
       case _:
         return null;
     }
@@ -135,6 +144,7 @@ extension SearchFailurePatterns on SearchFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? localDatabase,
     TResult Function()? server,
+    TResult Function(String message)? fetchResults,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -143,6 +153,8 @@ extension SearchFailurePatterns on SearchFailure {
         return localDatabase();
       case _Server() when server != null:
         return server();
+      case _FetchResults() when fetchResults != null:
+        return fetchResults(_that.message);
       case _:
         return orElse();
     }
@@ -165,6 +177,7 @@ extension SearchFailurePatterns on SearchFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() localDatabase,
     required TResult Function() server,
+    required TResult Function(String message) fetchResults,
   }) {
     final _that = this;
     switch (_that) {
@@ -172,6 +185,8 @@ extension SearchFailurePatterns on SearchFailure {
         return localDatabase();
       case _Server():
         return server();
+      case _FetchResults():
+        return fetchResults(_that.message);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -193,6 +208,7 @@ extension SearchFailurePatterns on SearchFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? localDatabase,
     TResult? Function()? server,
+    TResult? Function(String message)? fetchResults,
   }) {
     final _that = this;
     switch (_that) {
@@ -200,6 +216,8 @@ extension SearchFailurePatterns on SearchFailure {
         return localDatabase();
       case _Server() when server != null:
         return server();
+      case _FetchResults() when fetchResults != null:
+        return fetchResults(_that.message);
       case _:
         return null;
     }
@@ -238,6 +256,66 @@ class _Server extends SearchFailure {
 
   @override
   int get hashCode => Object.hash(runtimeType, super.hashCode);
+}
+
+/// @nodoc
+
+class _FetchResults extends SearchFailure {
+  const _FetchResults(this.message) : super._();
+
+  final String message;
+
+  /// Create a copy of SearchFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$FetchResultsCopyWith<_FetchResults> get copyWith =>
+      __$FetchResultsCopyWithImpl<_FetchResults>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _FetchResults &&
+            super == other &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, super.hashCode, message);
+}
+
+/// @nodoc
+abstract mixin class _$FetchResultsCopyWith<$Res>
+    implements $SearchFailureCopyWith<$Res> {
+  factory _$FetchResultsCopyWith(
+          _FetchResults value, $Res Function(_FetchResults) _then) =
+      __$FetchResultsCopyWithImpl;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$FetchResultsCopyWithImpl<$Res>
+    implements _$FetchResultsCopyWith<$Res> {
+  __$FetchResultsCopyWithImpl(this._self, this._then);
+
+  final _FetchResults _self;
+  final $Res Function(_FetchResults) _then;
+
+  /// Create a copy of SearchFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_FetchResults(
+      null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 // dart format on
