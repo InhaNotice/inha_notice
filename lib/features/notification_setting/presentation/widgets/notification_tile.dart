@@ -53,7 +53,7 @@ class NotificationTile extends StatelessWidget {
           final isOn = state.subscriptions[prefKey] ?? false;
           AppSnackBar.success(
             context,
-            isOn ? '$title의 알림이 활성화되었습니다.' : '$title의 알림이 비활성화되었습니다.',
+            isOn ? '활성화 되었어요.' : '비활성화 되었어요!',
           );
         }
       },

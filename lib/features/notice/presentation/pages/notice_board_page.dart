@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-23
  */
 
 import 'package:flutter/material.dart';
@@ -151,11 +151,11 @@ class _NoticeBoardPageState extends State<NoticeBoardPage> {
     if (bookmarkDs.isBookmarked(notice.id)) {
       await bookmarkDs.removeBookmark(notice.id);
       if (!mounted) return;
-      AppSnackBar.success(context, '삭제되었습니다.');
+      AppSnackBar.success(context, '삭제되었어요.');
     } else {
       await bookmarkDs.addBookmark(notice);
       if (!mounted) return;
-      AppSnackBar.success(context, '저장되었습니다.');
+      AppSnackBar.success(context, '저장되었어요.');
     }
     setState(() {});
   }
