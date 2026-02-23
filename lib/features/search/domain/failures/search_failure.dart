@@ -19,10 +19,14 @@ class SearchFailure with _$SearchFailure implements Failures {
 
   const factory SearchFailure.localDatabase() = _LocalDatabase;
   const factory SearchFailure.server() = _Server;
+  const factory SearchFailure.fetchResults(String message) = _FetchResults;
 
   @override
-  String get message =>
-      when(localDatabase: () => '로컬 데이터베이스 오류', server: () => 'API 서버 연결 실패');
+  String get message => when(
+        localDatabase: () => '로컬 데이터베이스 오류',
+        server: () => 'API 서버 연결 실패',
+        fetchResults: (msg) => msg,
+      );
 
   @override
   List<Object> get props => [message];

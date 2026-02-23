@@ -28,6 +28,13 @@ import 'package:inha_notice/features/notice/presentation/bloc/home_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/pages/home_page.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/notice_board_tab_widget.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
+import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
+import 'package:inha_notice/features/user_preference/domain/repositories/user_preference_repository.dart';
+import 'package:inha_notice/features/user_preference/domain/usecases/get_user_preference_use_case.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 
 import '../../../support/widget_test_pump_app.dart';
@@ -122,16 +129,47 @@ class _FakeNoticeBoardRepository implements NoticeBoardRepository {
   }
 }
 
+class _FakeUserPreferencesRepository implements UserPreferenceRepository {
+  Either<UserPreferenceFailure, UserPreferenceEntity> getResult = const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+  Either<UserPreferenceFailure, UserPreferenceEntity> updateResult =
+      const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+
+  @override
+  Either<UserPreferenceFailure, UserPreferenceEntity> getUserPreferences() {
+    return getResult;
+  }
+
+  @override
+  Future<Either<UserPreferenceFailure, UserPreferenceEntity>>
+      updateUserPreferences(UserPreferenceEntity preferences) async {
+    return updateResult;
+  }
+}
+
 void main() {
   group('HomePage 위젯 테스트', () {
     late _FakeHomeRepository homeRepository;
     late _FakeNoticeBoardRepository noticeBoardRepository;
+    late _FakeUserPreferencesRepository userPreferencesRepository;
 
     setUp(() async {
       await di.sl.reset();
 
       homeRepository = _FakeHomeRepository();
       noticeBoardRepository = _FakeNoticeBoardRepository();
+      userPreferencesRepository = _FakeUserPreferencesRepository();
 
       final prefs = _FakeSharedPrefsManager();
 
@@ -153,6 +191,8 @@ void main() {
               GetRelativeNoticesUseCase(repository: noticeBoardRepository),
           getUserSettingValueByNoticeTypeUseCase:
               GetUserSettingValueByNoticeTypeUseCase(sharedPrefsManager: prefs),
+          getUserPreferencesUseCase:
+              GetUserPreferenceUseCase(repository: userPreferencesRepository),
         ),
       );
     });

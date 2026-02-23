@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-22
  */
 
 /// **SharedPrefsKeys**
@@ -42,4 +42,9 @@ abstract class SharedPrefKeys {
 
   // 정석학술정보관
   static const String kLibrary = 'LIBRARY';
+
+  // 기본 정렬 설정
+  static const String kNoticeBoardDefaultType = 'notice-board-default-type';
+  static const String kBookmarkDefaultSort = 'bookmark-default-sort';
+  static const String kSearchResultDefaultSort = 'search-result-default-sort';
 }

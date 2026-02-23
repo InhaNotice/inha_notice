@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-19
+ * Latest Updated Date: 2026-02-20
  */
 
 import 'package:dartz/dartz.dart';
@@ -25,6 +25,13 @@ import 'package:inha_notice/features/notice/presentation/bloc/notice_board_bloc.
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_state.dart';
 import 'package:inha_notice/features/notice/presentation/pages/notice_board_page.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/pagination_widget.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
+import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
+import 'package:inha_notice/features/user_preference/domain/repositories/user_preference_repository.dart';
+import 'package:inha_notice/features/user_preference/domain/usecases/get_user_preference_use_case.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 
 import '../../../support/widget_test_pump_app.dart';
@@ -98,17 +105,47 @@ class _FakeNoticeBoardRepository implements NoticeBoardRepository {
   }
 }
 
+class _FakeUserPreferencesRepository implements UserPreferenceRepository {
+  Either<UserPreferenceFailure, UserPreferenceEntity> getResult = const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+  Either<UserPreferenceFailure, UserPreferenceEntity> updateResult =
+      const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+
+  @override
+  Either<UserPreferenceFailure, UserPreferenceEntity> getUserPreferences() {
+    return getResult;
+  }
+
+  @override
+  Future<Either<UserPreferenceFailure, UserPreferenceEntity>>
+      updateUserPreferences(UserPreferenceEntity preferences) async {
+    return updateResult;
+  }
+}
+
 class _TestNoticeBoardBloc extends NoticeBoardBloc {
   _TestNoticeBoardBloc()
       : super(
-          getAbsoluteNoticesUseCase: GetAbsoluteNoticesUseCase(
-              repository: _FakeNoticeBoardRepository()),
-          getRelativeNoticesUseCase: GetRelativeNoticesUseCase(
-              repository: _FakeNoticeBoardRepository()),
-          getUserSettingValueByNoticeTypeUseCase:
-              GetUserSettingValueByNoticeTypeUseCase(
-                  sharedPrefsManager: _FakeSharedPrefsManager()),
-        );
+            getAbsoluteNoticesUseCase: GetAbsoluteNoticesUseCase(
+                repository: _FakeNoticeBoardRepository()),
+            getRelativeNoticesUseCase: GetRelativeNoticesUseCase(
+                repository: _FakeNoticeBoardRepository()),
+            getUserSettingValueByNoticeTypeUseCase:
+                GetUserSettingValueByNoticeTypeUseCase(
+                    sharedPrefsManager: _FakeSharedPrefsManager()),
+            getUserPreferencesUseCase: GetUserPreferenceUseCase(
+                repository: _FakeUserPreferencesRepository()));
 
   void setStateForTest(NoticeBoardState state) {
     emit(state);
@@ -168,7 +205,7 @@ void main() {
       await di.sl.reset();
     });
 
-    Future<void> _pumpNoticeBoard(WidgetTester tester) async {
+    Future<void> pumpNoticeBoard(WidgetTester tester) async {
       await pumpInhaApp(
         tester,
         wrapWithScaffold: false,
@@ -181,7 +218,7 @@ void main() {
     }
 
     testWidgets('로딩된 상태에서 토글과 목록, 페이지네이션을 렌더링한다', (tester) async {
-      await _pumpNoticeBoard(tester);
+      await pumpNoticeBoard(tester);
       bloc.setStateForTest(_loadedState());
       await tester.pump();
 
@@ -192,7 +229,7 @@ void main() {
     });
 
     testWidgets('중요 선택 상태에서 중요 공지 목록을 렌더링한다', (tester) async {
-      await _pumpNoticeBoard(tester);
+      await pumpNoticeBoard(tester);
       bloc.setStateForTest(_loadedState(isHeadlineSelected: true));
       await tester.pump();
 
@@ -201,7 +238,7 @@ void main() {
     });
 
     testWidgets('설정 필요 상태에서 안내 UI를 렌더링한다', (tester) async {
-      await _pumpNoticeBoard(tester);
+      await pumpNoticeBoard(tester);
       bloc.setStateForTest(
         const NoticeBoardSettingRequired(
             noticeType: 'MAJOR', displayName: '학과'),
@@ -213,7 +250,7 @@ void main() {
     });
 
     testWidgets('에러 상태에서 빈 결과 안내 UI를 렌더링한다', (tester) async {
-      await _pumpNoticeBoard(tester);
+      await pumpNoticeBoard(tester);
       bloc.setStateForTest(const NoticeBoardError(message: '로드 실패'));
       await tester.pump();
 

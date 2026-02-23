@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:dartz/dartz.dart';
@@ -17,6 +17,8 @@ import 'package:inha_notice/features/bookmark/domain/failures/bookmark_failure.d
 import 'package:inha_notice/features/bookmark/domain/usecases/clear_bookmarks_use_case.dart';
 import 'package:inha_notice/features/bookmark/domain/usecases/get_bookmarks_use_case.dart';
 import 'package:inha_notice/features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
+import 'package:inha_notice/features/user_preference/data/datasources/user_preference_local_data_source.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
 
 import 'bookmark_event.dart';
 import 'bookmark_state.dart';
@@ -25,11 +27,13 @@ class BookmarkBloc extends Bloc<BookmarkEvent, BookmarkState> {
   final GetBookmarksUseCase getBookmarksUseCase;
   final ClearBookmarksUseCase clearBookmarksUseCase;
   final RemoveBookmarkUseCase removeBookmarkUseCase;
+  final UserPreferenceLocalDataSource userPreferencesDataSource;
 
   BookmarkBloc({
     required this.getBookmarksUseCase,
     required this.clearBookmarksUseCase,
     required this.removeBookmarkUseCase,
+    required this.userPreferencesDataSource,
   }) : super(BookmarkInitial()) {
     on<LoadBookmarksEvent>(_onLoadBookmarks);
     on<RemoveBookmarkEvent>(_onRemoveBookmark);
@@ -42,7 +46,12 @@ class BookmarkBloc extends Bloc<BookmarkEvent, BookmarkState> {
     if (!event.isRefresh) {
       emit(BookmarkLoading());
     }
-    final BookmarkSortingType sortType = BookmarkSortingType.newest;
+
+    // 북마크 정렬 설정값
+    final BookmarkDefaultSortType defaultSortType =
+        userPreferencesDataSource.getUserPreferences().bookmarkDefaultSort;
+    final BookmarkSortingType sortType =
+        _mapToBookmarkSortingType(defaultSortType);
 
     final Either<BookmarkFailure, BookmarkEntity> results =
         await getBookmarksUseCase();
@@ -128,5 +137,18 @@ class BookmarkBloc extends Bloc<BookmarkEvent, BookmarkState> {
     }
 
     return sortedList;
+  }
+
+  BookmarkSortingType _mapToBookmarkSortingType(
+    BookmarkDefaultSortType type,
+  ) {
+    switch (type) {
+      case BookmarkDefaultSortType.newest:
+        return BookmarkSortingType.newest;
+      case BookmarkDefaultSortType.oldest:
+        return BookmarkSortingType.oldest;
+      case BookmarkDefaultSortType.name:
+        return BookmarkSortingType.name;
+    }
   }
 }

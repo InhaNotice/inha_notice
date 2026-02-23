@@ -5,107 +5,88 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-23
  */
 
 import 'package:flutter/material.dart';
-import 'package:inha_notice/core/constants/page_constants.dart';
-import 'package:inha_notice/core/constants/string_constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
-import 'package:inha_notice/core/presentation/models/pages_model.dart';
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
+import 'package:inha_notice/core/presentation/widgets/blue_loading_indicator_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/common_app_bar_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/notice_tile_widget.dart';
 import 'package:inha_notice/core/presentation/widgets/rounded_toggle_widget.dart';
-import 'package:inha_notice/features/notice/presentation/pages/base_notice_board_page.dart';
+import 'package:inha_notice/features/bookmark/data/datasources/bookmark_local_data_source.dart';
+import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/no_search_result_widget.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/notice_refresh_header.dart';
 import 'package:inha_notice/features/notice/presentation/widgets/pagination_widget.dart';
-import 'package:inha_notice/features/search/data/datasources/search_scraper.dart';
-import 'package:logger/logger.dart';
+import 'package:inha_notice/features/search/presentation/bloc/search_result_bloc.dart';
+import 'package:inha_notice/features/search/presentation/bloc/search_result_event.dart';
+import 'package:inha_notice/features/search/presentation/bloc/search_result_state.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/injection_container.dart' as di;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **SearchResultPage**
-/// 이 클래스는 사용자 입력에 따른 검색 결과를 불러오는 클래스입니다.
-class SearchResultPage extends BaseNoticeBoardPage {
+/// 사용자 입력에 따른 검색 결과를 BLoC 패턴으로 표시하는 페이지입니다.
+class SearchResultPage extends StatelessWidget {
   final String query;
 
   const SearchResultPage({super.key, required this.query});
 
   @override
-  State<SearchResultPage> createState() => _LibraryNoticeBoardState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) =>
+          di.sl<SearchResultBloc>()..add(LoadSearchResultEvent(query: query)),
+      child: _SearchResultPageView(query: query),
+    );
+  }
 }
 
-class _LibraryNoticeBoardState
-    extends BaseNoticeBoardPageState<SearchResultPage> {
-  final logger = Logger();
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
-  SearchScraper searchScraper = SearchScraper();
-  bool showRank = false;
-  bool showDate = true;
+class _SearchResultPageView extends StatefulWidget {
+  final String query;
 
-  String sortedType = StringConstants.kDefaultSortedType;
+  const _SearchResultPageView({required this.query});
 
   @override
-  void initState() {
-    super.initState();
-    initialize();
+  State<_SearchResultPageView> createState() => _SearchResultPageViewState();
+}
+
+class _SearchResultPageViewState extends State<_SearchResultPageView> {
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 
-  /// **Refresh 컨트롤러(새로운 공지 불러옴)**
-  void _onRefresh() async {
-    await loadNotices(PageConstants.kInitialAbsolutePage);
+  void _onRefresh() {
+    context.read<SearchResultBloc>().add(const RefreshSearchResultEvent());
     _refreshController.refreshCompleted();
   }
 
-  Future<void> initialize() async {
-    try {
-      await loadNotices(PageConstants.kInitialRelativePage);
-    } catch (e) {
-      logger.e('${runtimeType.toString()} - initialize() 오류: $e');
-    }
+  void _markNoticeAsRead(String noticeId) {
+    context
+        .read<SearchResultBloc>()
+        .add(MarkNoticeAsReadEvent(noticeId: noticeId));
   }
 
-  void toggleOption(String option) {
-    setState(() {
-      if (option == 'RANK') {
-        showRank = true;
-        showDate = false;
-      } else {
-        showRank = false;
-        showDate = true;
-      }
-      sortedType = option;
-      loadNotices(PageConstants.kInitialRelativePage);
-    });
-  }
-
-  Future<void> loadNotices(int startCount,
-      [String? searchColumn, String? searchWord]) async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      final fetchedNotices = await searchScraper.fetchNotices(
-          widget.query, startCount, sortedType);
+  Future<void> _toggleBookmark(NoticeTileModel notice) async {
+    final bookmarkDs = di.sl<BookmarkLocalDataSource>();
+    if (bookmarkDs.isBookmarked(notice.id)) {
+      await bookmarkDs.removeBookmark(notice.id);
       if (!mounted) return;
-      setState(() {
-        notices = fetchedNotices;
-        // 최초 공지사항 로드시 페이지 리스트 초기화
-        if (startCount == PageConstants.kInitialRelativePage &&
-            pages['pageMetas'].isEmpty) {
-          pages = Pages.from(notices['pages']);
-        }
-        // offset을 통한 현재 페이지로 변환
-        currentPage = (startCount ~/ 10) + 1;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-      logger.e('${runtimeType.toString()} - loadNotices() 오류: $e');
+      AppSnackBar.success(context, '삭제되었습니다.');
+    } else {
+      await bookmarkDs.addBookmark(notice);
+      if (!mounted) return;
+      AppSnackBar.success(context, '저장되었습니다.');
     }
+    setState(() {});
   }
 
   @override
@@ -116,19 +97,46 @@ class _LibraryNoticeBoardState
         titleSize: 17,
         isCenter: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildHeader(),
-          buildMain(),
-          buildFooter(),
-        ],
+      body: BlocConsumer<SearchResultBloc, SearchResultState>(
+        listener: (context, state) {
+          if (state is SearchResultLoaded && !state.isRefreshing) {
+            if (_refreshController.isRefresh) {
+              _refreshController.refreshCompleted();
+            }
+          }
+          if (state is SearchResultError) {
+            if (_refreshController.isRefresh) {
+              _refreshController.refreshFailed();
+            }
+          }
+        },
+        builder: (context, state) {
+          if (state is SearchResultInitial || state is SearchResultLoading) {
+            return const Center(child: BlueLoadingIndicatorWidget());
+          }
+
+          if (state is SearchResultError) {
+            return const NoSearchResult();
+          }
+
+          if (state is SearchResultLoaded) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(state),
+                _buildMain(state),
+                _buildFooter(state),
+              ],
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
 
-  @override
-  Widget buildHeader() {
+  Widget _buildHeader(SearchResultLoaded state) {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -138,68 +146,82 @@ class _LibraryNoticeBoardState
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           RoundedToggleWidget(
-              text: '정확도순',
-              option: 'RANK',
-              isSelected: showRank,
-              onTap: toggleOption),
+            text: '정확도순',
+            option: SearchResultDefaultSortType.rank.value,
+            isSelected: state.sortType == SearchResultDefaultSortType.rank,
+            onTap: (_) {
+              context.read<SearchResultBloc>().add(
+                    const ChangeSortTypeEvent(
+                        sortType: SearchResultDefaultSortType.rank),
+                  );
+            },
+          ),
           const SizedBox(width: 10),
           RoundedToggleWidget(
-              text: '최신순',
-              option: 'DATE',
-              isSelected: showDate,
-              onTap: toggleOption),
+            text: '최신순',
+            option: SearchResultDefaultSortType.date.value,
+            isSelected: state.sortType == SearchResultDefaultSortType.date,
+            onTap: (_) {
+              context.read<SearchResultBloc>().add(
+                    const ChangeSortTypeEvent(
+                        sortType: SearchResultDefaultSortType.date),
+                  );
+            },
+          ),
         ],
       ),
     );
   }
 
-  @override
-  Widget buildMain() {
+  Widget _buildMain(SearchResultLoaded state) {
     return Expanded(
       child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
-        child: isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : notices['general'].isEmpty
-                ? NoSearchResult()
-                : SmartRefresher(
-                    controller: _refreshController,
-                    onRefresh: _onRefresh,
-                    enablePullDown: true,
-                    header: const NoticeRefreshHeader(),
-                    child: ListView.builder(
-                      itemCount: notices['general'].length,
-                      itemBuilder: (context, index) {
-                        final notice = notices['general'][index];
-                        final isRead = isNoticeRead(notice['id'].toString());
-                        final isBookmarked =
-                            isNoticeBookmarked(notice['id'].toString());
-                        return NoticeTileWidget(
-                          notice: NoticeTileModel.fromMap(notice),
-                          isRead: isRead,
-                          isBookmarked: isBookmarked,
-                          markNoticeAsRead: markNoticeAsRead,
-                          toggleBookmark: toggleBookmark,
-                        );
-                      },
-                    ),
-                  ),
+        child: state.isRefreshing
+            ? const Center(child: BlueLoadingIndicatorWidget())
+            : SmartRefresher(
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                enablePullDown: true,
+                header: const NoticeRefreshHeader(),
+                child: state.notices.isEmpty
+                    ? const NoSearchResult()
+                    : ListView.builder(
+                        itemCount: state.notices.length,
+                        itemBuilder: (context, index) {
+                          final notice = state.notices[index];
+                          final isRead =
+                              ReadNoticeLocalDataSource.isReadNotice(notice.id);
+                          final isBookmarked = di
+                              .sl<BookmarkLocalDataSource>()
+                              .isBookmarked(notice.id);
+                          return NoticeTileWidget(
+                            notice: notice,
+                            isRead: isRead,
+                            isBookmarked: isBookmarked,
+                            markNoticeAsRead: _markNoticeAsRead,
+                            toggleBookmark: _toggleBookmark,
+                          );
+                        },
+                      ),
+              ),
       ),
     );
   }
 
-  @override
-  Widget buildFooter() {
-    if (pages['pageMetas'].isEmpty) return const SizedBox();
+  Widget _buildFooter(SearchResultLoaded state) {
+    if (state.pages['pageMetas'].isEmpty) return const SizedBox();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: PaginationWidget(
-        pages: pages,
-        currentPage: currentPage,
+        pages: state.pages,
+        currentPage: state.currentPage,
         isRelativeStyle: true,
         onAbsolutePageTap: (_) {},
-        onRelativePageTap: (offset) => loadNotices(offset),
+        onRelativePageTap: (offset) {
+          context.read<SearchResultBloc>().add(LoadPageEvent(offset: offset));
+        },
       ),
     );
   }

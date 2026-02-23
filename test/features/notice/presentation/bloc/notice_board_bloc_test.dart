@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-19
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:dartz/dartz.dart';
@@ -20,6 +20,13 @@ import 'package:inha_notice/features/notice/domain/usecases/get_notices_use_case
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_bloc.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_event.dart';
 import 'package:inha_notice/features/notice/presentation/bloc/notice_board_state.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
+import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
+import 'package:inha_notice/features/user_preference/domain/repositories/user_preference_repository.dart';
+import 'package:inha_notice/features/user_preference/domain/usecases/get_user_preference_use_case.dart';
 
 class _FakeNoticeBoardRepository implements NoticeBoardRepository {
   Either<NoticeBoardFailure, NoticeBoardEntity> absoluteResult =
@@ -56,6 +63,35 @@ class _FakeNoticeBoardRepository implements NoticeBoardRepository {
     lastRelativeNoticeType = noticeType;
     lastRelativeOffset = offset;
     return relativeResult;
+  }
+}
+
+class _FakeUserPreferencesRepository implements UserPreferenceRepository {
+  Either<UserPreferenceFailure, UserPreferenceEntity> getResult = const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+  Either<UserPreferenceFailure, UserPreferenceEntity> updateResult =
+      const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+
+  @override
+  Either<UserPreferenceFailure, UserPreferenceEntity> getUserPreferences() {
+    return getResult;
+  }
+
+  @override
+  Future<Either<UserPreferenceFailure, UserPreferenceEntity>>
+      updateUserPreferences(UserPreferenceEntity preferences) async {
+    return updateResult;
   }
 }
 
@@ -98,11 +134,13 @@ Future<void> _flushEvents([int times = 40]) async {
 void main() {
   group('NoticeBoardBloc 유닛 테스트', () {
     late _FakeNoticeBoardRepository repository;
+    late _FakeUserPreferencesRepository userPreferencesRepository;
     late _FakeSharedPrefsManager prefs;
     late NoticeBoardBloc bloc;
 
     setUp(() {
       repository = _FakeNoticeBoardRepository();
+      userPreferencesRepository = _FakeUserPreferencesRepository();
       prefs = _FakeSharedPrefsManager();
       bloc = NoticeBoardBloc(
         getAbsoluteNoticesUseCase:
@@ -111,6 +149,8 @@ void main() {
             GetRelativeNoticesUseCase(repository: repository),
         getUserSettingValueByNoticeTypeUseCase:
             GetUserSettingValueByNoticeTypeUseCase(sharedPrefsManager: prefs),
+        getUserPreferencesUseCase:
+            GetUserPreferenceUseCase(repository: userPreferencesRepository),
       );
     });
 

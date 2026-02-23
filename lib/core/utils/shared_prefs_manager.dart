@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-12
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:inha_notice/core/config/app_theme_type.dart';
@@ -58,6 +58,11 @@ class SharedPrefsManager {
     SharedPrefKeys.kUndergraduateScheduleDDNotification: false,
     // 정석학술정보관
     SharedPrefKeys.kLibrary: false,
+
+    // 기본 정렬 설정
+    SharedPrefKeys.kNoticeBoardDefaultType: 'general',
+    SharedPrefKeys.kBookmarkDefaultSort: 'newest',
+    SharedPrefKeys.kSearchResultDefaultSort: 'RANK',
 
     // 학과
     ..._buildMajorPrefs(),

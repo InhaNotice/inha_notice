@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-20
+ * Latest Updated Date: 2026-02-22
  */
 
 import 'package:dartz/dartz.dart';
@@ -71,6 +71,14 @@ import 'package:inha_notice/features/university_setting/domain/usecases/get_curr
 import 'package:inha_notice/features/university_setting/domain/usecases/save_major_setting_use_case.dart';
 import 'package:inha_notice/features/university_setting/domain/usecases/save_setting_use_case.dart';
 import 'package:inha_notice/features/university_setting/presentation/bloc/university_setting_bloc.dart';
+import 'package:inha_notice/features/user_preference/data/datasources/user_preference_local_data_source.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
+import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
+import 'package:inha_notice/features/user_preference/domain/repositories/user_preference_repository.dart';
+import 'package:inha_notice/features/user_preference/domain/usecases/get_user_preference_use_case.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 import 'package:integration_test/integration_test.dart';
 
@@ -92,6 +100,40 @@ class _FakeSharedPrefsManager extends SharedPrefsManager {
   Future<void> setValue<T>(String key, T value) async {
     values[key] = value;
   }
+
+  @override
+  Future<void> initialize() async {
+    // Fake implementation - no-op
+  }
+
+  @override
+  Future<void> loadPreferences() async {
+    // Fake implementation - no-op
+  }
+
+  @override
+  Future<void> setMajorPreference(
+    String? currentMajorKey,
+    String newMajorKey,
+    String majorKeyType,
+  ) async {
+    // Fake implementation - no-op
+  }
+}
+
+class _FakeUserPreferencesLocalDataSource
+    implements UserPreferenceLocalDataSource {
+  @override
+  UserPreferenceEntity getUserPreferences() {
+    return const UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    );
+  }
+
+  @override
+  Future<void> saveUserPreferences(UserPreferenceEntity preferences) async {}
 }
 
 class _FakeBookmarkLocalDataSource implements BookmarkLocalDataSource {
@@ -310,6 +352,35 @@ class _FakeUniversitySettingRepository implements UniversitySettingRepository {
   }
 }
 
+class _FakeUserPreferencesRepository implements UserPreferenceRepository {
+  Either<UserPreferenceFailure, UserPreferenceEntity> getResult = const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+  Either<UserPreferenceFailure, UserPreferenceEntity> updateResult =
+      const Right(
+    UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    ),
+  );
+
+  @override
+  Either<UserPreferenceFailure, UserPreferenceEntity> getUserPreferences() {
+    return getResult;
+  }
+
+  @override
+  Future<Either<UserPreferenceFailure, UserPreferenceEntity>>
+      updateUserPreferences(UserPreferenceEntity preferences) async {
+    return updateResult;
+  }
+}
+
 Future<void> _registerTestDependencies({
   required List<HomeTabEntity> homeTabs,
   required _FakeSharedPrefsManager prefs,
@@ -325,6 +396,7 @@ Future<void> _registerTestDependencies({
   final cacheRepository = _FakeCacheRepository();
   final notificationRepository = _FakeNotificationRepository();
   final notificationSettingRepository = _FakeNotificationSettingRepository();
+  final userPreferencesRepository = _FakeUserPreferencesRepository();
 
   di.sl.registerLazySingleton<SharedPrefsManager>(() => prefs);
   di.sl.registerLazySingleton<BookmarkLocalDataSource>(
@@ -352,6 +424,8 @@ Future<void> _registerTestDependencies({
           GetRelativeNoticesUseCase(repository: noticeRepository),
       getUserSettingValueByNoticeTypeUseCase:
           GetUserSettingValueByNoticeTypeUseCase(sharedPrefsManager: prefs),
+      getUserPreferencesUseCase:
+          GetUserPreferenceUseCase(repository: userPreferencesRepository),
     ),
   );
 
@@ -372,6 +446,7 @@ Future<void> _registerTestDependencies({
           ClearBookmarksUseCase(repository: bookmarkRepository),
       removeBookmarkUseCase:
           RemoveBookmarkUseCase(repository: bookmarkRepository),
+      userPreferencesDataSource: _FakeUserPreferencesLocalDataSource(),
     ),
   );
 

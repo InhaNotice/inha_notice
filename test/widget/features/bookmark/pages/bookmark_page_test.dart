@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-19
+ * Latest Updated Date: 2026-02-20
  */
 
 import 'package:dartz/dartz.dart';
@@ -21,6 +21,11 @@ import 'package:inha_notice/features/bookmark/domain/usecases/get_bookmarks_use_
 import 'package:inha_notice/features/bookmark/domain/usecases/remove_bookmark_use_case.dart';
 import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_bloc.dart';
 import 'package:inha_notice/features/bookmark/presentation/pages/bookmark_page.dart';
+import 'package:inha_notice/features/user_preference/data/datasources/user_preference_local_data_source.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
+import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
 import 'package:inha_notice/injection_container.dart' as di;
 
 import '../../../support/widget_test_pump_app.dart';
@@ -79,6 +84,21 @@ class _FakeBookmarkLocalDataSource implements BookmarkLocalDataSource {
   }
 }
 
+class _FakeUserPreferencesLocalDataSource
+    implements UserPreferenceLocalDataSource {
+  @override
+  UserPreferenceEntity getUserPreferences() {
+    return const UserPreferenceEntity(
+      noticeBoardDefault: NoticeBoardDefaultType.general,
+      bookmarkDefaultSort: BookmarkDefaultSortType.newest,
+      searchResultDefaultSort: SearchResultDefaultSortType.rank,
+    );
+  }
+
+  @override
+  Future<void> saveUserPreferences(UserPreferenceEntity preferences) async {}
+}
+
 void main() {
   group('BookmarkPage 위젯 테스트', () {
     late _FakeBookmarkRepository repository;
@@ -94,6 +114,7 @@ void main() {
           getBookmarksUseCase: GetBookmarksUseCase(repository: repository),
           clearBookmarksUseCase: ClearBookmarksUseCase(repository: repository),
           removeBookmarkUseCase: RemoveBookmarkUseCase(repository: repository),
+          userPreferencesDataSource: _FakeUserPreferencesLocalDataSource(),
         ),
       );
       di.sl.registerLazySingleton<BookmarkLocalDataSource>(
