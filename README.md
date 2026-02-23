@@ -109,16 +109,16 @@ inha_notice
 │     │
 │     ├─ search/                    # Search feature
 │     │  ├─ data/
-│     │  │  ├─ datasources/         # Search scraper, recent search, remote/local sources
-│     │  │  ├─ models/              # TrendingTopicModel
-│     │  │  └─ repositories/
+│     │  │  ├─ datasources/         # Search scraper, recent search, remote/local sources, SearchResultRemoteDataSource
+│     │  │  ├─ models/              # TrendingTopicModel, SearchResultModel
+│     │  │  └─ repositories/        # SearchResultRepositoryImpl
 │     │  ├─ domain/
-│     │  │  ├─ entities/            # SearchSelectors, TrendingTopicEntity
+│     │  │  ├─ entities/            # SearchSelectors, TrendingTopicEntity, SearchResultEntity
 │     │  │  ├─ failures/
-│     │  │  ├─ repositories/
-│     │  │  └─ usecases/            # GetTrendingTopics, RecentSearchWords, etc.
+│     │  │  ├─ repositories/        # SearchResultRepository
+│     │  │  └─ usecases/            # GetTrendingTopics, RecentSearchWords, GetSearchResults, etc.
 │     │  └─ presentation/
-│     │     ├─ bloc/                # SearchBloc
+│     │     ├─ bloc/                # SearchBloc, SearchResultBloc
 │     │     ├─ pages/               # SearchPage, SearchResultPage
 │     │     └─ widgets/             # TrendingTopicsItem
 │     │
@@ -203,6 +203,20 @@ inha_notice
 │     │     ├─ bloc/                # UniversitySettingBloc
 │     │     ├─ pages/               # CollegeSetting, GraduateSchoolSetting, MajorSetting pages
 │     │     └─ widgets/             # SettingHeader, SettingListTile, SettingSearchField
+│     │
+│     ├─ user_preference/            # User preference feature
+│     │  ├─ data/
+│     │  │  ├─ datasources/         # Local data source
+│     │  │  └─ repositories/        # UserPreferenceRepositoryImpl
+│     │  ├─ domain/
+│     │  │  ├─ entities/            # UserPreferenceEntity, NoticeBoardDefaultType, BookmarkDefaultSortType, SearchResultDefaultSortType
+│     │  │  ├─ failures/
+│     │  │  ├─ repositories/
+│     │  │  └─ usecases/            # GetUserPreference, UpdateUserPreference
+│     │  └─ presentation/
+│     │     ├─ bloc/                # UserPreferenceBloc
+│     │     ├─ pages/               # UserPreferencePage
+│     │     └─ widgets/             # BookmarkSortPreferenceTile, NoticeBoardPreferenceTile, SearchResultSortPreferenceTile
 │     │
 │     ├─ main/                      # Main navigation feature
 │     │  ├─ domain/
