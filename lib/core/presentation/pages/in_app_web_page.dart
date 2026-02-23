@@ -5,8 +5,10 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-22
+ * Latest Updated Date: 2026-02-24
  */
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -37,13 +39,18 @@ class _InAppWebPageState extends State<InAppWebPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 450), () {
-      if (mounted) {
-        setState(() {
-          _isTransitionComplete = true;
-        });
-      }
-    });
+    if (Platform.isIOS) {
+      Future.delayed(
+        const Duration(milliseconds: 450),
+        () {
+          if (mounted) {
+            setState(() {
+              _isTransitionComplete = true;
+            });
+          }
+        },
+      );
+    }
   }
 
   /// **현재 페이지 공유하기**
@@ -203,7 +210,9 @@ class _InAppWebPageState extends State<InAppWebPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      body: !_isTransitionComplete ? _buildLoadingView() : _buildWebView(),
+      body: (Platform.isIOS && !_isTransitionComplete)
+          ? _buildLoadingView()
+          : _buildWebView(),
     );
   }
 }
