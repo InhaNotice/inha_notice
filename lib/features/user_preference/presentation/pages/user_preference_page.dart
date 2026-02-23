@@ -44,7 +44,7 @@ class _UserPreferencePageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppBarWidget(
-        title: '개인화 설정',
+        title: '나만의 앱 설정',
         titleSize: 20,
         isCenter: true,
       ),

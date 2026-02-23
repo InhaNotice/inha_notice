@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-22
+ * Latest Updated Date: 2026-02-23
  */
 
 import 'package:flutter/material.dart';
@@ -124,7 +124,7 @@ class _MorePageView extends StatelessWidget {
                 description: entity.appVersion,
                 icon: Icons.rocket_launch_outlined),
             MoreNavigationTile(
-              title: '개인화 설정',
+              title: '나만의 앱 설정',
               icon: Icons.tune_outlined,
               onTap: () {
                 Navigator.push(
