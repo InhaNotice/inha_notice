@@ -5,7 +5,7 @@
  * For full license text, see the LICENSE file in the root directory or at
  * http://www.apache.org/licenses/
  * Author: Junho Kim
- * Latest Updated Date: 2026-02-22
+ * Latest Updated Date: 2026-02-23
  */
 
 import 'package:flutter/material.dart';
@@ -16,6 +16,8 @@ import 'package:inha_notice/core/presentation/widgets/platform_selection_dialog.
 import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
 import 'package:inha_notice/features/user_preference/presentation/bloc/user_preference_bloc.dart';
 import 'package:inha_notice/features/user_preference/presentation/bloc/user_preference_event.dart';
+
+import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 
 class BookmarkSortPreferenceTile extends StatelessWidget {
   final BookmarkDefaultSortType currentType;
@@ -79,6 +81,7 @@ class BookmarkSortPreferenceTile extends StatelessWidget {
         context.read<UserPreferenceBloc>().add(
               UpdateBookmarkDefaultSortEvent(type: type),
             );
+        AppSnackBar.success(context, '저장되었어요.');
       },
     );
   }
