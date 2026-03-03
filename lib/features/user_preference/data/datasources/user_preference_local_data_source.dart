@@ -8,6 +8,9 @@
  * Latest Updated Date: 2026-02-22
  */
 
+import 'dart:ui';
+
+import 'package:inha_notice/core/config/app_language_type.dart';
 import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
@@ -26,6 +29,15 @@ class UserPreferenceLocalDataSourceImpl
 
   UserPreferenceLocalDataSourceImpl({required this.sharedPrefsManager});
 
+  /// Get system language with fallback to Korean
+  String _getSystemLanguage() {
+    final systemLocale = PlatformDispatcher.instance.locale;
+    if (systemLocale.languageCode == 'en') {
+      return AppLanguageType.english.value;
+    }
+    return AppLanguageType.korean.value;
+  }
+
   @override
   UserPreferenceEntity getUserPreferences() {
     final String noticeBoardDefault = sharedPrefsManager
@@ -40,11 +52,16 @@ class UserPreferenceLocalDataSourceImpl
             .getValue<String>(SharedPrefKeys.kSearchResultDefaultSort) ??
         SearchResultDefaultSortType.rank.value;
 
+    final String languagePref = sharedPrefsManager
+            .getValue<String>(SharedPrefKeys.kLanguagePreference) ??
+        _getSystemLanguage();
+
     return UserPreferenceEntity(
       noticeBoardDefault: NoticeBoardDefaultType.fromValue(noticeBoardDefault),
       bookmarkDefaultSort: BookmarkDefaultSortType.fromValue(bookmarkSort),
       searchResultDefaultSort:
           SearchResultDefaultSortType.fromValue(searchResultSort),
+      languagePreference: AppLanguageType.fromValue(languagePref),
     );
   }
 
@@ -63,6 +80,11 @@ class UserPreferenceLocalDataSourceImpl
     await sharedPrefsManager.setValue<String>(
       SharedPrefKeys.kSearchResultDefaultSort,
       preferences.searchResultDefaultSort.value,
+    );
+
+    await sharedPrefsManager.setValue<String>(
+      SharedPrefKeys.kLanguagePreference,
+      preferences.languagePreference.value,
     );
   }
 }

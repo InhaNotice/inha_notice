@@ -47,4 +47,7 @@ abstract class SharedPrefKeys {
   static const String kNoticeBoardDefaultType = 'notice-board-default-type';
   static const String kBookmarkDefaultSort = 'bookmark-default-sort';
   static const String kSearchResultDefaultSort = 'search-result-default-sort';
+
+  // 언어 설정
+  static const String kLanguagePreference = 'language-preference';
 }

@@ -12,6 +12,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
+import 'package:inha_notice/main.dart' show localeNotifier;
 import 'package:inha_notice/features/more/data/datasources/more_local_data_source.dart';
 import 'package:inha_notice/features/more/data/datasources/oss_license_local_data_source.dart';
 import 'package:inha_notice/features/more/data/datasources/theme_preference_local_data_source.dart';
@@ -142,7 +143,9 @@ Future<void> init() async {
   sl.registerFactory(() => ThemePreferenceBloc(
       getThemePreferenceUseCase: sl(), setThemePreferenceUseCase: sl()));
   sl.registerFactory(() => UserPreferenceBloc(
-      getUserPreferencesUseCase: sl(), updateUserPreferencesUseCase: sl()));
+      getUserPreferencesUseCase: sl(),
+      updateUserPreferencesUseCase: sl(),
+      localeNotifier: localeNotifier));
   sl.registerFactory(() => CustomTabBloc(
         getSelectedTabsUseCase: sl(),
         saveTabsUseCase: sl(),

@@ -1,0 +1,65 @@
+{
+  "@@locale": "ko",
+  "appName": "인하공지",
+  "commonConfirm": "확인",
+  "commonCancel": "취소",
+  "noticeUntitled": "제목이 없는 게시글입니다",
+  "noticeViewCount": "조회 {count}",
+  "@noticeViewCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "webViewDesktopMode": "데스크탑 모드로 전환되었습니다.",
+  "webViewMobileMode": "모바일 모드로 전환되었습니다.",
+  "themeSystem": "시스템 설정",
+  "themeLight": "화이트",
+  "themeDark": "다크",
+  "themeSettingTitle": "테마 설정",
+  "themeSettingMessage": "원하는 모드를 선택해주세요.",
+  "messageSuccessSettingSaved": "설정되었어요.",
+  "messageErrorRetry": "다시 시도해주세요.",
+  "bookmarkPageTitle": "북마크",
+  "bookmarkSortNewest": "최신순",
+  "bookmarkSortOldest": "과거순",
+  "bookmarkSortName": "이름순",
+  "bookmarkEmptyMessage": "북마크한 공지사항이 없어요.",
+  "messageWarnNoBookmarksToDelete": "삭제할 북마크가 없어요.",
+  "messageSuccessBookmarksCleared": "모두 삭제했어요!",
+  "bookmarkRefreshIdle": "북마크를 새로고침하려면 아래로 당겨주세요.",
+  "bookmarkRefreshRelease": "놓으면 북마크를 다시 불러와요!",
+  "bookmarkRefreshRefreshing": "잠시만 기다려주세요, 북마크를 가져오는 중이에요.",
+  "bookmarkRefreshComplete": "북마크가 업데이트 되었어요. 확인해보세요!",
+  "searchPageTitle": "검색",
+  "searchInputPlaceholder": "검색어를 입력하세요",
+  "searchRecentSearches": "최근 검색어",
+  "searchRecentEmpty": "최근 검색 기록이 없습니다.",
+  "searchClearAll": "전체삭제",
+  "searchPopularKeywords": "실시간 인기 검색어",
+  "searchPopularEmpty": "인기 검색어가 없어요.",
+  "searchResultTitle": "검색 결과: {query}",
+  "@searchResultTitle": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchSortRank": "정확도순",
+  "searchSortDate": "최신순",
+  "messageWarnSearchMinLength": "검색어는 두 글자 이상 입력해주세요.",
+  "messageWarnNoRecentSearches": "최근 검색어가 존재하지 않아요.",
+  "messageSuccessRecentSearchesCleared": "최근 검색어를 모두 삭제하였어요!",
+  "messageSuccessBookmarkDeleted": "삭제되었습니다.",
+  "messageSuccessBookmarkAdded": "저장되었습니다.",
+  "messageSuccessSearchWordDeleted": "{word}이 삭제되었어요!",
+  "@messageSuccessSearchWordDeleted": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  }
+}

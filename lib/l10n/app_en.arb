@@ -1,0 +1,65 @@
+{
+  "@@locale": "en",
+  "appName": "Inha Notice",
+  "commonConfirm": "Confirm",
+  "commonCancel": "Cancel",
+  "noticeUntitled": "Untitled Post",
+  "noticeViewCount": "Views {count}",
+  "@noticeViewCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "webViewDesktopMode": "Switched to desktop mode.",
+  "webViewMobileMode": "Switched to mobile mode.",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSettingTitle": "Theme Setting",
+  "themeSettingMessage": "Please select your preferred mode.",
+  "messageSuccessSettingSaved": "Settings saved!",
+  "messageErrorRetry": "Please try again.",
+  "bookmarkPageTitle": "Bookmarks",
+  "bookmarkSortNewest": "Newest",
+  "bookmarkSortOldest": "Oldest",
+  "bookmarkSortName": "Name",
+  "bookmarkEmptyMessage": "No bookmarks yet.",
+  "messageWarnNoBookmarksToDelete": "No bookmarks to delete.",
+  "messageSuccessBookmarksCleared": "All bookmarks deleted!",
+  "bookmarkRefreshIdle": "Pull down to refresh bookmarks.",
+  "bookmarkRefreshRelease": "Release to refresh!",
+  "bookmarkRefreshRefreshing": "Loading bookmarks...",
+  "bookmarkRefreshComplete": "Bookmarks updated!",
+  "searchPageTitle": "Search",
+  "searchInputPlaceholder": "Enter search term",
+  "searchRecentSearches": "Recent Searches",
+  "searchRecentEmpty": "No recent searches.",
+  "searchClearAll": "Clear All",
+  "searchPopularKeywords": "Popular Keywords",
+  "searchPopularEmpty": "No popular keywords.",
+  "searchResultTitle": "Search Results: {query}",
+  "@searchResultTitle": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "searchSortRank": "Relevance",
+  "searchSortDate": "Newest",
+  "messageWarnSearchMinLength": "Please enter at least 2 characters.",
+  "messageWarnNoRecentSearches": "No recent searches found.",
+  "messageSuccessRecentSearchesCleared": "Recent searches cleared!",
+  "messageSuccessBookmarkDeleted": "Deleted.",
+  "messageSuccessBookmarkAdded": "Saved.",
+  "messageSuccessSearchWordDeleted": "{word} deleted!",
+  "@messageSuccessSearchWordDeleted": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  }
+}

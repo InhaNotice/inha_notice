@@ -9,6 +9,7 @@
  */
 
 import 'package:equatable/equatable.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 import 'package:inha_notice/features/user_preference/domain/entities/bookmark_default_sort_type.dart';
 import 'package:inha_notice/features/user_preference/domain/entities/notice_board_default_type.dart';
 import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
@@ -49,4 +50,13 @@ class UpdateSearchResultDefaultSortEvent extends UserPreferenceEvent {
 
   @override
   List<Object> get props => [type];
+}
+
+class ChangeLanguagePreferenceEvent extends UserPreferenceEvent {
+  final AppLanguageType language;
+
+  const ChangeLanguagePreferenceEvent({required this.language});
+
+  @override
+  List<Object> get props => [language];
 }

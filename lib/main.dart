@@ -8,10 +8,14 @@
  * Latest Updated Date: 2026-02-12
  */
 
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/config/app_theme_type.dart';
 import 'package:inha_notice/core/config/firebase_options.dart';
@@ -21,6 +25,7 @@ import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/notice/data/datasources/read_notice_local_data_source.dart';
 import 'package:inha_notice/features/notification/data/datasources/firebase_remote_data_source.dart';
 import 'package:inha_notice/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:inha_notice/l10n/app_localizations.dart';
 
 import 'core/config/app_bloc_observer.dart';
 import 'features/bookmark/data/datasources/bookmark_local_data_source.dart';
@@ -30,6 +35,7 @@ import 'injection_container.dart' as di;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final ValueNotifier<ThemeMode> themeModeNotifier =
     ValueNotifier(ThemeMode.system);
+final ValueNotifier<Locale> localeNotifier = ValueNotifier(const Locale('ko'));
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,6 +65,9 @@ Future<void> main() async {
   // 테마 설정 불러오기
   await _initializeThemeSetting();
 
+  // 언어 설정 불러오기
+  await _initializeLanguageSetting();
+
   runApp(const MyApp());
 }
 
@@ -77,13 +86,29 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeModeNotifier,
       builder: (context, themeMode, child) {
-        return MaterialApp(
-          title: '인하공지',
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: themeMode,
-          navigatorKey: navigatorKey,
-          home: const OnboardingPage(),
+        return ValueListenableBuilder<Locale>(
+          valueListenable: localeNotifier,
+          builder: (context, locale, child) {
+            return MaterialApp(
+              title: '인하공지',
+              locale: locale,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('ko'),
+                Locale('en'),
+              ],
+              theme: lightTheme,
+              darkTheme: darkTheme,
+              themeMode: themeMode,
+              navigatorKey: navigatorKey,
+              home: const OnboardingPage(),
+            );
+          },
         );
       },
     );
@@ -113,4 +138,32 @@ Future<void> _initializeThemeSetting() async {
     AppLogger.e('테마 설정 불러오기 실패 (기본값 적용): $e');
     themeModeNotifier.value = ThemeMode.system;
   }
+}
+
+/// **언어 설정 불러오기**
+Future<void> _initializeLanguageSetting() async {
+  try {
+    final String? languagePref = di
+        .sl<SharedPrefsManager>()
+        .getValue<String>(SharedPrefKeys.kLanguagePreference);
+
+    if (languagePref != null) {
+      localeNotifier.value = AppLanguageType.fromValue(languagePref).toLocale();
+    } else {
+      // 저장된 설정이 없으면 시스템 언어 사용
+      localeNotifier.value = _getSystemLocale();
+    }
+  } catch (e) {
+    AppLogger.e('언어 설정 불러오기 실패 (기본값 적용): $e');
+    localeNotifier.value = _getSystemLocale();
+  }
+}
+
+/// **시스템 언어 가져오기**
+Locale _getSystemLocale() {
+  final systemLocale = PlatformDispatcher.instance.locale;
+  if (systemLocale.languageCode == 'en') {
+    return const Locale('en');
+  }
+  return const Locale('ko');
 }

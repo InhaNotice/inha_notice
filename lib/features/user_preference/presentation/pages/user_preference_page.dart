@@ -21,6 +21,7 @@ import 'package:inha_notice/features/user_preference/presentation/bloc/user_pref
 import 'package:inha_notice/features/user_preference/presentation/bloc/user_preference_event.dart';
 import 'package:inha_notice/features/user_preference/presentation/bloc/user_preference_state.dart';
 import 'package:inha_notice/features/user_preference/presentation/widgets/bookmark_sort_preference_tile.dart';
+import 'package:inha_notice/features/user_preference/presentation/widgets/language_preference_tile.dart';
 import 'package:inha_notice/features/user_preference/presentation/widgets/notice_board_preference_tile.dart';
 import 'package:inha_notice/features/user_preference/presentation/widgets/search_result_sort_preference_tile.dart';
 import 'package:inha_notice/injection_container.dart' as di;
@@ -138,6 +139,59 @@ class _UserPreferencePageView extends StatelessWidget {
                         ),
                       );
                     },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // 언어 설정 섹션
+            _buildSectionCard(
+              context,
+              primaryBlue,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.green.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Icon(
+                          Icons.language_rounded,
+                          color: Colors.green,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        '언어 설정',
+                        style: TextStyle(
+                          fontFamily: AppFont.pretendard.family,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).defaultThemedTextColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    '앱에서 사용할 언어를 선택해주세요',
+                    style: TextStyle(
+                      fontFamily: AppFont.pretendard.family,
+                      fontSize: 14,
+                      color: Theme.of(context).fixedGreyText,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const LanguagePreferenceTile(
+                    title: '언어',
+                    icon: Icons.language,
                   ),
                 ],
               ),

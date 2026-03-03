@@ -8,6 +8,7 @@
  * Latest Updated Date: 2026-02-22
  */
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
 import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
@@ -20,15 +21,18 @@ class UserPreferenceBloc
     extends Bloc<UserPreferenceEvent, UserPreferenceState> {
   final GetUserPreferenceUseCase getUserPreferencesUseCase;
   final UpdateUserPreferenceUseCase updateUserPreferencesUseCase;
+  final ValueNotifier<Locale>? localeNotifier;
 
   UserPreferenceBloc({
     required this.getUserPreferencesUseCase,
     required this.updateUserPreferencesUseCase,
+    this.localeNotifier,
   }) : super(UserPreferenceInitial()) {
     on<LoadUserPreferenceEvent>(_onLoadUserPreferences);
     on<UpdateNoticeBoardDefaultEvent>(_onUpdateNoticeBoardDefault);
     on<UpdateBookmarkDefaultSortEvent>(_onUpdateBookmarkDefaultSort);
     on<UpdateSearchResultDefaultSortEvent>(_onUpdateSearchResultDefaultSort);
+    on<ChangeLanguagePreferenceEvent>(_onChangeLanguage);
   }
 
   Future<void> _onLoadUserPreferences(
@@ -59,11 +63,9 @@ class UserPreferenceBloc
   ) async {
     if (state is UserPreferenceLoaded) {
       final UserPreferenceLoaded currentState = state as UserPreferenceLoaded;
-      final UserPreferenceEntity updatedPreferences = UserPreferenceEntity(
+      final UserPreferenceEntity updatedPreferences =
+          currentState.preferences.copyWith(
         noticeBoardDefault: event.type,
-        bookmarkDefaultSort: currentState.preferences.bookmarkDefaultSort,
-        searchResultDefaultSort:
-            currentState.preferences.searchResultDefaultSort,
       );
 
       final result = await updateUserPreferencesUseCase(updatedPreferences);
@@ -89,11 +91,9 @@ class UserPreferenceBloc
   ) async {
     if (state is UserPreferenceLoaded) {
       final UserPreferenceLoaded currentState = state as UserPreferenceLoaded;
-      final UserPreferenceEntity updatedPreferences = UserPreferenceEntity(
-        noticeBoardDefault: currentState.preferences.noticeBoardDefault,
+      final UserPreferenceEntity updatedPreferences =
+          currentState.preferences.copyWith(
         bookmarkDefaultSort: event.type,
-        searchResultDefaultSort:
-            currentState.preferences.searchResultDefaultSort,
       );
 
       final result = await updateUserPreferencesUseCase(updatedPreferences);
@@ -119,9 +119,8 @@ class UserPreferenceBloc
   ) async {
     if (state is UserPreferenceLoaded) {
       final UserPreferenceLoaded currentState = state as UserPreferenceLoaded;
-      final UserPreferenceEntity updatedPreferences = UserPreferenceEntity(
-        noticeBoardDefault: currentState.preferences.noticeBoardDefault,
-        bookmarkDefaultSort: currentState.preferences.bookmarkDefaultSort,
+      final UserPreferenceEntity updatedPreferences =
+          currentState.preferences.copyWith(
         searchResultDefaultSort: event.type,
       );
 
@@ -136,6 +135,36 @@ class UserPreferenceBloc
           emit(UserPreferenceError(message: message));
         },
         (preferences) {
+          emit(UserPreferenceLoaded(preferences: preferences));
+        },
+      );
+    }
+  }
+
+  Future<void> _onChangeLanguage(
+    ChangeLanguagePreferenceEvent event,
+    Emitter<UserPreferenceState> emit,
+  ) async {
+    if (state is UserPreferenceLoaded) {
+      final UserPreferenceLoaded currentState = state as UserPreferenceLoaded;
+      final UserPreferenceEntity updatedPreferences =
+          currentState.preferences.copyWith(
+        languagePreference: event.language,
+      );
+
+      final result = await updateUserPreferencesUseCase(updatedPreferences);
+
+      result.fold(
+        (failure) {
+          final String message = failure.when(
+            storage: (msg) => msg,
+            unknown: (msg) => msg,
+          );
+          emit(UserPreferenceError(message: message));
+        },
+        (preferences) {
+          // Update locale notifier to trigger UI rebuild
+          localeNotifier?.value = event.language.toLocale();
           emit(UserPreferenceLoaded(preferences: preferences));
         },
       );
