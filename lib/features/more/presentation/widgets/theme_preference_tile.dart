@@ -39,10 +39,19 @@ class ThemePreferenceTile extends StatefulWidget {
 }
 
 class _ThemePreferenceTileState extends State<ThemePreferenceTile> {
-  String description = di
-          .sl<SharedPrefsManager>()
-          .getValue<String>(SharedPrefKeys.kUserThemeSetting) ??
-      AppThemeType.system.text;
+  AppThemeType _getCurrentTheme() {
+    final String? savedValue = di
+        .sl<SharedPrefsManager>()
+        .getValue<String>(SharedPrefKeys.kUserThemeSetting);
+
+    if (savedValue == null) return AppThemeType.system;
+
+    // 저장된 한글 텍스트를 enum으로 변환
+    return AppThemeType.values.firstWhere(
+      (theme) => theme.text == savedValue,
+      orElse: () => AppThemeType.system,
+    );
+  }
 
   /// **다이얼로그 push -> pop 후, 변경사항 반영**
   Future<void> handleThemePreferenceTap() async {
@@ -51,10 +60,7 @@ class _ThemePreferenceTileState extends State<ThemePreferenceTile> {
       builder: (context) => const ThemeModeSelectionDialog(),
     );
     setState(() {
-      description = di
-              .sl<SharedPrefsManager>()
-              .getValue<String>(SharedPrefKeys.kUserThemeSetting) ??
-          AppThemeType.system.text;
+      // 다이얼로그 닫힌 후 UI 업데이트를 위한 setState
     });
   }
 
@@ -91,7 +97,7 @@ class _ThemePreferenceTileState extends State<ThemePreferenceTile> {
               ],
             ),
             Text(
-              description,
+              _getCurrentTheme().getDisplayName(context),
               style: TextStyle(
                   fontFamily: AppFont.pretendard.family,
                   fontSize: 16,

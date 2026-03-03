@@ -19,6 +19,7 @@ import 'package:inha_notice/core/keys/shared_pref_keys.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
 import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/injection_container.dart' as di;
+import 'package:inha_notice/l10n/app_localizations.dart';
 import 'package:inha_notice/main.dart';
 
 /// **ThemeModeSelectionDialog**
@@ -38,6 +39,7 @@ class ThemeModeSelectionDialog extends StatefulWidget {
 
 class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
   Future<void> _setThemeMode(String selectedValue) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       await di
           .sl<SharedPrefsManager>()
@@ -53,11 +55,11 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
       }
 
       if (mounted) {
-        AppSnackBar.success(context, '설정되었어요.');
+        AppSnackBar.success(context, l10n.messageSuccessSettingSaved);
       }
     } catch (e) {
       if (mounted) {
-        AppSnackBar.error(context, '다시 시도해주세요.');
+        AppSnackBar.error(context, l10n.messageErrorRetry);
       }
     } finally {
       // 현재 다이얼로그를 pop
@@ -69,11 +71,12 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // iOS 환경
     if (Platform.isIOS) {
       return CupertinoAlertDialog(
         title: Text(
-          '테마 설정',
+          l10n.themeSettingTitle,
           style: TextStyle(
             fontFamily: AppFont.pretendard.family,
             fontSize: 16,
@@ -83,7 +86,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           ),
         ),
         content: Text(
-          '원하는 모드를 선택해주세요.',
+          l10n.themeSettingMessage,
           style: TextStyle(
             fontFamily: AppFont.pretendard.family,
             fontSize: 13,
@@ -96,7 +99,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           CupertinoDialogAction(
             onPressed: () => _setThemeMode(AppThemeType.system.text),
             child: Text(
-              '시스템 설정',
+              AppThemeType.system.getDisplayName(context),
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -108,7 +111,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           CupertinoDialogAction(
             onPressed: () => _setThemeMode(AppThemeType.light.text),
             child: Text(
-              AppThemeType.light.text,
+              AppThemeType.light.getDisplayName(context),
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -120,7 +123,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           CupertinoDialogAction(
             onPressed: () => _setThemeMode(AppThemeType.dark.text),
             child: Text(
-              AppThemeType.dark.text,
+              AppThemeType.dark.getDisplayName(context),
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -137,7 +140,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
         alignment: Alignment.center,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          '테마 설정',
+          l10n.themeSettingTitle,
           textAlign: TextAlign.left,
           style: TextStyle(
             fontFamily: AppFont.pretendard.family,
@@ -148,7 +151,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           ),
         ),
         content: Text(
-          '원하는 모드를 선택해주세요.',
+          l10n.themeSettingMessage,
           style: TextStyle(
             fontFamily: AppFont.pretendard.family,
             fontSize: 16,
@@ -162,7 +165,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           TextButton(
             onPressed: () => _setThemeMode(AppThemeType.system.text),
             child: Text(
-              AppThemeType.system.text,
+              AppThemeType.system.getDisplayName(context),
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -175,7 +178,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           TextButton(
             onPressed: () => _setThemeMode(AppThemeType.light.text),
             child: Text(
-              AppThemeType.light.text,
+              AppThemeType.light.getDisplayName(context),
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -188,7 +191,7 @@ class _ThemeModeSelectionDialogState extends State<ThemeModeSelectionDialog> {
           TextButton(
             onPressed: () => _setThemeMode(AppThemeType.dark.text),
             child: Text(
-              AppThemeType.dark.text,
+              AppThemeType.dark.getDisplayName(context),
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
