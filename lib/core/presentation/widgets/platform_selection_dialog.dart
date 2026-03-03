@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/l10n/app_localizations.dart';
 
 /// 플랫폼별 선택 다이얼로그를 표시하는 공통 위젯
 ///
@@ -25,6 +26,7 @@ void showPlatformSelectionDialog<T>({
   required String Function(T) getDisplayName,
   required void Function(T) onSelected,
 }) {
+  final l10n = AppLocalizations.of(context)!;
   // iOS 환경
   if (Platform.isIOS) {
     showCupertinoModalPopup(
@@ -55,7 +57,7 @@ void showPlatformSelectionDialog<T>({
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.of(dialogContext).pop(),
           child: Text(
-            '취소',
+            l10n.commonCancel,
             style: TextStyle(
               fontFamily: AppFont.pretendard.family,
               fontSize: 16,

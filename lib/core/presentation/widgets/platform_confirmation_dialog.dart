@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
+import 'package:inha_notice/l10n/app_localizations.dart';
 
 /// 플랫폼별 확인 다이얼로그를 표시하는 공통 위젯
 ///
@@ -22,12 +23,15 @@ void showPlatformConfirmationDialog({
   required BuildContext context,
   required String title,
   required String content,
-  String confirmText = '확인',
-  String cancelText = '취소',
+  String? confirmText,
+  String? cancelText,
   bool isDestructive = false,
   VoidCallback? onConfirm,
   VoidCallback? onCancel,
 }) {
+  final l10n = AppLocalizations.of(context)!;
+  final actualConfirmText = confirmText ?? l10n.commonConfirm;
+  final actualCancelText = cancelText ?? l10n.commonCancel;
   // iOS 환경
   if (Platform.isIOS) {
     showCupertinoDialog(
@@ -68,7 +72,7 @@ void showPlatformConfirmationDialog({
               onCancel?.call();
             },
             child: Text(
-              cancelText,
+              actualCancelText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -84,7 +88,7 @@ void showPlatformConfirmationDialog({
             },
             isDestructiveAction: isDestructive,
             child: Text(
-              confirmText,
+              actualConfirmText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -132,7 +136,7 @@ void showPlatformConfirmationDialog({
               onCancel?.call();
             },
             child: Text(
-              cancelText,
+              actualCancelText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -147,7 +151,7 @@ void showPlatformConfirmationDialog({
               onConfirm?.call();
             },
             child: Text(
-              confirmText,
+              actualConfirmText,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
