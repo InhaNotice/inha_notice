@@ -27,6 +27,7 @@ import 'package:inha_notice/features/bookmark/presentation/bloc/bookmark_state.d
 import 'package:inha_notice/features/bookmark/presentation/widgets/bookmark_refresh_header_widget.dart';
 import 'package:inha_notice/features/notice/presentation/pages/base_notice_board_page.dart';
 import 'package:inha_notice/injection_container.dart';
+import 'package:inha_notice/l10n/app_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **BookmarkPage**
@@ -50,12 +51,13 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocProvider(
       create: (_) =>
           sl<BookmarkBloc>()..add(const LoadBookmarksEvent(isRefresh: false)),
       child: Scaffold(
-        appBar: const CommonAppBarWidget(
-          title: '북마크',
+        appBar: CommonAppBarWidget(
+          title: l10n.bookmarkPageTitle,
           titleSize: 20,
           isCenter: false,
         ),
@@ -78,6 +80,7 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
   Widget buildHeader() {
     return BlocBuilder<BookmarkBloc, BookmarkState>(
       builder: (context, state) {
+        final l10n = AppLocalizations.of(context)!;
         final BookmarkSortingType currentSortingType = (state is BookmarkLoaded)
             ? state.sortType
             : BookmarkSortingType.newest;
@@ -94,7 +97,7 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               RoundedToggleWidget(
-                text: '최신순',
+                text: l10n.bookmarkSortNewest,
                 option: 'NEWEST',
                 isSelected: currentSortingType == BookmarkSortingType.newest,
                 onTap: (_) => context.read<BookmarkBloc>().add(
@@ -105,7 +108,7 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
               ),
               const SizedBox(width: 10),
               RoundedToggleWidget(
-                text: '과거순',
+                text: l10n.bookmarkSortOldest,
                 option: 'OLDEST',
                 isSelected: currentSortingType == BookmarkSortingType.oldest,
                 onTap: (_) => context.read<BookmarkBloc>().add(
@@ -116,7 +119,7 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
               ),
               const SizedBox(width: 10),
               RoundedToggleWidget(
-                text: '이름순',
+                text: l10n.bookmarkSortName,
                 option: 'NAME',
                 isSelected: currentSortingType == BookmarkSortingType.name,
                 onTap: (_) => context.read<BookmarkBloc>().add(
@@ -134,11 +137,11 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
                 ),
                 onPressed: () {
                   if (isEmpty) {
-                    AppSnackBar.warn(context, '삭제할 북마크가 없어요.');
+                    AppSnackBar.warn(context, l10n.messageWarnNoBookmarksToDelete);
                     return;
                   }
                   context.read<BookmarkBloc>().add(ClearBookmarksEvent());
-                  AppSnackBar.success(context, '모두 삭제했어요!');
+                  AppSnackBar.success(context, l10n.messageSuccessBookmarksCleared);
                 },
               ),
             ],
@@ -175,10 +178,11 @@ class _BookmarkPageState extends BaseNoticeBoardPageState<BookmarkPage> {
             );
           }
           if (state is BookmarkLoaded) {
+            final l10n = AppLocalizations.of(context)!;
             if (state.bookmarks.isEmpty) {
               return Center(
                 child: Text(
-                  '북마크한 공지사항이 없어요.',
+                  l10n.bookmarkEmptyMessage,
                   style: TextStyle(
                     fontFamily: AppFont.pretendard.family,
                     fontSize: 14,

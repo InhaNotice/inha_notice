@@ -9,6 +9,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:inha_notice/l10n/app_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BookmarkRefreshHeaderWidget extends StatelessWidget {
@@ -16,11 +17,12 @@ class BookmarkRefreshHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ClassicHeader(
-      idleText: "북마크를 새로고침하려면 아래로 당겨주세요.",
-      releaseText: "놓으면 북마크를 다시 불러와요!",
-      refreshingText: "잠시만 기다려주세요, 북마크를 가져오는 중이에요.",
-      completeText: "북마크가 업데이트 되었어요. 확인해보세요!",
+      idleText: l10n.bookmarkRefreshIdle,
+      releaseText: l10n.bookmarkRefreshRelease,
+      refreshingText: l10n.bookmarkRefreshRefreshing,
+      completeText: l10n.bookmarkRefreshComplete,
     );
   }
 }
