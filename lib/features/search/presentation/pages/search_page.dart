@@ -22,6 +22,7 @@ import 'package:inha_notice/features/search/presentation/bloc/search_state.dart'
 import 'package:inha_notice/features/search/presentation/pages/search_result_page.dart';
 import 'package:inha_notice/features/search/presentation/widgets/trending_topics_item_widget.dart';
 import 'package:inha_notice/injection_container.dart' as di;
+import 'package:inha_notice/l10n/app_localizations.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -46,8 +47,9 @@ class _SearchPageViewState extends State<_SearchPageView> {
   final TextEditingController _searchController = TextEditingController();
 
   void _search(String query) {
+    final l10n = AppLocalizations.of(context)!;
     if (query.trim().length < 2) {
-      AppSnackBar.warn(context, '검색어는 두 글자 이상 입력해주세요.');
+      AppSnackBar.warn(context, l10n.messageWarnSearchMinLength);
       return;
     }
 
@@ -64,9 +66,10 @@ class _SearchPageViewState extends State<_SearchPageView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar:
-          const CommonAppBarWidget(title: '검색', titleSize: 20, isCenter: false),
+          CommonAppBarWidget(title: l10n.searchPageTitle, titleSize: 20, isCenter: false),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
@@ -91,6 +94,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
   }
 
   Widget _buildSearchField(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       height: 50.0,
@@ -113,7 +117,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
                     Theme.of(context).defaultThemedTextColor,
               ),
               decoration: InputDecoration(
-                hintText: '검색어를 입력하세요',
+                hintText: l10n.searchInputPlaceholder,
                 hintStyle: TextStyle(
                   fontFamily: AppFont.pretendard.family,
                   fontSize: 16,
@@ -137,6 +141,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
 
   Widget _buildRecentSearches(
       BuildContext context, List<String> recentSearches) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -144,7 +149,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '최근 검색어',
+              l10n.searchRecentSearches,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -156,14 +161,14 @@ class _SearchPageViewState extends State<_SearchPageView> {
             GestureDetector(
               onTap: () {
                 if (recentSearches.isEmpty) {
-                  AppSnackBar.warn(context, '최근 검색어가 존재하지 않아요.');
+                  AppSnackBar.warn(context, l10n.messageWarnNoRecentSearches);
                   return;
                 }
                 context.read<SearchBloc>().add(ClearRecentSearchWordsEvent());
-                AppSnackBar.success(context, '최근 검색어를 모두 삭제하였어요!');
+                AppSnackBar.success(context, l10n.messageSuccessRecentSearchesCleared);
               },
               child: Text(
-                '전체삭제',
+                l10n.searchClearAll,
                 style: TextStyle(
                   fontFamily: AppFont.pretendard.family,
                   fontSize: 14,
@@ -180,7 +185,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 8.0),
             child: Text(
-              "최근 검색 기록이 없습니다.",
+              l10n.searchRecentEmpty,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 14,
@@ -202,6 +207,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
   }
 
   Widget _buildSearchTag(BuildContext context, String text) {
+    final l10n = AppLocalizations.of(context)!;
     return InkWell(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
@@ -227,7 +233,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
             context
                 .read<SearchBloc>()
                 .add(RemoveRecentSearchWordEvent(query: text));
-            AppSnackBar.success(context, '$text이 삭제되었어요!');
+            AppSnackBar.success(context, l10n.messageSuccessSearchWordDeleted(text));
           },
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           visualDensity: VisualDensity.compact,
@@ -240,6 +246,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
   }
 
   Widget _buildTrendingTopics(BuildContext context, SearchState state) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -247,7 +254,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '실시간 인기 검색어',
+              l10n.searchPopularKeywords,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 16,
@@ -274,7 +281,7 @@ class _SearchPageViewState extends State<_SearchPageView> {
         else if (state.trendingTopics.isEmpty)
           Center(
             child: Text(
-              state.errorMessage ?? '인기 검색어가 없어요.',
+              state.errorMessage ?? l10n.searchPopularEmpty,
               style: TextStyle(
                 fontFamily: AppFont.pretendard.family,
                 fontSize: 14,

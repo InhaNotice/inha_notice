@@ -26,6 +26,7 @@ import 'package:inha_notice/features/search/presentation/bloc/search_result_even
 import 'package:inha_notice/features/search/presentation/bloc/search_result_state.dart';
 import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
 import 'package:inha_notice/injection_container.dart' as di;
+import 'package:inha_notice/l10n/app_localizations.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// **SearchResultPage**
@@ -76,24 +77,26 @@ class _SearchResultPageViewState extends State<_SearchResultPageView> {
   }
 
   Future<void> _toggleBookmark(NoticeTileModel notice) async {
+    final l10n = AppLocalizations.of(context)!;
     final bookmarkDs = di.sl<BookmarkLocalDataSource>();
     if (bookmarkDs.isBookmarked(notice.id)) {
       await bookmarkDs.removeBookmark(notice.id);
       if (!mounted) return;
-      AppSnackBar.success(context, '삭제되었습니다.');
+      AppSnackBar.success(context, l10n.messageSuccessBookmarkDeleted);
     } else {
       await bookmarkDs.addBookmark(notice);
       if (!mounted) return;
-      AppSnackBar.success(context, '저장되었습니다.');
+      AppSnackBar.success(context, l10n.messageSuccessBookmarkAdded);
     }
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: CommonAppBarWidget(
-        title: '검색 결과: ${widget.query}',
+        title: l10n.searchResultTitle(widget.query),
         titleSize: 17,
         isCenter: true,
       ),
@@ -137,6 +140,7 @@ class _SearchResultPageViewState extends State<_SearchResultPageView> {
   }
 
   Widget _buildHeader(SearchResultLoaded state) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -146,7 +150,7 @@ class _SearchResultPageViewState extends State<_SearchResultPageView> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           RoundedToggleWidget(
-            text: '정확도순',
+            text: l10n.searchSortRank,
             option: SearchResultDefaultSortType.rank.value,
             isSelected: state.sortType == SearchResultDefaultSortType.rank,
             onTap: (_) {
@@ -158,7 +162,7 @@ class _SearchResultPageViewState extends State<_SearchResultPageView> {
           ),
           const SizedBox(width: 10),
           RoundedToggleWidget(
-            text: '최신순',
+            text: l10n.searchSortDate,
             option: SearchResultDefaultSortType.date.value,
             isSelected: state.sortType == SearchResultDefaultSortType.date,
             onTap: (_) {
