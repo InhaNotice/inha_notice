@@ -13,6 +13,7 @@ import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/models/notice_tile_model.dart';
 import 'package:inha_notice/core/presentation/widgets/web_navigator_widget.dart';
+import 'package:inha_notice/l10n/app_localizations.dart';
 
 /// **NoticeListTile**
 /// 이 클래스는 공지사항 하나에 대한 정보를 출력하는 클래스입니다.
@@ -44,13 +45,14 @@ class _NoticeListTileState extends State<NoticeTileWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // 읽은 공지면 readTextColor, 읽지 않은 공지면 기본 색상을 표시
     final Color textColor = widget.isRead
         ? Theme.of(context).readTextColor
         : Theme.of(context).textTheme.bodyMedium?.color ??
             Theme.of(context).defaultThemedTextColor;
     final String title =
-        widget.notice.title.isNotEmpty ? widget.notice.title : '제목이 없는 게시글입니다';
+        widget.notice.title.isNotEmpty ? widget.notice.title : l10n.noticeUntitled;
     final String body = widget.notice.body ?? '';
     final String date = widget.notice.date.isNotEmpty ? widget.notice.date : '';
     final String access = widget.notice.access ?? '';
@@ -127,7 +129,7 @@ class _NoticeListTileState extends State<NoticeTileWidget> {
                       const SizedBox(width: 5),
                       if (access.isNotEmpty)
                         Text(
-                          '조회 $access',
+                          l10n.noticeViewCount(access),
                           style: TextStyle(
                             fontFamily: AppFont.pretendard.family,
                             fontSize: 14.0,

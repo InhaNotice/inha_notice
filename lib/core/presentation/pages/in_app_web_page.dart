@@ -15,6 +15,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:inha_notice/core/config/app_font.dart';
 import 'package:inha_notice/core/config/app_theme.dart';
 import 'package:inha_notice/core/presentation/utils/app_snack_bar.dart';
+import 'package:inha_notice/l10n/app_localizations.dart';
 import 'package:logger/logger.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -79,9 +80,10 @@ class _InAppWebPageState extends State<InAppWebPage> {
     );
 
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       AppSnackBar.success(
         context,
-        _isDesktopMode ? '데스크탑 모드로 전환되었습니다.' : '모바일 모드로 전환되었습니다.',
+        _isDesktopMode ? l10n.webViewDesktopMode : l10n.webViewMobileMode,
       );
     }
   }
