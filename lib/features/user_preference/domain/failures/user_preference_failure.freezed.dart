@@ -1,13 +1,3 @@
-/*
- * This is file of the project inha_notice
- * Licensed under the Apache License 2.0.
- * Copyright (c) 2025-2026 INGONG
- * For full license text, see the LICENSE file in the root directory or at
- * http://www.apache.org/licenses/
- * Author: Junho Kim
- * Latest Updated Date: 2026-02-22
- */
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -26,12 +16,12 @@ T _$identity<T>(T value) => value;
 mixin _$UserPreferenceFailure {
   String get message;
 
-  /// Create a copy of UserPreferencesFailure
+  /// Create a copy of UserPreferenceFailure
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $UserPreferencesFailureCopyWith<UserPreferenceFailure> get copyWith =>
-      _$UserPreferencesFailureCopyWithImpl<UserPreferenceFailure>(
+  $UserPreferenceFailureCopyWith<UserPreferenceFailure> get copyWith =>
+      _$UserPreferenceFailureCopyWithImpl<UserPreferenceFailure>(
           this as UserPreferenceFailure, _$identity);
 
   @override
@@ -48,23 +38,23 @@ mixin _$UserPreferenceFailure {
 }
 
 /// @nodoc
-abstract mixin class $UserPreferencesFailureCopyWith<$Res> {
-  factory $UserPreferencesFailureCopyWith(UserPreferenceFailure value,
+abstract mixin class $UserPreferenceFailureCopyWith<$Res> {
+  factory $UserPreferenceFailureCopyWith(UserPreferenceFailure value,
           $Res Function(UserPreferenceFailure) _then) =
-      _$UserPreferencesFailureCopyWithImpl;
+      _$UserPreferenceFailureCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class _$UserPreferencesFailureCopyWithImpl<$Res>
-    implements $UserPreferencesFailureCopyWith<$Res> {
-  _$UserPreferencesFailureCopyWithImpl(this._self, this._then);
+class _$UserPreferenceFailureCopyWithImpl<$Res>
+    implements $UserPreferenceFailureCopyWith<$Res> {
+  _$UserPreferenceFailureCopyWithImpl(this._self, this._then);
 
   final UserPreferenceFailure _self;
   final $Res Function(UserPreferenceFailure) _then;
 
-  /// Create a copy of UserPreferencesFailure
+  /// Create a copy of UserPreferenceFailure
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -81,7 +71,7 @@ class _$UserPreferencesFailureCopyWithImpl<$Res>
 }
 
 /// Adds pattern-matching-related methods to [UserPreferenceFailure].
-extension UserPreferencesFailurePatterns on UserPreferenceFailure {
+extension UserPreferenceFailurePatterns on UserPreferenceFailure {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -263,7 +253,7 @@ class _Storage extends UserPreferenceFailure {
   @override
   final String message;
 
-  /// Create a copy of UserPreferencesFailure
+  /// Create a copy of UserPreferenceFailure
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -286,7 +276,7 @@ class _Storage extends UserPreferenceFailure {
 
 /// @nodoc
 abstract mixin class _$StorageCopyWith<$Res>
-    implements $UserPreferencesFailureCopyWith<$Res> {
+    implements $UserPreferenceFailureCopyWith<$Res> {
   factory _$StorageCopyWith(_Storage value, $Res Function(_Storage) _then) =
       __$StorageCopyWithImpl;
   @override
@@ -301,7 +291,7 @@ class __$StorageCopyWithImpl<$Res> implements _$StorageCopyWith<$Res> {
   final _Storage _self;
   final $Res Function(_Storage) _then;
 
-  /// Create a copy of UserPreferencesFailure
+  /// Create a copy of UserPreferenceFailure
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -325,7 +315,7 @@ class _Unknown extends UserPreferenceFailure {
   @override
   final String message;
 
-  /// Create a copy of UserPreferencesFailure
+  /// Create a copy of UserPreferenceFailure
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -348,7 +338,7 @@ class _Unknown extends UserPreferenceFailure {
 
 /// @nodoc
 abstract mixin class _$UnknownCopyWith<$Res>
-    implements $UserPreferencesFailureCopyWith<$Res> {
+    implements $UserPreferenceFailureCopyWith<$Res> {
   factory _$UnknownCopyWith(_Unknown value, $Res Function(_Unknown) _then) =
       __$UnknownCopyWithImpl;
   @override
@@ -363,7 +353,7 @@ class __$UnknownCopyWithImpl<$Res> implements _$UnknownCopyWith<$Res> {
   final _Unknown _self;
   final $Res Function(_Unknown) _then;
 
-  /// Create a copy of UserPreferencesFailure
+  /// Create a copy of UserPreferenceFailure
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
