@@ -16,12 +16,16 @@ import 'package:inha_notice/features/more/domain/entities/more_configuration_ent
 import 'package:inha_notice/features/more/presentation/bloc/more_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_event.dart';
 import 'package:inha_notice/features/more/presentation/bloc/more_state.dart';
+import 'package:inha_notice/features/more/presentation/bloc/today_fortune_bloc.dart';
+import 'package:inha_notice/features/more/presentation/bloc/today_fortune_event.dart';
+import 'package:inha_notice/features/more/presentation/bloc/today_fortune_state.dart';
 import 'package:inha_notice/features/more/presentation/pages/oss_license_page.dart';
 import 'package:inha_notice/features/more/presentation/widgets/cache_deletion_widget.dart';
 import 'package:inha_notice/features/more/presentation/widgets/more_navigation_tile.dart';
 import 'package:inha_notice/features/more/presentation/widgets/more_non_navigation_tile.dart';
 import 'package:inha_notice/features/more/presentation/widgets/more_title_tile.dart';
 import 'package:inha_notice/features/more/presentation/widgets/more_web_navigation_tile.dart';
+import 'package:inha_notice/features/more/presentation/widgets/today_fortune_bottom_sheet.dart';
 import 'package:inha_notice/features/more/presentation/widgets/theme_preference_tile.dart';
 import 'package:inha_notice/features/notification_setting/presentation/pages/notification_setting_page.dart';
 import 'package:inha_notice/features/user_preference/presentation/pages/user_preference_page.dart';
@@ -32,15 +36,30 @@ class MorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => di.sl<MoreBloc>()..add(LoadWebUrlsEvent()),
+    return MultiBlocProvider(
+      providers: <BlocProvider>[
+        BlocProvider<MoreBloc>(
+          create: (BuildContext context) =>
+              di.sl<MoreBloc>()..add(LoadWebUrlsEvent()),
+        ),
+        BlocProvider<TodayFortuneBloc>(
+          create: (BuildContext context) => di.sl<TodayFortuneBloc>(),
+        ),
+      ],
       child: const _MorePageView(),
     );
   }
 }
 
-class _MorePageView extends StatelessWidget {
+class _MorePageView extends StatefulWidget {
   const _MorePageView();
+
+  @override
+  State<_MorePageView> createState() => _MorePageViewState();
+}
+
+class _MorePageViewState extends State<_MorePageView> {
+  bool _isTodayFortuneSheetOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,24 +67,68 @@ class _MorePageView extends StatelessWidget {
       appBar: const CommonAppBarWidget(
           title: '더보기', titleSize: 20, isCenter: false),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: BlocBuilder<MoreBloc, MoreState>(
-        builder: (context, state) {
-          if (state is MoreLoading || state is MoreInitial) {
-            return const Center(child: BlueLoadingIndicatorWidget());
-          }
+      body: MultiBlocListener(
+        listeners: <BlocListener>[
+          BlocListener<TodayFortuneBloc, TodayFortuneState>(
+            listenWhen:
+                (TodayFortuneState previous, TodayFortuneState current) =>
+                    current is TodayFortuneReady,
+            listener:
+                (BuildContext context, TodayFortuneState todayFortuneState) {
+              _showTodayFortuneSheet(context);
+            },
+          ),
+        ],
+        child: BlocBuilder<MoreBloc, MoreState>(
+          builder: (BuildContext context, MoreState state) {
+            if (state is MoreLoading || state is MoreInitial) {
+              return const Center(child: BlueLoadingIndicatorWidget());
+            }
 
-          if (state is MoreError) {
-            return Center(child: Text(state.message));
-          }
+            if (state is MoreError) {
+              return Center(child: Text(state.message));
+            }
 
-          if (state is MoreLoaded) {
-            return _buildBody(context, state.webUrls);
-          }
+            if (state is MoreLoaded) {
+              return _buildBody(context, state.webUrls);
+            }
 
-          return const SizedBox.shrink();
-        },
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
+  }
+
+  Future<void> _showTodayFortuneSheet(BuildContext context) async {
+    if (_isTodayFortuneSheetOpen) {
+      return;
+    }
+
+    _isTodayFortuneSheetOpen = true;
+
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext bottomSheetContext) {
+        return BlocProvider<TodayFortuneBloc>.value(
+          value: context.read<TodayFortuneBloc>(),
+          child: const TodayFortuneBottomSheet(),
+        );
+      },
+    );
+
+    if (!context.mounted) {
+      return;
+    }
+
+    _isTodayFortuneSheetOpen = false;
+    final TodayFortuneState currentState =
+        context.read<TodayFortuneBloc>().state;
+    if (currentState is TodayFortuneReady) {
+      context.read<TodayFortuneBloc>().add(TodayFortuneSheetClosedEvent());
+    }
   }
 
   Widget _buildBody(BuildContext context, MoreConfigurationEntity entity) {
@@ -122,7 +185,12 @@ class _MorePageView extends StatelessWidget {
             MoreNonNavigationTile(
                 title: '버전',
                 description: entity.appVersion,
-                icon: Icons.rocket_launch_outlined),
+                icon: Icons.rocket_launch_outlined,
+                onTap: () {
+                  context
+                      .read<TodayFortuneBloc>()
+                      .add(VersionTileTappedEvent());
+                }),
             MoreNavigationTile(
               title: '나만의 앱 설정',
               icon: Icons.tune_outlined,

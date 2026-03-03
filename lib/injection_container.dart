@@ -15,15 +15,22 @@ import 'package:inha_notice/core/utils/shared_prefs_manager.dart';
 import 'package:inha_notice/features/more/data/datasources/more_local_data_source.dart';
 import 'package:inha_notice/features/more/data/datasources/oss_license_local_data_source.dart';
 import 'package:inha_notice/features/more/data/datasources/theme_preference_local_data_source.dart';
+import 'package:inha_notice/features/more/data/datasources/today_fortune_local_data_source.dart';
 import 'package:inha_notice/features/more/data/repositories/more_repository_impl.dart';
 import 'package:inha_notice/features/more/data/repositories/oss_license_repository_impl.dart';
+import 'package:inha_notice/features/more/data/repositories/today_fortune_repository_impl.dart';
 import 'package:inha_notice/features/more/domain/repositories/more_repository.dart';
+import 'package:inha_notice/features/more/domain/repositories/today_fortune_repository.dart';
 import 'package:inha_notice/features/more/domain/usecases/get_oss_licenses_use_case.dart';
 import 'package:inha_notice/features/more/domain/usecases/get_theme_preference_use_case.dart';
+import 'package:inha_notice/features/more/domain/usecases/get_today_fortune_use_case.dart';
 import 'package:inha_notice/features/more/domain/usecases/get_web_urls_use_case.dart';
+import 'package:inha_notice/features/more/domain/usecases/increment_today_fortune_tap_count_use_case.dart';
+import 'package:inha_notice/features/more/domain/usecases/reset_today_fortune_tap_count_use_case.dart';
 import 'package:inha_notice/features/more/domain/usecases/set_theme_preference_use_case.dart';
 import 'package:inha_notice/features/more/presentation/bloc/oss_license_bloc.dart';
 import 'package:inha_notice/features/more/presentation/bloc/theme_preference_bloc.dart';
+import 'package:inha_notice/features/more/presentation/bloc/today_fortune_bloc.dart';
 import 'package:inha_notice/features/notification/data/repositories/notification_repository_impl.dart';
 import 'package:inha_notice/features/notification/domain/repositories/notification_repository.dart';
 import 'package:inha_notice/features/notification/domain/usecases/request_initial_permission_use_case.dart';
@@ -141,6 +148,11 @@ Future<void> init() async {
       () => MainNavigationBloc(getInitialNotificationMessage: sl()));
   sl.registerFactory(() => ThemePreferenceBloc(
       getThemePreferenceUseCase: sl(), setThemePreferenceUseCase: sl()));
+  sl.registerFactory(() => TodayFortuneBloc(
+        incrementTapCountUseCase: sl(),
+        resetTapCountUseCase: sl(),
+        getTodayFortuneUseCase: sl(),
+      ));
   sl.registerFactory(() => UserPreferenceBloc(
       getUserPreferencesUseCase: sl(), updateUserPreferencesUseCase: sl()));
   sl.registerFactory(() => CustomTabBloc(
@@ -185,6 +197,11 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetOssLicensesUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetThemePreferenceUseCase(repository: sl()));
   sl.registerLazySingleton(() => SetThemePreferenceUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => IncrementTodayFortuneTapCountUseCase(repository: sl()));
+  sl.registerLazySingleton(
+      () => ResetTodayFortuneTapCountUseCase(repository: sl()));
+  sl.registerLazySingleton(() => GetTodayFortuneUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetUserPreferenceUseCase(repository: sl()));
   sl.registerLazySingleton(() => UpdateUserPreferenceUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetSelectedTabsUseCase(repository: sl()));
@@ -231,6 +248,9 @@ Future<void> init() async {
       () => OssLicenseRepositoryImpl(localDataSource: sl()));
   sl.registerLazySingleton<ThemePreferenceRepository>(
       () => ThemePreferenceRepositoryImpl(localDataSource: sl()));
+  sl.registerLazySingleton<TodayFortuneRepository>(
+    () => TodayFortuneRepositoryImpl(localDataSource: sl()),
+  );
   sl.registerLazySingleton<UserPreferenceRepository>(
       () => UserPreferenceRepositoryImpl(localDataSource: sl()));
   sl.registerLazySingleton<CustomTabRepository>(
@@ -289,6 +309,9 @@ Future<void> init() async {
       () => OssLicenseLocalDataSourceImpl());
   sl.registerLazySingleton<ThemePreferenceLocalDataSource>(
     () => ThemePreferenceLocalDataSourceImpl(sharedPrefsManager: sl()),
+  );
+  sl.registerLazySingleton<TodayFortuneLocalDataSource>(
+    () => TodayFortuneLocalDataSourceImpl(sharedPrefsManager: sl()),
   );
   sl.registerLazySingleton<UserPreferenceLocalDataSource>(
     () => UserPreferenceLocalDataSourceImpl(sharedPrefsManager: sl()),

@@ -18,12 +18,14 @@ class MoreNonNavigationTile extends StatefulWidget {
   final String title;
   final String description;
   final IconData icon;
+  final VoidCallback? onTap;
 
   const MoreNonNavigationTile(
       {super.key,
       required this.title,
       required this.description,
-      required this.icon});
+      required this.icon,
+      this.onTap});
 
   @override
   State<MoreNonNavigationTile> createState() => _MoreNonNavigationTileState();
@@ -32,43 +34,54 @@ class MoreNonNavigationTile extends StatefulWidget {
 class _MoreNonNavigationTileState extends State<MoreNonNavigationTile> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50.0,
-      decoration: BoxDecoration(
+    return Semantics(
+      button: widget.onTap != null,
+      label: widget.title == '버전' && widget.onTap != null ? '오늘의 운세 열기' : null,
+      child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(widget.icon,
-                  size: 20, color: Theme.of(context).iconTheme.color),
-              const SizedBox(width: 8),
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontFamily: AppFont.pretendard.family,
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                  color: Theme.of(context).textTheme.bodyMedium?.color ??
-                      Theme.of(context).defaultThemedTextColor,
+        child: InkWell(
+          onTap: widget.onTap,
+          borderRadius: BorderRadius.circular(8.0),
+          child: Container(
+            height: 50.0,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(widget.icon,
+                        size: 20, color: Theme.of(context).iconTheme.color),
+                    const SizedBox(width: 8),
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontFamily: AppFont.pretendard.family,
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                        color: Theme.of(context).textTheme.bodyMedium?.color ??
+                            Theme.of(context).defaultThemedTextColor,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Text(
-            widget.description,
-            style: TextStyle(
-              fontFamily: AppFont.pretendard.family,
-              fontSize: 16,
-              fontWeight: FontWeight.normal,
-              color: Theme.of(context).textTheme.bodyMedium?.color ??
-                  Theme.of(context).defaultThemedTextColor,
+                Text(
+                  widget.description,
+                  style: TextStyle(
+                    fontFamily: AppFont.pretendard.family,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: Theme.of(context).textTheme.bodyMedium?.color ??
+                        Theme.of(context).defaultThemedTextColor,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
