@@ -35,6 +35,7 @@ import 'package:inha_notice/features/user_preference/domain/usecases/get_user_pr
 import 'package:inha_notice/injection_container.dart' as di;
 
 import '../../../support/widget_test_pump_app.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeSharedPrefsManager extends SharedPrefsManager {
   _FakeSharedPrefsManager() : super(null);
@@ -111,6 +112,7 @@ class _FakeUserPreferencesRepository implements UserPreferenceRepository {
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     ),
   );
   Either<UserPreferenceFailure, UserPreferenceEntity> updateResult =
@@ -119,6 +121,7 @@ class _FakeUserPreferencesRepository implements UserPreferenceRepository {
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     ),
   );
 

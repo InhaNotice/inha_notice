@@ -23,6 +23,7 @@ import 'package:inha_notice/features/user_preference/presentation/pages/user_pre
 import 'package:inha_notice/injection_container.dart' as di;
 
 import '../../../support/widget_test_pump_app.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeUserPreferenceRepository implements UserPreferenceRepository {
   Either<UserPreferenceFailure, UserPreferenceEntity> getResult = const Right(
@@ -30,6 +31,7 @@ class _FakeUserPreferenceRepository implements UserPreferenceRepository {
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     ),
   );
   Either<UserPreferenceFailure, UserPreferenceEntity> updateResult =
@@ -38,6 +40,7 @@ class _FakeUserPreferenceRepository implements UserPreferenceRepository {
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     ),
   );
 
@@ -103,6 +106,7 @@ void main() {
         noticeBoardDefault: NoticeBoardDefaultType.general,
         bookmarkDefaultSort: BookmarkDefaultSortType.newest,
         searchResultDefaultSort: SearchResultDefaultSortType.rank,
+        languagePreference: AppLanguageType.korean,
       );
       userPreferenceRepository.getResult = const Right(preferences);
 
@@ -122,6 +126,7 @@ void main() {
         noticeBoardDefault: NoticeBoardDefaultType.headline,
         bookmarkDefaultSort: BookmarkDefaultSortType.oldest,
         searchResultDefaultSort: SearchResultDefaultSortType.date,
+        languagePreference: AppLanguageType.korean,
       );
       userPreferenceRepository.getResult = const Right(preferences);
 

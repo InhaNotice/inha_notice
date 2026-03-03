@@ -24,6 +24,7 @@ import 'package:inha_notice/features/user_preference/presentation/bloc/user_pref
 import 'package:inha_notice/features/user_preference/presentation/widgets/search_result_sort_preference_tile.dart';
 
 import '../../../support/widget_test_pump_app.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeUserPreferenceRepository implements UserPreferenceRepository {
   Either<UserPreferenceFailure, UserPreferenceEntity> getResult = const Right(
@@ -31,6 +32,7 @@ class _FakeUserPreferenceRepository implements UserPreferenceRepository {
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     ),
   );
 

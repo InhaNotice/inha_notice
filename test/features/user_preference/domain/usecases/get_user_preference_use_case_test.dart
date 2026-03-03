@@ -17,6 +17,7 @@ import 'package:inha_notice/features/user_preference/domain/entities/user_prefer
 import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
 import 'package:inha_notice/features/user_preference/domain/repositories/user_preference_repository.dart';
 import 'package:inha_notice/features/user_preference/domain/usecases/get_user_preference_use_case.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeUserPreferenceRepository implements UserPreferenceRepository {
   Either<UserPreferenceFailure, UserPreferenceEntity> result = Right(
@@ -24,6 +25,7 @@ class _FakeUserPreferenceRepository implements UserPreferenceRepository {
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     ),
   );
 
@@ -55,6 +57,7 @@ void main() {
         noticeBoardDefault: NoticeBoardDefaultType.headline,
         bookmarkDefaultSort: BookmarkDefaultSortType.oldest,
         searchResultDefaultSort: SearchResultDefaultSortType.date,
+        languagePreference: AppLanguageType.korean,
       );
       repository.result = Right(expected);
 

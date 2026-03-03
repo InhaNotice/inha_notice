@@ -17,6 +17,7 @@ import 'package:inha_notice/features/user_preference/domain/entities/notice_boar
 import 'package:inha_notice/features/user_preference/domain/entities/search_result_default_sort_type.dart';
 import 'package:inha_notice/features/user_preference/domain/entities/user_preference_entity.dart';
 import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeUserPreferenceLocalDataSource
     implements UserPreferenceLocalDataSource {
@@ -33,6 +34,7 @@ class _FakeUserPreferenceLocalDataSource
           noticeBoardDefault: NoticeBoardDefaultType.general,
           bookmarkDefaultSort: BookmarkDefaultSortType.newest,
           searchResultDefaultSort: SearchResultDefaultSortType.rank,
+          languagePreference: AppLanguageType.korean,
         );
   }
 
@@ -62,6 +64,7 @@ void main() {
           noticeBoardDefault: NoticeBoardDefaultType.headline,
           bookmarkDefaultSort: BookmarkDefaultSortType.oldest,
           searchResultDefaultSort: SearchResultDefaultSortType.date,
+          languagePreference: AppLanguageType.korean,
         );
         dataSource._preferences = expected;
 
@@ -109,6 +112,7 @@ void main() {
           noticeBoardDefault: NoticeBoardDefaultType.headline,
           bookmarkDefaultSort: BookmarkDefaultSortType.name,
           searchResultDefaultSort: SearchResultDefaultSortType.date,
+          languagePreference: AppLanguageType.korean,
         );
 
         // Act
@@ -139,6 +143,7 @@ void main() {
           noticeBoardDefault: NoticeBoardDefaultType.general,
           bookmarkDefaultSort: BookmarkDefaultSortType.newest,
           searchResultDefaultSort: SearchResultDefaultSortType.rank,
+          languagePreference: AppLanguageType.korean,
         );
 
         // Act

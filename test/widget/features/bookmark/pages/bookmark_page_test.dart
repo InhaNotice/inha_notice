@@ -29,6 +29,7 @@ import 'package:inha_notice/features/user_preference/domain/entities/user_prefer
 import 'package:inha_notice/injection_container.dart' as di;
 
 import '../../../support/widget_test_pump_app.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeBookmarkRepository implements BookmarkRepository {
   Either<BookmarkFailure, BookmarkEntity> getResult =
@@ -92,6 +93,7 @@ class _FakeUserPreferencesLocalDataSource
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     );
   }
 

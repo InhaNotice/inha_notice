@@ -22,6 +22,7 @@ import 'package:inha_notice/features/user_preference/domain/usecases/update_user
 import 'package:inha_notice/features/user_preference/presentation/bloc/user_preference_bloc.dart';
 import 'package:inha_notice/features/user_preference/presentation/bloc/user_preference_event.dart';
 import 'package:inha_notice/features/user_preference/presentation/bloc/user_preference_state.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeUserPreferenceRepository implements UserPreferenceRepository {
   Either<UserPreferenceFailure, UserPreferenceEntity> getResult = Right(
@@ -29,6 +30,7 @@ class _FakeUserPreferenceRepository implements UserPreferenceRepository {
       noticeBoardDefault: NoticeBoardDefaultType.general,
       bookmarkDefaultSort: BookmarkDefaultSortType.newest,
       searchResultDefaultSort: SearchResultDefaultSortType.rank,
+      languagePreference: AppLanguageType.korean,
     ),
   );
 
@@ -113,6 +115,7 @@ void main() {
           noticeBoardDefault: NoticeBoardDefaultType.general,
           bookmarkDefaultSort: BookmarkDefaultSortType.newest,
           searchResultDefaultSort: SearchResultDefaultSortType.rank,
+          languagePreference: AppLanguageType.korean,
         ),
       ),
       act: (bloc) => bloc.add(
@@ -137,6 +140,7 @@ void main() {
           noticeBoardDefault: NoticeBoardDefaultType.general,
           bookmarkDefaultSort: BookmarkDefaultSortType.newest,
           searchResultDefaultSort: SearchResultDefaultSortType.rank,
+          languagePreference: AppLanguageType.korean,
         ),
       ),
       act: (bloc) => bloc.add(
@@ -161,6 +165,7 @@ void main() {
           noticeBoardDefault: NoticeBoardDefaultType.general,
           bookmarkDefaultSort: BookmarkDefaultSortType.newest,
           searchResultDefaultSort: SearchResultDefaultSortType.rank,
+          languagePreference: AppLanguageType.korean,
         ),
       ),
       act: (bloc) => bloc.add(
@@ -190,6 +195,7 @@ void main() {
           noticeBoardDefault: NoticeBoardDefaultType.general,
           bookmarkDefaultSort: BookmarkDefaultSortType.newest,
           searchResultDefaultSort: SearchResultDefaultSortType.rank,
+          languagePreference: AppLanguageType.korean,
         ),
       ),
       act: (bloc) => bloc.add(

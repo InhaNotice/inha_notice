@@ -17,6 +17,7 @@ import 'package:inha_notice/features/user_preference/domain/entities/user_prefer
 import 'package:inha_notice/features/user_preference/domain/failures/user_preference_failure.dart';
 import 'package:inha_notice/features/user_preference/domain/repositories/user_preference_repository.dart';
 import 'package:inha_notice/features/user_preference/domain/usecases/update_user_preference_use_case.dart';
+import 'package:inha_notice/core/config/app_language_type.dart';
 
 class _FakeUserPreferenceRepository implements UserPreferenceRepository {
   Future<Either<UserPreferenceFailure, UserPreferenceEntity>>? updateResult;
@@ -49,6 +50,7 @@ void main() {
         noticeBoardDefault: NoticeBoardDefaultType.headline,
         bookmarkDefaultSort: BookmarkDefaultSortType.name,
         searchResultDefaultSort: SearchResultDefaultSortType.date,
+        languagePreference: AppLanguageType.korean,
       );
       repository.updateResult = Future.value(Right(preferences));
 
@@ -71,6 +73,7 @@ void main() {
         noticeBoardDefault: NoticeBoardDefaultType.general,
         bookmarkDefaultSort: BookmarkDefaultSortType.newest,
         searchResultDefaultSort: SearchResultDefaultSortType.rank,
+        languagePreference: AppLanguageType.korean,
       );
       const failure = UserPreferenceFailure.storage('저장 실패');
       repository.updateResult = Future.value(const Left(failure));
