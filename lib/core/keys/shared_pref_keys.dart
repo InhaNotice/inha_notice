@@ -28,8 +28,11 @@ abstract class SharedPrefKeys {
   static const String kScholarship = 'SCHOLARSHIP';
   static const String kRecruitment = 'RECRUITMENT';
   static const String kMajorNotification = 'major-notification';
+  // ignore: constant_identifier_names
   static const String INTERNATIONAL = 'INTERNATIONAL';
+  // ignore: constant_identifier_names
   static const String SWUNIV = 'SWUNIV';
+  // ignore: constant_identifier_names
   static const String INHAHUSS = 'INHAHUSS';
 
   // 학사일정 하루 전(D-1) 알림
@@ -47,4 +50,6 @@ abstract class SharedPrefKeys {
   static const String kNoticeBoardDefaultType = 'notice-board-default-type';
   static const String kBookmarkDefaultSort = 'bookmark-default-sort';
   static const String kSearchResultDefaultSort = 'search-result-default-sort';
+  static const String kTodayFortuneVersionTapCount =
+      'today-fortune-version-tap-count';
 }

@@ -63,6 +63,7 @@ class SharedPrefsManager {
     SharedPrefKeys.kNoticeBoardDefaultType: 'general',
     SharedPrefKeys.kBookmarkDefaultSort: 'newest',
     SharedPrefKeys.kSearchResultDefaultSort: 'RANK',
+    SharedPrefKeys.kTodayFortuneVersionTapCount: 0,
 
     // 학과
     ..._buildMajorPrefs(),
@@ -118,6 +119,8 @@ class SharedPrefsManager {
         _cache[key] = _prefs?.getStringList(key) ?? value;
       } else if (value is Set<String>) {
         _cache[key] = _prefs?.getStringList(key)?.toSet() ?? value;
+      } else if (value is int) {
+        _cache[key] = _prefs?.getInt(key) ?? value;
       }
     });
   }
@@ -140,6 +143,8 @@ class SharedPrefsManager {
         await _prefs?.setStringList(key, value.toList());
       } else if (value is List<String>) {
         await _prefs?.setStringList(key, value.toList());
+      } else if (value is int) {
+        await _prefs?.setInt(key, value);
       }
       AppLogger.d('✅ Preference 성공적으로 저장 - $key: $value');
     } catch (e) {
@@ -148,7 +153,7 @@ class SharedPrefsManager {
   }
 
   /// 설정 값 가져오기
-  /// 사용법 예시: final isDark = SharedPrefsManager().getValue<bool>(Keys.isDark);
+  /// 사용법 예시: `final isDark = SharedPrefsManager().getValue<bool>(Keys.isDark);`
   T? getValue<T>(String key) {
     final value = _cache[key];
     if (value is T) {
